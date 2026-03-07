@@ -3,12 +3,14 @@
   "name": "Factify",
   "version": "0.1.0",
   "description": "AI-powered fact-checking for any text on the web",
-  "permissions": ["contextMenus", "activeTab", "storage"],
+  "permissions": ["contextMenus", "activeTab", "storage", "sidePanel"],
   "background": {
     "service_worker": "background.js"
   },
+  "side_panel": {
+    "default_path": "panel.html"
+  },
   "action": {
-    "default_popup": "popup.html",
     "default_title": "Factify"
   },
   "icons": {

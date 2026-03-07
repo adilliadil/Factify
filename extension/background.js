@@ -6,26 +6,30 @@ chrome.runtime.onInstalled.addListener(() => {
     title: "Fact This",
     contexts: ["selection"],
   });
+
+  chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: true });
 });
 
-chrome.contextMenus.onClicked.addListener((info, tab) => {
+chrome.contextMenus.onClicked.addListener(async (info, tab) => {
   if (info.menuItemId === "factify_check" && info.selectionText) {
+    await chrome.sidePanel.open({ tabId: tab.id });
     runFactCheck(info.selectionText);
   }
 });
 
-chrome.commands.onCommand.addListener((command) => {
+chrome.commands.onCommand.addListener(async (command) => {
   if (command === "fact-check") {
-    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-      if (!tabs[0]) return;
-      chrome.scripting.executeScript(
-        { target: { tabId: tabs[0].id }, func: () => window.getSelection().toString() },
-        (results) => {
-          const text = results?.[0]?.result;
-          if (text) runFactCheck(text);
-        }
-      );
+    const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+    if (!tab) return;
+
+    await chrome.sidePanel.open({ tabId: tab.id });
+
+    const results = await chrome.scripting.executeScript({
+      target: { tabId: tab.id },
+      func: () => window.getSelection().toString(),
     });
+    const text = results?.[0]?.result;
+    if (text) runFactCheck(text);
   }
 });
 

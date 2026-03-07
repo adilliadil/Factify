@@ -78,8 +78,8 @@ function render() {
 
       if (factify_state === "loading") {
         document.getElementById("loading-claim").textContent =
-          factify_text?.length > 80
-            ? factify_text.substring(0, 80) + "..."
+          factify_text?.length > 120
+            ? factify_text.substring(0, 120) + "..."
             : factify_text || "";
         showState("loading");
         return;

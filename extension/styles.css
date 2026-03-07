@@ -6,26 +6,27 @@
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  width: 380px;
-  min-height: 200px;
+  width: 100%;
+  min-height: 100vh;
   background: #0f0f0f;
   color: #e5e5e5;
 }
 
 .container {
-  padding: 20px;
+  padding: 24px 20px;
+  max-width: 480px;
 }
 
 header {
   display: flex;
   align-items: center;
-  margin-bottom: 16px;
-  padding-bottom: 12px;
+  margin-bottom: 20px;
+  padding-bottom: 14px;
   border-bottom: 1px solid #2a2a2a;
 }
 
 header h1 {
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 700;
   color: #fff;
   letter-spacing: -0.3px;
@@ -33,10 +34,10 @@ header h1 {
 
 .hint {
   color: #888;
-  font-size: 13px;
-  line-height: 1.5;
+  font-size: 14px;
+  line-height: 1.6;
   text-align: center;
-  padding: 24px 0;
+  padding: 40px 12px;
 }
 
 .hint strong {
@@ -45,13 +46,13 @@ header h1 {
 
 /* Loading */
 .spinner {
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
   border: 3px solid #2a2a2a;
   border-top-color: #c084fc;
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
-  margin: 16px auto 12px;
+  margin: 32px auto 14px;
 }
 
 @keyframes spin {
@@ -60,16 +61,18 @@ header h1 {
 
 .loading-text {
   text-align: center;
-  font-size: 14px;
+  font-size: 15px;
   color: #aaa;
 }
 
 .claim-preview {
   text-align: center;
-  font-size: 12px;
+  font-size: 13px;
   color: #666;
-  margin-top: 8px;
+  margin-top: 10px;
   font-style: italic;
+  padding: 0 8px;
+  line-height: 1.5;
 }
 
 /* Score */
@@ -77,12 +80,12 @@ header h1 {
   display: flex;
   align-items: center;
   gap: 16px;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
 }
 
 .score-ring {
-  width: 64px;
-  height: 64px;
+  width: 72px;
+  height: 72px;
   border-radius: 50%;
   border: 4px solid #22c55e;
   display: flex;
@@ -92,15 +95,15 @@ header h1 {
 }
 
 .score-value {
-  font-size: 22px;
+  font-size: 26px;
   font-weight: 700;
   color: #fff;
 }
 
 .verdict-badge {
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 600;
-  padding: 6px 14px;
+  padding: 8px 18px;
   border-radius: 20px;
   color: #000;
 }
@@ -111,13 +114,13 @@ h3 {
   text-transform: uppercase;
   letter-spacing: 0.8px;
   color: #666;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 }
 
 .claims-section,
 .explanation-section,
 .sources-section {
-  margin-bottom: 16px;
+  margin-bottom: 20px;
 }
 
 .claims-section ul {
@@ -126,19 +129,19 @@ h3 {
 }
 
 .claims-section li {
-  font-size: 13px;
+  font-size: 14px;
   color: #ccc;
-  padding: 6px 10px;
+  padding: 8px 12px;
   background: #1a1a1a;
-  border-radius: 6px;
-  margin-bottom: 4px;
-  line-height: 1.4;
+  border-radius: 8px;
+  margin-bottom: 6px;
+  line-height: 1.5;
 }
 
 .explanation-section p {
-  font-size: 13px;
+  font-size: 14px;
   color: #bbb;
-  line-height: 1.6;
+  line-height: 1.7;
 }
 
 .sources-section ul {
@@ -147,16 +150,15 @@ h3 {
 }
 
 .sources-section li {
-  margin-bottom: 4px;
+  margin-bottom: 6px;
 }
 
 .sources-section a {
-  font-size: 12px;
+  font-size: 13px;
   color: #818cf8;
   text-decoration: none;
   display: block;
   padding: 4px 0;
-  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
@@ -168,21 +170,21 @@ h3 {
 
 /* Error */
 .error-icon {
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   background: #dc2626;
   color: #fff;
-  font-size: 22px;
+  font-size: 24px;
   font-weight: 700;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 16px auto 12px;
+  margin: 32px auto 14px;
 }
 
 .error-text {
   text-align: center;
-  font-size: 13px;
+  font-size: 14px;
   color: #f87171;
 }

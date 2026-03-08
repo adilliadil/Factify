@@ -17,9 +17,35 @@
     </div>
 
     <div id="loading-state" class="state" hidden>
-      <div class="spinner"></div>
-      <p class="loading-text">Checking claim...</p>
       <p class="claim-preview" id="loading-claim"></p>
+
+      <div class="loading-steps">
+        <div class="loading-step active" data-step="extracting">
+          <div class="step-icon">
+            <div class="step-spinner"></div>
+            <svg class="step-check" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="step-label">Extracting claims</div>
+        </div>
+        <div class="step-connector"></div>
+        <div class="loading-step" data-step="searching">
+          <div class="step-icon">
+            <div class="step-spinner"></div>
+            <svg class="step-check" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="step-label">Searching sources</div>
+          <div class="step-meta" id="step-meta-searching"></div>
+        </div>
+        <div class="step-connector"></div>
+        <div class="loading-step" data-step="analyzing">
+          <div class="step-icon">
+            <div class="step-spinner"></div>
+            <svg class="step-check" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="step-label">Analyzing evidence</div>
+          <div class="step-meta" id="step-meta-analyzing"></div>
+        </div>
+      </div>
     </div>
 
     <div id="result-state" class="state" hidden>

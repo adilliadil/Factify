@@ -95,7 +95,7 @@
   <div class="mock-toolbar">
     <span class="toolbar-label">State:</span>
     <button onclick="mockState('empty')">Empty</button>
-    <button onclick="mockState('loading')">Loading</button>
+    <button onclick="mockLoading()">Loading</button>
     <button onclick="mockState('error')">Error</button>
     <span class="toolbar-label">Results:</span>
     <button onclick="mockResult('false')">False (12)</button>
@@ -214,9 +214,36 @@
         document.body.appendChild(script);
       });
 
+    let _loadingTimer = null;
+
+    function mockLoading() {
+      if (_loadingTimer) clearTimeout(_loadingTimer);
+
+      chrome.storage.local.set({
+        factify_state: "loading",
+        factify_text: "Vitamin C cures the flu in 24 hours and prevents all respiratory infections...",
+        factify_loading_step: "extracting",
+        factify_step_meta: {},
+      });
+
+      _loadingTimer = setTimeout(() => {
+        chrome.storage.local.set({
+          factify_loading_step: "searching",
+          factify_step_meta: { claims_found: 2 },
+        });
+
+        _loadingTimer = setTimeout(() => {
+          chrome.storage.local.set({
+            factify_loading_step: "analyzing",
+            factify_step_meta: { claims_found: 2, sources_found: 5 },
+          });
+        }, 2000);
+      }, 1500);
+    }
+
     function mockState(state) {
-      const data = { factify_state: state };
-      if (state === "loading") data.factify_text = "Vitamin C cures the flu in 24 hours and prevents all respiratory infections...";
+      if (_loadingTimer) { clearTimeout(_loadingTimer); _loadingTimer = null; }
+      const data = { factify_state: state, factify_loading_step: null, factify_step_meta: null };
       if (state === "error") data.factify_error = "Unable to connect to the server. Make sure the backend is running.";
       if (state === "empty") data.factify_state = "idle";
       chrome.storage.local.set(data);

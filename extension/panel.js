@@ -176,6 +176,7 @@ function render() {
             ? factify_text.substring(0, 120) + "..."
             : factify_text || "";
         showState("loading");
+        updateLoadingSteps();
         return;
       }
 
@@ -196,6 +197,47 @@ function render() {
   );
 }
 
+const STEP_ORDER = ["extracting", "searching", "analyzing"];
+
+function updateLoadingSteps() {
+  chrome.storage.local.get(["factify_loading_step", "factify_step_meta"], (data) => {
+    const current = data.factify_loading_step || "extracting";
+    const meta = data.factify_step_meta || {};
+    const currentIdx = STEP_ORDER.indexOf(current);
+
+    document.querySelectorAll(".loading-step").forEach((el) => {
+      const step = el.dataset.step;
+      const stepIdx = STEP_ORDER.indexOf(step);
+      el.classList.remove("active", "done", "pending");
+
+      if (stepIdx < currentIdx) {
+        el.classList.add("done");
+      } else if (stepIdx === currentIdx) {
+        el.classList.add("active");
+      } else {
+        el.classList.add("pending");
+      }
+    });
+
+    document.querySelectorAll(".step-connector").forEach((el, i) => {
+      el.classList.toggle("filled", i < currentIdx);
+    });
+
+    const searchMeta = document.getElementById("step-meta-searching");
+    const analyzeMeta = document.getElementById("step-meta-analyzing");
+    if (meta.claims_found && currentIdx >= 1) {
+      searchMeta.textContent = `${meta.claims_found} claim${meta.claims_found > 1 ? "s" : ""} found`;
+    } else {
+      searchMeta.textContent = "";
+    }
+    if (meta.sources_found && currentIdx >= 2) {
+      analyzeMeta.textContent = `${meta.sources_found} source${meta.sources_found > 1 ? "s" : ""} found`;
+    } else {
+      analyzeMeta.textContent = "";
+    }
+  });
+}
+
 document.addEventListener("click", (e) => {
   const toggle = e.target.closest(".collapsible-toggle");
   if (!toggle) return;
@@ -207,9 +249,9 @@ document.getElementById("check-another").addEventListener("click", resetState);
 document.getElementById("error-check-another").addEventListener("click", resetState);
 
 chrome.storage.onChanged.addListener((changes, area) => {
-  if (area === "local" && changes.factify_state) {
-    render();
-  }
+  if (area !== "local") return;
+  if (changes.factify_state) render();
+  if (changes.factify_loading_step) updateLoadingSteps();
 });
 
 render();

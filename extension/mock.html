@@ -119,9 +119,9 @@
         confidence: "high", confidence_reason: "Multiple authoritative medical sources agree",
         explanation: "Medical authorities including the CDC and Mayo Clinic state that vitamin C does not cure influenza. While some studies suggest it may slightly reduce cold duration, it does not prevent respiratory infections.",
         sources: [
-          { title: "CDC Flu Treatment Guidelines", url: "https://cdc.gov/flu/treatment" },
-          { title: "Vitamin C and the Common Cold – Mayo Clinic", url: "https://mayoclinic.org/vitamin-c" },
-          { title: "The effectiveness of vitamin C in preventing and relieving symptoms", url: "https://pubmed.ncbi.nlm.nih.gov/10543583/" },
+          { title: "CDC Flu Treatment Guidelines", url: "https://cdc.gov/flu/treatment", stance: "contradicting" },
+          { title: "Vitamin C and the Common Cold – Mayo Clinic", url: "https://mayoclinic.org/vitamin-c", stance: "contradicting" },
+          { title: "The effectiveness of vitamin C in preventing and relieving symptoms", url: "https://pubmed.ncbi.nlm.nih.gov/10543583/", stance: "contradicting" },
         ],
       },
       mostly_false: {
@@ -135,8 +135,8 @@
         confidence: "high", confidence_reason: "NASA and astronaut testimony directly address this",
         explanation: "Multiple astronauts and NASA have confirmed the Great Wall is not visible to the naked eye from low Earth orbit. Other structures like highways and airports are more visible due to their width.",
         sources: [
-          { title: "Can you see the Great Wall from space? – Britannica", url: "https://britannica.com/great-wall" },
-          { title: "Is the Great Wall Visible from the Moon? – Snopes", url: "https://snopes.com/great-wall-moon" },
+          { title: "Can you see the Great Wall from space? – Britannica", url: "https://britannica.com/great-wall", stance: "contradicting" },
+          { title: "Is the Great Wall Visible from the Moon? – Snopes", url: "https://snopes.com/great-wall-moon", stance: "contradicting" },
         ],
       },
       mixed: {
@@ -150,10 +150,10 @@
         confidence: "medium", confidence_reason: "Sources cover the topic but findings are nuanced",
         explanation: "Research is divided on coffee's overall health impact. While excessive consumption can cause issues, moderate intake (3-4 cups/day) is associated with reduced mortality. Most large studies show no increased heart disease risk.",
         sources: [
-          { title: "Coffee and Health – Harvard T.H. Chan School", url: "https://hsph.harvard.edu/coffee" },
-          { title: "Is Coffee Good for You? – NEJM", url: "https://nejm.org/coffee-study" },
-          { title: "Coffee consumption and cardiovascular health", url: "https://pubmed.ncbi.nlm.nih.gov/coffee-cardio" },
-          { title: "American Heart Association on Coffee", url: "https://heart.org/coffee" },
+          { title: "Coffee and Health – Harvard T.H. Chan School", url: "https://hsph.harvard.edu/coffee", stance: "contradicting" },
+          { title: "Is Coffee Good for You? – NEJM", url: "https://nejm.org/coffee-study", stance: "contradicting" },
+          { title: "Coffee consumption and cardiovascular health", url: "https://pubmed.ncbi.nlm.nih.gov/coffee-cardio", stance: "supporting" },
+          { title: "American Heart Association on Coffee", url: "https://heart.org/coffee", stance: "neutral" },
         ],
       },
       mostly_true: {
@@ -166,9 +166,9 @@
         confidence: "high", confidence_reason: "Three independent scientific agencies confirm",
         explanation: "NASA, NOAA, and the IPCC confirm global average temperatures have risen approximately 1.1-1.2°C above pre-industrial levels. The exact figure varies slightly depending on the baseline period used.",
         sources: [
-          { title: "Global Temperature – NASA Climate", url: "https://climate.nasa.gov/vital-signs/global-temperature" },
-          { title: "IPCC AR6 Summary for Policymakers", url: "https://ipcc.ch/report/ar6" },
-          { title: "Climate Change Indicators – NOAA", url: "https://noaa.gov/climate-indicators" },
+          { title: "Global Temperature – NASA Climate", url: "https://climate.nasa.gov/vital-signs/global-temperature", stance: "supporting" },
+          { title: "IPCC AR6 Summary for Policymakers", url: "https://ipcc.ch/report/ar6", stance: "supporting" },
+          { title: "Climate Change Indicators – NOAA", url: "https://noaa.gov/climate-indicators", stance: "supporting" },
         ],
       },
       true: {
@@ -181,8 +181,8 @@
         confidence: "high", confidence_reason: "Established scientific fact with universal agreement",
         explanation: "This is a well-established physical fact confirmed by all chemistry and physics references. Water boils at exactly 100°C (212°F) at 1 atmosphere of pressure at sea level.",
         sources: [
-          { title: "Boiling Point – Britannica", url: "https://britannica.com/boiling-point" },
-          { title: "Properties of Water – USGS", url: "https://usgs.gov/water-properties" },
+          { title: "Boiling Point – Britannica", url: "https://britannica.com/boiling-point", stance: "supporting" },
+          { title: "Properties of Water – USGS", url: "https://usgs.gov/water-properties", stance: "supporting" },
         ],
       },
       multi: {
@@ -197,11 +197,11 @@
         confidence: "high", confidence_reason: "Well-documented historical facts with clear records",
         explanation: "Einstein excelled at mathematics throughout his education. The light bulb was invented by Thomas Edison, not Einstein. However, Einstein did publish his special theory of relativity in 1905 as part of his 'Annus Mirabilis' papers.",
         sources: [
-          { title: "Albert Einstein Biography – Nobel Prize", url: "https://nobelprize.org/einstein" },
-          { title: "Did Einstein Fail Math? – History.com", url: "https://history.com/einstein-math-myth" },
-          { title: "Einstein's Annus Mirabilis papers – APS", url: "https://aps.org/einstein-1905" },
-          { title: "Who Invented the Light Bulb? – Smithsonian", url: "https://si.edu/light-bulb" },
-          { title: "Einstein's Academic Record – ETH Zurich", url: "https://ethz.ch/einstein-records" },
+          { title: "Albert Einstein Biography – Nobel Prize", url: "https://nobelprize.org/einstein", stance: "contradicting" },
+          { title: "Did Einstein Fail Math? – History.com", url: "https://history.com/einstein-math-myth", stance: "contradicting" },
+          { title: "Einstein's Annus Mirabilis papers – APS", url: "https://aps.org/einstein-1905", stance: "supporting" },
+          { title: "Who Invented the Light Bulb? – Smithsonian", url: "https://si.edu/light-bulb", stance: "contradicting" },
+          { title: "Einstein's Academic Record – ETH Zurich", url: "https://ethz.ch/einstein-records", stance: "contradicting" },
         ],
       },
     };

@@ -8,6 +8,7 @@ class FactCheckRequest(BaseModel):
 class Source(BaseModel):
     title: str
     url: str
+    stance: str = "neutral"
 
 
 class ClaimResult(BaseModel):

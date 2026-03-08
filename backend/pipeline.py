@@ -69,8 +69,9 @@ async def fact_check_stream(text: str) -> AsyncGenerator[str, None]:
         verdict = claim_verdicts_map.get(c, "unverifiable")
         claim_results.append(ClaimResult(text=c, verdict=verdict))
 
+    source_stances = analysis.get("source_stances", {})
     response_sources = [
-        Source(title=s["title"], url=s["url"])
+        Source(title=s["title"], url=s["url"], stance=source_stances.get(s["url"], "neutral"))
         for s in all_sources[:8]
     ]
 
@@ -138,8 +139,9 @@ async def fact_check(text: str) -> FactCheckResponse:
         verdict = claim_verdicts_map.get(c, "unverifiable")
         claim_results.append(ClaimResult(text=c, verdict=verdict))
 
+    source_stances = analysis.get("source_stances", {})
     response_sources = [
-        Source(title=s["title"], url=s["url"])
+        Source(title=s["title"], url=s["url"], stance=source_stances.get(s["url"], "neutral"))
         for s in all_sources[:8]
     ]
 

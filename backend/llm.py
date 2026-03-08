@@ -50,10 +50,17 @@ Return a JSON object with exactly these fields:
       "claim": "<the exact claim text>",
       "verdict": "<one of: supported, contradicted, mixed, unverifiable>"
     }}
+  ],
+  "source_stances": [
+    {{
+      "url": "<the exact source URL>",
+      "stance": "<one of: supporting, contradicting, neutral>"
+    }}
   ]
 }}
 
 There must be exactly one entry in "claim_verdicts" for each claim listed above, in the same order.
+There must be exactly one entry in "source_stances" for each source listed above, using the exact URL.
 
 Score guide:
 - 0-20: False (sources clearly contradict the claims)
@@ -138,6 +145,14 @@ async def analyze_evidence(claims: list[str], sources: list[dict]) -> dict:
     if confidence not in {"high", "medium", "low"}:
         confidence = "low"
 
+    valid_stances = {"supporting", "contradicting", "neutral"}
+    source_stances = {}
+    for ss in result.get("source_stances", []):
+        stance = ss.get("stance", "neutral")
+        if stance not in valid_stances:
+            stance = "neutral"
+        source_stances[ss.get("url", "")] = stance
+
     return {
         "score": score,
         "verdict": verdict,
@@ -146,4 +161,5 @@ async def analyze_evidence(claims: list[str], sources: list[dict]) -> dict:
         "confidence": confidence,
         "confidence_reason": result.get("confidence_reason", ""),
         "claim_verdicts": sanitized_verdicts,
+        "source_stances": source_stances,
     }

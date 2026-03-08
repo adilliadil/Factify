@@ -133,10 +133,19 @@ function renderResult(result, originalText) {
 
   document.getElementById("explanation").textContent = result.explanation;
 
+  const STANCE_ORDER = { supporting: 0, contradicting: 1, neutral: 2 };
+  const STANCE_LABELS = { supporting: "Supporting", contradicting: "Contradicting", neutral: "Neutral" };
+
+  const sortedSources = [...(result.sources || [])].sort(
+    (a, b) => (STANCE_ORDER[a.stance] ?? 2) - (STANCE_ORDER[b.stance] ?? 2)
+  );
+
   const sourcesList = document.getElementById("sources-list");
   sourcesList.innerHTML = "";
-  result.sources.forEach((source) => {
+  sortedSources.forEach((source) => {
     const domain = getDomain(source.url);
+    const stance = source.stance || "neutral";
+
     const card = document.createElement("a");
     card.className = "source-card";
     card.href = source.url;
@@ -153,15 +162,24 @@ function renderResult(result, originalText) {
     const info = document.createElement("div");
     info.className = "source-info";
 
-    const domainEl = document.createElement("span");
-    domainEl.className = "source-domain";
-    domainEl.textContent = domain;
+    const domainRow = document.createElement("span");
+    domainRow.className = "source-domain";
+    domainRow.textContent = domain;
+
+    const domainLine = document.createElement("span");
+    domainLine.className = "source-domain-line";
+    domainLine.appendChild(domainRow);
+
+    const stanceTag = document.createElement("span");
+    stanceTag.className = `source-stance stance-tag-${stance}`;
+    stanceTag.textContent = STANCE_LABELS[stance] || "Neutral";
+    domainLine.appendChild(stanceTag);
 
     const titleEl = document.createElement("span");
     titleEl.className = "source-title";
     titleEl.textContent = source.title || source.url;
 
-    info.appendChild(domainEl);
+    info.appendChild(domainLine);
     info.appendChild(titleEl);
     card.appendChild(favicon);
     card.appendChild(info);

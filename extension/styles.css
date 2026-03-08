@@ -480,17 +480,19 @@ h3 {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 10px 12px;
-  background: var(--bg-card);
-  border-radius: 8px;
-  margin-bottom: 6px;
+  padding: 10px 0;
   text-decoration: none;
-  transition: background 0.15s;
+  transition: opacity 0.15s;
   cursor: pointer;
+  border-bottom: 1px solid var(--border);
+}
+
+.source-card:last-child {
+  border-bottom: none;
 }
 
 .source-card:hover {
-  background: var(--bg-card-hover);
+  opacity: 0.75;
 }
 
 .source-favicon {
@@ -505,10 +507,46 @@ h3 {
   min-width: 0;
 }
 
+.source-domain-line {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
 .source-domain {
   font-size: 11px;
   color: var(--text-dim);
   text-transform: lowercase;
+}
+
+.source-stance {
+  font-size: 9px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  padding: 1px 6px;
+  border-radius: 3px;
+}
+
+.stance-tag-supporting {
+  color: #22c55e;
+  background: rgba(34, 197, 94, 0.12);
+}
+
+.stance-tag-contradicting {
+  color: #ef4444;
+  background: rgba(239, 68, 68, 0.12);
+}
+
+.stance-tag-neutral {
+  color: var(--text-muted);
+  background: rgba(156, 163, 175, 0.15);
+}
+
+@media (prefers-color-scheme: light) {
+  .stance-tag-supporting { color: #16a34a; background: rgba(34, 197, 94, 0.1); }
+  .stance-tag-contradicting { color: #dc2626; background: rgba(239, 68, 68, 0.1); }
+  .stance-tag-neutral { color: #4b5563; background: rgba(156, 163, 175, 0.15); }
 }
 
 .source-title {

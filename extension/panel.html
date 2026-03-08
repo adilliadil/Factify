@@ -23,6 +23,7 @@
     </div>
 
     <div id="result-state" class="state" hidden>
+      <!-- Level 1: Glanceable — always visible -->
       <blockquote class="original-text" id="original-text"></blockquote>
 
       <div class="score-section">
@@ -33,22 +34,44 @@
           </svg>
           <span class="donut-value" id="score-value">0</span>
         </div>
-        <span class="verdict-badge" id="verdict-badge"></span>
+        <div class="verdict-info">
+          <span class="verdict-badge" id="verdict-badge"></span>
+          <p class="tldr" id="tldr"></p>
+        </div>
       </div>
 
-      <div class="claims-section">
-        <h3>Claims</h3>
-        <ul id="claims-list"></ul>
+      <!-- Level 2: Expandable details -->
+      <div class="collapsible" id="claims-section">
+        <button class="collapsible-toggle" data-target="claims-section">
+          <h3>Claims</h3>
+          <span class="toggle-count" id="claims-count"></span>
+          <span class="toggle-arrow">›</span>
+        </button>
+        <div class="collapsible-body">
+          <ul id="claims-list"></ul>
+        </div>
       </div>
 
-      <div class="explanation-section">
-        <h3>Analysis</h3>
-        <p id="explanation"></p>
+      <div class="collapsible" id="analysis-section">
+        <button class="collapsible-toggle" data-target="analysis-section">
+          <h3>Analysis</h3>
+          <span class="toggle-arrow">›</span>
+        </button>
+        <div class="collapsible-body">
+          <p id="explanation"></p>
+        </div>
       </div>
 
-      <div class="sources-section">
-        <h3>Sources</h3>
-        <div id="sources-list"></div>
+      <!-- Level 3: Deep dive -->
+      <div class="collapsible" id="sources-section">
+        <button class="collapsible-toggle" data-target="sources-section">
+          <h3>Sources</h3>
+          <span class="toggle-count" id="sources-count"></span>
+          <span class="toggle-arrow">›</span>
+        </button>
+        <div class="collapsible-body">
+          <div id="sources-list"></div>
+        </div>
       </div>
 
       <button class="check-another" id="check-another">Check another</button>

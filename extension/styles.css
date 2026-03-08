@@ -28,6 +28,7 @@
   --btn-text: #888;
   --btn-hover-text: #ccc;
   --donut-track: #2a2a2a;
+  --toggle-hover: #1a1a1a;
 }
 
 @media (prefers-color-scheme: light) {
@@ -55,6 +56,7 @@
     --btn-text: #6b7280;
     --btn-hover-text: #374151;
     --donut-track: #e5e7eb;
+    --toggle-hover: #f3f4f6;
   }
 }
 
@@ -147,7 +149,7 @@ header h1 {
   display: flex;
   align-items: center;
   gap: 16px;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
 }
 
 .donut-wrapper {
@@ -188,12 +190,93 @@ header h1 {
   color: var(--score-text);
 }
 
+.verdict-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
 .verdict-badge {
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 600;
-  padding: 8px 18px;
+  padding: 6px 14px;
   border-radius: 20px;
   color: var(--verdict-text);
+  align-self: flex-start;
+}
+
+.tldr {
+  font-size: 13px;
+  color: var(--text-body);
+  line-height: 1.5;
+}
+
+/* Collapsible sections */
+.collapsible {
+  border-top: 1px solid var(--border);
+}
+
+.collapsible:last-of-type {
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 16px;
+}
+
+.collapsible-toggle {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 12px 4px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  gap: 8px;
+  transition: background 0.15s;
+  border-radius: 4px;
+}
+
+.collapsible-toggle:hover {
+  background: var(--toggle-hover);
+}
+
+.collapsible-toggle h3 {
+  margin-bottom: 0;
+  pointer-events: none;
+}
+
+.toggle-count {
+  font-size: 11px;
+  color: var(--text-dim);
+  background: var(--bg-card);
+  padding: 1px 7px;
+  border-radius: 10px;
+  pointer-events: none;
+}
+
+.toggle-arrow {
+  margin-left: auto;
+  font-size: 16px;
+  color: var(--text-dim);
+  transition: transform 0.25s ease;
+  pointer-events: none;
+}
+
+.collapsible.open .toggle-arrow {
+  transform: rotate(90deg);
+}
+
+.collapsible-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease, opacity 0.25s ease;
+  opacity: 0;
+}
+
+.collapsible.open .collapsible-body {
+  max-height: 600px;
+  opacity: 1;
+  padding-bottom: 12px;
 }
 
 /* Sections */
@@ -205,19 +288,14 @@ h3 {
   margin-bottom: 10px;
 }
 
-.claims-section,
-.explanation-section,
-.sources-section {
-  margin-bottom: 20px;
-}
-
 /* Claims with dots */
-.claims-section ul {
+.claims-section ul,
+.collapsible ul {
   list-style: none;
   padding: 0;
 }
 
-.claims-section li {
+.collapsible li {
   display: flex;
   align-items: flex-start;
   gap: 10px;
@@ -238,10 +316,11 @@ h3 {
   margin-top: 6px;
 }
 
-.explanation-section p {
+.collapsible-body p {
   font-size: 14px;
   color: var(--text-body);
   line-height: 1.7;
+  padding: 0 4px;
 }
 
 /* Source cards */

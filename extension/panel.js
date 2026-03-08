@@ -69,6 +69,11 @@ function animateScore(target, color) {
   requestAnimationFrame(step);
 }
 
+function makeTldr(explanation) {
+  const first = explanation.split(/\.\s/)[0];
+  return first.length > 120 ? first.substring(0, 117) + "..." : first + ".";
+}
+
 function renderResult(result, originalText) {
   const color = getScoreColor(result.score);
 
@@ -81,6 +86,8 @@ function renderResult(result, originalText) {
   const badge = document.getElementById("verdict-badge");
   badge.textContent = VERDICT_LABELS[result.verdict] || result.verdict;
   badge.style.backgroundColor = color;
+
+  document.getElementById("tldr").textContent = makeTldr(result.explanation);
 
   const claimsList = document.getElementById("claims-list");
   claimsList.innerHTML = "";
@@ -101,6 +108,8 @@ function renderResult(result, originalText) {
     li.appendChild(span);
     claimsList.appendChild(li);
   });
+
+  document.getElementById("claims-count").textContent = result.claims.length;
 
   document.getElementById("explanation").textContent = result.explanation;
 
@@ -138,6 +147,10 @@ function renderResult(result, originalText) {
     card.appendChild(info);
     sourcesList.appendChild(card);
   });
+
+  document.getElementById("sources-count").textContent = result.sources.length;
+
+  document.querySelectorAll(".collapsible").forEach((el) => el.classList.remove("open"));
 
   showState("result");
 }
@@ -187,6 +200,13 @@ function render() {
     }
   );
 }
+
+document.addEventListener("click", (e) => {
+  const toggle = e.target.closest(".collapsible-toggle");
+  if (!toggle) return;
+  const section = toggle.closest(".collapsible");
+  section.classList.toggle("open");
+});
 
 document.getElementById("check-another").addEventListener("click", resetState);
 document.getElementById("error-check-another").addEventListener("click", resetState);

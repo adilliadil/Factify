@@ -69,11 +69,6 @@ function animateScore(target, color) {
   requestAnimationFrame(step);
 }
 
-function makeTldr(explanation) {
-  const first = explanation.split(/\.\s/)[0];
-  return first.length > 120 ? first.substring(0, 117) + "..." : first + ".";
-}
-
 function renderResult(result, originalText) {
   const color = getScoreColor(result.score);
 
@@ -87,7 +82,7 @@ function renderResult(result, originalText) {
   badge.textContent = VERDICT_LABELS[result.verdict] || result.verdict;
   badge.style.backgroundColor = color;
 
-  document.getElementById("tldr").textContent = makeTldr(result.explanation);
+  document.getElementById("tldr").textContent = result.tldr || "";
 
   const claimsList = document.getElementById("claims-list");
   claimsList.innerHTML = "";

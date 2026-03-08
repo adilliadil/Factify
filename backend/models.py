@@ -20,6 +20,7 @@ class FactCheckResponse(BaseModel):
     claims: list[ClaimResult]
     score: int = Field(..., ge=0, le=100)
     verdict: str
+    tldr: str
     explanation: str
     sources: list[Source]
 

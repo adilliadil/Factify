@@ -41,6 +41,7 @@ Return a JSON object with exactly these fields:
 {{
   "score": <integer 0-100>,
   "verdict": "<one of: false, mostly_false, mixed, mostly_true, true, unverifiable>",
+  "tldr": "<single punchy sentence, max 15 words, stating the core conclusion — be direct and opinionated, e.g. 'This contradicts medical consensus.' or 'Supported by multiple scientific sources.'>",
   "explanation": "<2-3 sentence explanation citing specific sources>",
   "claim_verdicts": [
     {{
@@ -129,6 +130,7 @@ async def analyze_evidence(claims: list[str], sources: list[dict]) -> dict:
     return {
         "score": score,
         "verdict": verdict,
+        "tldr": result.get("tldr", ""),
         "explanation": result.get("explanation", "Unable to determine."),
         "claim_verdicts": sanitized_verdicts,
     }

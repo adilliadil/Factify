@@ -12,6 +12,7 @@ async def fact_check(text: str) -> FactCheckResponse:
             claims=[],
             score=0,
             verdict="unverifiable",
+            tldr="No factual claims detected.",
             explanation="No factual claims were detected in the provided text.",
             sources=[],
         )
@@ -32,6 +33,7 @@ async def fact_check(text: str) -> FactCheckResponse:
             claims=[ClaimResult(text=c, verdict="unverifiable") for c in claims],
             score=50,
             verdict="unverifiable",
+            tldr="Unable to find sources to verify.",
             explanation="Unable to retrieve sources to verify the claims.",
             sources=[],
         )
@@ -57,6 +59,7 @@ async def fact_check(text: str) -> FactCheckResponse:
         claims=claim_results,
         score=analysis["score"],
         verdict=analysis["verdict"],
+        tldr=analysis.get("tldr", ""),
         explanation=analysis["explanation"],
         sources=response_sources,
     )

@@ -1,6 +1,6 @@
 from backend.llm import extract_claims, analyze_evidence
 from backend.search import search_claim
-from backend.models import FactCheckResponse, Source
+from backend.models import FactCheckResponse, Source, ClaimResult
 
 
 async def fact_check(text: str) -> FactCheckResponse:
@@ -8,6 +8,7 @@ async def fact_check(text: str) -> FactCheckResponse:
 
     if not claims:
         return FactCheckResponse(
+            original_text=text,
             claims=[],
             score=0,
             verdict="unverifiable",
@@ -27,7 +28,8 @@ async def fact_check(text: str) -> FactCheckResponse:
 
     if not all_sources:
         return FactCheckResponse(
-            claims=claims,
+            original_text=text,
+            claims=[ClaimResult(text=c, verdict="unverifiable") for c in claims],
             score=50,
             verdict="unverifiable",
             explanation="Unable to retrieve sources to verify the claims.",
@@ -36,13 +38,23 @@ async def fact_check(text: str) -> FactCheckResponse:
 
     analysis = await analyze_evidence(claims, all_sources)
 
+    claim_verdicts_map = {
+        cv["claim"]: cv["verdict"]
+        for cv in analysis.get("claim_verdicts", [])
+    }
+    claim_results = []
+    for c in claims:
+        verdict = claim_verdicts_map.get(c, "unverifiable")
+        claim_results.append(ClaimResult(text=c, verdict=verdict))
+
     response_sources = [
         Source(title=s["title"], url=s["url"])
         for s in all_sources[:8]
     ]
 
     return FactCheckResponse(
-        claims=claims,
+        original_text=text,
+        claims=claim_results,
         score=analysis["score"],
         verdict=analysis["verdict"],
         explanation=analysis["explanation"],

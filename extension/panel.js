@@ -28,12 +28,55 @@ const VERDICT_LABELS = {
   unverifiable: "Unverifiable",
 };
 
-function renderResult(result) {
+const CLAIM_VERDICT_COLORS = {
+  supported: "#22c55e",
+  contradicted: "#ef4444",
+  mixed: "#eab308",
+  unverifiable: "#9ca3af",
+};
+
+function getDomain(url) {
+  try {
+    return new URL(url).hostname.replace(/^www\./, "");
+  } catch {
+    return url;
+  }
+}
+
+function animateScore(target, color) {
+  const CIRCUMFERENCE = 2 * Math.PI * 34;
+  const fill = document.getElementById("donut-fill");
+  const valueEl = document.getElementById("score-value");
+
+  fill.style.stroke = color;
+  fill.style.strokeDasharray = `${CIRCUMFERENCE}`;
+  fill.style.strokeDashoffset = `${CIRCUMFERENCE}`;
+
+  requestAnimationFrame(() => {
+    const offset = CIRCUMFERENCE - (target / 100) * CIRCUMFERENCE;
+    fill.style.strokeDashoffset = `${offset}`;
+  });
+
+  const duration = 800;
+  const start = performance.now();
+  function step(now) {
+    const elapsed = now - start;
+    const progress = Math.min(elapsed / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    valueEl.textContent = Math.round(eased * target);
+    if (progress < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+
+function renderResult(result, originalText) {
   const color = getScoreColor(result.score);
 
-  const ring = document.getElementById("score-ring");
-  ring.style.borderColor = color;
-  document.getElementById("score-value").textContent = result.score;
+  const quoteEl = document.getElementById("original-text");
+  quoteEl.textContent = originalText || "";
+  quoteEl.hidden = !originalText;
+
+  animateScore(result.score, color);
 
   const badge = document.getElementById("verdict-badge");
   badge.textContent = VERDICT_LABELS[result.verdict] || result.verdict;
@@ -43,7 +86,19 @@ function renderResult(result) {
   claimsList.innerHTML = "";
   result.claims.forEach((claim) => {
     const li = document.createElement("li");
-    li.textContent = claim;
+
+    const dot = document.createElement("span");
+    dot.className = "claim-dot";
+    const text = typeof claim === "string" ? claim : claim.text;
+    const verdict = typeof claim === "string" ? "unverifiable" : claim.verdict;
+    dot.style.backgroundColor = CLAIM_VERDICT_COLORS[verdict] || CLAIM_VERDICT_COLORS.unverifiable;
+    dot.title = verdict;
+
+    const span = document.createElement("span");
+    span.textContent = text;
+
+    li.appendChild(dot);
+    li.appendChild(span);
     claimsList.appendChild(li);
   });
 
@@ -52,17 +107,48 @@ function renderResult(result) {
   const sourcesList = document.getElementById("sources-list");
   sourcesList.innerHTML = "";
   result.sources.forEach((source) => {
-    const li = document.createElement("li");
-    const a = document.createElement("a");
-    a.href = source.url;
-    a.target = "_blank";
-    a.rel = "noopener";
-    a.textContent = source.title || source.url;
-    li.appendChild(a);
-    sourcesList.appendChild(li);
+    const domain = getDomain(source.url);
+    const card = document.createElement("a");
+    card.className = "source-card";
+    card.href = source.url;
+    card.target = "_blank";
+    card.rel = "noopener";
+
+    const favicon = document.createElement("img");
+    favicon.className = "source-favicon";
+    favicon.src = `https://www.google.com/s2/favicons?sz=16&domain=${domain}`;
+    favicon.alt = "";
+    favicon.width = 16;
+    favicon.height = 16;
+
+    const info = document.createElement("div");
+    info.className = "source-info";
+
+    const domainEl = document.createElement("span");
+    domainEl.className = "source-domain";
+    domainEl.textContent = domain;
+
+    const titleEl = document.createElement("span");
+    titleEl.className = "source-title";
+    titleEl.textContent = source.title || source.url;
+
+    info.appendChild(domainEl);
+    info.appendChild(titleEl);
+    card.appendChild(favicon);
+    card.appendChild(info);
+    sourcesList.appendChild(card);
   });
 
   showState("result");
+}
+
+function resetState() {
+  chrome.storage.local.set({
+    factify_state: "idle",
+    factify_text: null,
+    factify_result: null,
+    factify_error: null,
+  });
 }
 
 function render() {
@@ -86,7 +172,7 @@ function render() {
       }
 
       if (factify_state === "done" && factify_result) {
-        renderResult(factify_result);
+        renderResult(factify_result, factify_result.original_text || factify_text);
         return;
       }
 
@@ -101,6 +187,9 @@ function render() {
     }
   );
 }
+
+document.getElementById("check-another").addEventListener("click", resetState);
+document.getElementById("error-check-another").addEventListener("click", resetState);
 
 chrome.storage.onChanged.addListener((changes, area) => {
   if (area === "local" && changes.factify_state) {

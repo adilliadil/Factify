@@ -41,8 +41,16 @@ Return a JSON object with exactly these fields:
 {{
   "score": <integer 0-100>,
   "verdict": "<one of: false, mostly_false, mixed, mostly_true, true, unverifiable>",
-  "explanation": "<2-3 sentence explanation citing specific sources>"
+  "explanation": "<2-3 sentence explanation citing specific sources>",
+  "claim_verdicts": [
+    {{
+      "claim": "<the exact claim text>",
+      "verdict": "<one of: supported, contradicted, mixed, unverifiable>"
+    }}
+  ]
 }}
+
+There must be exactly one entry in "claim_verdicts" for each claim listed above, in the same order.
 
 Score guide:
 - 0-20: False (sources clearly contradict the claims)
@@ -106,8 +114,21 @@ async def analyze_evidence(claims: list[str], sources: list[dict]) -> dict:
     if verdict not in valid_verdicts:
         verdict = "unverifiable"
 
+    claim_verdicts = result.get("claim_verdicts", [])
+    valid_claim_verdicts = {"supported", "contradicted", "mixed", "unverifiable"}
+    sanitized_verdicts = []
+    for cv in claim_verdicts:
+        v = cv.get("verdict", "unverifiable")
+        if v not in valid_claim_verdicts:
+            v = "unverifiable"
+        sanitized_verdicts.append({
+            "claim": cv.get("claim", ""),
+            "verdict": v,
+        })
+
     return {
         "score": score,
         "verdict": verdict,
         "explanation": result.get("explanation", "Unable to determine."),
+        "claim_verdicts": sanitized_verdicts,
     }

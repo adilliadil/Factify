@@ -7,6 +7,7 @@
 :root {
   --bg: #0f0f0f;
   --bg-card: #1a1a1a;
+  --bg-card-hover: #222222;
   --border: #2a2a2a;
   --text: #e5e5e5;
   --text-heading: #fff;
@@ -21,12 +22,19 @@
   --score-text: #fff;
   --verdict-text: #000;
   --error-text: #f87171;
+  --quote-bg: #1a1a1a;
+  --quote-border: #c084fc;
+  --btn-bg: transparent;
+  --btn-text: #888;
+  --btn-hover-text: #ccc;
+  --donut-track: #2a2a2a;
 }
 
 @media (prefers-color-scheme: light) {
   :root {
     --bg: #ffffff;
     --bg-card: #f3f4f6;
+    --bg-card-hover: #e5e7eb;
     --border: #e5e7eb;
     --text: #1f2937;
     --text-heading: #111827;
@@ -41,6 +49,12 @@
     --score-text: #111827;
     --verdict-text: #fff;
     --error-text: #dc2626;
+    --quote-bg: #f9fafb;
+    --quote-border: #7c3aed;
+    --btn-bg: transparent;
+    --btn-text: #6b7280;
+    --btn-hover-text: #374151;
+    --donut-track: #e5e7eb;
   }
 }
 
@@ -115,7 +129,20 @@ header h1 {
   line-height: 1.5;
 }
 
-/* Score */
+/* Original text quote */
+.original-text {
+  font-size: 13px;
+  color: var(--text-muted);
+  font-style: italic;
+  line-height: 1.6;
+  padding: 10px 14px;
+  margin-bottom: 20px;
+  background: var(--quote-bg);
+  border-left: 3px solid var(--quote-border);
+  border-radius: 0 6px 6px 0;
+}
+
+/* SVG Donut Score */
 .score-section {
   display: flex;
   align-items: center;
@@ -123,19 +150,40 @@ header h1 {
   margin-bottom: 24px;
 }
 
-.score-ring {
-  width: 72px;
-  height: 72px;
-  border-radius: 50%;
-  border: 4px solid #22c55e;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.donut-wrapper {
+  position: relative;
+  width: 80px;
+  height: 80px;
   flex-shrink: 0;
 }
 
-.score-value {
-  font-size: 26px;
+.donut {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.donut-track {
+  fill: none;
+  stroke: var(--donut-track);
+  stroke-width: 6;
+}
+
+.donut-fill {
+  fill: none;
+  stroke: #22c55e;
+  stroke-width: 6;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.donut-value {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
   font-weight: 700;
   color: var(--score-text);
 }
@@ -163,12 +211,16 @@ h3 {
   margin-bottom: 20px;
 }
 
+/* Claims with dots */
 .claims-section ul {
   list-style: none;
   padding: 0;
 }
 
 .claims-section li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
   font-size: 14px;
   color: var(--text-secondary);
   padding: 8px 12px;
@@ -178,34 +230,86 @@ h3 {
   line-height: 1.5;
 }
 
+.claim-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 6px;
+}
+
 .explanation-section p {
   font-size: 14px;
   color: var(--text-body);
   line-height: 1.7;
 }
 
-.sources-section ul {
-  list-style: none;
-  padding: 0;
-}
-
-.sources-section li {
+/* Source cards */
+.source-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  background: var(--bg-card);
+  border-radius: 8px;
   margin-bottom: 6px;
+  text-decoration: none;
+  transition: background 0.15s;
+  cursor: pointer;
 }
 
-.sources-section a {
+.source-card:hover {
+  background: var(--bg-card-hover);
+}
+
+.source-favicon {
+  flex-shrink: 0;
+  border-radius: 2px;
+}
+
+.source-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.source-domain {
+  font-size: 11px;
+  color: var(--text-dim);
+  text-transform: lowercase;
+}
+
+.source-title {
   font-size: 13px;
   color: var(--link);
-  text-decoration: none;
-  display: block;
-  padding: 4px 0;
   overflow: hidden;
   text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-.sources-section a:hover {
+.source-card:hover .source-title {
   color: var(--link-hover);
-  text-decoration: underline;
+}
+
+/* Check another button */
+.check-another {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-top: 8px;
+  background: var(--btn-bg);
+  color: var(--btn-text);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: color 0.15s;
+  font-family: inherit;
+}
+
+.check-another:hover {
+  color: var(--btn-hover-text);
 }
 
 /* Error */
@@ -227,4 +331,5 @@ h3 {
   text-align: center;
   font-size: 14px;
   color: var(--error-text);
+  margin-bottom: 16px;
 }

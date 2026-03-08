@@ -10,8 +10,14 @@ class Source(BaseModel):
     url: str
 
 
+class ClaimResult(BaseModel):
+    text: str
+    verdict: str  # "supported", "contradicted", "mixed", "unverifiable"
+
+
 class FactCheckResponse(BaseModel):
-    claims: list[str]
+    original_text: str
+    claims: list[ClaimResult]
     score: int = Field(..., ge=0, le=100)
     verdict: str
     explanation: str

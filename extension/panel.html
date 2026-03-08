@@ -23,9 +23,15 @@
     </div>
 
     <div id="result-state" class="state" hidden>
+      <blockquote class="original-text" id="original-text"></blockquote>
+
       <div class="score-section">
-        <div class="score-ring" id="score-ring">
-          <span class="score-value" id="score-value">0</span>
+        <div class="donut-wrapper">
+          <svg class="donut" viewBox="0 0 80 80">
+            <circle class="donut-track" cx="40" cy="40" r="34" />
+            <circle class="donut-fill" id="donut-fill" cx="40" cy="40" r="34" />
+          </svg>
+          <span class="donut-value" id="score-value">0</span>
         </div>
         <span class="verdict-badge" id="verdict-badge"></span>
       </div>
@@ -42,13 +48,16 @@
 
       <div class="sources-section">
         <h3>Sources</h3>
-        <ul id="sources-list"></ul>
+        <div id="sources-list"></div>
       </div>
+
+      <button class="check-another" id="check-another">Check another</button>
     </div>
 
     <div id="error-state" class="state" hidden>
       <p class="error-icon">!</p>
       <p class="error-text" id="error-text"></p>
+      <button class="check-another" id="error-check-another">Try again</button>
     </div>
   </div>
 

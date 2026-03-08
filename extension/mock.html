@@ -42,7 +42,21 @@
       align-self: center;
       margin-right: 4px;
     }
-    body { padding-bottom: 60px; }
+    body {
+      padding-bottom: 60px;
+      display: flex;
+      justify-content: center;
+      background: #888;
+    }
+    @media (prefers-color-scheme: light) {
+      body { background: #d1d5db; }
+    }
+    #mock-panel-root {
+      width: 360px;
+      min-height: calc(100vh - 60px);
+      background: var(--bg);
+      box-shadow: 0 0 20px rgba(0,0,0,0.3);
+    }
   </style>
 
   <script>
@@ -180,8 +194,9 @@
       },
     };
 
-    /* ── Load real panel.html body + panel.js ── */
-    fetch("panel.html")
+    /* ── Load real panel.html body + panel.js (cache-busted) ── */
+    const bust = Date.now();
+    fetch(`panel.html?v=${bust}`)
       .then(r => r.text())
       .then(html => {
         const doc = new DOMParser().parseFromString(html, "text/html");
@@ -189,7 +204,7 @@
           doc.querySelector(".container").outerHTML;
 
         const script = document.createElement("script");
-        script.src = "panel.js";
+        script.src = `panel.js?v=${bust}`;
         document.body.appendChild(script);
       });
 

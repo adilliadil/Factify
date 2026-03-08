@@ -43,6 +43,8 @@ Return a JSON object with exactly these fields:
   "verdict": "<one of: false, mostly_false, mixed, mostly_true, true, unverifiable>",
   "tldr": "<single punchy sentence, max 15 words, stating the core conclusion — be direct and opinionated, e.g. 'This contradicts medical consensus.' or 'Supported by multiple scientific sources.'>",
   "explanation": "<2-3 sentence explanation citing specific sources>",
+  "confidence": "<one of: high, medium, low>",
+  "confidence_reason": "<short phrase explaining why, max 12 words, e.g. 'Multiple independent sources agree' or 'Only one tangentially relevant source found'>",
   "claim_verdicts": [
     {{
       "claim": "<the exact claim text>",
@@ -59,6 +61,11 @@ Score guide:
 - 41-60: Mixed (sources both support and contradict)
 - 61-80: Mostly true (sources mostly support with minor caveats)
 - 81-100: True (sources clearly support the claims)
+
+Confidence guide:
+- high: 3+ independent, authoritative sources agree; claims are directly addressed
+- medium: 2+ sources with partial coverage; some claims only indirectly addressed
+- low: few or weak sources; claims mostly unaddressed or sources conflict heavily
 
 If the sources don't contain enough information to evaluate, use verdict "unverifiable" with score 50."""
 
@@ -127,10 +134,16 @@ async def analyze_evidence(claims: list[str], sources: list[dict]) -> dict:
             "verdict": v,
         })
 
+    confidence = result.get("confidence", "low")
+    if confidence not in {"high", "medium", "low"}:
+        confidence = "low"
+
     return {
         "score": score,
         "verdict": verdict,
         "tldr": result.get("tldr", ""),
         "explanation": result.get("explanation", "Unable to determine."),
+        "confidence": confidence,
+        "confidence_reason": result.get("confidence_reason", ""),
         "claim_verdicts": sanitized_verdicts,
     }

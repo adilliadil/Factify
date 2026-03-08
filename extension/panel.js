@@ -35,6 +35,22 @@ const CLAIM_VERDICT_COLORS = {
   unverifiable: "#9ca3af",
 };
 
+const ACTION_MAP = {
+  safe:    { label: "Safe to share", icon: "\u2713", cls: "action-safe" },
+  caution: { label: "Needs caution", icon: "\u26A0", cls: "action-caution" },
+  false:   { label: "Likely false",  icon: "\u2717", cls: "action-false" },
+  unknown: { label: "Can\u2019t verify yet", icon: "?", cls: "action-unknown" },
+};
+
+function getAction(score, verdict) {
+  if (verdict === "unverifiable") return ACTION_MAP.unknown;
+  if (score <= 40) return ACTION_MAP.false;
+  if (score <= 60) return ACTION_MAP.caution;
+  return ACTION_MAP.safe;
+}
+
+const CONFIDENCE_LABELS = { high: "High confidence", medium: "Medium confidence", low: "Low confidence" };
+
 function getDomain(url) {
   try {
     return new URL(url).hostname.replace(/^www\./, "");
@@ -76,11 +92,20 @@ function renderResult(result, originalText) {
   quoteEl.textContent = originalText || "";
   quoteEl.hidden = !originalText;
 
-  animateScore(result.score, color);
+  const action = getAction(result.score, result.verdict);
+  const actionEl = document.getElementById("action-verdict");
+  actionEl.className = `action-verdict ${action.cls}`;
+  document.getElementById("action-icon").textContent = action.icon;
+  document.getElementById("action-label").textContent = action.label;
 
-  const badge = document.getElementById("verdict-badge");
-  badge.textContent = VERDICT_LABELS[result.verdict] || result.verdict;
-  badge.style.backgroundColor = color;
+  const confLevel = document.getElementById("confidence-level");
+  const confReason = document.getElementById("confidence-reason");
+  const conf = result.confidence || "low";
+  confLevel.textContent = CONFIDENCE_LABELS[conf] || CONFIDENCE_LABELS.low;
+  confLevel.className = `confidence-level conf-${conf}`;
+  confReason.textContent = result.confidence_reason ? ` \u00B7 ${result.confidence_reason}` : "";
+
+  animateScore(result.score, color);
 
   document.getElementById("tldr").textContent = result.tldr || "";
 
@@ -146,6 +171,10 @@ function renderResult(result, originalText) {
   document.getElementById("sources-count").textContent = result.sources.length;
 
   document.querySelectorAll(".collapsible").forEach((el) => el.classList.remove("open"));
+
+  const checkedAt = document.getElementById("checked-at");
+  const now = new Date();
+  checkedAt.textContent = `Checked ${now.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })}`;
 
   showState("result");
 }

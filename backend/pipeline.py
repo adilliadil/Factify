@@ -23,6 +23,8 @@ async def fact_check_stream(text: str) -> AsyncGenerator[str, None]:
             verdict="unverifiable",
             tldr="No factual claims detected.",
             explanation="No factual claims were detected in the provided text.",
+            confidence="low",
+            confidence_reason="No claims to evaluate",
             sources=[],
         )
         yield sse("result", result.model_dump())
@@ -47,6 +49,8 @@ async def fact_check_stream(text: str) -> AsyncGenerator[str, None]:
             verdict="unverifiable",
             tldr="Unable to find sources to verify.",
             explanation="Unable to retrieve sources to verify the claims.",
+            confidence="low",
+            confidence_reason="No sources found",
             sources=[],
         )
         yield sse("result", result.model_dump())
@@ -77,6 +81,8 @@ async def fact_check_stream(text: str) -> AsyncGenerator[str, None]:
         verdict=analysis["verdict"],
         tldr=analysis.get("tldr", ""),
         explanation=analysis["explanation"],
+        confidence=analysis.get("confidence", "low"),
+        confidence_reason=analysis.get("confidence_reason", ""),
         sources=response_sources,
     )
     yield sse("result", result.model_dump())
@@ -93,6 +99,8 @@ async def fact_check(text: str) -> FactCheckResponse:
             verdict="unverifiable",
             tldr="No factual claims detected.",
             explanation="No factual claims were detected in the provided text.",
+            confidence="low",
+            confidence_reason="No claims to evaluate",
             sources=[],
         )
 
@@ -114,6 +122,8 @@ async def fact_check(text: str) -> FactCheckResponse:
             verdict="unverifiable",
             tldr="Unable to find sources to verify.",
             explanation="Unable to retrieve sources to verify the claims.",
+            confidence="low",
+            confidence_reason="No sources found",
             sources=[],
         )
 
@@ -140,5 +150,7 @@ async def fact_check(text: str) -> FactCheckResponse:
         verdict=analysis["verdict"],
         tldr=analysis.get("tldr", ""),
         explanation=analysis["explanation"],
+        confidence=analysis.get("confidence", "low"),
+        confidence_reason=analysis.get("confidence_reason", ""),
         sources=response_sources,
     )

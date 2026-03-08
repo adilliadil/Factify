@@ -52,18 +52,29 @@
       <!-- Level 1: Glanceable — always visible -->
       <blockquote class="original-text" id="original-text"></blockquote>
 
+      <div class="action-verdict" id="action-verdict">
+        <span class="action-icon" id="action-icon"></span>
+        <span class="action-label" id="action-label"></span>
+      </div>
+
+      <div class="confidence-line" id="confidence-line">
+        <span class="confidence-level" id="confidence-level"></span>
+        <span class="confidence-reason" id="confidence-reason"></span>
+      </div>
+
+      <hr class="details-divider">
+
       <div class="score-section">
         <div class="donut-wrapper">
           <svg class="donut" viewBox="0 0 80 80">
             <circle class="donut-track" cx="40" cy="40" r="34" />
             <circle class="donut-fill" id="donut-fill" cx="40" cy="40" r="34" />
           </svg>
-          <span class="donut-value" id="score-value">0</span>
+          <div class="donut-value">
+            <span id="score-value">0</span><span class="score-max">/100</span>
+          </div>
         </div>
-        <div class="verdict-info">
-          <span class="verdict-badge" id="verdict-badge"></span>
-          <p class="tldr" id="tldr"></p>
-        </div>
+        <p class="tldr" id="tldr"></p>
       </div>
 
       <!-- Level 2: Expandable details -->
@@ -100,6 +111,7 @@
         </div>
       </div>
 
+      <p class="checked-at" id="checked-at"></p>
       <button class="check-another" id="check-another">Check another</button>
     </div>
 

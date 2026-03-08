@@ -22,6 +22,8 @@ class FactCheckResponse(BaseModel):
     verdict: str
     tldr: str
     explanation: str
+    confidence: str = "low"
+    confidence_reason: str = ""
     sources: list[Source]
 
 

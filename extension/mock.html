@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Factify – Mock Preview</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .mock-toolbar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #1e1e2e;
+      border-top: 1px solid #444;
+      padding: 10px 16px;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      z-index: 1000;
+      font-family: -apple-system, sans-serif;
+    }
+    @media (prefers-color-scheme: light) {
+      .mock-toolbar { background: #f0f0f0; border-top-color: #ccc; }
+      .mock-toolbar button { background: #fff; color: #333; border-color: #ccc; }
+      .mock-toolbar button:hover { background: #e5e5e5; }
+      .mock-toolbar .toolbar-label { color: #666; }
+    }
+    .mock-toolbar button {
+      padding: 5px 12px;
+      border-radius: 6px;
+      border: 1px solid #555;
+      background: #2a2a3a;
+      color: #ddd;
+      font-size: 12px;
+      cursor: pointer;
+    }
+    .mock-toolbar button:hover { background: #3a3a4a; }
+    .mock-toolbar .toolbar-label {
+      font-size: 11px;
+      color: #888;
+      align-self: center;
+      margin-right: 4px;
+    }
+    body { padding-bottom: 60px; }
+  </style>
+
+  <script>
+    /* ── Fake chrome.storage API ── */
+    const _store = {};
+    const _listeners = [];
+
+    window.chrome = {
+      storage: {
+        local: {
+          get(keys, cb) {
+            const result = {};
+            keys.forEach(k => { if (k in _store) result[k] = _store[k]; });
+            cb(result);
+          },
+          set(obj, cb) {
+            const changes = {};
+            Object.entries(obj).forEach(([k, v]) => {
+              changes[k] = { oldValue: _store[k], newValue: v };
+              _store[k] = v;
+            });
+            _listeners.forEach(fn => fn(changes, "local"));
+            if (cb) cb();
+          },
+        },
+        onChanged: {
+          addListener(fn) { _listeners.push(fn); },
+        },
+      },
+    };
+  </script>
+</head>
+<body>
+  <div id="mock-panel-root"></div>
+
+  <div class="mock-toolbar">
+    <span class="toolbar-label">State:</span>
+    <button onclick="mockState('empty')">Empty</button>
+    <button onclick="mockState('loading')">Loading</button>
+    <button onclick="mockState('error')">Error</button>
+    <span class="toolbar-label">Results:</span>
+    <button onclick="mockResult('false')">False (12)</button>
+    <button onclick="mockResult('mostly_false')">Mostly False (28)</button>
+    <button onclick="mockResult('mixed')">Mixed (52)</button>
+    <button onclick="mockResult('mostly_true')">Mostly True (78)</button>
+    <button onclick="mockResult('true')">True (95)</button>
+    <button onclick="mockResult('multi')">Multi-claim</button>
+  </div>
+
+  <script>
+    const MOCK_RESULTS = {
+      false: {
+        original_text: "Vitamin C cures the flu in 24 hours and prevents all respiratory infections.",
+        claims: [
+          { text: "Vitamin C cures the flu in 24 hours.", verdict: "contradicted" },
+          { text: "Vitamin C prevents all respiratory infections.", verdict: "contradicted" },
+        ],
+        score: 12, verdict: "false",
+        explanation: "Medical authorities including the CDC and Mayo Clinic state that vitamin C does not cure influenza. While some studies suggest it may slightly reduce cold duration, it does not prevent respiratory infections.",
+        sources: [
+          { title: "CDC Flu Treatment Guidelines", url: "https://cdc.gov/flu/treatment" },
+          { title: "Vitamin C and the Common Cold – Mayo Clinic", url: "https://mayoclinic.org/vitamin-c" },
+          { title: "The effectiveness of vitamin C in preventing and relieving symptoms", url: "https://pubmed.ncbi.nlm.nih.gov/10543583/" },
+        ],
+      },
+      mostly_false: {
+        original_text: "The Great Wall of China is the only man-made structure visible from space.",
+        claims: [
+          { text: "The Great Wall of China is visible from space.", verdict: "contradicted" },
+          { text: "It is the only man-made structure visible from space.", verdict: "contradicted" },
+        ],
+        score: 28, verdict: "mostly_false",
+        explanation: "Multiple astronauts and NASA have confirmed the Great Wall is not visible to the naked eye from low Earth orbit. Other structures like highways and airports are more visible due to their width.",
+        sources: [
+          { title: "Can you see the Great Wall from space? – Britannica", url: "https://britannica.com/great-wall" },
+          { title: "Is the Great Wall Visible from the Moon? – Snopes", url: "https://snopes.com/great-wall-moon" },
+        ],
+      },
+      mixed: {
+        original_text: "Coffee is bad for your health and increases the risk of heart disease.",
+        claims: [
+          { text: "Coffee is bad for your health.", verdict: "mixed" },
+          { text: "Coffee increases the risk of heart disease.", verdict: "contradicted" },
+        ],
+        score: 52, verdict: "mixed",
+        explanation: "Research is divided on coffee's overall health impact. While excessive consumption can cause issues, moderate intake (3-4 cups/day) is associated with reduced mortality. Most large studies show no increased heart disease risk.",
+        sources: [
+          { title: "Coffee and Health – Harvard T.H. Chan School", url: "https://hsph.harvard.edu/coffee" },
+          { title: "Is Coffee Good for You? – NEJM", url: "https://nejm.org/coffee-study" },
+          { title: "Coffee consumption and cardiovascular health", url: "https://pubmed.ncbi.nlm.nih.gov/coffee-cardio" },
+          { title: "American Heart Association on Coffee", url: "https://heart.org/coffee" },
+        ],
+      },
+      mostly_true: {
+        original_text: "The Earth's average temperature has risen by about 1.1 degrees Celsius since pre-industrial times.",
+        claims: [
+          { text: "The Earth's average temperature has risen by about 1.1°C since pre-industrial times.", verdict: "supported" },
+        ],
+        score: 78, verdict: "mostly_true",
+        explanation: "NASA, NOAA, and the IPCC confirm global average temperatures have risen approximately 1.1-1.2°C above pre-industrial levels. The exact figure varies slightly depending on the baseline period used.",
+        sources: [
+          { title: "Global Temperature – NASA Climate", url: "https://climate.nasa.gov/vital-signs/global-temperature" },
+          { title: "IPCC AR6 Summary for Policymakers", url: "https://ipcc.ch/report/ar6" },
+          { title: "Climate Change Indicators – NOAA", url: "https://noaa.gov/climate-indicators" },
+        ],
+      },
+      true: {
+        original_text: "Water boils at 100 degrees Celsius at sea level under standard atmospheric pressure.",
+        claims: [
+          { text: "Water boils at 100°C at sea level under standard atmospheric pressure.", verdict: "supported" },
+        ],
+        score: 95, verdict: "true",
+        explanation: "This is a well-established physical fact confirmed by all chemistry and physics references. Water boils at exactly 100°C (212°F) at 1 atmosphere of pressure at sea level.",
+        sources: [
+          { title: "Boiling Point – Britannica", url: "https://britannica.com/boiling-point" },
+          { title: "Properties of Water – USGS", url: "https://usgs.gov/water-properties" },
+        ],
+      },
+      multi: {
+        original_text: "Einstein failed math in school, invented the light bulb, and published the theory of relativity in 1905.",
+        claims: [
+          { text: "Einstein failed math in school.", verdict: "contradicted" },
+          { text: "Einstein invented the light bulb.", verdict: "contradicted" },
+          { text: "Einstein published the theory of relativity in 1905.", verdict: "supported" },
+        ],
+        score: 35, verdict: "mostly_false",
+        explanation: "Einstein excelled at mathematics throughout his education. The light bulb was invented by Thomas Edison, not Einstein. However, Einstein did publish his special theory of relativity in 1905 as part of his 'Annus Mirabilis' papers.",
+        sources: [
+          { title: "Albert Einstein Biography – Nobel Prize", url: "https://nobelprize.org/einstein" },
+          { title: "Did Einstein Fail Math? – History.com", url: "https://history.com/einstein-math-myth" },
+          { title: "Einstein's Annus Mirabilis papers – APS", url: "https://aps.org/einstein-1905" },
+          { title: "Who Invented the Light Bulb? – Smithsonian", url: "https://si.edu/light-bulb" },
+          { title: "Einstein's Academic Record – ETH Zurich", url: "https://ethz.ch/einstein-records" },
+        ],
+      },
+    };
+
+    /* ── Load real panel.html body + panel.js ── */
+    fetch("panel.html")
+      .then(r => r.text())
+      .then(html => {
+        const doc = new DOMParser().parseFromString(html, "text/html");
+        document.getElementById("mock-panel-root").innerHTML =
+          doc.querySelector(".container").outerHTML;
+
+        const script = document.createElement("script");
+        script.src = "panel.js";
+        document.body.appendChild(script);
+      });
+
+    function mockState(state) {
+      const data = { factify_state: state };
+      if (state === "loading") data.factify_text = "Vitamin C cures the flu in 24 hours and prevents all respiratory infections...";
+      if (state === "error") data.factify_error = "Unable to connect to the server. Make sure the backend is running.";
+      if (state === "empty") data.factify_state = "idle";
+      chrome.storage.local.set(data);
+    }
+
+    function mockResult(key) {
+      chrome.storage.local.set({
+        factify_state: "done",
+        factify_result: MOCK_RESULTS[key],
+        factify_text: MOCK_RESULTS[key].original_text,
+      });
+    }
+  </script>
+</body>
+</html>

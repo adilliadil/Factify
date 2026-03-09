@@ -11,51 +11,60 @@
       bottom: 0;
       left: 0;
       right: 0;
-      background: #1e1e2e;
-      border-top: 1px solid #444;
+      background: #0B0F19;
+      border-top: 1px solid #1E2740;
       padding: 10px 16px;
       display: flex;
-      gap: 8px;
+      gap: 6px;
       flex-wrap: wrap;
       z-index: 1000;
-      font-family: -apple-system, sans-serif;
+      font-family: 'Inter', -apple-system, sans-serif;
     }
     @media (prefers-color-scheme: light) {
-      .mock-toolbar { background: #f0f0f0; border-top-color: #ccc; }
-      .mock-toolbar button { background: #fff; color: #333; border-color: #ccc; }
-      .mock-toolbar button:hover { background: #e5e5e5; }
-      .mock-toolbar .toolbar-label { color: #666; }
+      .mock-toolbar { background: #F1F5F9; border-top-color: #E2E8F0; }
+      .mock-toolbar button { background: #fff; color: #334155; border-color: #E2E8F0; }
+      .mock-toolbar button:hover { background: #F8FAFC; border-color: #6366F1; color: #6366F1; }
+      .mock-toolbar .toolbar-label { color: #64748B; }
     }
     .mock-toolbar button {
       padding: 5px 12px;
-      border-radius: 6px;
-      border: 1px solid #555;
-      background: #2a2a3a;
-      color: #ddd;
+      border-radius: 8px;
+      border: 1px solid #1E2740;
+      background: #131825;
+      color: #CBD5E1;
       font-size: 12px;
       cursor: pointer;
+      transition: all 0.15s ease;
     }
-    .mock-toolbar button:hover { background: #3a3a4a; }
+    .mock-toolbar button:hover { background: rgba(129, 140, 248, 0.12); border-color: #818CF8; color: #818CF8; }
     .mock-toolbar .toolbar-label {
       font-size: 11px;
-      color: #888;
+      color: #64748B;
       align-self: center;
       margin-right: 4px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
     body {
       padding-bottom: 60px;
       display: flex;
       justify-content: center;
-      background: #888;
+      background: #0B0F19;
     }
     @media (prefers-color-scheme: light) {
-      body { background: #d1d5db; }
+      body { background: #CBD5E1; }
     }
     #mock-panel-root {
       width: 360px;
       min-height: calc(100vh - 60px);
       background: var(--bg);
-      box-shadow: 0 0 20px rgba(0,0,0,0.3);
+      box-shadow: 0 4px 40px rgba(0,0,0,0.5);
+      border-left: 1px solid #1E2740;
+      border-right: 1px solid #1E2740;
+    }
+    @media (prefers-color-scheme: light) {
+      #mock-panel-root { box-shadow: 0 4px 40px rgba(0,0,0,0.12); border-color: #E2E8F0; }
     }
   </style>
 

@@ -35,11 +35,34 @@ const CLAIM_VERDICT_COLORS = {
   unverifiable: "#9ca3af",
 };
 
+const CLAIM_VERDICT_LABELS = {
+  supported: "Supported",
+  contradicted: "Contradicted",
+  mixed: "Mixed",
+  unverifiable: "Unverifiable",
+};
+
 const ACTION_MAP = {
-  safe:    { label: "Safe to share", icon: "\u2713", cls: "action-safe" },
-  caution: { label: "Needs caution", icon: "\u26A0", cls: "action-caution" },
-  false:   { label: "Likely false",  icon: "\u2717", cls: "action-false" },
-  unknown: { label: "Can\u2019t verify yet", icon: "?", cls: "action-unknown" },
+  safe: {
+    label: "Safe to share",
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>',
+    cls: "action-safe",
+  },
+  caution: {
+    label: "Needs caution",
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>',
+    cls: "action-caution",
+  },
+  false: {
+    label: "Likely false",
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>',
+    cls: "action-false",
+  },
+  unknown: {
+    label: "Can\u2019t verify yet",
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>',
+    cls: "action-unknown",
+  },
 };
 
 function getAction(score, verdict) {
@@ -73,6 +96,11 @@ function animateScore(target, color) {
     fill.style.strokeDashoffset = `${offset}`;
   });
 
+  const wrapper = document.querySelector(".donut-wrapper");
+  if (wrapper) {
+    wrapper.style.filter = `drop-shadow(0 0 24px ${color}40)`;
+  }
+
   const duration = 800;
   const start = performance.now();
   function step(now) {
@@ -95,7 +123,7 @@ function renderResult(result, originalText) {
   const action = getAction(result.score, result.verdict);
   const actionEl = document.getElementById("action-verdict");
   actionEl.className = `action-verdict ${action.cls}`;
-  document.getElementById("action-icon").textContent = action.icon;
+  document.getElementById("action-icon").innerHTML = action.icon;
   document.getElementById("action-label").textContent = action.label;
 
   const confLevel = document.getElementById("confidence-level");
@@ -114,18 +142,19 @@ function renderResult(result, originalText) {
   result.claims.forEach((claim) => {
     const li = document.createElement("li");
 
-    const dot = document.createElement("span");
-    dot.className = "claim-dot";
     const text = typeof claim === "string" ? claim : claim.text;
     const verdict = typeof claim === "string" ? "unverifiable" : claim.verdict;
-    dot.style.backgroundColor = CLAIM_VERDICT_COLORS[verdict] || CLAIM_VERDICT_COLORS.unverifiable;
-    dot.title = verdict;
 
-    const span = document.createElement("span");
-    span.textContent = text;
+    const textSpan = document.createElement("span");
+    textSpan.className = "claim-text";
+    textSpan.textContent = text;
 
-    li.appendChild(dot);
-    li.appendChild(span);
+    const label = document.createElement("span");
+    label.className = `claim-verdict-label claim-verdict-${verdict}`;
+    label.textContent = CLAIM_VERDICT_LABELS[verdict] || "Unknown";
+
+    li.appendChild(textSpan);
+    li.appendChild(label);
     claimsList.appendChild(li);
   });
 
@@ -151,7 +180,6 @@ function renderResult(result, originalText) {
     card.href = source.url;
     card.target = "_blank";
     card.rel = "noopener";
-
     const favicon = document.createElement("img");
     favicon.className = "source-favicon";
     favicon.src = `https://www.google.com/s2/favicons?sz=16&domain=${domain}`;
@@ -269,6 +297,12 @@ function updateLoadingSteps() {
     document.querySelectorAll(".step-connector").forEach((el, i) => {
       el.classList.toggle("filled", i < currentIdx);
     });
+
+    const progressFill = document.getElementById("loading-progress-fill");
+    if (progressFill) {
+      const pct = ((currentIdx + 1) / STEP_ORDER.length) * 100;
+      progressFill.style.width = `${Math.min(pct, 95)}%`;
+    }
 
     const searchMeta = document.getElementById("step-meta-searching");
     const analyzeMeta = document.getElementById("step-meta-analyzing");

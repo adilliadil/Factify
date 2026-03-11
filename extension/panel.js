@@ -6,9 +6,14 @@ const states = {
 };
 
 function showState(name) {
-  Object.entries(states).forEach(([key, el]) => {
-    el.hidden = key !== name;
-  });
+  const container = document.querySelector(".container");
+  container.classList.add("state-exit");
+  setTimeout(() => {
+    Object.entries(states).forEach(([key, el]) => {
+      el.hidden = key !== name;
+    });
+    container.classList.remove("state-exit");
+  }, 150);
 }
 
 function getScoreColor(score) {
@@ -18,22 +23,6 @@ function getScoreColor(score) {
   if (score <= 80) return "#84cc16";
   return "#22c55e";
 }
-
-const VERDICT_LABELS = {
-  false: "False",
-  mostly_false: "Mostly False",
-  mixed: "Mixed",
-  mostly_true: "Mostly True",
-  true: "True",
-  unverifiable: "Unverifiable",
-};
-
-const CLAIM_VERDICT_COLORS = {
-  supported: "#22c55e",
-  contradicted: "#ef4444",
-  mixed: "#eab308",
-  unverifiable: "#9ca3af",
-};
 
 const CLAIM_VERDICT_LABELS = {
   supported: "Supported",
@@ -98,7 +87,7 @@ function animateScore(target, color) {
 
   const wrapper = document.querySelector(".donut-wrapper");
   if (wrapper) {
-    wrapper.style.filter = `drop-shadow(0 0 24px ${color}40)`;
+    wrapper.style.filter = `drop-shadow(0 0 20px ${color}30)`;
   }
 
   const duration = 800;
@@ -113,12 +102,93 @@ function animateScore(target, color) {
   requestAnimationFrame(step);
 }
 
+function setupOriginalText(text) {
+  const quoteEl = document.getElementById("original-text");
+  const toggleBtn = document.getElementById("original-text-toggle");
+  const wrapper = quoteEl.closest(".original-text-wrapper");
+
+  if (!text) {
+    wrapper.hidden = true;
+    return;
+  }
+
+  wrapper.hidden = false;
+  quoteEl.textContent = text;
+  quoteEl.classList.add("truncated");
+  toggleBtn.textContent = "Show more";
+  toggleBtn.hidden = text.length <= 80;
+
+  toggleBtn.onclick = () => {
+    const isTruncated = quoteEl.classList.toggle("truncated");
+    toggleBtn.textContent = isTruncated ? "Show more" : "Show less";
+  };
+}
+
+function setupExplanation(text) {
+  const explanationEl = document.getElementById("explanation");
+  const toggleBtn = document.getElementById("explanation-toggle");
+
+  if (!text || text.length <= 100) {
+    explanationEl.textContent = text || "";
+    explanationEl.classList.remove("truncated");
+    toggleBtn.hidden = true;
+    return;
+  }
+
+  explanationEl.textContent = text;
+  explanationEl.classList.add("truncated");
+  toggleBtn.textContent = "Read more";
+  toggleBtn.hidden = false;
+
+  toggleBtn.onclick = () => {
+    const isTruncated = explanationEl.classList.toggle("truncated");
+    toggleBtn.textContent = isTruncated ? "Read more" : "Show less";
+  };
+}
+
+function renderClaimSummaryBar(claims) {
+  const wrapper = document.getElementById("claim-summary-wrapper");
+  const bar = document.getElementById("claim-summary-bar");
+  const legend = document.getElementById("claim-summary-legend");
+
+  const counts = { supported: 0, contradicted: 0, mixed: 0, unverifiable: 0 };
+  claims.forEach((c) => {
+    const v = typeof c === "string" ? "unverifiable" : c.verdict;
+    if (counts[v] !== undefined) counts[v]++;
+  });
+
+  const total = claims.length;
+  if (!total) {
+    wrapper.hidden = true;
+    return;
+  }
+
+  wrapper.hidden = false;
+  bar.innerHTML = "";
+  legend.innerHTML = "";
+
+  const labels = CLAIM_VERDICT_LABELS;
+  const legendItems = [];
+
+  Object.entries(counts).forEach(([key, count]) => {
+    if (count === 0) return;
+
+    const seg = document.createElement("div");
+    seg.className = `bar-segment bar-${key}`;
+    seg.style.flex = count;
+    seg.title = `${count} ${labels[key]}`;
+    bar.appendChild(seg);
+
+    legendItems.push(`<span class="legend-item legend-${key}">${count} ${labels[key].toLowerCase()}</span>`);
+  });
+
+  legend.innerHTML = legendItems.join('<span class="legend-sep">\u00B7</span>');
+}
+
 function renderResult(result, originalText) {
   const color = getScoreColor(result.score);
 
-  const quoteEl = document.getElementById("original-text");
-  quoteEl.textContent = originalText || "";
-  quoteEl.hidden = !originalText;
+  setupOriginalText(originalText);
 
   const action = getAction(result.score, result.verdict);
   const actionEl = document.getElementById("action-verdict");
@@ -126,22 +196,20 @@ function renderResult(result, originalText) {
   document.getElementById("action-icon").innerHTML = action.icon;
   document.getElementById("action-label").textContent = action.label;
 
-  const confLevel = document.getElementById("confidence-level");
-  const confReason = document.getElementById("confidence-reason");
+  const confBadge = document.getElementById("confidence-level");
   const conf = result.confidence || "low";
-  confLevel.textContent = CONFIDENCE_LABELS[conf] || CONFIDENCE_LABELS.low;
-  confLevel.className = `confidence-level conf-${conf}`;
-  confReason.textContent = result.confidence_reason ? ` \u00B7 ${result.confidence_reason}` : "";
+  confBadge.textContent = CONFIDENCE_LABELS[conf] || CONFIDENCE_LABELS.low;
+  confBadge.className = `confidence-badge conf-${conf}`;
 
   animateScore(result.score, color);
 
   document.getElementById("tldr").textContent = result.tldr || "";
+  setupExplanation(result.explanation);
 
   const claimsList = document.getElementById("claims-list");
   claimsList.innerHTML = "";
   result.claims.forEach((claim) => {
     const li = document.createElement("li");
-
     const text = typeof claim === "string" ? claim : claim.text;
     const verdict = typeof claim === "string" ? "unverifiable" : claim.verdict;
 
@@ -159,8 +227,7 @@ function renderResult(result, originalText) {
   });
 
   document.getElementById("claims-count").textContent = result.claims.length;
-
-  document.getElementById("explanation").textContent = result.explanation;
+  renderClaimSummaryBar(result.claims);
 
   const STANCE_ORDER = { supporting: 0, contradicting: 1, neutral: 2 };
   const STANCE_LABELS = { supporting: "Supporting", contradicting: "Contradicting", neutral: "Neutral" };
@@ -216,7 +283,14 @@ function renderResult(result, originalText) {
 
   document.getElementById("sources-count").textContent = result.sources.length;
 
-  document.querySelectorAll(".collapsible").forEach((el) => el.classList.remove("open"));
+  document.querySelectorAll(".collapsible").forEach((el) => {
+    el.classList.add("open");
+  });
+
+  document.querySelectorAll(".collapsible-toggle").forEach((btn) => {
+    const section = btn.closest(".collapsible");
+    btn.setAttribute("aria-expanded", section.classList.contains("open"));
+  });
 
   const checkedAt = document.getElementById("checked-at");
   const now = new Date();
@@ -248,7 +322,7 @@ function render() {
       if (factify_state === "loading") {
         document.getElementById("loading-claim").textContent =
           factify_text?.length > 120
-            ? factify_text.substring(0, 120) + "..."
+            ? factify_text.substring(0, 120) + "\u2026"
             : factify_text || "";
         showState("loading");
         updateLoadingSteps();
@@ -262,7 +336,7 @@ function render() {
 
       if (factify_state === "error") {
         document.getElementById("error-text").textContent =
-          factify_error || "Something went wrong";
+          factify_error || "Something went wrong. Please try again.";
         showState("error");
         return;
       }
@@ -324,7 +398,40 @@ document.addEventListener("click", (e) => {
   if (!toggle) return;
   const section = toggle.closest(".collapsible");
   section.classList.toggle("open");
+  toggle.setAttribute("aria-expanded", section.classList.contains("open"));
 });
+
+document.addEventListener("keydown", (e) => {
+  if (e.key !== "Enter" && e.key !== " ") return;
+  const toggle = e.target.closest(".collapsible-toggle");
+  if (!toggle) return;
+  e.preventDefault();
+  toggle.click();
+});
+
+const themeToggle = document.getElementById("theme-toggle");
+function applyTheme(theme) {
+  document.documentElement.setAttribute("data-theme", theme);
+  try { localStorage.setItem("factify-theme", theme); } catch {}
+}
+
+function getSystemTheme() {
+  return window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+}
+
+function getCurrentTheme() {
+  try { return localStorage.getItem("factify-theme"); } catch { return null; }
+}
+
+const savedTheme = getCurrentTheme();
+if (savedTheme) applyTheme(savedTheme);
+
+if (themeToggle) {
+  themeToggle.addEventListener("click", () => {
+    const current = getCurrentTheme() || getSystemTheme();
+    applyTheme(current === "dark" ? "light" : "dark");
+  });
+}
 
 document.getElementById("check-another").addEventListener("click", resetState);
 document.getElementById("error-check-another").addEventListener("click", resetState);

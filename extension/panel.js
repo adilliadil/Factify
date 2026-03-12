@@ -433,7 +433,6 @@ if (themeToggle) {
   });
 }
 
-document.getElementById("check-another").addEventListener("click", resetState);
 document.getElementById("error-check-another").addEventListener("click", resetState);
 
 chrome.storage.onChanged.addListener((changes, area) => {

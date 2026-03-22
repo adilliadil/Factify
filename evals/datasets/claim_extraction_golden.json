@@ -1,0 +1,92 @@
+[
+  {
+    "id": "single_fact",
+    "description": "Single clear factual statement should be extracted",
+    "input": "The Earth is approximately 4.5 billion years old.",
+    "expected_claims": ["The Earth is approximately 4.5 billion years old."],
+    "should_exclude": []
+  },
+  {
+    "id": "opinion_only",
+    "description": "Pure opinion should result in no claims extracted",
+    "input": "Pizza is the best food in the world.",
+    "expected_claims": [],
+    "should_exclude": ["Pizza is the best food"]
+  },
+  {
+    "id": "fact_and_opinion_mixed",
+    "description": "Should extract fact but reject opinion from same text",
+    "input": "The Earth orbits the Sun at about 67,000 mph. Summer is definitely the best season of the year.",
+    "expected_claims": ["The Earth orbits the Sun at about 67,000 mph."],
+    "should_exclude": ["best season", "Summer is definitely"]
+  },
+  {
+    "id": "multiple_facts",
+    "description": "Multiple factual claims should all be extracted",
+    "input": "Water boils at 100 degrees Celsius at sea level. The speed of light is approximately 299,792 kilometers per second.",
+    "expected_claims": [
+      "Water boils at 100 degrees Celsius at sea level.",
+      "The speed of light is approximately 299,792 kilometers per second."
+    ],
+    "should_exclude": []
+  },
+  {
+    "id": "health_claim",
+    "description": "Health-related claims should be extracted for verification",
+    "input": "Vitamin C supplements can prevent the common cold.",
+    "expected_claims": ["Vitamin C supplements can prevent the common cold."],
+    "should_exclude": []
+  },
+  {
+    "id": "statistical_claim",
+    "description": "Statistical claims with numbers should be preserved accurately",
+    "input": "Approximately 70% of the Earth's surface is covered by water.",
+    "expected_claims": ["Approximately 70% of the Earth's surface is covered by water."],
+    "should_exclude": []
+  },
+  {
+    "id": "historical_claim",
+    "description": "Historical facts with dates should be extracted",
+    "input": "World War II ended in 1945 with the surrender of Japan.",
+    "expected_claims": ["World War II ended in 1945 with the surrender of Japan."],
+    "should_exclude": []
+  },
+  {
+    "id": "cause_effect_claim",
+    "description": "Causal claims should be extracted",
+    "input": "Smoking cigarettes significantly increases the risk of lung cancer.",
+    "expected_claims": ["Smoking cigarettes significantly increases the risk of lung cancer."],
+    "should_exclude": []
+  },
+  {
+    "id": "disputed_but_verifiable",
+    "description": "Disputed claims should still be extracted (they're verifiable, just wrong)",
+    "input": "The Great Wall of China is visible from space with the naked eye.",
+    "expected_claims": ["The Great Wall of China is visible from space with the naked eye."],
+    "should_exclude": []
+  },
+  {
+    "id": "future_prediction",
+    "description": "Speculative predictions without factual basis should not be extracted",
+    "input": "I think it will probably rain tomorrow afternoon.",
+    "expected_claims": [],
+    "should_exclude": ["rain tomorrow", "probably rain"]
+  },
+  {
+    "id": "complex_paragraph",
+    "description": "Should extract multiple facts from a paragraph while ignoring opinions",
+    "input": "The Amazon rainforest produces about 20% of the world's oxygen. It spans across 9 countries in South America. Many people believe it's the most beautiful place on Earth, though that's subjective.",
+    "expected_claims": [
+      "The Amazon rainforest produces about 20% of the world's oxygen.",
+      "The Amazon rainforest spans across 9 countries in South America."
+    ],
+    "should_exclude": ["most beautiful", "subjective"]
+  },
+  {
+    "id": "quote_with_claim",
+    "description": "Factual claims within quotes should be extracted",
+    "input": "Scientists say that \"the universe is approximately 13.8 billion years old.\"",
+    "expected_claims": ["The universe is approximately 13.8 billion years old."],
+    "should_exclude": []
+  }
+]

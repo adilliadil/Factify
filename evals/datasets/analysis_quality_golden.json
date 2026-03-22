@@ -1,0 +1,182 @@
+[
+  {
+    "id": "clear_true_scientific",
+    "description": "Well-established scientific fact with strong supporting sources",
+    "claims": ["The Earth orbits the Sun."],
+    "sources": [
+      {
+        "title": "Earth's Orbit - NASA Science",
+        "url": "https://science.nasa.gov/earth/facts/",
+        "content": "Earth orbits the Sun at an average distance of 93 million miles (150 million kilometers). It takes Earth 365.25 days to complete one orbit around the Sun. This orbital motion, combined with Earth's axial tilt, causes the seasons."
+      },
+      {
+        "title": "Solar System - Encyclopedia Britannica",
+        "url": "https://www.britannica.com/place/Earth",
+        "content": "Earth is the third planet from the Sun and orbits at a distance that allows liquid water to exist on its surface. The planet completes one revolution around the Sun every 365.256 days, defining our calendar year."
+      }
+    ],
+    "expected_verdicts": ["true", "mostly_true"]
+  },
+  {
+    "id": "clear_false_myth",
+    "description": "Common myth that sources clearly debunk",
+    "claims": ["The Great Wall of China is visible from space with the naked eye."],
+    "sources": [
+      {
+        "title": "Is the Great Wall of China Visible from Space? - NASA",
+        "url": "https://www.nasa.gov/vision/space/workinginspace/great_wall.html",
+        "content": "The Great Wall of China, frequently billed as the only man-made object visible from space, generally isn't visible from low Earth orbit without aid. Astronaut William Pogue thought he had seen it, but discovered he was actually looking at the Grand Canal of China."
+      },
+      {
+        "title": "Great Wall of China visibility myth - Scientific American",
+        "url": "https://www.scientificamerican.com/article/is-chinas-great-wall-visible-from-space/",
+        "content": "The claim that the Great Wall is visible from space is a myth. The wall averages about 15 feet wide, which is too narrow to be seen from orbital altitudes. Even astronaut Yang Liwei said he could not see it during China's first manned spaceflight."
+      }
+    ],
+    "expected_verdicts": ["false", "mostly_false"]
+  },
+  {
+    "id": "mixed_health_claim",
+    "description": "Health claim with both supporting and contradicting evidence",
+    "claims": ["Drinking coffee is good for your health."],
+    "sources": [
+      {
+        "title": "Coffee and Health - Harvard T.H. Chan School of Public Health",
+        "url": "https://www.hsph.harvard.edu/nutritionsource/food-features/coffee/",
+        "content": "Research suggests that moderate coffee consumption (3-4 cups per day) may be associated with reduced risk of type 2 diabetes, heart disease, liver disease, and Parkinson's disease. Coffee contains antioxidants and other bioactive compounds."
+      },
+      {
+        "title": "Coffee: Benefits, nutrition, and risks - Medical News Today",
+        "url": "https://www.medicalnewstoday.com/articles/270202",
+        "content": "While coffee has potential benefits, excessive consumption can lead to anxiety, insomnia, digestive issues, and increased heart rate. Pregnant women are advised to limit intake. Some people are more sensitive to caffeine's negative effects."
+      }
+    ],
+    "expected_verdicts": ["mixed", "mostly_true"]
+  },
+  {
+    "id": "unverifiable_obscure",
+    "description": "Claim that sources don't directly address",
+    "claims": ["The ancient library of Alexandria contained exactly 400,000 scrolls."],
+    "sources": [
+      {
+        "title": "Library of Alexandria - World History Encyclopedia",
+        "url": "https://www.worldhistory.org/Library_of_Alexandria/",
+        "content": "The Library of Alexandria was one of the largest and most significant libraries of the ancient world. Estimates of its collection vary widely, with ancient sources claiming anywhere from 40,000 to 400,000 scrolls. The exact number is unknown and debated by historians."
+      },
+      {
+        "title": "What happened to the Library of Alexandria? - History.com",
+        "url": "https://www.history.com/news/what-happened-to-the-library-of-alexandria",
+        "content": "The Library of Alexandria's destruction is surrounded by legend. Ancient accounts disagree on both the size of the collection and the circumstances of its destruction. Some scholars believe the library declined gradually rather than being destroyed in a single event."
+      }
+    ],
+    "expected_verdicts": ["unverifiable", "mixed"]
+  },
+  {
+    "id": "statistics_verified",
+    "description": "Statistical claim that sources confirm with data",
+    "claims": ["Approximately 71% of Earth's surface is covered by water."],
+    "sources": [
+      {
+        "title": "How Much Water is There on Earth? - USGS",
+        "url": "https://www.usgs.gov/special-topics/water-science-school/science/how-much-water-there-earth",
+        "content": "About 71 percent of the Earth's surface is water-covered, and the oceans hold about 96.5 percent of all Earth's water. Water also exists in the air as water vapor, in rivers and lakes, in icecaps and glaciers, and in the ground as soil moisture."
+      },
+      {
+        "title": "Ocean - National Geographic",
+        "url": "https://education.nationalgeographic.org/resource/ocean/",
+        "content": "The ocean covers more than 70 percent of Earth's surface. It contains about 1.35 billion cubic kilometers of water, which is about 97 percent of all the water on Earth. The ocean plays a crucial role in regulating Earth's climate."
+      }
+    ],
+    "expected_verdicts": ["true", "mostly_true"]
+  },
+  {
+    "id": "nuanced_health_vitamin",
+    "description": "Health claim that is partially true with caveats",
+    "claims": ["Vitamin C prevents the common cold."],
+    "sources": [
+      {
+        "title": "Vitamin C for preventing and treating the common cold - Cochrane",
+        "url": "https://www.cochrane.org/CD000980/ARI_vitamin-c-for-preventing-and-treating-the-common-cold",
+        "content": "Regular supplementation trials have shown that vitamin C reduces the duration of colds by 8% in adults and 14% in children. However, trials of high-dose vitamin C administered after the onset of symptoms showed no consistent effect on duration or severity."
+      },
+      {
+        "title": "Vitamin C and the Common Cold - Harvard Health",
+        "url": "https://www.health.harvard.edu/cold-and-flu/can-vitamin-c-prevent-a-cold",
+        "content": "Despite its reputation, vitamin C has not been proven to prevent colds in the general population. Studies show it may slightly reduce the duration of colds if taken regularly before getting sick, but it doesn't prevent you from catching a cold."
+      }
+    ],
+    "expected_verdicts": ["mostly_false", "false", "mixed"]
+  },
+  {
+    "id": "historical_fact_verified",
+    "description": "Historical fact with clear documentation",
+    "claims": ["World War II ended in 1945."],
+    "sources": [
+      {
+        "title": "End of World War II - History.com",
+        "url": "https://www.history.com/topics/world-war-ii/v-j-day",
+        "content": "World War II ended on September 2, 1945, when Japan formally surrendered to the Allied powers aboard the USS Missouri in Tokyo Bay. V-J Day (Victory over Japan Day) is celebrated on this date, marking the end of the deadliest conflict in human history."
+      },
+      {
+        "title": "World War II - Encyclopedia Britannica",
+        "url": "https://www.britannica.com/event/World-War-II",
+        "content": "World War II began in 1939 and ended in 1945 with the defeat of the Axis powers. Germany surrendered on May 8, 1945 (V-E Day), and Japan surrendered on September 2, 1945, following the atomic bombings of Hiroshima and Nagasaki."
+      }
+    ],
+    "expected_verdicts": ["true"]
+  },
+  {
+    "id": "contradicted_outdated",
+    "description": "Claim that was once believed true but is now known to be false",
+    "claims": ["Pluto is the ninth planet in our solar system."],
+    "sources": [
+      {
+        "title": "Pluto: Facts - NASA Science",
+        "url": "https://science.nasa.gov/dwarf-planets/pluto/facts/",
+        "content": "Pluto was reclassified from a planet to a dwarf planet in 2006 by the International Astronomical Union. This decision was made because Pluto has not cleared the neighborhood around its orbit, one of the three criteria for full planet status."
+      },
+      {
+        "title": "Why Is Pluto No Longer a Planet? - Library of Congress",
+        "url": "https://www.loc.gov/everyday-mysteries/astronomy/item/why-is-pluto-no-longer-a-planet/",
+        "content": "In August 2006, the IAU voted to remove Pluto from the list of planets in our solar system. Instead, it was reclassified as a dwarf planet. Our solar system now has eight official planets: Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, and Neptune."
+      }
+    ],
+    "expected_verdicts": ["false", "mostly_false"]
+  },
+  {
+    "id": "partial_truth_nutrition",
+    "description": "Nutrition claim that is oversimplified",
+    "claims": ["Eating carrots improves your eyesight."],
+    "sources": [
+      {
+        "title": "Do Carrots Really Improve Your Vision? - American Academy of Ophthalmology",
+        "url": "https://www.aao.org/eye-health/tips-prevention/do-carrots-improve-vision",
+        "content": "Carrots contain beta-carotene, which the body converts to vitamin A, essential for good vision. However, eating carrots won't improve vision beyond normal unless you have a vitamin A deficiency. The myth was popularized by British propaganda during WWII."
+      },
+      {
+        "title": "Carrots and Night Vision - Snopes",
+        "url": "https://www.snopes.com/fact-check/carrot-eyesight/",
+        "content": "The claim that carrots dramatically improve eyesight originated from British WWII propaganda to hide their use of radar. While vitamin A is important for eye health, excessive carrot consumption won't give you better-than-normal vision."
+      }
+    ],
+    "expected_verdicts": ["mostly_false", "mixed", "false"]
+  },
+  {
+    "id": "recent_scientific_consensus",
+    "description": "Recent scientific consensus with strong evidence",
+    "claims": ["Human activities are causing climate change."],
+    "sources": [
+      {
+        "title": "Scientific Consensus: Earth's Climate Is Warming - NASA",
+        "url": "https://climate.nasa.gov/scientific-consensus/",
+        "content": "Multiple studies published in peer-reviewed scientific journals show that 97 percent or more of actively publishing climate scientists agree: Climate-warming trends over the past century are extremely likely due to human activities."
+      },
+      {
+        "title": "Climate Change 2021: The Physical Science Basis - IPCC",
+        "url": "https://www.ipcc.ch/report/ar6/wg1/",
+        "content": "It is unequivocal that human influence has warmed the atmosphere, ocean and land. Widespread and rapid changes in the atmosphere, ocean, cryosphere and biosphere have occurred. Human-induced climate change is already affecting many weather and climate extremes in every region."
+      }
+    ],
+    "expected_verdicts": ["true", "mostly_true"]
+  }
+]

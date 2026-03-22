@@ -3,11 +3,12 @@
 import pytest
 from unittest.mock import AsyncMock
 from conftest import load_dataset, make_llm_response
+from judges import judge_analysis_quality
 from backend.llm import analyze_evidence
 
 
-class TestAnalysis:
-    """Test cases for analyze_evidence() function."""
+class TestAnalysisUnit:
+    """Unit tests for analyze_evidence() - mocked LLM, tests parsing logic."""
 
     @pytest.fixture(autouse=True)
     def setup(self):
@@ -170,3 +171,164 @@ class TestAnalysis:
 
         assert 0 <= result["score"] <= 100, \
             f"Score should be clamped to 0-100, got {result['score']}"
+
+
+class TestAnalysisQuality:
+    """Quality tests for analysis - real LLM calls, tests verdict and reasoning quality."""
+
+    @pytest.fixture(autouse=True)
+    def setup(self):
+        self.golden_dataset = load_dataset("analysis_quality_golden")
+
+    def _get_case(self, case_id: str) -> dict:
+        return next(c for c in self.golden_dataset if c["id"] == case_id)
+
+    @pytest.mark.asyncio
+    async def test_clear_true_scientific(self):
+        """Well-established scientific fact should be verified as true."""
+        case = self._get_case("clear_true_scientific")
+
+        result = await analyze_evidence(case["claims"], case["sources"])
+        judgment = await judge_analysis_quality(
+            claims=case["claims"],
+            sources=case["sources"],
+            analysis_result=result,
+            expected_verdicts=case["expected_verdicts"],
+        )
+
+        assert judgment["pass"], f"[{case['id']}] {judgment['reason']}"
+
+    @pytest.mark.asyncio
+    async def test_clear_false_myth(self):
+        """Common myth should be identified as false."""
+        case = self._get_case("clear_false_myth")
+
+        result = await analyze_evidence(case["claims"], case["sources"])
+        judgment = await judge_analysis_quality(
+            claims=case["claims"],
+            sources=case["sources"],
+            analysis_result=result,
+            expected_verdicts=case["expected_verdicts"],
+        )
+
+        assert judgment["pass"], f"[{case['id']}] {judgment['reason']}"
+
+    @pytest.mark.asyncio
+    async def test_mixed_health_claim(self):
+        """Health claim with mixed evidence should return mixed verdict."""
+        case = self._get_case("mixed_health_claim")
+
+        result = await analyze_evidence(case["claims"], case["sources"])
+        judgment = await judge_analysis_quality(
+            claims=case["claims"],
+            sources=case["sources"],
+            analysis_result=result,
+            expected_verdicts=case["expected_verdicts"],
+        )
+
+        assert judgment["pass"], f"[{case['id']}] {judgment['reason']}"
+
+    @pytest.mark.asyncio
+    async def test_unverifiable_obscure(self):
+        """Claim that sources don't directly address should be unverifiable."""
+        case = self._get_case("unverifiable_obscure")
+
+        result = await analyze_evidence(case["claims"], case["sources"])
+        judgment = await judge_analysis_quality(
+            claims=case["claims"],
+            sources=case["sources"],
+            analysis_result=result,
+            expected_verdicts=case["expected_verdicts"],
+        )
+
+        assert judgment["pass"], f"[{case['id']}] {judgment['reason']}"
+
+    @pytest.mark.asyncio
+    async def test_statistics_verified(self):
+        """Statistical claim with confirming data should be true."""
+        case = self._get_case("statistics_verified")
+
+        result = await analyze_evidence(case["claims"], case["sources"])
+        judgment = await judge_analysis_quality(
+            claims=case["claims"],
+            sources=case["sources"],
+            analysis_result=result,
+            expected_verdicts=case["expected_verdicts"],
+        )
+
+        assert judgment["pass"], f"[{case['id']}] {judgment['reason']}"
+
+    @pytest.mark.asyncio
+    async def test_nuanced_health_vitamin(self):
+        """Nuanced health claim should reflect the caveats in sources."""
+        case = self._get_case("nuanced_health_vitamin")
+
+        result = await analyze_evidence(case["claims"], case["sources"])
+        judgment = await judge_analysis_quality(
+            claims=case["claims"],
+            sources=case["sources"],
+            analysis_result=result,
+            expected_verdicts=case["expected_verdicts"],
+        )
+
+        assert judgment["pass"], f"[{case['id']}] {judgment['reason']}"
+
+    @pytest.mark.asyncio
+    async def test_historical_fact_verified(self):
+        """Clear historical fact should be verified as true."""
+        case = self._get_case("historical_fact_verified")
+
+        result = await analyze_evidence(case["claims"], case["sources"])
+        judgment = await judge_analysis_quality(
+            claims=case["claims"],
+            sources=case["sources"],
+            analysis_result=result,
+            expected_verdicts=case["expected_verdicts"],
+        )
+
+        assert judgment["pass"], f"[{case['id']}] {judgment['reason']}"
+
+    @pytest.mark.asyncio
+    async def test_contradicted_outdated(self):
+        """Outdated claim that is now false should be identified."""
+        case = self._get_case("contradicted_outdated")
+
+        result = await analyze_evidence(case["claims"], case["sources"])
+        judgment = await judge_analysis_quality(
+            claims=case["claims"],
+            sources=case["sources"],
+            analysis_result=result,
+            expected_verdicts=case["expected_verdicts"],
+        )
+
+        assert judgment["pass"], f"[{case['id']}] {judgment['reason']}"
+
+    @pytest.mark.asyncio
+    async def test_partial_truth_nutrition(self):
+        """Oversimplified nutrition claim should reflect partial truth."""
+        case = self._get_case("partial_truth_nutrition")
+
+        result = await analyze_evidence(case["claims"], case["sources"])
+        judgment = await judge_analysis_quality(
+            claims=case["claims"],
+            sources=case["sources"],
+            analysis_result=result,
+            expected_verdicts=case["expected_verdicts"],
+        )
+
+        assert judgment["pass"], f"[{case['id']}] {judgment['reason']}"
+
+    @pytest.mark.asyncio
+    async def test_recent_scientific_consensus(self):
+        """Recent scientific consensus should be verified as true."""
+        case = self._get_case("recent_scientific_consensus")
+
+        result = await analyze_evidence(case["claims"], case["sources"])
+        judgment = await judge_analysis_quality(
+            claims=case["claims"],
+            sources=case["sources"],
+            analysis_result=result,
+            expected_verdicts=case["expected_verdicts"],
+        )
+
+        assert judgment["pass"], f"[{case['id']}] {judgment['reason']}"

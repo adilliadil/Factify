@@ -196,3 +196,114 @@ async def judge_search_relevance(
         "relevant_source_count": result.get("relevant_source_count", 0),
         "irrelevant_sources": result.get("irrelevant_sources", []),
     }
+
+
+ANALYSIS_QUALITY_JUDGE_PROMPT = """You are evaluating a fact-checking analysis system.
+
+The system was given CLAIMS and SOURCES, and produced an ANALYSIS RESULT.
+Your job is to judge if the analysis is correct and well-reasoned.
+
+CLAIMS:
+{claims}
+
+SOURCES:
+{sources}
+
+ANALYSIS RESULT:
+- Verdict: {verdict}
+- Score: {score}/100
+- Explanation: {explanation}
+- Confidence: {confidence}
+
+EXPECTED VERDICT (one of these is acceptable):
+{expected_verdicts}
+
+Evaluate the analysis on three dimensions:
+
+1. VERDICT CORRECTNESS: Is the verdict reasonable given the evidence in the sources?
+   - The verdict should match what the sources actually say
+   - Consider: Do sources support, contradict, or provide mixed evidence?
+
+2. REASONING QUALITY: Does the explanation correctly interpret the sources?
+   - Are sources cited or referenced appropriately?
+   - Is the reasoning logical and based on the evidence?
+   - Are there any misinterpretations of the source content?
+
+3. SCORE ALIGNMENT: Is the numerical score consistent with the verdict?
+   - true/mostly_true should have scores 70-100
+   - mixed should have scores 40-70
+   - mostly_false/false should have scores 0-40
+   - unverifiable typically 40-60
+
+Return a JSON object:
+{{
+  "pass": true or false,
+  "reason": "Brief explanation of the judgment",
+  "verdict_correct": true or false,
+  "reasoning_sound": true or false,
+  "score_aligned": true or false,
+  "issues": ["list of specific issues found, if any"]
+}}
+
+A test passes if:
+- verdict_correct is true (verdict matches expected options)
+- reasoning_sound is true (explanation makes sense given sources)
+- score_aligned is true (score matches verdict range)
+
+Be fair but rigorous. Minor phrasing differences are OK, but logical errors or misinterpretations should fail."""
+
+
+async def judge_analysis_quality(
+    claims: list[str],
+    sources: list[dict],
+    analysis_result: dict,
+    expected_verdicts: list[str],
+) -> dict:
+    """
+    Use GPT-4o to judge whether the analysis is correct and well-reasoned.
+
+    Args:
+        claims: The claims that were analyzed
+        sources: The sources used for analysis
+        analysis_result: The result from analyze_evidence()
+        expected_verdicts: List of acceptable verdicts (e.g., ["true", "mostly_true"])
+
+    Returns:
+        dict with keys: pass, reason, verdict_correct, reasoning_sound, score_aligned, issues
+    """
+    claims_text = "\n".join(f"- {c}" for c in claims)
+    sources_text = "\n\n".join(
+        f"Source {i+1}: {s.get('title', 'Untitled')}\n  URL: {s.get('url', '')}\n  Content: {s.get('content', '')[:800]}"
+        for i, s in enumerate(sources)
+    )
+
+    prompt = ANALYSIS_QUALITY_JUDGE_PROMPT.format(
+        claims=claims_text,
+        sources=sources_text,
+        verdict=analysis_result.get("verdict", "unknown"),
+        score=analysis_result.get("score", 0),
+        explanation=analysis_result.get("explanation", "No explanation"),
+        confidence=analysis_result.get("confidence", "unknown"),
+        expected_verdicts=", ".join(expected_verdicts),
+    )
+
+    resp = await get_judge_client().chat.completions.create(
+        model="gpt-4o",
+        messages=[
+            {"role": "system", "content": "You are a precise evaluator. Always respond with valid JSON."},
+            {"role": "user", "content": prompt},
+        ],
+        response_format={"type": "json_object"},
+        temperature=0,
+    )
+
+    result = json.loads(resp.choices[0].message.content)
+
+    return {
+        "pass": result.get("pass", False),
+        "reason": result.get("reason", "No reason provided"),
+        "verdict_correct": result.get("verdict_correct", False),
+        "reasoning_sound": result.get("reasoning_sound", False),
+        "score_aligned": result.get("score_aligned", False),
+        "issues": result.get("issues", []),
+    }

@@ -1,0 +1,50 @@
+[
+  {
+    "id": "clear_true_statement",
+    "description": "Well-established scientific fact should be verified as true",
+    "input_text": "The Earth orbits the Sun.",
+    "expected_verdicts": ["true", "mostly_true"]
+  },
+  {
+    "id": "clear_false_statement",
+    "description": "Thoroughly debunked claim should be verified as false",
+    "input_text": "The Earth is flat.",
+    "expected_verdicts": ["false", "mostly_false"]
+  },
+  {
+    "id": "pure_opinion",
+    "description": "Pure opinion should have no claims extracted and be unverifiable",
+    "input_text": "Pizza is the best food ever invented.",
+    "expected_verdicts": ["unverifiable"]
+  },
+  {
+    "id": "fact_with_opinion",
+    "description": "Mixed factual and opinion text - should extract only the fact",
+    "input_text": "The Eiffel Tower is 330 meters tall, and it's the most beautiful structure ever built.",
+    "expected_verdicts": ["true", "mostly_true", "mixed"]
+  },
+  {
+    "id": "health_misinformation",
+    "description": "Dangerous health misinformation should be identified as false",
+    "input_text": "Vaccines cause autism in children.",
+    "expected_verdicts": ["false", "mostly_false"]
+  },
+  {
+    "id": "verifiable_statistic",
+    "description": "Common verifiable statistic should be confirmed",
+    "input_text": "About 70% of Earth's surface is covered by water.",
+    "expected_verdicts": ["true", "mostly_true"]
+  },
+  {
+    "id": "common_myth",
+    "description": "Popular myth that has been debunked should be identified",
+    "input_text": "The Great Wall of China is visible from space with the naked eye.",
+    "expected_verdicts": ["false", "mostly_false"]
+  },
+  {
+    "id": "recent_science",
+    "description": "Recent well-established scientific fact should be verified",
+    "input_text": "COVID-19 is caused by a coronavirus called SARS-CoV-2.",
+    "expected_verdicts": ["true", "mostly_true"]
+  }
+]

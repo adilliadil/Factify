@@ -2,13 +2,14 @@
 
 import pytest
 from unittest.mock import AsyncMock
-from conftest import make_llm_response, load_search_fixture
+from conftest import make_llm_response, load_search_fixture, load_dataset
+from judges import judge_e2e_quality
 from backend.pipeline import fact_check
 from backend.models import FactCheckResponse
 
 
-class TestE2EPipeline:
-    """End-to-end tests for fact_check() function."""
+class TestE2EUnit:
+    """Unit tests for fact_check() - mocked LLM and search, tests integration logic."""
 
     @pytest.mark.asyncio
     async def test_true_statement_scores_high(self, mock_llm_client, mock_tavily_client):
@@ -168,3 +169,150 @@ class TestE2EPipeline:
         result = await fact_check(input_text)
 
         assert len(result.claims) == 2, f"Expected 2 claims, got {len(result.claims)}"
+
+
+class TestE2EQuality:
+    """Quality tests for E2E pipeline - real LLM and Tavily calls, tests overall accuracy."""
+
+    @pytest.fixture(autouse=True)
+    def setup(self):
+        self.golden_dataset = load_dataset("e2e_quality_golden")
+
+    def _get_case(self, case_id: str) -> dict:
+        return next(c for c in self.golden_dataset if c["id"] == case_id)
+
+    @pytest.mark.asyncio
+    async def test_clear_true_statement(self):
+        """Well-established scientific fact should be verified as true."""
+        case = self._get_case("clear_true_statement")
+
+        result = await fact_check(case["input_text"])
+        result_dict = result.model_dump()
+
+        judgment = await judge_e2e_quality(
+            input_text=case["input_text"],
+            result=result_dict,
+            expected_verdicts=case["expected_verdicts"],
+            description=case["description"],
+        )
+
+        assert judgment["pass"], f"[{case['id']}] {judgment['reason']}"
+
+    @pytest.mark.asyncio
+    async def test_clear_false_statement(self):
+        """Thoroughly debunked claim should be verified as false."""
+        case = self._get_case("clear_false_statement")
+
+        result = await fact_check(case["input_text"])
+        result_dict = result.model_dump()
+
+        judgment = await judge_e2e_quality(
+            input_text=case["input_text"],
+            result=result_dict,
+            expected_verdicts=case["expected_verdicts"],
+            description=case["description"],
+        )
+
+        assert judgment["pass"], f"[{case['id']}] {judgment['reason']}"
+
+    @pytest.mark.asyncio
+    async def test_pure_opinion(self):
+        """Pure opinion should have no claims extracted and be unverifiable."""
+        case = self._get_case("pure_opinion")
+
+        result = await fact_check(case["input_text"])
+        result_dict = result.model_dump()
+
+        judgment = await judge_e2e_quality(
+            input_text=case["input_text"],
+            result=result_dict,
+            expected_verdicts=case["expected_verdicts"],
+            description=case["description"],
+        )
+
+        assert judgment["pass"], f"[{case['id']}] {judgment['reason']}"
+
+    @pytest.mark.asyncio
+    async def test_fact_with_opinion(self):
+        """Mixed factual and opinion text - should extract only the fact."""
+        case = self._get_case("fact_with_opinion")
+
+        result = await fact_check(case["input_text"])
+        result_dict = result.model_dump()
+
+        judgment = await judge_e2e_quality(
+            input_text=case["input_text"],
+            result=result_dict,
+            expected_verdicts=case["expected_verdicts"],
+            description=case["description"],
+        )
+
+        assert judgment["pass"], f"[{case['id']}] {judgment['reason']}"
+
+    @pytest.mark.asyncio
+    async def test_health_misinformation(self):
+        """Dangerous health misinformation should be identified as false."""
+        case = self._get_case("health_misinformation")
+
+        result = await fact_check(case["input_text"])
+        result_dict = result.model_dump()
+
+        judgment = await judge_e2e_quality(
+            input_text=case["input_text"],
+            result=result_dict,
+            expected_verdicts=case["expected_verdicts"],
+            description=case["description"],
+        )
+
+        assert judgment["pass"], f"[{case['id']}] {judgment['reason']}"
+
+    @pytest.mark.asyncio
+    async def test_verifiable_statistic(self):
+        """Common verifiable statistic should be confirmed."""
+        case = self._get_case("verifiable_statistic")
+
+        result = await fact_check(case["input_text"])
+        result_dict = result.model_dump()
+
+        judgment = await judge_e2e_quality(
+            input_text=case["input_text"],
+            result=result_dict,
+            expected_verdicts=case["expected_verdicts"],
+            description=case["description"],
+        )
+
+        assert judgment["pass"], f"[{case['id']}] {judgment['reason']}"
+
+    @pytest.mark.asyncio
+    async def test_common_myth(self):
+        """Popular myth that has been debunked should be identified."""
+        case = self._get_case("common_myth")
+
+        result = await fact_check(case["input_text"])
+        result_dict = result.model_dump()
+
+        judgment = await judge_e2e_quality(
+            input_text=case["input_text"],
+            result=result_dict,
+            expected_verdicts=case["expected_verdicts"],
+            description=case["description"],
+        )
+
+        assert judgment["pass"], f"[{case['id']}] {judgment['reason']}"
+
+    @pytest.mark.asyncio
+    async def test_recent_science(self):
+        """Recent well-established scientific fact should be verified."""
+        case = self._get_case("recent_science")
+
+        result = await fact_check(case["input_text"])
+        result_dict = result.model_dump()
+
+        judgment = await judge_e2e_quality(
+            input_text=case["input_text"],
+            result=result_dict,
+            expected_verdicts=case["expected_verdicts"],
+            description=case["description"],
+        )
+
+        assert judgment["pass"], f"[{case['id']}] {judgment['reason']}"

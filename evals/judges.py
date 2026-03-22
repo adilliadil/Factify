@@ -307,3 +307,116 @@ async def judge_analysis_quality(
         "score_aligned": result.get("score_aligned", False),
         "issues": result.get("issues", []),
     }
+
+
+E2E_QUALITY_JUDGE_PROMPT = """You are evaluating an end-to-end fact-checking system.
+
+The system was given INPUT TEXT and produced a FACT CHECK RESULT.
+Your job is to judge if the entire pipeline produced a correct and reasonable result.
+
+INPUT TEXT:
+{input_text}
+
+FACT CHECK RESULT:
+- Extracted Claims: {claims}
+- Verdict: {verdict}
+- Score: {score}/100
+- Explanation: {explanation}
+- Number of Sources Found: {source_count}
+
+EXPECTED BEHAVIOR:
+- Expected Verdicts (one of these is acceptable): {expected_verdicts}
+- Description: {description}
+
+Evaluate the end-to-end result on four dimensions:
+
+1. CLAIM EXTRACTION: Were the right claims extracted from the input?
+   - Factual claims should be extracted
+   - Opinions and subjective statements should NOT be extracted
+   - If input is pure opinion, no claims should be extracted
+
+2. VERDICT CORRECTNESS: Is the final verdict reasonable?
+   - Does it match one of the expected verdicts?
+   - Is it consistent with what a reasonable fact-checker would conclude?
+
+3. SCORE ALIGNMENT: Is the numerical score consistent with the verdict?
+   - true/mostly_true should have scores 70-100
+   - mixed should have scores 40-70
+   - mostly_false/false should have scores 0-40
+   - unverifiable typically 40-60
+
+4. EXPLANATION QUALITY: Is the explanation helpful and accurate?
+   - Does it explain why the verdict was given?
+   - Is it clear and understandable?
+
+Return a JSON object:
+{{
+  "pass": true or false,
+  "reason": "Brief explanation of the judgment",
+  "claims_correct": true or false,
+  "verdict_correct": true or false,
+  "score_aligned": true or false,
+  "explanation_quality": "good", "acceptable", or "poor",
+  "issues": ["list of specific issues found, if any"]
+}}
+
+A test passes if:
+- claims_correct is true (appropriate claims were extracted)
+- verdict_correct is true (verdict matches expected options)
+- score_aligned is true (score matches verdict range)
+- explanation_quality is "good" or "acceptable"
+
+Be fair but rigorous. The system should produce sensible fact-check results."""
+
+
+async def judge_e2e_quality(
+    input_text: str,
+    result: dict,
+    expected_verdicts: list[str],
+    description: str,
+) -> dict:
+    """
+    Use GPT-4o to judge whether the end-to-end fact-check result is correct.
+
+    Args:
+        input_text: The original text that was fact-checked
+        result: The FactCheckResponse as a dict
+        expected_verdicts: List of acceptable verdicts
+        description: Description of what the test case is checking
+
+    Returns:
+        dict with keys: pass, reason, claims_correct, verdict_correct,
+                       score_aligned, explanation_quality, issues
+    """
+    prompt = E2E_QUALITY_JUDGE_PROMPT.format(
+        input_text=input_text,
+        claims="\n".join(f"- {c}" for c in result.get("claims", [])) if result.get("claims") else "(no claims extracted)",
+        verdict=result.get("verdict", "unknown"),
+        score=result.get("score", 0),
+        explanation=result.get("explanation", "No explanation"),
+        source_count=len(result.get("sources", [])),
+        expected_verdicts=", ".join(expected_verdicts),
+        description=description,
+    )
+
+    resp = await get_judge_client().chat.completions.create(
+        model="gpt-4o",
+        messages=[
+            {"role": "system", "content": "You are a precise evaluator. Always respond with valid JSON."},
+            {"role": "user", "content": prompt},
+        ],
+        response_format={"type": "json_object"},
+        temperature=0,
+    )
+
+    result_json = json.loads(resp.choices[0].message.content)
+
+    return {
+        "pass": result_json.get("pass", False),
+        "reason": result_json.get("reason", "No reason provided"),
+        "claims_correct": result_json.get("claims_correct", False),
+        "verdict_correct": result_json.get("verdict_correct", False),
+        "score_aligned": result_json.get("score_aligned", False),
+        "explanation_quality": result_json.get("explanation_quality", "poor"),
+        "issues": result_json.get("issues", []),
+    }

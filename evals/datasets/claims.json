@@ -1,0 +1,68 @@
+[
+  {
+    "id": "single_factual_claim",
+    "input": "The Earth orbits the Sun.",
+    "expected_claims": ["The Earth orbits the Sun."],
+    "description": "Single clear factual statement should be extracted as-is"
+  },
+  {
+    "id": "multiple_claims",
+    "input": "Water boils at 100 degrees Celsius at sea level. The speed of light is approximately 300,000 km per second.",
+    "expected_claims": [
+      "Water boils at 100 degrees Celsius at sea level.",
+      "The speed of light is approximately 300,000 km per second."
+    ],
+    "description": "Multiple factual claims should each be extracted"
+  },
+  {
+    "id": "opinion_only",
+    "input": "Chocolate ice cream is the best flavor.",
+    "expected_claims": [],
+    "description": "Pure opinion should result in no claims"
+  },
+  {
+    "id": "mixed_fact_opinion",
+    "input": "Paris is the capital of France, and it's the most beautiful city in the world.",
+    "must_include": ["Paris is the capital of France"],
+    "must_exclude_pattern": "beautiful|best",
+    "description": "Should extract fact but not subjective opinion"
+  },
+  {
+    "id": "health_claim",
+    "input": "Drinking 8 glasses of water a day is essential for health.",
+    "min_claims": 1,
+    "description": "Health claims should be extracted for verification"
+  },
+  {
+    "id": "statistical_claim",
+    "input": "Approximately 70% of the Earth's surface is covered by water.",
+    "min_claims": 1,
+    "description": "Statistical claims should be extracted"
+  },
+  {
+    "id": "historical_claim",
+    "input": "World War II ended in 1945.",
+    "expected_claims": ["World War II ended in 1945."],
+    "description": "Historical facts should be extracted"
+  },
+  {
+    "id": "cause_effect_claim",
+    "input": "Smoking causes lung cancer.",
+    "min_claims": 1,
+    "description": "Cause-effect statements should be extracted"
+  },
+  {
+    "id": "future_prediction",
+    "input": "I think it will rain tomorrow.",
+    "expected_claims": [],
+    "description": "Speculative predictions without factual basis should not be extracted"
+  },
+  {
+    "id": "complex_paragraph",
+    "input": "The Great Wall of China is visible from space. It was built over many centuries starting from the 7th century BC. Some people think it's overrated as a tourist destination.",
+    "must_include": ["Great Wall of China"],
+    "min_claims": 1,
+    "max_claims": 3,
+    "description": "Should extract factual claims from paragraph, may or may not include the disputed 'visible from space' claim"
+  }
+]

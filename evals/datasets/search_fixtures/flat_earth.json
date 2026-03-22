@@ -1,0 +1,20 @@
+{
+  "query": "The Earth is flat evidence fact check",
+  "results": [
+    {
+      "title": "Flat Earth Debunked - Scientific American",
+      "url": "https://www.scientificamerican.com/flat-earth-debunked",
+      "content": "The flat Earth claim has been thoroughly debunked by centuries of scientific observation. Evidence includes ship masts disappearing over the horizon, lunar eclipses showing Earth's round shadow, and photographs from space."
+    },
+    {
+      "title": "Why Do People Believe the Earth Is Flat? - Live Science",
+      "url": "https://www.livescience.com/flat-earth-belief",
+      "content": "Despite overwhelming scientific evidence that Earth is an oblate spheroid, flat Earth conspiracy theories persist. Scientists point to gravity, satellite imagery, and circumnavigation as proof of Earth's spherical shape."
+    },
+    {
+      "title": "Earth's Shape - NASA",
+      "url": "https://www.nasa.gov/earth-shape",
+      "content": "NASA satellites have photographed Earth from space countless times, clearly showing its spherical shape. The Earth is actually an oblate spheroid, slightly flattened at the poles and bulging at the equator."
+    }
+  ]
+}

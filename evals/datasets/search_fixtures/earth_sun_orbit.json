@@ -1,0 +1,20 @@
+{
+  "query": "The Earth orbits the Sun evidence fact check",
+  "results": [
+    {
+      "title": "Earth's Orbit - NASA Science",
+      "url": "https://science.nasa.gov/earth/facts/",
+      "content": "Earth orbits the Sun at an average distance of 93 million miles (150 million kilometers). It takes Earth 365.25 days to complete one orbit around the Sun, which is why we have a leap year every four years."
+    },
+    {
+      "title": "How Earth Moves - Space.com",
+      "url": "https://www.space.com/earth-orbit",
+      "content": "Earth travels around the Sun in an elliptical orbit at an average speed of about 67,000 miles per hour. The orbital period is one year, and this motion causes the seasons."
+    },
+    {
+      "title": "Solar System Overview - Encyclopedia Britannica",
+      "url": "https://www.britannica.com/place/Earth",
+      "content": "Earth is the third planet from the Sun and orbits at a distance that allows liquid water to exist on its surface. The planet completes one revolution around the Sun every 365.256 days."
+    }
+  ]
+}

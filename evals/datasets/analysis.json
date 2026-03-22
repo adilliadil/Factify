@@ -1,0 +1,95 @@
+[
+  {
+    "id": "clearly_true_claim",
+    "claims": ["The Earth orbits the Sun."],
+    "sources": [
+      {
+        "title": "Earth's Orbit - NASA",
+        "url": "https://nasa.gov/earth-orbit",
+        "content": "Earth orbits the Sun at an average distance of 93 million miles, completing one orbit every 365.25 days."
+      },
+      {
+        "title": "Solar System - Britannica",
+        "url": "https://britannica.com/solar-system",
+        "content": "Earth is the third planet from the Sun and completes one revolution around it annually."
+      }
+    ],
+    "expected_verdicts": ["true", "mostly_true"],
+    "expected_score_range": [70, 100],
+    "description": "Well-established scientific fact with supporting sources should score high"
+  },
+  {
+    "id": "clearly_false_claim",
+    "claims": ["The Earth is flat."],
+    "sources": [
+      {
+        "title": "Flat Earth Debunked - Scientific American",
+        "url": "https://scientificamerican.com/flat-earth",
+        "content": "The flat Earth claim has been thoroughly debunked. Evidence includes satellite imagery and circumnavigation proving Earth is spherical."
+      },
+      {
+        "title": "Earth's Shape - NASA",
+        "url": "https://nasa.gov/earth-shape",
+        "content": "NASA satellites have photographed Earth from space countless times, clearly showing its spherical shape."
+      }
+    ],
+    "expected_verdicts": ["false", "mostly_false"],
+    "expected_score_range": [0, 30],
+    "description": "Debunked claim with contradicting sources should score low"
+  },
+  {
+    "id": "mixed_evidence_claim",
+    "claims": ["Coffee is good for your health."],
+    "sources": [
+      {
+        "title": "Coffee Health Benefits - Harvard Health",
+        "url": "https://health.harvard.edu/coffee",
+        "content": "Studies suggest moderate coffee consumption may reduce risk of certain diseases including type 2 diabetes and Parkinson's."
+      },
+      {
+        "title": "Coffee Risks - Mayo Clinic",
+        "url": "https://mayoclinic.org/coffee",
+        "content": "Excessive coffee consumption can lead to anxiety, insomnia, and increased heart rate. Some people should limit intake."
+      }
+    ],
+    "expected_verdicts": ["mixed", "mostly_true", "mostly_false"],
+    "expected_score_range": [30, 70],
+    "description": "Claim with mixed supporting and contradicting evidence"
+  },
+  {
+    "id": "unverifiable_claim",
+    "claims": ["Aliens visited Earth in 1947."],
+    "sources": [
+      {
+        "title": "Roswell Incident - History.com",
+        "url": "https://history.com/roswell",
+        "content": "The Roswell incident involved a crashed weather balloon, according to the U.S. military. Conspiracy theories persist but no evidence of aliens has been confirmed."
+      }
+    ],
+    "expected_verdicts": ["unverifiable", "false", "mostly_false"],
+    "expected_score_range": [0, 50],
+    "description": "Claim that cannot be definitively verified with available sources"
+  },
+  {
+    "id": "multiple_claims_mixed",
+    "claims": [
+      "Water boils at 100 degrees Celsius at sea level.",
+      "Water is wet because of hydrogen bonds."
+    ],
+    "sources": [
+      {
+        "title": "Boiling Point - Chemistry LibreTexts",
+        "url": "https://chem.libretexts.org/boiling",
+        "content": "At standard atmospheric pressure (sea level), pure water boils at 100°C (212°F)."
+      },
+      {
+        "title": "Properties of Water - USGS",
+        "url": "https://usgs.gov/water-properties",
+        "content": "Water molecules form hydrogen bonds, giving water its unique properties like high surface tension."
+      }
+    ],
+    "expected_verdicts": ["true", "mostly_true", "mixed"],
+    "expected_score_range": [50, 100],
+    "description": "Multiple claims with varying levels of support"
+  }
+]

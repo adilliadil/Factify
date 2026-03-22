@@ -100,3 +100,99 @@ async def judge_claim_extraction(
         "missing_claims": result.get("missing_claims", []),
         "spurious_claims": result.get("spurious_claims", []),
     }
+
+
+SEARCH_RELEVANCE_JUDGE_PROMPT = """You are evaluating search results for a fact-checking system.
+
+Your task is to determine if the search results are useful for verifying or refuting a claim.
+
+CLAIM TO VERIFY:
+{claim}
+
+SEARCH RESULTS:
+{sources}
+
+Evaluate the search results on two dimensions:
+
+1. RELEVANCE: Do the sources actually relate to the claim?
+   - 1.0 = All sources directly address the claim
+   - 0.5 = Some sources are relevant, some are off-topic
+   - 0.0 = Sources are completely unrelated
+
+2. COVERAGE: Do the sources provide enough information to verify or refute the claim?
+   - 1.0 = Sources contain clear evidence to confirm or deny the claim
+   - 0.5 = Sources provide partial information, but not conclusive
+   - 0.0 = Sources don't help verify the claim at all
+
+Return a JSON object:
+{{
+  "pass": true or false,
+  "reason": "Brief explanation of the judgment",
+  "relevance_score": 0.0 to 1.0,
+  "coverage_score": 0.0 to 1.0,
+  "relevant_source_count": number of sources that are relevant,
+  "irrelevant_sources": ["URLs of sources that are not relevant"]
+}}
+
+A test passes if:
+- relevance_score >= 0.6 (at least 60% of sources relate to the claim)
+- coverage_score >= 0.5 (sources provide some verification info)
+
+Note: If zero sources are returned, that's a failure (relevance_score = 0, coverage_score = 0)."""
+
+
+async def judge_search_relevance(
+    claim: str,
+    sources: list[dict],
+) -> dict:
+    """
+    Use GPT-4o to judge whether search results are relevant and useful.
+
+    Args:
+        claim: The claim that was searched for
+        sources: List of source dicts with title, url, content
+
+    Returns:
+        dict with keys: pass, reason, relevance_score, coverage_score,
+                       relevant_source_count, irrelevant_sources
+    """
+    if not sources:
+        return {
+            "pass": False,
+            "reason": "No sources returned from search",
+            "relevance_score": 0.0,
+            "coverage_score": 0.0,
+            "relevant_source_count": 0,
+            "irrelevant_sources": [],
+        }
+
+    sources_text = "\n\n".join(
+        f"Source {i+1}:\n  Title: {s.get('title', 'Untitled')}\n  URL: {s.get('url', '')}\n  Content: {s.get('content', '')[:500]}..."
+        for i, s in enumerate(sources)
+    )
+
+    prompt = SEARCH_RELEVANCE_JUDGE_PROMPT.format(
+        claim=claim,
+        sources=sources_text,
+    )
+
+    resp = await get_judge_client().chat.completions.create(
+        model="gpt-4o",
+        messages=[
+            {"role": "system", "content": "You are a precise evaluator. Always respond with valid JSON."},
+            {"role": "user", "content": prompt},
+        ],
+        response_format={"type": "json_object"},
+        temperature=0,
+    )
+
+    result = json.loads(resp.choices[0].message.content)
+
+    return {
+        "pass": result.get("pass", False),
+        "reason": result.get("reason", "No reason provided"),
+        "relevance_score": result.get("relevance_score", 0.0),
+        "coverage_score": result.get("coverage_score", 0.0),
+        "relevant_source_count": result.get("relevant_source_count", 0),
+        "irrelevant_sources": result.get("irrelevant_sources", []),
+    }

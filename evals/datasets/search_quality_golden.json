@@ -1,0 +1,52 @@
+[
+  {
+    "id": "well_known_scientific_fact",
+    "description": "Well-established scientific fact should return authoritative sources",
+    "claim": "The Earth orbits the Sun at an average distance of 93 million miles."
+  },
+  {
+    "id": "health_claim",
+    "description": "Health claim should return medical/scientific sources",
+    "claim": "Vitamin C supplements can prevent the common cold."
+  },
+  {
+    "id": "statistical_claim",
+    "description": "Statistical claim should return sources with data",
+    "claim": "Approximately 70% of the Earth's surface is covered by water."
+  },
+  {
+    "id": "historical_fact",
+    "description": "Historical fact should return historical/educational sources",
+    "claim": "World War II ended in 1945 with Japan's surrender."
+  },
+  {
+    "id": "disputed_myth",
+    "description": "Common myth should return debunking sources",
+    "claim": "The Great Wall of China is visible from space with the naked eye."
+  },
+  {
+    "id": "recent_scientific",
+    "description": "Recent scientific topic should return news/scientific sources",
+    "claim": "COVID-19 was first identified in Wuhan, China in December 2019."
+  },
+  {
+    "id": "precise_scientific_constant",
+    "description": "Scientific constant should return physics/science sources",
+    "claim": "The speed of light in a vacuum is approximately 299,792 kilometers per second."
+  },
+  {
+    "id": "nutrition_claim",
+    "description": "Nutrition claim should return health/nutrition sources",
+    "claim": "Eating carrots improves your eyesight."
+  },
+  {
+    "id": "technology_claim",
+    "description": "Technology claim should return tech/business sources",
+    "claim": "The first iPhone was released by Apple in 2007."
+  },
+  {
+    "id": "environmental_claim",
+    "description": "Environmental claim should return scientific/news sources",
+    "claim": "The Amazon rainforest produces about 20% of the world's oxygen."
+  }
+]

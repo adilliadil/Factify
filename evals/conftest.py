@@ -1,11 +1,26 @@
 """Pytest fixtures and mock helpers for evals."""
 
 import json
+import time
 import pytest
 from pathlib import Path
 from unittest.mock import patch, MagicMock
 
 FIXTURES_DIR = Path(__file__).parent / "datasets"
+
+
+@pytest.fixture(autouse=True)
+def reset_clients_and_delay():
+    """Reset API clients and add delay to avoid rate limiting."""
+    # Reset the global clients before each test
+    import backend.search
+    import backend.llm
+    backend.search.client = None
+    backend.llm.client = None
+
+    time.sleep(0.3)  # Small delay before test
+    yield
+    time.sleep(0.3)  # Small delay after test
 
 
 @pytest.fixture

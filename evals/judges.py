@@ -1,16 +1,24 @@
 """LLM-as-judge functions for evaluating extraction and analysis quality."""
 
 import json
+import os
+
 from openai import AsyncOpenAI
 
-# Use a separate client for judging to allow different model
+JUDGE_MODEL = os.getenv("JUDGE_MODEL", "deepseek-ai/DeepSeek-V3-0324")
+JUDGE_BASE_URL = os.getenv("JUDGE_BASE_URL", "https://api.tokenfactory.nebius.com/v1/")
+JUDGE_API_KEY = os.getenv("NEBIUS_API_KEY")
+
 _judge_client: AsyncOpenAI | None = None
 
 
 def get_judge_client() -> AsyncOpenAI:
     global _judge_client
     if _judge_client is None:
-        _judge_client = AsyncOpenAI()
+        _judge_client = AsyncOpenAI(
+            base_url=JUDGE_BASE_URL,
+            api_key=JUDGE_API_KEY,
+        )
     return _judge_client
 
 
@@ -60,7 +68,7 @@ async def judge_claim_extraction(
     should_exclude: list[str] | None = None,
 ) -> dict:
     """
-    Use GPT-4o to judge whether claim extraction was successful.
+    Use an LLM judge to evaluate whether claim extraction was successful.
 
     Args:
         input_text: The original text that was processed
@@ -81,7 +89,7 @@ async def judge_claim_extraction(
     )
 
     resp = await get_judge_client().chat.completions.create(
-        model="gpt-4o",
+        model=JUDGE_MODEL,
         messages=[
             {"role": "system", "content": "You are a precise evaluator. Always respond with valid JSON."},
             {"role": "user", "content": prompt},
@@ -146,7 +154,7 @@ async def judge_search_relevance(
     sources: list[dict],
 ) -> dict:
     """
-    Use GPT-4o to judge whether search results are relevant and useful.
+    Use an LLM judge to evaluate whether search results are relevant and useful.
 
     Args:
         claim: The claim that was searched for
@@ -177,7 +185,7 @@ async def judge_search_relevance(
     )
 
     resp = await get_judge_client().chat.completions.create(
-        model="gpt-4o",
+        model=JUDGE_MODEL,
         messages=[
             {"role": "system", "content": "You are a precise evaluator. Always respond with valid JSON."},
             {"role": "user", "content": prompt},
@@ -260,7 +268,7 @@ async def judge_analysis_quality(
     expected_verdicts: list[str],
 ) -> dict:
     """
-    Use GPT-4o to judge whether the analysis is correct and well-reasoned.
+    Use an LLM judge to evaluate whether the analysis is correct and well-reasoned.
 
     Args:
         claims: The claims that were analyzed
@@ -288,7 +296,7 @@ async def judge_analysis_quality(
     )
 
     resp = await get_judge_client().chat.completions.create(
-        model="gpt-4o",
+        model=JUDGE_MODEL,
         messages=[
             {"role": "system", "content": "You are a precise evaluator. Always respond with valid JSON."},
             {"role": "user", "content": prompt},
@@ -376,7 +384,7 @@ async def judge_e2e_quality(
     description: str,
 ) -> dict:
     """
-    Use GPT-4o to judge whether the end-to-end fact-check result is correct.
+    Use an LLM judge to evaluate whether the end-to-end fact-check result is correct.
 
     Args:
         input_text: The original text that was fact-checked
@@ -400,7 +408,7 @@ async def judge_e2e_quality(
     )
 
     resp = await get_judge_client().chat.completions.create(
-        model="gpt-4o",
+        model=JUDGE_MODEL,
         messages=[
             {"role": "system", "content": "You are a precise evaluator. Always respond with valid JSON."},
             {"role": "user", "content": prompt},

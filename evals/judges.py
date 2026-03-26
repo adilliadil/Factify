@@ -1,13 +1,10 @@
 """LLM-as-judge functions for evaluating extraction and analysis quality."""
 
 import json
-import os
 
 from openai import AsyncOpenAI
 
-JUDGE_MODEL = os.getenv("JUDGE_MODEL", "deepseek-ai/DeepSeek-V3-0324")
-JUDGE_BASE_URL = os.getenv("JUDGE_BASE_URL", "https://api.tokenfactory.nebius.com/v1/")
-JUDGE_API_KEY = os.getenv("NEBIUS_API_KEY")
+from backend.config import config
 
 _judge_client: AsyncOpenAI | None = None
 
@@ -15,10 +12,7 @@ _judge_client: AsyncOpenAI | None = None
 def get_judge_client() -> AsyncOpenAI:
     global _judge_client
     if _judge_client is None:
-        _judge_client = AsyncOpenAI(
-            base_url=JUDGE_BASE_URL,
-            api_key=JUDGE_API_KEY,
-        )
+        _judge_client = AsyncOpenAI(base_url=config.judge.base_url, api_key=config.judge.api_key)
     return _judge_client
 
 
@@ -89,7 +83,7 @@ async def judge_claim_extraction(
     )
 
     resp = await get_judge_client().chat.completions.create(
-        model=JUDGE_MODEL,
+        model=config.judge.model,
         messages=[
             {"role": "system", "content": "You are a precise evaluator. Always respond with valid JSON."},
             {"role": "user", "content": prompt},
@@ -100,7 +94,6 @@ async def judge_claim_extraction(
 
     result = json.loads(resp.choices[0].message.content)
 
-    # Ensure required fields exist with defaults
     return {
         "pass": result.get("pass", False),
         "reason": result.get("reason", "No reason provided"),
@@ -185,7 +178,7 @@ async def judge_search_relevance(
     )
 
     resp = await get_judge_client().chat.completions.create(
-        model=JUDGE_MODEL,
+        model=config.judge.model,
         messages=[
             {"role": "system", "content": "You are a precise evaluator. Always respond with valid JSON."},
             {"role": "user", "content": prompt},
@@ -296,7 +289,7 @@ async def judge_analysis_quality(
     )
 
     resp = await get_judge_client().chat.completions.create(
-        model=JUDGE_MODEL,
+        model=config.judge.model,
         messages=[
             {"role": "system", "content": "You are a precise evaluator. Always respond with valid JSON."},
             {"role": "user", "content": prompt},
@@ -408,7 +401,7 @@ async def judge_e2e_quality(
     )
 
     resp = await get_judge_client().chat.completions.create(
-        model=JUDGE_MODEL,
+        model=config.judge.model,
         messages=[
             {"role": "system", "content": "You are a precise evaluator. Always respond with valid JSON."},
             {"role": "user", "content": prompt},

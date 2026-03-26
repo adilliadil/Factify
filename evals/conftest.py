@@ -6,21 +6,26 @@ import pytest
 from pathlib import Path
 from unittest.mock import patch, MagicMock
 
+from backend.config import config
+
 FIXTURES_DIR = Path(__file__).parent / "datasets"
 
 
 @pytest.fixture(autouse=True)
 def reset_clients_and_delay():
-    """Reset API clients and add delay to avoid rate limiting."""
-    # Reset the global clients before each test
+    """Reset API clients and config cache to ensure clean state per test."""
     import backend.search
     import backend.llm
+    import judges
+
     backend.search.client = None
     backend.llm.client = None
+    judges._judge_client = None
+    config.reset()
 
-    time.sleep(0.3)  # Small delay before test
+    time.sleep(0.3)
     yield
-    time.sleep(0.3)  # Small delay after test
+    time.sleep(0.3)
 
 
 @pytest.fixture

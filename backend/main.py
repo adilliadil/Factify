@@ -1,4 +1,4 @@
-import os
+import logging
 from pathlib import Path
 
 from dotenv import load_dotenv
@@ -10,8 +10,18 @@ load_dotenv(Path(__file__).resolve().parent.parent / ".env")
 from fastapi.responses import JSONResponse
 from starlette.responses import StreamingResponse
 
+from backend.config import config, ConfigError
 from backend.models import FactCheckRequest, FactCheckResponse, ErrorResponse
 from backend.pipeline import fact_check, fact_check_stream
+
+logger = logging.getLogger(__name__)
+
+try:
+    _ = config.llm
+    _ = config.search
+except ConfigError as exc:
+    logger.error("Configuration error at startup: %s", exc)
+    raise SystemExit(1) from exc
 
 app = FastAPI(title="Factify", version="0.1.0")
 

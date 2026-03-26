@@ -1,13 +1,15 @@
 import json
 from openai import AsyncOpenAI
 
+from backend.config import config
+
 client: AsyncOpenAI | None = None
 
 
 def get_client() -> AsyncOpenAI:
     global client
     if client is None:
-        client = AsyncOpenAI()
+        client = AsyncOpenAI(api_key=config.llm.api_key, base_url=config.llm.base_url)
     return client
 
 
@@ -79,7 +81,7 @@ If the sources don't contain enough information to evaluate, use verdict "unveri
 
 async def extract_claims(text: str) -> list[str]:
     resp = await get_client().chat.completions.create(
-        model="gpt-4o-mini",
+        model=config.llm.model,
         messages=[
             {"role": "system", "content": "You extract factual claims from text. Always respond with valid JSON."},
             {"role": "user", "content": CLAIM_EXTRACTION_PROMPT.format(text=text)},
@@ -111,7 +113,7 @@ async def analyze_evidence(claims: list[str], sources: list[dict]) -> dict:
     claims_text = "\n".join(f"- {c}" for c in claims)
 
     resp = await get_client().chat.completions.create(
-        model="gpt-4o-mini",
+        model=config.llm.model,
         messages=[
             {"role": "system", "content": "You are a fact-checking assistant. Always respond with valid JSON."},
             {"role": "user", "content": EVIDENCE_ANALYSIS_PROMPT.format(claims=claims_text, sources=sources_text)},

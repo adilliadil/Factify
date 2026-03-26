@@ -1,5 +1,6 @@
 from tavily import AsyncTavilyClient
-import os
+
+from backend.config import config
 
 client: AsyncTavilyClient | None = None
 
@@ -7,7 +8,7 @@ client: AsyncTavilyClient | None = None
 def get_client() -> AsyncTavilyClient:
     global client
     if client is None:
-        client = AsyncTavilyClient(api_key=os.getenv("TAVILY_API_KEY"))
+        client = AsyncTavilyClient(api_key=config.search.api_key)
     return client
 
 

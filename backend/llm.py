@@ -107,7 +107,7 @@ async def extract_claims(text: str) -> list[str]:
 
 async def analyze_evidence(claims: list[str], sources: list[dict]) -> dict:
     sources_text = "\n\n".join(
-        f"Source {i+1}: {s.get('title', 'Untitled')}\nURL: {s.get('url', '')}\nContent: {s.get('content', '')[:2000]}"
+        f"Source {i+1}: {s.get('title', 'Untitled')}\nURL: {s.get('url', '')}\nContent: {s.get('content', '')}"
         for i, s in enumerate(sources)
     )
     claims_text = "\n".join(f"- {c}" for c in claims)

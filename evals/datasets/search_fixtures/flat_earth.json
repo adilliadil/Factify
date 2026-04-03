@@ -4,17 +4,22 @@
     {
       "title": "Flat Earth Debunked - Scientific American",
       "url": "https://www.scientificamerican.com/flat-earth-debunked",
-      "content": "The flat Earth claim has been thoroughly debunked by centuries of scientific observation. Evidence includes ship masts disappearing over the horizon, lunar eclipses showing Earth's round shadow, and photographs from space."
+      "content": "The claim that Earth is flat has been comprehensively and repeatedly refuted by multiple independent lines of scientific evidence accumulated over more than two millennia. The ancient Greek philosopher Eratosthenes calculated Earth's circumference with remarkable accuracy around 240 BCE by measuring shadow angles in two cities simultaneously. Modern evidence is overwhelming: ships disappear hull-first over the horizon; the shadow Earth casts on the Moon during a lunar eclipse is always a circular arc regardless of the angle; circumnavigation of the globe has been achieved by ships, aircraft, and satellites; astronauts and space probes have photographed Earth's spherical shape from orbit. The Earth is more precisely an oblate spheroid — very slightly flattened at the poles and bulging at the equator due to its rotation — but is spherical to within 0.3% in any given measurement."
     },
     {
       "title": "Why Do People Believe the Earth Is Flat? - Live Science",
       "url": "https://www.livescience.com/flat-earth-belief",
-      "content": "Despite overwhelming scientific evidence that Earth is an oblate spheroid, flat Earth conspiracy theories persist. Scientists point to gravity, satellite imagery, and circumnavigation as proof of Earth's spherical shape."
+      "content": "Despite centuries of scientific consensus and direct photographic evidence from space, flat Earth conspiracy theories have persisted and even grown in reach through social media. Researchers who study this phenomenon note that flat Earth belief is typically not driven by a single piece of evidence but rather by a general distrust of institutions — governments, NASA, mainstream science — combined with community reinforcement online. From a purely scientific standpoint, the spherical Earth model is supported by GPS satellite networks (which only function correctly with a spherical Earth model in their orbital calculations), the consistent behavior of gravity across the surface, the physics of tides, the predictable timing of eclipses calculated centuries in advance, and the direct observations of every astronaut from every nation who has traveled to orbit. No credible scientific body in the world supports the flat Earth hypothesis."
     },
     {
       "title": "Earth's Shape - NASA",
       "url": "https://www.nasa.gov/earth-shape",
-      "content": "NASA satellites have photographed Earth from space countless times, clearly showing its spherical shape. The Earth is actually an oblate spheroid, slightly flattened at the poles and bulging at the equator."
+      "content": "NASA and space agencies worldwide have photographed Earth from orbit continuously since 1957. Every image taken from sufficient altitude — by crewed missions, robotic satellites, and deep-space probes — shows Earth as a sphere. The precise shape is technically an oblate spheroid: the equatorial radius is 6,378 km while the polar radius is 6,357 km, a difference of about 21 km. This slight flattening is a direct consequence of Earth's rotation and is fully consistent with the physics of rotating fluid bodies. The curvature of Earth is also visible from high-altitude aircraft above 35,000 feet and is routinely measured and accounted for in surveying, long-range artillery ballistics, aviation navigation, and all satellite orbital mechanics. Claims that Earth is flat are not supported by any peer-reviewed scientific literature."
+    },
+    {
+      "title": "How We Know the Earth Is Round - National Geographic",
+      "url": "https://www.nationalgeographic.com/science/article/earth-is-round",
+      "content": "There are dozens of independent ways to verify Earth's spherical shape that require no trust in any authority — anyone can test them. The most direct include: watching a ship disappear over the horizon and then seeing it fully reappear when viewed through a telescope from a higher elevation (consistent only with a curved surface); observing that the North Star (Polaris) appears at different elevations depending on latitude, exactly as expected on a sphere; watching lunar eclipses in which Earth's shadow is always curved; and timing sunrises and sunsets, which occur at different moments in different cities in a pattern that maps perfectly onto a spherical Earth. Additionally, time zones only make sense on a spherical rotating Earth — on a flat disc, the Sun would illuminate all regions simultaneously. The round-Earth model makes precise, testable, and universally confirmed predictions across all of these phenomena."
     }
   ]
 }

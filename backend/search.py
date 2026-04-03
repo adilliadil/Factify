@@ -19,6 +19,7 @@ async def search_claim(claim: str, max_results: int = 5) -> list[dict]:
             query=f"{claim} evidence fact check",
             max_results=max_results,
             include_answer=False,
+            search_depth="advanced",
         )
     except Exception:
         return []

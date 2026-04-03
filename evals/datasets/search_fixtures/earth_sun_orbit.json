@@ -4,17 +4,22 @@
     {
       "title": "Earth's Orbit - NASA Science",
       "url": "https://science.nasa.gov/earth/facts/",
-      "content": "Earth orbits the Sun at an average distance of 93 million miles (150 million kilometers). It takes Earth 365.25 days to complete one orbit around the Sun, which is why we have a leap year every four years."
+      "content": "Earth orbits the Sun at an average distance of about 93 million miles (150 million kilometers), a distance astronomers call one Astronomical Unit (AU). This orbit is not a perfect circle but an ellipse, meaning the distance varies slightly — Earth is closest to the Sun (perihelion) in early January at about 91.4 million miles, and farthest (aphelion) in early July at about 94.5 million miles. It takes Earth approximately 365.25 days to complete one full orbit, which is the basis of our calendar year. The extra 0.25 day accumulates and is corrected by adding a leap day every four years. Earth's orbital speed averages about 18.5 miles per second (29.8 km/s), though it moves slightly faster when closer to the Sun and slower when farther away, in accordance with Kepler's second law of planetary motion."
     },
     {
       "title": "How Earth Moves - Space.com",
       "url": "https://www.space.com/earth-orbit",
-      "content": "Earth travels around the Sun in an elliptical orbit at an average speed of about 67,000 miles per hour. The orbital period is one year, and this motion causes the seasons."
+      "content": "Earth's orbit around the Sun is the result of gravity and inertia working together. The Sun's gravitational pull constantly bends Earth's straight-line motion into a nearly circular path. Earth travels at an average speed of approximately 67,000 miles per hour (107,000 km/h) in its orbit. This orbital motion, combined with Earth's axial tilt of 23.5 degrees, is the primary driver of the seasons experienced on Earth. When the Northern Hemisphere is tilted toward the Sun, it receives more direct sunlight, producing summer, while the Southern Hemisphere experiences winter. Six months later the situation is reversed. The precise relationship between Earth's orbit and the Sun has been measured and confirmed by centuries of astronomical observations, space missions, and modern satellite tracking."
     },
     {
       "title": "Solar System Overview - Encyclopedia Britannica",
       "url": "https://www.britannica.com/place/Earth",
-      "content": "Earth is the third planet from the Sun and orbits at a distance that allows liquid water to exist on its surface. The planet completes one revolution around the Sun every 365.256 days."
+      "content": "Earth is the third planet from the Sun in the solar system, orbiting at a mean distance of approximately 1 AU (149.6 million km). The orbital path is an ellipse with a low eccentricity of 0.0167, making it nearly circular. Earth's orbital period — one sidereal year — is 365.256 days. This heliocentric model of the solar system, with Earth and the other planets orbiting the Sun, was established by Nicolaus Copernicus in the 16th century and later refined through the work of Johannes Kepler and Isaac Newton. Newton's law of universal gravitation mathematically explained why planets follow elliptical orbits, a framework that remains foundational to modern astrophysics and space navigation. All subsequent space missions have operated on the basis of these well-verified orbital mechanics."
+    },
+    {
+      "title": "Kepler's Laws of Planetary Motion - Khan Academy",
+      "url": "https://www.khanacademy.org/science/physics/centripetal-force-and-gravitation/gravity-newtonian/a/keplers-laws",
+      "content": "Johannes Kepler formulated three laws of planetary motion in the early 17th century based on the meticulous observational data of Tycho Brahe. Kepler's first law states that every planet, including Earth, travels in an elliptical orbit with the Sun at one of the two foci. His second law — the law of equal areas — states that a line connecting the planet to the Sun sweeps equal areas in equal times, implying that planets move faster when closer to the Sun. The third law establishes a precise mathematical relationship between a planet's orbital period and its average distance from the Sun. These laws were later derived by Isaac Newton directly from his law of universal gravitation, providing a theoretical foundation for the observed orbital behavior of Earth and all other solar system bodies."
     }
   ]
 }

@@ -1,0 +1,1333 @@
+{
+  "metadata": {
+    "name": "AVeriTeC",
+    "source": "pminervini/averitec",
+    "description": "Real-world claims with web-sourced evidence and 4-level verdicts",
+    "sample_count": 50
+  },
+  "samples": [
+    {
+      "id": "av_001",
+      "claim": "Indian Railways has been completely privatized, and as a result, scores of people working in the Railways would lose their jobs.",
+      "label": "Conflicting Evidence/Cherrypicking",
+      "expected_verdicts": [
+        "mixed",
+        "mostly_true",
+        "mostly_false"
+      ],
+      "expected_score_range": [
+        25,
+        75
+      ],
+      "gold_evidence": [
+        {
+          "title": "Has the government-owned Indian Railways been fully privatised?",
+          "url": "https://web.archive.org/web/20200909075240im_/https://pbs.twimg.com/profile_banners/1207634475254865921/1598874762/1500x500",
+          "content": "There are certain areas where public-private partnership is being worked upon but the control will still vest with @RailMinIndia. \nNo jobs are being lost."
+        },
+        {
+          "title": "Will there be Job losses due to the partial privatization?",
+          "url": "https://web.archive.org/web/20211206134459/https://www.livemint.com/news/india/no-job-cuts-but-profiles-may-change-says-indian-railways-11593790324156.html",
+          "content": "No job cuts, but profiles may change says Indian Railways."
+        }
+      ]
+    },
+    {
+      "id": "av_002",
+      "claim": "Donald Trump said: \"Biden also vowed to oppose school choice and close down charter schools, ripping away the ladder of opportunity for Black and Hispanic children.\"",
+      "label": "Conflicting Evidence/Cherrypicking",
+      "expected_verdicts": [
+        "mixed",
+        "mostly_true",
+        "mostly_false"
+      ],
+      "expected_score_range": [
+        25,
+        75
+      ],
+      "gold_evidence": [
+        {
+          "title": "What is 'school choice'",
+          "url": "https://www.edchoice.org/school-choice/what-is-school-choice/#:~:text=In%20a%20nutshell%3A%20School%20choice,other%20learning%20environment%20families%20choose.",
+          "content": "School choice allows public education funds to follow students to the schools or services that best fit their needs —whether that’s to a public school, private school, charter school, home school or any other learning environment families choose"
+        },
+        {
+          "title": "What are U.S charter schools?",
+          "url": "https://en.wikipedia.org/wiki/Charter_schools_in_the_United_States#:~:text=Charter%20schools%20in%20the%20United%20States%20are%20primary%20or%20secondary,funded%20with%20public%20tax%20dollars.",
+          "content": "Charter schools in the United States are primary or secondary education institutions that are funded through taxation and operated by private organizations, rather than local school districts. They do not charge tuition, as they are funded with public tax dollars"
+        },
+        {
+          "title": "Did Joe Biden oppose school choice?",
+          "url": "https://web.archive.org/web/20210118102704/https://www.edchoice.org/school-choice/types-of-school-choice/",
+          "content": "he supports good charter schools and allowing students to pick among public schools. Those also qualify as school choice options."
+        },
+        {
+          "title": "Did Joe Biden want to close down charter schools?",
+          "url": "https://www.edweek.org/policy-politics/federal-funding-and-charter-school-closures-what-the-latest-government-data-show/2022/10",
+          "content": "The Biden administration did controversially push for more oversight when it comes to charter school funding."
+        }
+      ]
+    },
+    {
+      "id": "av_003",
+      "claim": "At independence, Nigeria had a population of 45 million",
+      "label": "Supported",
+      "expected_verdicts": [
+        "true",
+        "mostly_true"
+      ],
+      "expected_score_range": [
+        60,
+        100
+      ],
+      "gold_evidence": [
+        {
+          "title": "When did Nigeria gain independence?",
+          "url": "https://www.theguardian.com/global-development/poverty-matters/2010/oct/01/nigeria-50th-anniversary-development-progress",
+          "content": "1st October 1960"
+        },
+        {
+          "title": "what was the population of Nigeria on 1st October 1960?",
+          "url": "https://web.archive.org/web/20210527052134/https://data.worldbank.org/indicator/SP.POP.TOTL?locations=NG",
+          "content": "The population was 45.1 million on 1st July 1960."
+        }
+      ]
+    },
+    {
+      "id": "av_004",
+      "claim": "The U.S. surgeon general and the Centers for Disease Control both previously said that ‘masks are not effective in preventing [the] general public from catching coronavirus.’",
+      "label": "Conflicting Evidence/Cherrypicking",
+      "expected_verdicts": [
+        "mixed",
+        "mostly_true",
+        "mostly_false"
+      ],
+      "expected_score_range": [
+        25,
+        75
+      ],
+      "gold_evidence": [
+        {
+          "title": "Are masks effective in preventing people from catching coronavirus?",
+          "url": "https://dx.doi.org/10.1136/bmjgh-2020-002794",
+          "content": "The effectiveness of face masks is dependent on how they are used. Face mask use was 79% effective in reducing transmission in certain situations. But not effective in certain other situations."
+        }
+      ]
+    },
+    {
+      "id": "av_005",
+      "claim": "Russia sent medical aid to the US, in the form of medical equipment to help coronavirus patients.",
+      "label": "Conflicting Evidence/Cherrypicking",
+      "expected_verdicts": [
+        "mixed",
+        "mostly_true",
+        "mostly_false"
+      ],
+      "expected_score_range": [
+        25,
+        75
+      ],
+      "gold_evidence": [
+        {
+          "title": "What did Russia send to the US during the covid-19 outbreak?",
+          "url": "https://web.archive.org/web/20210718091632/https://www.nytimes.com/2020/04/02/world/europe/coronavirus-us-russia-aid.html",
+          "content": "On April 1, a Russian military plane arrived at New York’s JFK Airport loaded with 60 tons of medical equipment, including 45 Russian-produced Aventa-M ventilators meant to help coronavirus patients in intensive care keep breathing."
+        },
+        {
+          "title": "Was this aid, or was this a purchase from the US?",
+          "url": "https://web.archive.org/web/20210718091632/https://www.state.gov/u-s-purchase-of-needed-supplies-from-russia/",
+          "content": "Initially, there was confusion over whether the planeload of equipment was aid, as Russia portrayed it, or if the American side had paid for it. The U.S. State Department clarified this in a press release that referred to the shipment as a “purchase.”"
+        },
+        {
+          "title": "What happened to this equipment?",
+          "url": "https://web.archive.org/web/20210718091632/https://www.buzzfeednews.com/article/christopherm51/fema-russia-ventilators-coronavirus?fbclid=IwAR0NDhdqILPthpTHGNnmK_-8yH7CjmyDtbo81pzlHEVVKI9loXMnfI9uVas",
+          "content": "Within about one week, Aventa-M ventilators had been found responsible for fires at two Russian hospitals in Moscow and St. Petersburg; six people were killed. Russian investigators blamed the ventilators’ faulty circuitry.\n\nUltimately the Aventa-M ventilators from Russia were never used by any American hospital, but in October it was finally discovered where those ventilators ended up – in the trash heap. This week, Christopher Miller, writing for Buzzfeed, revealed that the Federal Emergency Management Agency (FEMA) disposed of the Aventa-M ventilators."
+        }
+      ]
+    },
+    {
+      "id": "av_006",
+      "claim": "Nigeria was the third most terrorised in the world in 2020, after Afghanistan and Iraq.",
+      "label": "Not Enough Evidence",
+      "expected_verdicts": [
+        "unverifiable",
+        "mixed"
+      ],
+      "expected_score_range": [
+        30,
+        60
+      ],
+      "gold_evidence": [
+        {
+          "title": "What were the top three most terrorised countries in the world in 2020?",
+          "url": "https://www.vanguardngr.com/2019/09/nigeria-3rd-most-terrorised-nation-security-expert/",
+          "content": "The 2020 data had not yet been released at the time of the claim. \n\nIn 2019 data set “Nigeria remains the 3rd most terrorised nation in the world, according to the global terrorism index report of 2018. The five most terrorised countries in the world are Iran, Afghanistan, Nigeria, Syria and Pakistan\""
+        }
+      ]
+    },
+    {
+      "id": "av_007",
+      "claim": "Illegal drug, border crossings, and human smuggling activities have decreased in areas where barriers are deployed in the United States.",
+      "label": "Not Enough Evidence",
+      "expected_verdicts": [
+        "unverifiable",
+        "mixed"
+      ],
+      "expected_score_range": [
+        30,
+        60
+      ],
+      "gold_evidence": [
+        {
+          "title": "Which border is this claim referring to?",
+          "url": "Metadata",
+          "content": "The US-Mexico border."
+        },
+        {
+          "title": "Did the US-Mexico border have barriers before President Tump took office?",
+          "url": "https://www.wsj.com/articles/the-border-wall-mile-by-mile-11550152535",
+          "content": "Yes"
+        },
+        {
+          "title": "Did the US-Mexico border have barriers before President Tump took office?",
+          "url": "https://www.bbc.com/news/world-us-canada-46824649",
+          "content": "Yes"
+        },
+        {
+          "title": "How many border encounters were there in 2018-2020?",
+          "url": "https://www.cbp.gov/newsroom/stats/southwest-land-border-encounters",
+          "content": "Fiscal years\n2018 - 521,090\n2019 - 977,509\n2020 - 458,088"
+        },
+        {
+          "title": "When did the Covid-19 pandemic emerge?",
+          "url": "https://www.nfid.org/infectious-diseases/coronaviruses/",
+          "content": "The novel coronavirus (SARS-CoV-2) that causes COVID-19 first emerged in the Chinese city of Wuhan in 2019 and was declared a pandemic by the World Health Organization (WHO)"
+        }
+      ]
+    },
+    {
+      "id": "av_008",
+      "claim": "Since 2002, South Africa’s police force has grown by 50%.",
+      "label": "Refuted",
+      "expected_verdicts": [
+        "false",
+        "mostly_false"
+      ],
+      "expected_score_range": [
+        0,
+        40
+      ],
+      "gold_evidence": [
+        {
+          "title": "How many people were employed in the SA police force in 2002/03",
+          "url": "https://web.archive.org/web/20200918235056/https://www.westerncape.gov.za/sites/www.westerncape.gov.za/files/documents/2003/saps_annreport_0203_part3.pdf#page=5",
+          "content": "132,310"
+        },
+        {
+          "title": "How many people were employed in SA police force in 2018/19",
+          "url": "https://web.archive.org/web/20210603081707/https://www.saps.gov.za/about/stratframework/annual_report/2018_2019/saps_annualreport2018_2019v2.pdf#page=41",
+          "content": "192,277"
+        },
+        {
+          "title": "What is the percentage growth in the SA police force between 2002 to 2019",
+          "url": "https://www.calculator.net/",
+          "content": "45.3%"
+        }
+      ]
+    },
+    {
+      "id": "av_009",
+      "claim": "Today, Nigeria grapple has a population exceeding 200 million.",
+      "label": "Supported",
+      "expected_verdicts": [
+        "true",
+        "mostly_true"
+      ],
+      "expected_score_range": [
+        60,
+        100
+      ],
+      "gold_evidence": [
+        {
+          "title": "What was Nigeria's current population in 2020?",
+          "url": "https://www.worlddata.info/africa/nigeria/populationgrowth.php",
+          "content": "206 million people"
+        }
+      ]
+    },
+    {
+      "id": "av_010",
+      "claim": "UNESCO declared Nadar community as the most ancient race in the world.",
+      "label": "Refuted",
+      "expected_verdicts": [
+        "false",
+        "mostly_false"
+      ],
+      "expected_score_range": [
+        0,
+        40
+      ],
+      "gold_evidence": [
+        {
+          "title": "What is Nadar?",
+          "url": "https://www.familytreedna.com/groups/nadar/about/background",
+          "content": "Nadar (also referred as Nadan, Shanar) is a caste of Tamil Nadu & Kerala, South India. The Nadars are an entrepreneurial south Indian caste] and constitute 12% of Tamil Nadu's population. The Nadar community was not a singular caste, but an assortment of sub-castes and classes of different origins, which in course of time, came under the single banner Nadar. Nadars are predominant in the southern districts of Tuticorin, Kaniyakumari, Tirunelveli and Virudhunagar."
+        },
+        {
+          "title": "What is the world's most ancient race?",
+          "url": "https://www.independent.co.uk/news/science/world-s-most-ancient-race-traced-in-dna-study-1677113.html",
+          "content": "The San people of southern Africa, who have lived as hunter-gatherers for thousands of years, are likely to be the oldest population of humans on Earth, according to the biggest and most detailed analysis of African DNA."
+        }
+      ]
+    },
+    {
+      "id": "av_011",
+      "claim": "Fact Check: WHO has not approved home remedy for COVID-19, don’t fall for misinformation",
+      "label": "Supported",
+      "expected_verdicts": [
+        "true",
+        "mostly_true"
+      ],
+      "expected_score_range": [
+        60,
+        100
+      ],
+      "gold_evidence": [
+        {
+          "title": "What is the home remedy cure for COVID 19",
+          "url": "https://web.archive.org/web/20200805200828/https://timesofindia.indiatimes.com/life-style/health-fitness/health-news/coronavirus-myth-vs-fact-whatsapp-forward-claiming-turmeric-and-black-pepper-home-remedy-to-cure-covid-19-is-fake/photostory/76995286.cms",
+          "content": "As much as we would like to believe that something like this is true, till date, no cure or treatment, especially home remedy has been found to be effective in rooting out the virus. Neither have they been approved by WHO or any such health body."
+        }
+      ]
+    },
+    {
+      "id": "av_012",
+      "claim": "Hunter Biden (son of US president Joe Biden)  had 25,000 pics of him torturing and raping children under 10 in China on his laptop.",
+      "label": "Not Enough Evidence",
+      "expected_verdicts": [
+        "unverifiable",
+        "mixed"
+      ],
+      "expected_score_range": [
+        30,
+        60
+      ],
+      "gold_evidence": [
+        {
+          "title": "What is this claim based on?",
+          "url": "https://twitter.com/atrupar/status/1317849887438966784?s=21",
+          "content": "Hunter Biden's laptop was subpoena'd by an FBI agent who workd on child pornography."
+        },
+        {
+          "title": "Was there child pornography on the laptop?",
+          "url": "https://www.foxnews.com/politics/sen-johnson-presses-wray-on-validity-of-hunter-biden-laptop-claim",
+          "content": "Sen. Ron Johnson is calling on FBI Director Christopher Wray to confirm or deny details regarding a laptop said to have belonged to Democratic presidential nominee Joe Biden's son Hunter Biden.\n\nJohnson, R-Wis., said in a letter to Wray obtained by Fox News that a whistleblower contacted his committee on September 24, claiming to possess a laptop that Hunter Biden left at his business, and that he had turned it over to the FBI. Johnson noted that staff immediately asked the FBI to confirm certain details in order to validate the claim, but the bureau said they would not confirm or deny any of the information included in their request."
+        }
+      ]
+    },
+    {
+      "id": "av_013",
+      "claim": "Dr. Ebeneezer, a medical doctor and a herbal practitioner at the Amuzu Hospital has instructed men to have sex at least 21 times a month to avoid prostate cancer.",
+      "label": "Refuted",
+      "expected_verdicts": [
+        "false",
+        "mostly_false"
+      ],
+      "expected_score_range": [
+        0,
+        40
+      ],
+      "gold_evidence": [
+        {
+          "title": "Who is Dr Ebeneezer?",
+          "url": "https://web.archive.org/web/20210119165100/https://www.westafricareporters.com/men-must-have-sex-at-least-21-times-a-month-to-avoid-prostate-cancer-expert/",
+          "content": "The original article claims Ebeneezer is a medical doctor and a herbal practitioner at the Amuzu Hospital"
+        },
+        {
+          "title": "Is amount of sex or ejaculation linked to prostate cancer?",
+          "url": "https://web.archive.org/web/20201228105910/https://www.sciencedirect.com/science/article/abs/pii/S0302283816003778?via%3Dihub",
+          "content": "Yes"
+        }
+      ]
+    },
+    {
+      "id": "av_014",
+      "claim": "There was a 40% drop in oil prices in Nigeria.",
+      "label": "Not Enough Evidence",
+      "expected_verdicts": [
+        "unverifiable",
+        "mixed"
+      ],
+      "expected_score_range": [
+        30,
+        60
+      ],
+      "gold_evidence": [
+        {
+          "title": "How much did oil prices drop in Nigeria in 2020?",
+          "url": "https://web.archive.org/web/20210405033525/https://nnpcgroup.com/NNPCDocuments/Performance%20Data/FullReports/NNPC%20Monthly%20Financial%20and%20Operations%20Report%20for%20the%20Month%20of%20July%202020.pdf",
+          "content": "According to data from July 2020 from the Nigerian National Petroleum Corporation, monthly average prices decreased 73% from January to April 2020."
+        },
+        {
+          "title": "Are there frequent fluctuations in the oil price in Nigeria?",
+          "url": "https://www.intechopen.com/chapters/73798",
+          "content": "Yes"
+        }
+      ]
+    },
+    {
+      "id": "av_015",
+      "claim": "In the US lockdowns are partly responsible for excess deaths not directly attributed to COVID-19 which were observed in 2020.",
+      "label": "Not Enough Evidence",
+      "expected_verdicts": [
+        "unverifiable",
+        "mixed"
+      ],
+      "expected_score_range": [
+        30,
+        60
+      ],
+      "gold_evidence": [
+        {
+          "title": "How is  lockdown partly responsible for excess deaths in the US ?",
+          "url": "https://www.cdc.gov/mmwr/volumes/69/wr/mm6942e2.htm",
+          "content": "As of October 15, 216,025 deaths from coronavirus disease 2019 (COVID-19) have been reported in the United States*; however, this number might underestimate the total impact of the pandemic on mortality. Measures of excess deaths have been used to estimate the impact of public health pandemics or disasters, particularly when there are questions about underascertainment of deaths directly attributable to a given event or cause (1–6).† Excess deaths are defined as the number of persons who have died from all causes, in excess of the expected number of deaths for a given place and time. This report describes trends and demographic patterns in excess deaths during January 26–October 3, 2020. Expected numbers of deaths were estimated using overdispersed Poisson regression models with spline terms to account for seasonal patterns, using provisional mortality data from CDC’s National Vital Statistics System (NVSS) (7). Weekly numbers of deaths by age group and race/ethnicity were assessed to examine the difference between the weekly number of deaths occurring in 2020 and the average number occurring in the same week during 2015–2019 and the percentage change in 2020. Overall, an estimated 299,028 excess deaths have occurred in the United States from late January through October 3, 2020, with two thirds of these attributed to COVID-19. The largest percentage increases were seen among adults aged 25–44 years and among Hispanic or Latino (Hispanic) persons. These results provide information about the degree to which COVID-19 deaths might be underascertained and inform efforts to prevent mortality directly or indirectly associated with the COVID-19 pandemic, such as efforts to minimize disruptions to health care.\n\nEstimates of excess deaths can provide a comprehensive account of mortality related to the COVID-19 pandemic, including deaths that are directly or indirectly attributable to COVID-19. Estimates of the numbers of deaths directly attributable to COVID-19 might be limi"
+        },
+        {
+          "title": "Do the studies used to make the claim include lockdowns relating to excessive deaths?",
+          "url": "https://web.archive.org/web/20210310112506/https://jamanetwork.com/journals/jama/fullarticle/2771761",
+          "content": "they do not mention lockdown factors in the excessive deaths"
+        },
+        {
+          "title": "Do the studies used to make the claim include lockdowns relating to excessive deaths?",
+          "url": "https://web.archive.org/web/20210309181157/https://www.cdc.gov/mmwr/volumes/69/wr/mm6942e2.htm",
+          "content": "they do not mention lockdown factors in the excessive deaths"
+        }
+      ]
+    },
+    {
+      "id": "av_016",
+      "claim": "You see the number today? 33.1 GDP. The biggest in the history of our country by almost triple, right? Almost triple. Now it’s very much bigger than any GDP we’ve ever had. You have to go back to the 1950s, and then it’s less than half. This is the greatest number, 33.1 percent.",
+      "label": "Not Enough Evidence",
+      "expected_verdicts": [
+        "unverifiable",
+        "mixed"
+      ],
+      "expected_score_range": [
+        30,
+        60
+      ],
+      "gold_evidence": [
+        {
+          "title": "Was 1950's U.S GDP less than half of 2020's GDP of 33.1?",
+          "url": "https://www.stlouisfed.org/on-the-economy/2017/april/us-manufacturing-really-declining",
+          "content": "Yes"
+        }
+      ]
+    },
+    {
+      "id": "av_017",
+      "claim": "Because of a so-called trade war with China, America lost 300,000 manufacturing jobs.",
+      "label": "Supported",
+      "expected_verdicts": [
+        "true",
+        "mostly_true"
+      ],
+      "expected_score_range": [
+        60,
+        100
+      ],
+      "gold_evidence": [
+        {
+          "title": "How many jobs have been lost because of the USA-China trade war?",
+          "url": "https://edition.cnn.com/2020/01/14/politics/cost-of-china-tariff-trade-war/index.html",
+          "content": "A report from Moody’s Analytics says that the trade war with China, which started in early 2018, cost 300,000 jobs through September, based on an economic simulation."
+        }
+      ]
+    },
+    {
+      "id": "av_018",
+      "claim": "There was a 40% drop in the price of oil, Nigeria's main export.",
+      "label": "Not Enough Evidence",
+      "expected_verdicts": [
+        "unverifiable",
+        "mixed"
+      ],
+      "expected_score_range": [
+        30,
+        60
+      ],
+      "gold_evidence": [
+        {
+          "title": "How much did Nigerian oil prices fall in 2020?",
+          "url": "https://web.archive.org/web/20210405033525/https://nnpcgroup.com/NNPCDocuments/Performance%20Data/FullReports/NNPC%20Monthly%20Financial%20and%20Operations%20Report%20for%20the%20Month%20of%20July%202020.pdf",
+          "content": "According to data from July 2020 from the Nigerian National Petroleum Corporation, monthly average prices decreased 73% from January to April 2020."
+        },
+        {
+          "title": "Are there frequent fluctuations in Nigeria's oil prices?",
+          "url": "https://scialert.net/fulltext/?doi=aujss.2017.1.16#:~:text=The%20surplus%20of%20exporting%20value,great%20challenges%20for%20policy%20making.",
+          "content": "Oil prices have witnessed profound fluctuations and this has implications for the performance of macroeconomic variables, posing great challenges for policy making."
+        }
+      ]
+    },
+    {
+      "id": "av_019",
+      "claim": "Twitter now putting warnings on tweets that are just unedited clips of Biden saying he would end fracking",
+      "label": "Conflicting Evidence/Cherrypicking",
+      "expected_verdicts": [
+        "mixed",
+        "mostly_true",
+        "mostly_false"
+      ],
+      "expected_score_range": [
+        25,
+        75
+      ],
+      "gold_evidence": [
+        {
+          "title": "Have Twitter started putting warnings on tweets that are just unedited clips of Biden saying he would end fracking?",
+          "url": "https://web.archive.org/web/20201101032342/https://blog.twitter.com/en_us/topics/company/2020/2020-election-changes.html",
+          "content": "Twitter automatically warns when the user has not opened and read the item to be re-tweeted. \"Headlines don't tell the whole story,\" the Twitter message says. \"You can read the article on Twitter before Retweeting.\"\n\nTwitter announced a set of changes to try to stem the spread of misinformation ahead of the November 3, 2020 presidential election. Among the most significant is a request that users add their own content before retweeting someone else's:\n\n(W)e will encourage people to add their own commentary prior to amplifying content by prompting them to Quote Tweet instead of Retweet. People who go to Retweet will be brought to the Quote Tweet composer where they'll be encouraged to comment before sending their Tweet."
+        },
+        {
+          "title": "Had Twitter been putting warnings on un-edited tweets about Biden saying he would end fracking at the time of the claim (October 2020)?",
+          "url": "https://web.archive.org/web/20201101024709/https://blog.twitter.com/en_us/topics/company/2020/2020-election-changes.html",
+          "content": "Yes"
+        }
+      ]
+    },
+    {
+      "id": "av_020",
+      "claim": "Edo State in Nigeria has a 19% unemployment rate.",
+      "label": "Supported",
+      "expected_verdicts": [
+        "true",
+        "mostly_true"
+      ],
+      "expected_score_range": [
+        60,
+        100
+      ],
+      "gold_evidence": [
+        {
+          "title": "When was this claim made?",
+          "url": "Metadata",
+          "content": "13/09/2020"
+        },
+        {
+          "title": "What was the unemployment rate in Edo, Nigeria in September 2020?",
+          "url": "https://thenationonlineng.net/edo-unemployment-rate-reduces-to-19/amp/",
+          "content": "The unemployment rate in Edo State has dropped from 25.1 per cent in the 3rd quarter of 2018 to 19 per cent in the second quarter of 2020, new data released from Nigeria Bureau of Statistics (NBS) have shown."
+        },
+        {
+          "title": "What was the unemployment rate in Edo, Nigeria in September 2020?",
+          "url": "https://nigerianstat.gov.ng/pdfuploads/Q2_2020_Unemployment_Report.pdf",
+          "content": "19%"
+        }
+      ]
+    },
+    {
+      "id": "av_021",
+      "claim": "Fuel in Nigeria in 2020 was not cheaper than that in Saudi Arabia.",
+      "label": "Not Enough Evidence",
+      "expected_verdicts": [
+        "unverifiable",
+        "mixed"
+      ],
+      "expected_score_range": [
+        30,
+        60
+      ],
+      "gold_evidence": [
+        {
+          "title": "What was the average for fuel prices in Nigeria in 2020?",
+          "url": "https://punchng.com/petrol-price-in-nigeria-one-of-the-cheapest-in-africa-says-fg/",
+          "content": "N162 per litre"
+        }
+      ]
+    },
+    {
+      "id": "av_022",
+      "claim": "The Nigerian government is donating $600 million to Democratic presidential nominee Joe Biden’s campaign.",
+      "label": "Refuted",
+      "expected_verdicts": [
+        "false",
+        "mostly_false"
+      ],
+      "expected_score_range": [
+        0,
+        40
+      ],
+      "gold_evidence": [
+        {
+          "title": "Where was this claim published?",
+          "url": "https://www.google.com/search?q=Nigeria+endorsing+Joe+Biden&rlz=1C5CHFA_enUS890US890&source=lnms&tbm=nws&sa=X&ved=2ahUKEwivhYzls7LsAhUPhXIEHazqCBgQ_AUoAXoECAsQAw&biw=1440&bih=722",
+          "content": "There are no credible news reports."
+        },
+        {
+          "title": "Who is attributed to have made this donation?",
+          "url": "Metadata",
+          "content": "Lai Mohammed, Minister of Information and Culture."
+        },
+        {
+          "title": "Is Nigeria or Lai Mohammed  on the FEC list of donors to the Biden campaign?",
+          "url": "https://www.fec.gov/data/receipts/?data_type=processed&committee_id=C00703975&contributor_name=Lai+Mohammed%2C&two_year_transaction_period=2020",
+          "content": "No"
+        },
+        {
+          "title": "Are donations to US presidential campaigns from foreign countries/nationals allowed?",
+          "url": "https://www.fec.gov/help-candidates-and-committees/candidate-taking-receipts/who-can-and-cant-contribute/",
+          "content": "No"
+        }
+      ]
+    },
+    {
+      "id": "av_023",
+      "claim": "Even if your mail-in ballot is postmarked prior to the Election day but arrives after the Election day it will be thrown out.",
+      "label": "Conflicting Evidence/Cherrypicking",
+      "expected_verdicts": [
+        "mixed",
+        "mostly_true",
+        "mostly_false"
+      ],
+      "expected_score_range": [
+        25,
+        75
+      ],
+      "gold_evidence": [
+        {
+          "title": "Do some states accept ballots that were postmarked before election day?",
+          "url": "https://www.buzzfeednews.com/article/addybaird/vote-by-mail-state-deadlines",
+          "content": "There are 22 states plus the District of Columbia"
+        },
+        {
+          "title": "Are there states which do require votes to arrive by election day.",
+          "url": "https://www.cbsnews.com/news/wisconsin-election-supreme-court-rules-againt-absentee-ballots-after-election-day/",
+          "content": "Wisconsin is one of about 30 states that require absentee ballots be received by Election Day to be counted."
+        },
+        {
+          "title": "Does the original posterLiz Gilbert mention the state that does not allow voting after deadline?",
+          "url": "https://www.facebook.com/GilbertLiz/photos/a.356148997800555/3549940058421417",
+          "content": "No"
+        }
+      ]
+    },
+    {
+      "id": "av_024",
+      "claim": "There was a 40% drop in oil prices in Nigeria in 2020.",
+      "label": "Not Enough Evidence",
+      "expected_verdicts": [
+        "unverifiable",
+        "mixed"
+      ],
+      "expected_score_range": [
+        30,
+        60
+      ],
+      "gold_evidence": [
+        {
+          "title": "How much did oil prices drop by in Nigeria in 2020?",
+          "url": "https://web.archive.org/web/20210526202243/https://www.nnpcgroup.com/NNPCDocuments/Performance%20Data/FullReports/NNPC%20Monthly%20Financial%20and%20Operations%20Report%20for%20the%20Month%20of%20July%202020.pdf",
+          "content": "In July 2020, Group operating revenue as compared to June 2020, increased by 11.00%\nor N34.62Billion to stand at N349.35Billion. Likewise, expenditure for the month\nincreased by 5.24% or N16.39Billion, at N328.99Billion."
+        },
+        {
+          "title": "Did the president make it clear in his speech when the oil prices dropped?",
+          "url": "https://web.archive.org/web/20210118154309/https://www.channelstv.com/2020/10/01/nigeria-at-60-president-buharis-independence-anniversary-speech-full-text/",
+          "content": "No"
+        }
+      ]
+    },
+    {
+      "id": "av_025",
+      "claim": "Joe Biden proposed a US wide 2% property tax increase.",
+      "label": "Refuted",
+      "expected_verdicts": [
+        "false",
+        "mostly_false"
+      ],
+      "expected_score_range": [
+        0,
+        40
+      ],
+      "gold_evidence": [
+        {
+          "title": "DID JOE BIDEN PROPOSE A 2% FEDERAL PROPERTY TAX INCREASE?",
+          "url": "https://www.taxpolicycenter.org/publications/analysis-former-vice-president-bidens-tax-proposals/full",
+          "content": "There is no evidence that Biden proposed a nationwide property tax increase. Local and state governments collect property taxes, not the federal government. Its a fake post."
+        }
+      ]
+    },
+    {
+      "id": "av_026",
+      "claim": "The UK public won’t be able to claim compensation if unlicensed vaccines damage our health.",
+      "label": "Conflicting Evidence/Cherrypicking",
+      "expected_verdicts": [
+        "mixed",
+        "mostly_true",
+        "mostly_false"
+      ],
+      "expected_score_range": [
+        25,
+        75
+      ],
+      "gold_evidence": [
+        {
+          "title": "Who has civil liability for unlicensed vaccines in the UK?",
+          "url": "https://web.archive.org/web/20210607133928/https://www.gov.uk/government/consultations/distributing-vaccines-and-treatments-for-covid-19-and-flu/consultation-document-changes-to-human-medicine-regulations-to-support-the-rollout-of-covid-19-vaccines#civil-liability-and-immunity",
+          "content": "Key actors in the medicines supply chain cannot generally be sued in the civil courts for the consequences resulting from the use of an unlicensed product, or a new use of a licensed product, that a national licensing authority is recommending in order to deal with certain specific health threats."
+        }
+      ]
+    },
+    {
+      "id": "av_027",
+      "claim": "The PLAAF has shot down an Indian Sukhoi Su-30 fighter jet in Tibet.",
+      "label": "Refuted",
+      "expected_verdicts": [
+        "false",
+        "mostly_false"
+      ],
+      "expected_score_range": [
+        0,
+        40
+      ],
+      "gold_evidence": [
+        {
+          "title": "What is the PLAAF",
+          "url": "https://www.orfonline.org/tags/plaaf/",
+          "content": "People's Liberation Army Airforce"
+        },
+        {
+          "title": "Was an Indian jet Sukhoi Su-30 fighter shot down in Tibet.",
+          "url": "https://eurasiantimes.com/india-holds-back-its-rafales-deploys-su-30-mkis-to-counter-chinese-su-30-mkks-j-series-jets/",
+          "content": "No"
+        }
+      ]
+    },
+    {
+      "id": "av_028",
+      "claim": "U.S. President Donald Trump has suspended all travel from China.",
+      "label": "Conflicting Evidence/Cherrypicking",
+      "expected_verdicts": [
+        "mixed",
+        "mostly_true",
+        "mostly_false"
+      ],
+      "expected_score_range": [
+        25,
+        75
+      ],
+      "gold_evidence": [
+        {
+          "title": "What are the current travel rules for travelers coming from China to the U.S.?",
+          "url": "Metadata",
+          "content": "Mr Trump issued an order on 31 January which stopped foreign nationals who had been in China in the previous two weeks from entering the US, which came into effect on 2 February."
+        },
+        {
+          "title": "What are the current travel rules for travelers coming from China to the U.S.?",
+          "url": "https://www.cnbc.com/2020/01/31/white-house-to-hold-briefing-on-coronavirus-friday-afternoon.html",
+          "content": "President Donald Trump signed an order for the U.S. to deny entry to foreign nationals who have traveled to China within the past two weeks."
+        }
+      ]
+    },
+    {
+      "id": "av_029",
+      "claim": "Before the first case of the coronavirus spread within the United States, the president Donald Trump took unprecedented action and suspended all travel from China.",
+      "label": "Refuted",
+      "expected_verdicts": [
+        "false",
+        "mostly_false"
+      ],
+      "expected_score_range": [
+        0,
+        40
+      ],
+      "gold_evidence": [
+        {
+          "title": "When was the first case of COVID-19 discovered in the US",
+          "url": "https://web.archive.org/web/20210502100658/https://www.cdc.gov/media/releases/2020/p0121-novel-coronavirus-travel-case.html",
+          "content": "21st January 2020"
+        },
+        {
+          "title": "How many people were still travelling after the travel ban on China after the discovery of the novel coronavirus in the US",
+          "url": "https://web.archive.org/web/20210503140609/https://www.nytimes.com/2020/04/04/us/coronavirus-china-travel-restrictions.html",
+          "content": "There were 1,300 direct flights to 17 cities before President Trump’s travel restrictions. Since then, nearly 40,000 Americans and other authorized travelers have made the trip"
+        }
+      ]
+    },
+    {
+      "id": "av_030",
+      "claim": "A Pakistani website was hacked by an Indian cyber group to wish Pawan Kalyan a Happy Birthday.",
+      "label": "Supported",
+      "expected_verdicts": [
+        "true",
+        "mostly_true"
+      ],
+      "expected_score_range": [
+        60,
+        100
+      ],
+      "gold_evidence": [
+        {
+          "title": "Where was this claim published?",
+          "url": "Metadata",
+          "content": "Indian Cyber Troops"
+        },
+        {
+          "title": "Where was this claim published?",
+          "url": "https://www.facebook.com/IndianCyberTroops/posts/635643360421831",
+          "content": "Content is no longer available on Facebook"
+        },
+        {
+          "title": "Who are Indian Cyber Troops?",
+          "url": "https://insidergeeks.com/indian-cyber-troops-again-hacked-nepali-website/",
+          "content": "It’s not a new thing these days to hear Indian Cyber Troops hacking Nepali websites. Gradually time and again the action is repeated"
+        },
+        {
+          "title": "Were Pakistani websites hacked by Indian cyber troops?",
+          "url": "https://web.archive.org/web/20201001082923/https://newsd.in/pakistan-website-hacked-indian-hackers-write-ramlalla-hum-aaege-mandir-karachi-lahore-me-banaege/",
+          "content": "Yes"
+        },
+        {
+          "title": "Were Pakistani websites hacked by Indian cyber troops?",
+          "url": "https://web.archive.org/web/20210603203816/https://zeenews.india.com/india/indian-hackers-give-befitting-reply-to-pakistans-agenda-on-ram-temple-kashmir-hack-over-80-pakistani-websites-2303465.html",
+          "content": "Yes"
+        },
+        {
+          "title": "Did Indian cyber troops wish Pawan Kalyan a Happy Birthday when they hacked Pakistani websites?",
+          "url": "https://web.archive.org/web/20221212111529/https://www.youtube.com/watch?v=lm-sPzoP_Jw",
+          "content": "Birthday messages for Pawan Kalyan did appear on the hacked Pakistani websites."
+        }
+      ]
+    },
+    {
+      "id": "av_031",
+      "claim": "The eligibility criteria for applying to take the exam for the Union Public Service Commission (UPSC) of India, differentiates depending on whether you are a Hindu or a Muslim.",
+      "label": "Refuted",
+      "expected_verdicts": [
+        "false",
+        "mostly_false"
+      ],
+      "expected_score_range": [
+        0,
+        40
+      ],
+      "gold_evidence": [
+        {
+          "title": "Is there different allowances for taking the exam for the Union Public Service Commission (UPSC) of India based on the candidates religion?",
+          "url": "https://web.archive.org/web/20200919092343/https://www.upsc.gov.in/sites/default/files/Notification-CSPE_2020_N_Engl.pdf",
+          "content": "There is no mention of religion affecting candidates."
+        }
+      ]
+    },
+    {
+      "id": "av_032",
+      "claim": "Hunter Biden was chairman of the Nobel Peace Prize winning World Food Program.",
+      "label": "Supported",
+      "expected_verdicts": [
+        "true",
+        "mostly_true"
+      ],
+      "expected_score_range": [
+        60,
+        100
+      ],
+      "gold_evidence": [
+        {
+          "title": "Who is the chairman of World Food Program at time of claim?",
+          "url": "https://web.archive.org/web/20210506211312/https://www.wfpusa.org/about-us/board-of-directors/",
+          "content": "Randy Russel"
+        },
+        {
+          "title": "Has Hunter Biden ever been Chairman of World Food Program?",
+          "url": "https://web.archive.org/web/20210506220717/https://www.wfpusa.org/about-us/financial-information/annual-reports/",
+          "content": "Hunter Biden, son of Democratic presidential nominee Joe Biden, was on the World Food Program USA board of directors from 2011 to 2017 and served as chairman from 2011 to 2015, according to the nonprofit’s annual reports."
+        }
+      ]
+    },
+    {
+      "id": "av_033",
+      "claim": "Officer who wore Trump 2020 mask to polls to face disciplinary action",
+      "label": "Supported",
+      "expected_verdicts": [
+        "true",
+        "mostly_true"
+      ],
+      "expected_score_range": [
+        60,
+        100
+      ],
+      "gold_evidence": [
+        {
+          "title": "Did the Officer who wore Trump 2020 mask to polls face disciplinary action?",
+          "url": "Metadata",
+          "content": "Miami Mayor Francis Suarez confirmed that the officer had breached department policy by promoting a political candidate."
+        }
+      ]
+    },
+    {
+      "id": "av_034",
+      "claim": "Ivermectin is a treatment for coronavirus.",
+      "label": "Not Enough Evidence",
+      "expected_verdicts": [
+        "unverifiable",
+        "mixed"
+      ],
+      "expected_score_range": [
+        30,
+        60
+      ],
+      "gold_evidence": [
+        {
+          "title": "What is ivermectin?",
+          "url": "https://www.thelancet.com/journals/langlo/article/PIIS2214-109X(19)30490-5/fulltext",
+          "content": "Ivermectin is one of the most important antibiotics discovered."
+        },
+        {
+          "title": "Could invermectin be used as a treatment for Covid-19?",
+          "url": "https://www.ncbi.nlm.nih.gov/labs/pmc/articles/PMC7521351/",
+          "content": "The clinical efficacy and utility of ivermectin in SARS CoV-2 infected patients are unpredictable at this stage, as we are dealing with a completely novel virus. We await results of well-designed large scale randomized controlled clinical trials exploring treatment efficacy of ivermectin to treat SARS-CoV-2."
+        }
+      ]
+    },
+    {
+      "id": "av_035",
+      "claim": "Schools have resumed in New Brunswick, Canada despite the COVID-19 pandemic",
+      "label": "Supported",
+      "expected_verdicts": [
+        "true",
+        "mostly_true"
+      ],
+      "expected_score_range": [
+        60,
+        100
+      ],
+      "gold_evidence": [
+        {
+          "title": "Why did School close in New Brunswick?",
+          "url": "https://www.science.org/content/article/does-closing-schools-slow-spread-novel-coronavirus",
+          "content": "They closed due to the COVID-19 pandemic, to avoid spreading the virus."
+        },
+        {
+          "title": "When did New Brunswick open their schools?",
+          "url": "https://web.archive.org/web/20210118140806/https://www2.gnb.ca/content/gnb/en/corporate/promo/education-and-early-childhood-development-covid-19.html",
+          "content": "Early September 2020"
+        },
+        {
+          "title": "Why did the open despite the covid-19 pandemic?",
+          "url": "https://web.archive.org/web/20210118140806/https://www2.gnb.ca/content/gnb/en/departments/health/news/news_release.2020.09.0476.html",
+          "content": "In New Brunswick, classes resumed in early September, as in many other parts of the country. The number of positive cases in the province is relatively low compared to other provinces in the country: as of September 10, 2020, 193 people were confirmed to have contracted the virus, of which 188 recovered and 2 died. Returning to the classroom requires increased monitoring of precautions and guidelines, which vary from one province or territory to another."
+        },
+        {
+          "title": "Was the Covid 19 virus still declared a pandemic when schools reopened early September 2020?",
+          "url": "https://www.who.int/docs/default-source/coronaviruse/situation-reports/20200928-weekly-epi-update.pdf",
+          "content": "Yes"
+        }
+      ]
+    },
+    {
+      "id": "av_036",
+      "claim": "New Zealand spends less on pensions than most wealthy countries, spending 4.4 per cent of GDP",
+      "label": "Conflicting Evidence/Cherrypicking",
+      "expected_verdicts": [
+        "mixed",
+        "mostly_true",
+        "mostly_false"
+      ],
+      "expected_score_range": [
+        25,
+        75
+      ],
+      "gold_evidence": [
+        {
+          "title": "What does New Zealand currently spend on pensions?",
+          "url": "https://www.treasury.govt.nz/sites/default/files/2020-05/nzsf-model-changes-befu20.pdf",
+          "content": "4.8% of GDP"
+        },
+        {
+          "title": "Does New Zealand spend less on pensions than most wealthy countries?",
+          "url": "https://www.oecd-ilibrary.org/sites/d6831cac-en/index.html?itemId=/content/component/d6831cac-en",
+          "content": "Yes"
+        }
+      ]
+    },
+    {
+      "id": "av_037",
+      "claim": "Black Lives Matter wants to destroy the nuclear family.",
+      "label": "Conflicting Evidence/Cherrypicking",
+      "expected_verdicts": [
+        "mixed",
+        "mostly_true",
+        "mostly_false"
+      ],
+      "expected_score_range": [
+        25,
+        75
+      ],
+      "gold_evidence": [
+        {
+          "title": "What does the Black Lives Matter believe of the nuclear family",
+          "url": "https://web.archive.org/web/20200408020723/https:/blacklivesmatter.com/what-we-believe/",
+          "content": "We disrupt the Western-prescribed nuclear family structure requirement by supporting each other as extended families and “villages” that collectively care for one another, especially our children, to the degree that mothers, parents, and children are comfortable."
+        }
+      ]
+    },
+    {
+      "id": "av_038",
+      "claim": "PTFE Sprayed On Blue Masks Causes Symptoms Similar To COVID-19",
+      "label": "Refuted",
+      "expected_verdicts": [
+        "false",
+        "mostly_false"
+      ],
+      "expected_score_range": [
+        0,
+        40
+      ],
+      "gold_evidence": [
+        {
+          "title": "Are the common types of  face masks people wear to protect from Covid 19  sprayed with PTFE?",
+          "url": "https://web.archive.org/web/20220411022706/https://www.amazon.com/Disposable-3-Ply-Polypropylene-Elastic-Loops/dp/B08972H6RL",
+          "content": "No"
+        }
+      ]
+    },
+    {
+      "id": "av_039",
+      "claim": "More cops have died from COVID this year than have been killed on patrol.",
+      "label": "Not Enough Evidence",
+      "expected_verdicts": [
+        "unverifiable",
+        "mixed"
+      ],
+      "expected_score_range": [
+        30,
+        60
+      ],
+      "gold_evidence": [
+        {
+          "title": "Did COVID-19 killed more law enforcement officers this year than those cops who died on patrol, in 2020\n?",
+          "url": "https://web.archivehttps://fopcovid19.org/news/covid-19-line-of-duty-deaths/",
+          "content": "COVID-19 Line-of-Duty Deaths\n\nWhile COVID-19 is without a doubt a public health crisis, it is also a public safety crisis. The FOP knew at the beginning of the pandemic that law enforcement officers on the front lines combating this pandemic—more than 90% of whom will be responding from local and State agencies—would be increasingly vulnerable to contracting the virus. COVID-19 makes no distinction between age, race or gender. As we had feared, the virus has claimed the lives of many, and now includes a growing number of law enforcement officers.\n\nPlease Note: The following list has been compiled using media and news reports of law enforcement officers who have died due to COVID-19. The numbers listed include all reported COVID-19 deaths—not all have been verified. The FOP’s goal is to maintain an accurate and up-to-date list and is working around the clock to support our members as we all respond to the national pandemic. To ensure that every officer is accounted for, if you are aware of an officer that has died in the line of duty due to COVID-19, please feel free to send an email to Mark McDonald with the officer’s information and a link to either a media report or obituary.\n\nIf you have any questions or concerns, please feel free to reach out to us via email at media@fop.net.\nTotal Deaths (As of June 18, 2021)\n\n493\nState\n\nAlabama\n    6\nAlaska\n    0\nAmerican Samoa\n    0\nArizona\n    11\nArkansas\n    3\nCalifornia\n    49\nColorado\n    3\nConnecticut\n    1\nDelaware\n    0\nFlorida\n    30\nGeorgia\n    23\nGuam\n    2\nHawaii\n    0\nIdaho\n    0\nIllinois\n    13\nIndiana\n    3\nIowa\n    2\nKansas\n    6\nKentucky\n    5\nLouisiana\n    25\nMaine\n    0\nMaryland\n    6\nMassachusetts\n    5\nMichigan\n    12\nMinnesota\n    1\nMississippi\n    4\nMissouri\n    4\nMontana\n    1\nNebraska\n    2\nNevada\n    2\nNew Hampshire\n    0\nNew Jersey\n    18\nNew Mexico\n    0\nNew York\n    44\nNorth Carolina\n    16\nNorth Dakota\n    0\nOhio\n    14\nOklahoma\n    4\nOregon\n    0\nPennsylvania\n    16\nPuerto Rico\n    7\nRhode Island"
+        },
+        {
+          "title": "Did Democratic presidential candidate former Vice President Joe Biden visit Pittsburgh Local Fire Fighters No. 1 in Pittsburgh on August 31 2020?",
+          "url": "https://www.politico.com/news/2020/08/31/joe-biden-speech-riots-looters-405981",
+          "content": "Biden gave a speech in Pittsburgh on August 31 2020 but the article does not mention firefighters or visiting their location."
+        },
+        {
+          "title": "Is the claim related to the information provided in the text?",
+          "url": "Metadata",
+          "content": "No, it looks like this claim refers to another article."
+        }
+      ]
+    },
+    {
+      "id": "av_040",
+      "claim": "President Trump announces  he has tested positive for Covid-19.",
+      "label": "Supported",
+      "expected_verdicts": [
+        "true",
+        "mostly_true"
+      ],
+      "expected_score_range": [
+        60,
+        100
+      ],
+      "gold_evidence": [
+        {
+          "title": "Has President Donald Trump tested positive for COVID-19?",
+          "url": "https://web.archive.org/web/20210605224745/https://twitter.com/JuddPDeere45/status/1311895390086729728",
+          "content": "Yes"
+        }
+      ]
+    },
+    {
+      "id": "av_041",
+      "claim": "Joe and Jill Biden's income has increased recently.",
+      "label": "Supported",
+      "expected_verdicts": [
+        "true",
+        "mostly_true"
+      ],
+      "expected_score_range": [
+        60,
+        100
+      ],
+      "gold_evidence": [
+        {
+          "title": "What was Joe and Jill Biden's income in 2017?",
+          "url": "https://web.archive.org/web/20201223113926/https://www.businessinsider.com/personal-finance/bidens-earned-156-million-from-book-deals-speeches-since-2017-2019-7?r=US&IR=T",
+          "content": "$11 million"
+        },
+        {
+          "title": "What was Joe and Jill Biden's annual earnings when he was Vice President?",
+          "url": "https://www.theguardian.com/us-news/2016/jan/12/joe-biden-barack-obama-money-house-beau-family",
+          "content": "$230,000 annually"
+        }
+      ]
+    },
+    {
+      "id": "av_042",
+      "claim": "No one lost their health care because of the Wellmark and Iowa Farm Bureau Health Plan Bill.",
+      "label": "Not Enough Evidence",
+      "expected_verdicts": [
+        "unverifiable",
+        "mixed"
+      ],
+      "expected_score_range": [
+        30,
+        60
+      ],
+      "gold_evidence": [
+        {
+          "title": "Have complaints been made due to the Wellmark and Iowa Farm Bureau Health Plan Bill?",
+          "url": "https://web.archive.org/web/20201103105722/https://www.bbb.org/us/ia/west-des-moines/profile/insurance-services-office/farm-bureau-financial-services-0664-101127/complaints",
+          "content": "Yes"
+        }
+      ]
+    },
+    {
+      "id": "av_043",
+      "claim": "MPs are not following workplace Covid guidance by wearing masks.",
+      "label": "Refuted",
+      "expected_verdicts": [
+        "false",
+        "mostly_false"
+      ],
+      "expected_score_range": [
+        0,
+        40
+      ],
+      "gold_evidence": [
+        {
+          "title": "Is wearing face masks mandatory for MP's?",
+          "url": "https://web.archive.org/web/20201101035947/https://assets.publishing.service.gov.uk/media/5eb97e7686650c278d4496ea/working-safely-during-covid-19-offices-contact-centres-151020.pdf",
+          "content": "No, Face coverings are not mandatory in\noffices, though are required for customers and staff in some\nbusinesses that are customer facing such as banks, building\nsocieties, post offices, premises providing professional, legal or\nfinancial services, estate agents and auction houses. Staff in\nthese settings must wear face coverings when in areas that are\nopen to the public"
+        },
+        {
+          "title": "Does Covid guidance for MPs attending parliament involve wearing masks ?",
+          "url": "https://www.gonewsindia.com/latest-news/news-and-politic/mps-wear-masks-use-sanitisers-as-coronavirus-fear-enters-parliament1-10071",
+          "content": "Amid Coronavirus fears, many MPs arrived at the Parliament wearing protective masks and were seen using sanitisers before shaking hands."
+        }
+      ]
+    },
+    {
+      "id": "av_044",
+      "claim": "UK Employees unable to work in tier 3 areas will get a combination of Job Support Scheme and Universal Credit, which will mean they get 80% of their wages.",
+      "label": "Conflicting Evidence/Cherrypicking",
+      "expected_verdicts": [
+        "mixed",
+        "mostly_true",
+        "mostly_false"
+      ],
+      "expected_score_range": [
+        25,
+        75
+      ],
+      "gold_evidence": [
+        {
+          "title": "What are the terms of the UK Furlough Scheme?",
+          "url": "https://www.bbc.com/news/explainers-52135342",
+          "content": "Furlough applies across the UK and covers up to 80% of an employee's salary for the hours they can't work, up to a maximum of £2,500 per month."
+        },
+        {
+          "title": "What are the terms of the UK Job Support Scheme?",
+          "url": "https://www.bbc.co.uk/news/uk-politics-54492574",
+          "content": "staff at UK companies told to close would get 67% of their wages from the government under the expanded Job Support Scheme."
+        },
+        {
+          "title": "When does the UK Job Support Scheme end?",
+          "url": "https://www.englandandcompany.co.uk/briefing-15-15th-october/",
+          "content": "The Government has announced that this scheme will run for six months through to 30th April 2021."
+        },
+        {
+          "title": "Is the claim regarding the new UK Job Support Scheme?",
+          "url": "Metadata",
+          "content": "Yes"
+        }
+      ]
+    },
+    {
+      "id": "av_045",
+      "claim": "The alleged concerns of the United States over Cuba's cooperation, in this case about the ‘More Doctors’ program, are neither legitimate nor pertinent to be discussed at PAHO [Pan American Health Organization].",
+      "label": "Not Enough Evidence",
+      "expected_verdicts": [
+        "unverifiable",
+        "mixed"
+      ],
+      "expected_score_range": [
+        30,
+        60
+      ],
+      "gold_evidence": [
+        {
+          "title": "Are there issues with the more doctors program",
+          "url": "https://web.archive.org/web/20210319020517/https://www.foreign.senate.gov/press/ranking/release/menendez-rubio-unveil-new-effort-to-combat-trafficking-of-cuban-doctors",
+          "content": "The new legislation seeks to strengthen accountability for the Cuban regime’s documented human trafficking and exploitation of Cuban doctors, nurses, and other medical professionals through overseas medical missions."
+        },
+        {
+          "title": "What are the alleged concerns of USA over \"More Doctors\" programme?",
+          "url": "Metadata",
+          "content": "USA asked how “the programme came to be the middleman in a scheme to exploit Cuban medical workers in Brazil,” why the group sent $1.3 billion to Cuba, why it didn’t seek the approval from its executive council for involvement in the Brazilian program, and what PAHO did with $75 million it collected from Mais Medicos."
+        }
+      ]
+    },
+    {
+      "id": "av_046",
+      "claim": "US Miami-Dade County Mayor Carlos Giminez kept his taxpayer-funded Mercedes-Benz after slashing $400 million in government jobs and spending.",
+      "label": "Conflicting Evidence/Cherrypicking",
+      "expected_verdicts": [
+        "mixed",
+        "mostly_true",
+        "mostly_false"
+      ],
+      "expected_score_range": [
+        25,
+        75
+      ],
+      "gold_evidence": [
+        {
+          "title": "When did US Miami-Dade County Mayor Carlos Giminez",
+          "url": "https://www.politifact.com/factchecks/2011/jun/20/accountability-project/miami-mayors-race-third-party-group-tries-tie-carl/",
+          "content": "J.C. Planas, an attorney for the Gimenez campaign and a former state legislator, told PolitiFact in a previous fact-check on June 20, 2011 that Gimenez was entitled to the same car allowances as all the commissioners. For the last year and a half, Gimenez drove a Mercedes-Benz ML and prior to that a Mercedes-Benz E320...Their salary is their benefits -- one of which is their car allowance.\nThe fact-checking agency also stated that:  Car allowances -- or the use of city-owned cars -- is one piece of an official's compensation package"
+        },
+        {
+          "title": "When did Gimenez drive a Mercedes",
+          "url": "https://web.archive.org/web/20210310031315/https://www.politifact.com/",
+          "content": "WHen he was a county commissioner, he has car allowance. He approved the cut of 400$ as county comssision official, not as mayor"
+        }
+      ]
+    },
+    {
+      "id": "av_047",
+      "claim": "Muslim candidates can qualify with lower marks than others in the UPCS (i.e. Union Public Service Commission for recruitment to higher Civil Services of the Government of India) exam",
+      "label": "Refuted",
+      "expected_verdicts": [
+        "false",
+        "mostly_false"
+      ],
+      "expected_score_range": [
+        0,
+        40
+      ],
+      "gold_evidence": [
+        {
+          "title": "Do Muslim candidates  qualify with lower marks than others in the Indian UPCS exam?",
+          "url": "https://upsc.gov.in/sites/default/files/Cut_Off_Marks_CS2019_Eng.pdf",
+          "content": "No. Cut off marks for the UPCS exam are not based on religion but social and economic factors."
+        },
+        {
+          "title": "What is the UPCS exam?",
+          "url": "https://www.indiatoday.in/education-today/featurephilia/story/upsc-civil-services-exam-12033-2016-06-02",
+          "content": "UPSC conducts competitive exams to fill-in various civil service vacancies for the government of India. The UPSC conducts the Civil Services Examination (CSE), popularly known as IAS (Indian Administrative Service) exam, in two phases namely- UPSC Prelims and UPSC Mains. The prelims exam comprises objective-type questions, while the questions asked in mains need descriptive and essay-type answering."
+        }
+      ]
+    },
+    {
+      "id": "av_048",
+      "claim": "The CDC has removed the “Covid-19 Pandemic” and replaced it with “Covid-19 Outbreak” on their website.",
+      "label": "Refuted",
+      "expected_verdicts": [
+        "false",
+        "mostly_false"
+      ],
+      "expected_score_range": [
+        0,
+        40
+      ],
+      "gold_evidence": [
+        {
+          "title": "How does the CDC describe Covid-19 in it's website?",
+          "url": "https://web.archive.org/web/20201023003804/https://www.cdc.gov/",
+          "content": "novel coronavirus outbreak"
+        },
+        {
+          "title": "How does the CDC describe Covid-19 in it's website?",
+          "url": "https://www.cdc.gov/coronavirus/2019-ncov/cases-updates/about-epidemiology/identifying-source-outbreak.html",
+          "content": "An outbreak is called an epidemic when there is a sudden increase in cases. As COVID-19 began spreading in Wuhan, China, it became an epidemic. Because the disease then spread across several countries and affected a large number of people, it was classified as a pandemic."
+        },
+        {
+          "title": "How does the CDC describe Covid-19 in it's website?",
+          "url": "https://web.archive.org/web/20200907030239/https://www.cdc.gov/flu/pandemic-resources/index.htm",
+          "content": "Pandemic Influenza - \nAn influenza pandemic is a global outbreak of a new influenza. A virus. Pandemics happen when new (novel) influenza A viruses emerge which are able to infect people easily and spread from person to person in an efficient and sustained way. The United States is NOT currently experiencing an influenza pandemic. There is an ongoing pandemic with a new coronavirus.  CDC influenza programs protect the United States from seasonal influenza and an influenza pandemic, which occurs when a new flu virus emerges that can infect people and spread globally."
+        },
+        {
+          "title": "How does the CDC describe Covid-19 in it's website?",
+          "url": "https://web.archive.org/web/20200908015907/https://www.cdc.gov/",
+          "content": "At the time of the claim the CDC homepage said - \nCoronavirus Disease 2019 - CDC is responding to the coronavirus disease 2019 outbreak. \n\nIt also lists Coronavirus under 'outbreaks.'\n\nOutbreaks\n\nPeaches – Salmonella  Onions – Salmonella \nCoronavirus Disease 2019 (COVID-19)\nLung Injury Associated with E-cigarette Use or Vaping"
+        },
+        {
+          "title": "Can a pandemic, also be referred to as an outbreak?",
+          "url": "https://apic.org/monthly_alerts/outbreaks-epidemics-and-pandemics-what-you-need-to-know/",
+          "content": "Association for Professionals in Infection Control and Epidemiology uses the phrase 'global disease outbreak' to define the meaning of a  pandemic -  What are pandemics? - \"A pandemic is a global disease outbreak.\""
+        },
+        {
+          "title": "What does 'replace' mean?",
+          "url": "https://dictionary.cambridge.org/dictionary/english/replace",
+          "content": "To CHANGE FOR - take the place of something, or to put something or someone in the place of something or someone else:\n\nThe factory replaced most of its workers with robots.\n\nTourism has replaced agriculture as the nation's main industry."
+        },
+        {
+          "title": "Did the CDC change 'pandemic' for 'outbreak'?",
+          "url": "https://web.archive.org/web/20200304001558/https://www.cdc.gov/",
+          "content": "No"
+        }
+      ]
+    },
+    {
+      "id": "av_049",
+      "claim": "The wife of  Lal Bahadur Shastri (ex Prime minister of India) repaid his car loan after his death.",
+      "label": "Supported",
+      "expected_verdicts": [
+        "true",
+        "mostly_true"
+      ],
+      "expected_score_range": [
+        60,
+        100
+      ],
+      "gold_evidence": [
+        {
+          "title": "Did Lal Bahadur Shastri (ex Prime minister of India) have to get a car loan?",
+          "url": "https://web.archive.org/web/20201109040706/https://economictimes.indiatimes.com/news/politics-and-nation/when-lal-bahadur-shashtris-widow-had-to-repay-a-rs-5000-pnb-loan-from-her-pension/articleshow/63009549.cms",
+          "content": "The former PM's family was looking for a drive. After enquiries by VS Venkatraman, the special assistant to the PM, the Shastris came to know that a new Fiat would cost them around Rs 12,000. The family, however, had only Rs 7,000 in the bank.\n\nShastri applied for a Rs 5,000 loan which was sanctioned the same day."
+        }
+      ]
+    },
+    {
+      "id": "av_050",
+      "claim": "Sunil Gavaskar said that \"Virat Kohli has only trained against Anushka [Sharma]'s balls during the lockdown\"",
+      "label": "Conflicting Evidence/Cherrypicking",
+      "expected_verdicts": [
+        "mixed",
+        "mostly_true",
+        "mostly_false"
+      ],
+      "expected_score_range": [
+        25,
+        75
+      ],
+      "gold_evidence": [
+        {
+          "title": "What did Sunil Gavaskar say?",
+          "url": "https://web.archive.org/web/20210501172710/https://www.indiatoday.in/sports/ipl-2020/story/sunil-gavaskar-clarifies-comments-on-virat-kohli-anushka-sharma-during-ipl-2020-match-6-1725431-2020-09-25",
+          "content": "He [Kohli] didn’t get a chance to undertake the necessary practice. He knows that the more he practices, he’ll improve. When the lockdown happened, he only practised against Anuskha’s bowling, we have seen the video, but nothing is going to come of that"
+        },
+        {
+          "title": "Why did he (Sunil Gavaskar) make this remark about  Virat Kohli only training against Anushka Sharma's bowling during lockdown?",
+          "url": "https://web.archive.org/web/20210621225218/https://indianexpress.com/article/sports/ipl/sunil-gavaskar-creates-controversy-with-comment-on-virat-kohli-and-anushka-sharma-6610086/",
+          "content": "Gavaskar was referring to a video clip that went viral after it was posted on a Kohli fan page. In the video, Kohli can be seen bowling to Anushka before taking to the stumps. The video then shows Anushka bowling to him."
+        },
+        {
+          "title": "What does the claim mean?",
+          "url": "https://web.archive.org/web/20201117063920/https://www.espncricinfo.com/story/_/id/29967286/virat-kohli-wife-slams-sunil-gavaskar-distasteful-commentary",
+          "content": "Anushka Sharma, India captain Virat Kohli's wife, has criticised Sunil Gavaskar for his \"distasteful\" commentary on Thursday and \"accusing a wife for her husband's game\"."
+        },
+        {
+          "title": "Was he being mis-quoted?",
+          "url": "https://web.archive.org/web/20201120034404/https://www.youtube.com/watch?v=etdAOkiKvBI&feature=youtu.be",
+          "content": "Yes"
+        }
+      ]
+    }
+  ]
+}

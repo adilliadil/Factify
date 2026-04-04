@@ -113,6 +113,7 @@
     <button onclick="mockResult('mostly_true')">Mostly True (78)</button>
     <button onclick="mockResult('true')">True (95)</button>
     <button onclick="mockResult('multi')">Multi-claim</button>
+    <button onclick="mockResult('no_claims')">No Claims</button>
   </div>
 
   <script>
@@ -212,6 +213,17 @@
           { title: "Who Invented the Light Bulb? – Smithsonian", url: "https://si.edu/light-bulb", stance: "contradicting" },
           { title: "Einstein's Academic Record – ETH Zurich", url: "https://ethz.ch/einstein-records", stance: "contradicting" },
         ],
+      },
+      no_claims: {
+        original_text: "Wow, what a beautiful day today! I really love this weather.",
+        claims: [],
+        score: 0,
+        verdict: "unverifiable",
+        tldr: "No factual claims detected.",
+        explanation: "No factual claims were detected in the provided text.",
+        confidence: "low",
+        confidence_reason: "No claims to evaluate",
+        sources: [],
       },
     };
 

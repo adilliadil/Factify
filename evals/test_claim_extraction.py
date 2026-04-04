@@ -54,6 +54,19 @@ class TestClaimExtractionUnit:
         assert result == [], f"Expected no claims for opinion, got {result}"
 
     @pytest.mark.asyncio
+    async def test_trivial_fact_returns_empty(self, mock_llm_client):
+        """Trivial unimportant facts should not be extracted as check-worthy."""
+        case = next(c for c in self.dataset if c["id"] == "trivial_factual_claim")
+
+        mock_llm_client.chat.completions.create = AsyncMock(
+            return_value=make_llm_response({"claims": []})
+        )
+
+        result = await extract_claims(case["input"])
+
+        assert result == [], f"Expected no claims for trivial fact, got {result}"
+
+    @pytest.mark.asyncio
     async def test_extracts_historical_claim(self, mock_llm_client):
         """Historical facts should be extracted."""
         case = next(c for c in self.dataset if c["id"] == "historical_claim")
@@ -239,6 +252,21 @@ class TestClaimExtractionQuality:
     async def test_future_prediction(self):
         """Speculative predictions should not be extracted."""
         case = self._get_case("future_prediction")
+
+        actual_claims = await extract_claims(case["input"])
+        judgment = await judge_claim_extraction(
+            input_text=case["input"],
+            expected_claims=case["expected_claims"],
+            actual_claims=actual_claims,
+            should_exclude=case.get("should_exclude", []),
+        )
+
+        assert judgment["pass"], f"[{case['id']}] {judgment['reason']}"
+
+    @pytest.mark.asyncio
+    async def test_trivial_fact(self):
+        """Trivial unimportant facts should not be extracted as check-worthy."""
+        case = self._get_case("trivial_fact")
 
         actual_claims = await extract_claims(case["input"])
         judgment = await judge_claim_extraction(

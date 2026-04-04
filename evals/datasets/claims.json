@@ -52,6 +52,12 @@
     "description": "Cause-effect statements should be extracted"
   },
   {
+    "id": "trivial_factual_claim",
+    "input": "I went to the grocery store yesterday afternoon.",
+    "expected_claims": [],
+    "description": "Trivial personal facts nobody would check should not be extracted"
+  },
+  {
     "id": "future_prediction",
     "input": "I think it will rain tomorrow.",
     "expected_claims": [],

@@ -13,17 +13,24 @@ def get_client() -> AsyncOpenAI:
     return client
 
 
-CLAIM_EXTRACTION_PROMPT = """Extract all distinct factual claims from the text below.
+CLAIM_EXTRACTION_PROMPT = """Extract only the check-worthy factual claims from the text below.
 
-A factual claim is any statement that asserts something as true or false about the world,
-including health claims, statistics, cause-effect statements, historical facts, and scientific assertions.
+A check-worthy factual claim is a statement that:
+- Asserts something as objectively true or false about the world, AND
+- The general public would care whether it is true or false (e.g. health claims, statistics, historical facts, scientific assertions, cause-effect statements made by public figures).
+
+Exclude ALL of the following:
+- Subjective opinions and preferences (e.g. "this is the best policy", "chocolate is delicious")
+- Future predictions with no factual basis (e.g. "it will rain tomorrow")
+- Trivial or unimportant facts nobody would bother checking (e.g. "we had lunch yesterday", "next Tuesday is a weekday")
+- Greetings, filler, and conversational sentences with no factual content
+- Purely emotional or rhetorical statements
 
 Rules:
 - Return a JSON object with a "claims" key containing an array of claim strings.
 - Each claim should be a self-contained sentence.
-- Only exclude purely subjective opinions (e.g. "chocolate is the best flavor") and future predictions with no factual basis.
-- If in doubt, include the claim.
-- If the entire text is a single claim, return it as-is in the array.
+- If no check-worthy claims exist, return an empty array: {{"claims": []}}.
+- If the entire text is a single check-worthy claim, return it as-is in the array.
 
 Text:
 {text}"""

@@ -46,5 +46,11 @@
     "description": "Recent well-established scientific fact should be verified",
     "input_text": "COVID-19 is caused by a coronavirus called SARS-CoV-2.",
     "expected_verdicts": ["true", "mostly_true"]
+  },
+  {
+    "id": "trivial_factual_statement",
+    "description": "Trivial unimportant facts should produce no check-worthy claims and be unverifiable",
+    "input_text": "I went to the store yesterday and it was a weekday.",
+    "expected_verdicts": ["unverifiable"]
   }
 ]

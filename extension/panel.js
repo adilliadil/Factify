@@ -71,10 +71,12 @@ function getDomain(url) {
   }
 }
 
-function animateScore(target, color) {
+function animateScore(target, color, dash = false) {
   const CIRCUMFERENCE = 2 * Math.PI * 34;
   const fill = document.getElementById("donut-fill");
   const valueEl = document.getElementById("score-value");
+  const scoreMax = document.querySelector(".score-max");
+  const donutLabel = document.querySelector(".donut-label");
 
   fill.style.stroke = color;
   fill.style.strokeDasharray = `${CIRCUMFERENCE}`;
@@ -89,6 +91,16 @@ function animateScore(target, color) {
   if (wrapper) {
     wrapper.style.filter = `drop-shadow(0 0 20px ${color}30)`;
   }
+
+  if (dash) {
+    valueEl.textContent = "—";
+    scoreMax.hidden = true;
+    donutLabel.textContent = "No claims";
+    return;
+  }
+
+  scoreMax.hidden = false;
+  donutLabel.textContent = "Truthfulness";
 
   const duration = 800;
   const start = performance.now();
@@ -186,7 +198,8 @@ function renderClaimSummaryBar(claims) {
 }
 
 function renderResult(result, originalText) {
-  const color = getScoreColor(result.score);
+  const isNoClaims = result.claims.length === 0;
+  const color = isNoClaims ? "#64748b" : getScoreColor(result.score);
 
   setupOriginalText(originalText);
 
@@ -201,30 +214,37 @@ function renderResult(result, originalText) {
   confBadge.textContent = CONFIDENCE_LABELS[conf] || CONFIDENCE_LABELS.low;
   confBadge.className = `confidence-badge conf-${conf}`;
 
-  animateScore(result.score, color);
+  animateScore(result.score, color, isNoClaims);
 
   document.getElementById("tldr").textContent = result.tldr || "";
   setupExplanation(result.explanation);
 
   const claimsList = document.getElementById("claims-list");
   claimsList.innerHTML = "";
-  result.claims.forEach((claim) => {
-    const li = document.createElement("li");
-    const text = typeof claim === "string" ? claim : claim.text;
-    const verdict = typeof claim === "string" ? "unverifiable" : claim.verdict;
+  if (isNoClaims) {
+    const empty = document.createElement("li");
+    empty.className = "empty-list-msg";
+    empty.textContent = "No factual claims found in this text.";
+    claimsList.appendChild(empty);
+  } else {
+    result.claims.forEach((claim) => {
+      const li = document.createElement("li");
+      const text = typeof claim === "string" ? claim : claim.text;
+      const verdict = typeof claim === "string" ? "unverifiable" : claim.verdict;
 
-    const textSpan = document.createElement("span");
-    textSpan.className = "claim-text";
-    textSpan.textContent = text;
+      const textSpan = document.createElement("span");
+      textSpan.className = "claim-text";
+      textSpan.textContent = text;
 
-    const label = document.createElement("span");
-    label.className = `claim-verdict-label claim-verdict-${verdict}`;
-    label.textContent = CLAIM_VERDICT_LABELS[verdict] || "Unknown";
+      const label = document.createElement("span");
+      label.className = `claim-verdict-label claim-verdict-${verdict}`;
+      label.textContent = CLAIM_VERDICT_LABELS[verdict] || "Unknown";
 
-    li.appendChild(textSpan);
-    li.appendChild(label);
-    claimsList.appendChild(li);
-  });
+      li.appendChild(textSpan);
+      li.appendChild(label);
+      claimsList.appendChild(li);
+    });
+  }
 
   document.getElementById("claims-count").textContent = result.claims.length;
   renderClaimSummaryBar(result.claims);
@@ -238,48 +258,55 @@ function renderResult(result, originalText) {
 
   const sourcesList = document.getElementById("sources-list");
   sourcesList.innerHTML = "";
-  sortedSources.forEach((source) => {
-    const domain = getDomain(source.url);
-    const stance = source.stance || "neutral";
+  if (sortedSources.length === 0) {
+    const empty = document.createElement("p");
+    empty.className = "empty-list-msg";
+    empty.textContent = isNoClaims ? "No factual claims to search for." : "No sources found.";
+    sourcesList.appendChild(empty);
+  } else {
+    sortedSources.forEach((source) => {
+      const domain = getDomain(source.url);
+      const stance = source.stance || "neutral";
 
-    const card = document.createElement("a");
-    card.className = "source-card";
-    card.href = source.url;
-    card.target = "_blank";
-    card.rel = "noopener";
-    const favicon = document.createElement("img");
-    favicon.className = "source-favicon";
-    favicon.src = `https://www.google.com/s2/favicons?sz=16&domain=${domain}`;
-    favicon.alt = "";
-    favicon.width = 16;
-    favicon.height = 16;
+      const card = document.createElement("a");
+      card.className = "source-card";
+      card.href = source.url;
+      card.target = "_blank";
+      card.rel = "noopener";
+      const favicon = document.createElement("img");
+      favicon.className = "source-favicon";
+      favicon.src = `https://www.google.com/s2/favicons?sz=16&domain=${domain}`;
+      favicon.alt = "";
+      favicon.width = 16;
+      favicon.height = 16;
 
-    const info = document.createElement("div");
-    info.className = "source-info";
+      const info = document.createElement("div");
+      info.className = "source-info";
 
-    const domainRow = document.createElement("span");
-    domainRow.className = "source-domain";
-    domainRow.textContent = domain;
+      const domainRow = document.createElement("span");
+      domainRow.className = "source-domain";
+      domainRow.textContent = domain;
 
-    const domainLine = document.createElement("span");
-    domainLine.className = "source-domain-line";
-    domainLine.appendChild(domainRow);
+      const domainLine = document.createElement("span");
+      domainLine.className = "source-domain-line";
+      domainLine.appendChild(domainRow);
 
-    const stanceTag = document.createElement("span");
-    stanceTag.className = `source-stance stance-tag-${stance}`;
-    stanceTag.textContent = STANCE_LABELS[stance] || "Neutral";
-    domainLine.appendChild(stanceTag);
+      const stanceTag = document.createElement("span");
+      stanceTag.className = `source-stance stance-tag-${stance}`;
+      stanceTag.textContent = STANCE_LABELS[stance] || "Neutral";
+      domainLine.appendChild(stanceTag);
 
-    const titleEl = document.createElement("span");
-    titleEl.className = "source-title";
-    titleEl.textContent = source.title || source.url;
+      const titleEl = document.createElement("span");
+      titleEl.className = "source-title";
+      titleEl.textContent = source.title || source.url;
 
-    info.appendChild(domainLine);
-    info.appendChild(titleEl);
-    card.appendChild(favicon);
-    card.appendChild(info);
-    sourcesList.appendChild(card);
-  });
+      info.appendChild(domainLine);
+      info.appendChild(titleEl);
+      card.appendChild(favicon);
+      card.appendChild(info);
+      sourcesList.appendChild(card);
+    });
+  }
 
   document.getElementById("sources-count").textContent = result.sources.length;
 

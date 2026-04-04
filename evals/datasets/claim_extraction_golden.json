@@ -66,6 +66,13 @@
     "should_exclude": []
   },
   {
+    "id": "trivial_fact",
+    "description": "Unimportant factual statements are not check-worthy and should return empty",
+    "input": "I had lunch at noon. Next Tuesday is a weekday.",
+    "expected_claims": [],
+    "should_exclude": ["lunch at noon", "next Tuesday", "weekday"]
+  },
+  {
     "id": "future_prediction",
     "description": "Speculative predictions without factual basis should not be extracted",
     "input": "I think it will probably rain tomorrow afternoon.",

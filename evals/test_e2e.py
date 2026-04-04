@@ -89,6 +89,21 @@ class TestE2EUnit:
         assert result.verdict == "unverifiable"
 
     @pytest.mark.asyncio
+    async def test_trivial_fact_returns_no_claims(self, mock_llm_client, mock_tavily_client):
+        """Trivial unimportant facts should not be check-worthy and produce no claims."""
+        input_text = "I went to the grocery store yesterday afternoon."
+
+        mock_llm_client.chat.completions.create = AsyncMock(
+            return_value=make_llm_response({"claims": []})
+        )
+
+        result = await fact_check(input_text)
+
+        assert result.claims == [], "Trivial fact should have no claims"
+        assert result.verdict == "unverifiable"
+        assert result.score == 0
+
+    @pytest.mark.asyncio
     async def test_no_sources_returns_unverifiable(self, mock_llm_client, mock_tavily_client):
         """When no sources are found, should return unverifiable."""
         input_text = "Some obscure claim."
@@ -304,6 +319,23 @@ class TestE2EQuality:
     async def test_recent_science(self):
         """Recent well-established scientific fact should be verified."""
         case = self._get_case("recent_science")
+
+        result = await fact_check(case["input_text"])
+        result_dict = result.model_dump()
+
+        judgment = await judge_e2e_quality(
+            input_text=case["input_text"],
+            result=result_dict,
+            expected_verdicts=case["expected_verdicts"],
+            description=case["description"],
+        )
+
+        assert judgment["pass"], f"[{case['id']}] {judgment['reason']}"
+
+    @pytest.mark.asyncio
+    async def test_trivial_factual_statement(self):
+        """Trivial unimportant facts should produce no check-worthy claims."""
+        case = self._get_case("trivial_factual_statement")
 
         result = await fact_check(case["input_text"])
         result_dict = result.model_dump()

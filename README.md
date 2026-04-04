@@ -115,9 +115,15 @@ Then open **http://localhost:3000/mock.html** in your browser to interact with t
 
 ```bash
 pip install -r evals/requirements.txt
+
+# Unit + quality tests
 python -m pytest evals/ -v
+
+# Benchmark evals only (generates report in evals/reports/)
+cd evals && PYTHONPATH=.. python -m pytest test_benchmark.py -v
 ```
 
+<<<<<<< HEAD
 ### Filtering benchmark runs
 
 Benchmark cases live in `evals/test_benchmark.py` (three arms: gold evidence, searched evidence, full pipeline). Parametrised test IDs are `{dataset_name}-{sample_id}` (for example `AVeriTeC-av_001`), defined in that file.
@@ -146,27 +152,55 @@ python -m pytest evals/test_benchmark.py -m benchmark -k "TestGoldEvidenceAnalys
 A timestamped report is still written under `evals/reports/` when any benchmark tests run in that session (see `evals/conftest.py`).
 
 Unit tests (mocked) inject placeholder keys so they run without real credentials. Benchmark and quality (`live_api`) tests skip unless `backend.config` can load the pipeline LLM, Tavily search, and (for quality suites) the judge model from your `.env` — matching whatever providers you configure.
+=======
+Unit tests (mocked) run without API keys. Quality and benchmark tests require `OPENAI_API_KEY` and `TAVILY_API_KEY`.
+>>>>>>> d003105 (update readme)
 
 ### How evals work
 
 ```mermaid
-flowchart TD
-    A([Run eval suite])
+flowchart TB
+    A([Run eval suite]) --> E
 
-    A --> B
+    subgraph E["Eval Types"]
+        direction TB
 
-    subgraph B["1. Unit Tests  ·  mocked  ·  no API keys"]
-        B1["🧪 Pick a test case"]
-        B2["🤖 Mock LLM<br/>returns scripted extraction + analysis JSON"]
-        B3["📦 Mock Tavily<br/>returns pre-recorded search fixture"]
-        B4["▶ Run fact_check()"]
-        B5["✅ Assert response fields<br/>score · verdict · claims · sources"]
-        B1 --> B2
-        B1 --> B3
-        B2 --> B4
-        B3 --> B4
-        B4 --> B5
+        subgraph U["1. Unit Tests · mocked · no API keys"]
+            direction TB
+            U1["Pick a test case"]
+            U2["Mock LLM + Tavily<br/>scripted responses + recorded fixtures"]
+            U3["Run fact_check()"]
+            U4["Assert score · verdict · claims · sources"]
+            U1 --> U2 --> U3 --> U4
+        end
+
+        subgraph Q["2. Quality Tests · live APIs · LLM-as-judge"]
+            direction TB
+            Q1["Load golden case<br/>input + expected verdict + description"]
+            Q2["Run fact_check()<br/>with live LLM + Tavily"]
+            Q3["Judge with judge_e2e_quality()"]
+            Q4["Rubric<br/>claim extraction · verdict<br/>score alignment · explanation"]
+            Q1 --> Q2 --> Q3 --> Q4
+        end
+
+        subgraph B["3. Benchmark Evals · three-arm"]
+            direction TB
+            B0["Auto-discover benchmark_*.json<br/>PolitiFact + AVeriTeC"]
+            B1["Arm A<br/>analyze_evidence() + gold evidence"]
+            B2["Arm B<br/>search_claim() + analyze_evidence()"]
+            B3["Arm C<br/>full fact_check() pipeline"]
+            B4["Auto-generate benchmark report<br/>accuracy · within-one · deltas<br/>per-label · calibration · failures"]
+            B5["Outputs<br/>evals/reports/YYYY-MM-DD_HHmmss.txt<br/>evals/reports/benchmark_results.json"]
+            B0 --> B1
+            B0 --> B2
+            B0 --> B3
+            B1 --> B4
+            B2 --> B4
+            B3 --> B4
+            B4 --> B5
+        end
     end
+<<<<<<< HEAD
 
     B --> C
 
@@ -188,4 +222,6 @@ flowchart TD
     end
 
     D --> E{Pass?}
+=======
+>>>>>>> d003105 (update readme)
 ```

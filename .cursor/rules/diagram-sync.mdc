@@ -1,0 +1,20 @@
+---
+description: Keep README diagrams in sync with pipeline changes
+alwaysApply: true
+---
+
+# Diagram Sync
+
+When a change affects the documented fact-checking or eval flow, update the Mermaid diagrams in `README.md` in the same task.
+
+Update the core logic diagram when changes affect:
+- claim extraction or filtering behavior
+- search flow, deduplication, or source limits
+- analysis outputs, verdicting, confidence, or early exits
+
+Update the evals diagram when changes affect:
+- unit vs quality eval structure
+- golden dataset or judging flow
+- evaluation rubric dimensions or pass criteria
+
+Do not update diagrams for refactors that do not change documented behavior.

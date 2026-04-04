@@ -1,0 +1,35 @@
+---
+description: Keep evals in sync when core logic changes
+globs: backend/**/*.py
+alwaysApply: false
+---
+
+# Eval Sync
+
+When a change to `backend/` alters observable behavior, update or add corresponding evals in `evals/` in the same task. Do not wait for the user to ask.
+
+## What counts as observable behavior change
+
+- New, removed, or renamed fields in models (`models.py`)
+- Changed prompt structure, output schema, or LLM call logic (`llm.py`)
+- Modified pipeline flow, early exits, or branching (`pipeline.py`)
+- Changed search query construction or result handling (`search.py`)
+- New or changed API endpoints or response shapes (`main.py`)
+- Changed config values that affect defaults or thresholds (`config.py`)
+
+## What to update in evals
+
+| Change type | Eval action |
+|---|---|
+| New field or output | Add assertions for the new field in relevant unit tests |
+| Removed field | Remove or update assertions that reference it |
+| Changed verdict/score logic | Update expected values in unit tests and golden dataset entries if needed |
+| New pipeline branch or early exit | Add a unit test covering that path |
+| Changed prompt or rubric | Update quality eval expected dimensions and judge criteria (`judges.py`) |
+| New endpoint | Add an E2E test exercising it |
+
+## What does NOT require eval changes
+
+- Pure refactors with identical inputs/outputs
+- Comment or docstring edits
+- Dependency version bumps with no API change

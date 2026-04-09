@@ -1,6 +1,10 @@
+import logging
+
 from tavily import AsyncTavilyClient
 
 from backend.config import config
+
+logger = logging.getLogger(__name__)
 
 client: AsyncTavilyClient | None = None
 
@@ -22,6 +26,7 @@ async def search_claim(claim: str, max_results: int = 5) -> list[dict]:
             search_depth="advanced",
         )
     except Exception:
+        logger.exception("Tavily search failed for claim (truncated): %s", claim[:120])
         return []
 
     sources = []

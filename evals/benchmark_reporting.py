@@ -1,15 +1,16 @@
 """Benchmark metrics computation, report formatting, and file output.
 
-Pure reporting logic with no pytest dependency. Called by conftest.py hooks
-at session end to generate timestamped .txt and .json reports.
+Called by conftest.py hooks at session end to generate timestamped .txt and .json reports.
+Uses `backend.config` for the resolved pipeline model label (pytest `pythonpath` includes repo root).
 """
 
 import json
-import os
 import statistics
 import subprocess
 from datetime import datetime, timezone
 from pathlib import Path
+
+from backend.config import config
 
 REPORTS_DIR = Path(__file__).parent / "reports"
 VERDICT_ORDER = ["false", "mostly_false", "mixed", "mostly_true", "true", "unverifiable"]
@@ -152,7 +153,7 @@ def format_report(
 ) -> str:
     now = datetime.now(timezone.utc)
     commit = get_git_commit()
-    model = os.getenv("LLM_MODEL", "gpt-4o-mini")
+    model = config.llm.model
 
     datasets_summary: dict[str, int] = {}
     for r in arm_b:
@@ -283,7 +284,7 @@ def write_reports(
     json_path = REPORTS_DIR / "benchmark_results.json"
     json_data = {
         "timestamp": now.isoformat(),
-        "model": os.getenv("LLM_MODEL", "gpt-4o-mini"),
+        "model": config.llm.model,
         "commit": get_git_commit(),
         "arm_a": arm_a,
         "arm_b": arm_b,

@@ -1,16 +1,36 @@
 import json
-from openai import AsyncOpenAI
+import logging
+from typing import TypedDict
 
 from backend.config import config
+from backend.llm_clients import LLMClient, create_client
 
-client: AsyncOpenAI | None = None
+logger = logging.getLogger(__name__)
+
+client: LLMClient | None = None
 
 
-def get_client() -> AsyncOpenAI:
+def get_client() -> LLMClient:
     global client
     if client is None:
-        client = AsyncOpenAI(api_key=config.llm.api_key, base_url=config.llm.base_url)
+        client = create_client(config.llm)
     return client
+
+
+class ClaimVerdictItem(TypedDict):
+    claim: str
+    verdict: str
+
+
+class AnalysisResult(TypedDict):
+    score: int
+    verdict: str
+    tldr: str
+    explanation: str
+    confidence: str
+    confidence_reason: str
+    claim_verdicts: list[ClaimVerdictItem]
+    source_stances: dict[str, str]
 
 
 CLAIM_EXTRACTION_PROMPT = """Extract only the check-worthy factual claims from the text below.
@@ -87,6 +107,7 @@ If the sources don't contain enough information to evaluate, use verdict "unveri
 
 
 async def extract_claims(text: str) -> list[str]:
+    logger.debug("extract_claims: input length=%d model=%s", len(text), config.llm.model)
     resp = await get_client().chat.completions.create(
         model=config.llm.model,
         messages=[
@@ -98,21 +119,39 @@ async def extract_claims(text: str) -> list[str]:
     )
 
     raw = resp.choices[0].message.content
-    parsed = json.loads(raw)
+    if raw is None:
+        logger.warning("extract_claims: empty message content from LLM")
+        return []
+    try:
+        parsed = json.loads(raw)
+    except json.JSONDecodeError:
+        logger.warning("extract_claims: invalid JSON from LLM (first 200 chars): %r", raw[:200])
+        return []
 
     if isinstance(parsed, list):
-        return parsed
-    if isinstance(parsed, dict):
+        out = parsed
+    elif isinstance(parsed, dict):
         for key in ("claims", "factual_claims", "results"):
             if key in parsed and isinstance(parsed[key], list):
-                return parsed[key]
-        vals = list(parsed.values())
-        if vals and isinstance(vals[0], list):
-            return vals[0]
-    return []
+                out = parsed[key]
+                break
+        else:
+            vals = list(parsed.values())
+            out = vals[0] if vals and isinstance(vals[0], list) else []
+    else:
+        out = []
+
+    logger.info("extract_claims: extracted %d claim(s)", len(out))
+    return out
 
 
-async def analyze_evidence(claims: list[str], sources: list[dict]) -> dict:
+async def analyze_evidence(claims: list[str], sources: list[dict]) -> AnalysisResult:
+    logger.debug(
+        "analyze_evidence: claims=%d sources=%d model=%s",
+        len(claims),
+        len(sources),
+        config.llm.model,
+    )
     sources_text = "\n\n".join(
         f"Source {i+1}: {s.get('title', 'Untitled')}\nURL: {s.get('url', '')}\nContent: {s.get('content', '')}"
         for i, s in enumerate(sources)
@@ -130,18 +169,33 @@ async def analyze_evidence(claims: list[str], sources: list[dict]) -> dict:
     )
 
     raw = resp.choices[0].message.content
-    result = json.loads(raw)
+    if raw is None:
+        logger.warning("analyze_evidence: empty message content from LLM")
+        return _fallback_analysis()
+
+    try:
+        result = json.loads(raw)
+    except json.JSONDecodeError:
+        logger.warning("analyze_evidence: invalid JSON (first 200 chars): %r", raw[:200])
+        return _fallback_analysis()
+
+    if not isinstance(result, dict):
+        logger.warning("analyze_evidence: expected JSON object, got %s", type(result).__name__)
+        return _fallback_analysis()
 
     score = max(0, min(100, int(result.get("score", 50))))
     verdict = result.get("verdict", "unverifiable")
     valid_verdicts = {"false", "mostly_false", "mixed", "mostly_true", "true", "unverifiable"}
     if verdict not in valid_verdicts:
+        logger.warning("analyze_evidence: invalid verdict %r, defaulting to unverifiable", verdict)
         verdict = "unverifiable"
 
     claim_verdicts = result.get("claim_verdicts", [])
     valid_claim_verdicts = {"supported", "contradicted", "mixed", "unverifiable"}
-    sanitized_verdicts = []
+    sanitized_verdicts: list[ClaimVerdictItem] = []
     for cv in claim_verdicts:
+        if not isinstance(cv, dict):
+            continue
         v = cv.get("verdict", "unverifiable")
         if v not in valid_claim_verdicts:
             v = "unverifiable"
@@ -155,12 +209,21 @@ async def analyze_evidence(claims: list[str], sources: list[dict]) -> dict:
         confidence = "low"
 
     valid_stances = {"supporting", "contradicting", "neutral"}
-    source_stances = {}
+    source_stances: dict[str, str] = {}
     for ss in result.get("source_stances", []):
+        if not isinstance(ss, dict):
+            continue
         stance = ss.get("stance", "neutral")
         if stance not in valid_stances:
             stance = "neutral"
         source_stances[ss.get("url", "")] = stance
+
+    logger.info(
+        "analyze_evidence: verdict=%s score=%d confidence=%s",
+        verdict,
+        score,
+        confidence,
+    )
 
     return {
         "score": score,
@@ -171,4 +234,17 @@ async def analyze_evidence(claims: list[str], sources: list[dict]) -> dict:
         "confidence_reason": result.get("confidence_reason", ""),
         "claim_verdicts": sanitized_verdicts,
         "source_stances": source_stances,
+    }
+
+
+def _fallback_analysis() -> AnalysisResult:
+    return {
+        "score": 50,
+        "verdict": "unverifiable",
+        "tldr": "",
+        "explanation": "Unable to determine.",
+        "confidence": "low",
+        "confidence_reason": "Model returned invalid or empty JSON",
+        "claim_verdicts": [],
+        "source_stances": {},
     }

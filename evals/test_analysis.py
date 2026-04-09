@@ -176,6 +176,8 @@ class TestAnalysisUnit:
 class TestAnalysisQuality:
     """Quality tests for analysis - real LLM calls, tests verdict and reasoning quality."""
 
+    pytestmark = pytest.mark.live_api
+
     @pytest.fixture(autouse=True)
     def setup(self):
         self.golden_dataset = load_dataset("analysis_quality_golden")

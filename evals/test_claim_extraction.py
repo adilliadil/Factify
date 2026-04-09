@@ -106,6 +106,8 @@ class TestClaimExtractionUnit:
 class TestClaimExtractionQuality:
     """Quality tests for claim extraction - real LLM calls, tests actual behavior."""
 
+    pytestmark = pytest.mark.live_api
+
     @pytest.fixture(autouse=True)
     def setup(self):
         self.golden_dataset = load_dataset("claim_extraction_golden")

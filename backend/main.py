@@ -11,14 +11,15 @@ from fastapi.responses import JSONResponse
 from starlette.responses import StreamingResponse
 
 from backend.config import config, ConfigError
+from backend.logging_config import configure_logging
 from backend.models import FactCheckRequest, FactCheckResponse, ErrorResponse
 from backend.pipeline import fact_check, fact_check_stream
 
+configure_logging()
 logger = logging.getLogger(__name__)
 
 try:
-    _ = config.llm
-    _ = config.search
+    _ = (config.llm, config.search)
 except ConfigError as exc:
     logger.error("Configuration error at startup: %s", exc)
     raise SystemExit(1) from exc
@@ -35,7 +36,7 @@ app.add_middleware(
 
 
 @app.post("/factcheck", response_model=FactCheckResponse)
-async def factcheck_endpoint(request: FactCheckRequest):
+async def factcheck_endpoint(request: FactCheckRequest) -> FactCheckResponse | JSONResponse:
     try:
         result = await fact_check(request.text)
         return result
@@ -47,7 +48,7 @@ async def factcheck_endpoint(request: FactCheckRequest):
 
 
 @app.post("/factcheck/stream")
-async def factcheck_stream_endpoint(request: FactCheckRequest):
+async def factcheck_stream_endpoint(request: FactCheckRequest) -> StreamingResponse:
     return StreamingResponse(
         fact_check_stream(request.text),
         media_type="text/event-stream",
@@ -56,5 +57,5 @@ async def factcheck_stream_endpoint(request: FactCheckRequest):
 
 
 @app.get("/health")
-async def health():
+async def health() -> dict[str, str]:
     return {"status": "ok"}

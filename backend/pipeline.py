@@ -1,9 +1,12 @@
 import json
+import logging
 from typing import AsyncGenerator
 
 from backend.llm import extract_claims, analyze_evidence
 from backend.search import search_claim
 from backend.models import FactCheckResponse, Source, ClaimResult
+
+logger = logging.getLogger(__name__)
 
 
 async def fact_check_stream(text: str) -> AsyncGenerator[str, None]:
@@ -16,6 +19,7 @@ async def fact_check_stream(text: str) -> AsyncGenerator[str, None]:
     claims = await extract_claims(text)
 
     if not claims:
+        logger.info("fact_check_stream: no claims extracted (input length=%d)", len(text))
         result = FactCheckResponse(
             original_text=text,
             claims=[],
@@ -42,6 +46,10 @@ async def fact_check_stream(text: str) -> AsyncGenerator[str, None]:
                 all_sources.append(s)
 
     if not all_sources:
+        logger.warning(
+            "fact_check_stream: no sources after search (claims=%d)",
+            len(claims),
+        )
         result = FactCheckResponse(
             original_text=text,
             claims=[ClaimResult(text=c, verdict="unverifiable") for c in claims],
@@ -86,6 +94,12 @@ async def fact_check_stream(text: str) -> AsyncGenerator[str, None]:
         confidence_reason=analysis.get("confidence_reason", ""),
         sources=response_sources,
     )
+    logger.info(
+        "fact_check_stream: done verdict=%s score=%s sources=%d",
+        result.verdict,
+        result.score,
+        len(response_sources),
+    )
     yield sse("result", result.model_dump())
 
 
@@ -93,6 +107,7 @@ async def fact_check(text: str) -> FactCheckResponse:
     claims = await extract_claims(text)
 
     if not claims:
+        logger.info("fact_check: no claims extracted (input length=%d)", len(text))
         return FactCheckResponse(
             original_text=text,
             claims=[],
@@ -116,6 +131,7 @@ async def fact_check(text: str) -> FactCheckResponse:
                 all_sources.append(s)
 
     if not all_sources:
+        logger.warning("fact_check: no sources after search (claims=%d)", len(claims))
         return FactCheckResponse(
             original_text=text,
             claims=[ClaimResult(text=c, verdict="unverifiable") for c in claims],
@@ -145,7 +161,7 @@ async def fact_check(text: str) -> FactCheckResponse:
         for s in all_sources[:8]
     ]
 
-    return FactCheckResponse(
+    out = FactCheckResponse(
         original_text=text,
         claims=claim_results,
         score=analysis["score"],
@@ -156,3 +172,10 @@ async def fact_check(text: str) -> FactCheckResponse:
         confidence_reason=analysis.get("confidence_reason", ""),
         sources=response_sources,
     )
+    logger.info(
+        "fact_check: done verdict=%s score=%s sources=%d",
+        out.verdict,
+        out.score,
+        len(response_sources),
+    )
+    return out

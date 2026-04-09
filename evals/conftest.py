@@ -1,14 +1,38 @@
 """Pytest fixtures, hooks, and shared test helpers for evals."""
 
 import json
+import os
 import re
 import time
 import pytest
 from pathlib import Path
 from unittest.mock import patch, MagicMock
 
-from backend.config import config
+from backend.config import ConfigError, config
 from benchmark_reporting import build_structured_results, write_reports
+
+
+def collect_eval_config_errors(*, need_judge: bool) -> list[str]:
+    """Try loading config slices needed for live/benchmark evals; return ConfigError messages.
+
+    Call after ``config.reset()`` so env reflects the current test process. Used by the
+    autouse fixture and unit-tested in ``test_config_helpers.py``.
+    """
+    errors: list[str] = []
+    try:
+        _ = config.llm
+    except ConfigError as exc:
+        errors.append(str(exc))
+    try:
+        _ = config.search
+    except ConfigError as exc:
+        errors.append(str(exc))
+    if need_judge:
+        try:
+            _ = config.judge
+        except ConfigError as exc:
+            errors.append(str(exc))
+    return errors
 
 FIXTURES_DIR = Path(__file__).parent / "datasets"
 
@@ -98,11 +122,36 @@ def pytest_sessionfinish(session, exitstatus):
 # ── Fixtures ───────────────────────────────────────────────────
 
 @pytest.fixture(autouse=True)
-def reset_clients_and_delay():
+def reset_clients_and_delay(request, monkeypatch):
     """Reset API clients and config cache to ensure clean state per test."""
     import backend.search
     import backend.llm
     import judges
+
+    marker_names = [m.name for m in request.node.iter_markers()]
+    needs_real_keys = any(n in ("benchmark", "live_api") for n in marker_names)
+    need_judge = "live_api" in marker_names
+
+    backend.search.client = None
+    backend.llm.client = None
+    judges._judge_client = None
+    config.reset()
+
+    # Mocked unit tests still read config; inject placeholders only when not calling live APIs.
+    if needs_real_keys:
+        missing = collect_eval_config_errors(need_judge=need_judge)
+        config.reset()
+        if missing:
+            pytest.skip(
+                f"Live/benchmark tests require configured providers ({'; '.join(missing)})"
+            )
+    else:
+        if not os.getenv("OPENAI_API_KEY"):
+            monkeypatch.setenv("OPENAI_API_KEY", "__test_openai_key__")
+        if not os.getenv("NEBIUS_API_KEY"):
+            monkeypatch.setenv("NEBIUS_API_KEY", "__test_nebius_key__")
+        if not os.getenv("TAVILY_API_KEY"):
+            monkeypatch.setenv("TAVILY_API_KEY", "__test_tavily_key__")
 
     backend.search.client = None
     backend.llm.client = None

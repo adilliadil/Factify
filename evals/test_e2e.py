@@ -189,6 +189,8 @@ class TestE2EUnit:
 class TestE2EQuality:
     """Quality tests for E2E pipeline - real LLM and Tavily calls, tests overall accuracy."""
 
+    pytestmark = pytest.mark.live_api
+
     @pytest.fixture(autouse=True)
     def setup(self):
         self.golden_dataset = load_dataset("e2e_quality_golden")

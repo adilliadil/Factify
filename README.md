@@ -118,6 +118,33 @@ pip install -r evals/requirements.txt
 python -m pytest evals/ -v
 ```
 
+### Filtering benchmark runs
+
+Benchmark cases live in `evals/test_benchmark.py` (three arms: gold evidence, searched evidence, full pipeline). Parametrised test IDs are `{dataset_name}-{sample_id}` (for example `AVeriTeC-av_001`), defined in that file.
+
+Run a single arm:
+
+```bash
+python -m pytest evals/test_benchmark.py -m benchmark -k "TestGoldEvidenceAnalysis"
+python -m pytest evals/test_benchmark.py -m benchmark -k "TestSearchedEvidenceAnalysis"
+python -m pytest evals/test_benchmark.py -m benchmark -k "TestFullPipeline"
+```
+
+Run one sample (match the param ID substring; combine with the class name if needed):
+
+```bash
+python -m pytest evals/test_benchmark.py -m benchmark -k "TestGoldEvidenceAnalysis and av_001"
+python -m pytest evals/test_benchmark.py -m benchmark -k "AVeriTeC-av_001"
+```
+
+Show prints and pipeline logs while debugging:
+
+```bash
+python -m pytest evals/test_benchmark.py -m benchmark -k "TestGoldEvidenceAnalysis and av_001" -s --log-cli-level=DEBUG
+```
+
+A timestamped report is still written under `evals/reports/` when any benchmark tests run in that session (see `evals/conftest.py`).
+
 Unit tests (mocked) inject placeholder keys so they run without real credentials. Benchmark and quality (`live_api`) tests skip unless `backend.config` can load the pipeline LLM, Tavily search, and (for quality suites) the judge model from your `.env` — matching whatever providers you configure.
 
 ### How evals work

@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 ## 0.2.7
 
 - Benchmark text reports: failed sample rows now include verdict vs expected, score vs expected range (Arm A gold only), and reconstructed failure reasons so score-only failures are visible. `expected_score_range` is included in structured results / JSON snapshot. Tests in `evals/test_benchmark_reporting.py`.
+- README: documented filtering benchmark runs by arm (`-k` class name), by sample ID, and with `-s` / `--log-cli-level` for debugging.
 
 ## 0.2.6
 

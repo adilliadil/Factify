@@ -37,13 +37,17 @@ class TestSearchUnit:
         assert results == [], "Should return empty list for no results"
 
     @pytest.mark.asyncio
-    async def test_handles_api_error(self, mock_tavily_client):
-        """Should return empty list on API error."""
+    async def test_handles_api_error(self, mock_tavily_client, caplog):
+        """Should return empty list on API error and log the failure."""
+        import logging
+
         mock_tavily_client.search = AsyncMock(side_effect=Exception("API Error"))
 
+        caplog.set_level(logging.ERROR)
         results = await search_claim("any claim")
 
         assert results == [], "Should return empty list on error"
+        assert "Tavily search failed" in caplog.text
 
     @pytest.mark.asyncio
     async def test_respects_max_results(self, mock_tavily_client):
@@ -74,6 +78,8 @@ class TestSearchUnit:
 
 class TestSearchQuality:
     """Quality tests for search - real Tavily calls, tests actual search relevance."""
+
+    pytestmark = pytest.mark.live_api
 
     @pytest.fixture(autouse=True)
     def setup(self):

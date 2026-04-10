@@ -1,15 +1,16 @@
 """Benchmark metrics computation, report formatting, and file output.
 
-Pure reporting logic with no pytest dependency. Called by conftest.py hooks
-at session end to generate timestamped .txt and .json reports.
+Called by conftest.py hooks at session end to generate timestamped .txt and .json reports.
+Uses `backend.config` for the resolved pipeline model label (pytest `pythonpath` includes repo root).
 """
 
 import json
-import os
 import statistics
 import subprocess
 from datetime import datetime, timezone
 from pathlib import Path
+
+from backend.config import config
 
 REPORTS_DIR = Path(__file__).parent / "reports"
 VERDICT_ORDER = ["false", "mostly_false", "mixed", "mostly_true", "true", "unverifiable"]
@@ -32,6 +33,26 @@ def within_one_level(actual: str, expected_verdicts: list[str]) -> bool:
         verdict_index(ev) != -1 and abs(actual_idx - verdict_index(ev)) <= 1
         for ev in expected_verdicts
     )
+
+
+def failure_reasons(r: dict, *, check_score_range: bool) -> list[str]:
+    """Explain why a benchmark row is incorrect (reconstructs assertions from `test_benchmark`)."""
+    reasons: list[str] = []
+    expected = r.get("expected_verdicts") or []
+    actual = r.get("actual_verdict", "?")
+    if actual not in expected:
+        exp = "/".join(expected) if expected else "(none)"
+        reasons.append(f"verdict: got {actual}, expected one of {exp}")
+
+    if check_score_range:
+        rng = r.get("expected_score_range")
+        if rng is not None and len(rng) == 2:
+            lo, hi = int(rng[0]), int(rng[1])
+            score = r.get("score", -1)
+            if not (lo <= score <= hi):
+                reasons.append(f"score: got {score}, expected in [{lo}, {hi}]")
+
+    return reasons or ["unknown (assertion mismatch not reconstructed)"]
 
 
 # ── Aggregate metrics ─────────────────────────────────────────
@@ -133,6 +154,7 @@ def build_structured_results(
                 "claim": meta.get("claim", ""),
                 "label": meta.get("label", "unknown"),
                 "expected_verdicts": expected,
+                "expected_score_range": meta.get("expected_score_range"),
                 "actual_verdict": actual_verdict,
                 "score": score,
                 "confidence": conf,
@@ -152,7 +174,7 @@ def format_report(
 ) -> str:
     now = datetime.now(timezone.utc)
     commit = get_git_commit()
-    model = os.getenv("LLM_MODEL", "gpt-4o-mini")
+    model = config.llm.model
 
     datasets_summary: dict[str, int] = {}
     for r in arm_b:
@@ -241,21 +263,37 @@ def format_report(
         lines.append(f"  {label:40s} {stats['mean']:5.1f} ± {stats['std']:4.1f}  (n={stats['count']})")
     lines.append("")
 
-    # Failed Samples
-    arm_label_map = [("Arm A — Gold Evidence", arm_a), ("Arm B — Searched Evidence", arm_b), ("Arm C — Full Pipeline", arm_c)]
-    failures_exist = any(not r["correct"] for _, results in arm_label_map for r in results)
+    # Failed Samples (Arm A also asserts score range; B/C assert verdict only — see test_benchmark.py)
+    arm_specs = [
+        ("Arm A — Gold Evidence", arm_a, True),
+        ("Arm B — Searched Evidence", arm_b, False),
+        ("Arm C — Full Pipeline", arm_c, False),
+    ]
+    failures_exist = any(not r["correct"] for _, results, _ in arm_specs for r in results)
     if failures_exist:
         lines.append("── Failed Samples ───────────────────────────────────────────")
         lines.append("")
-        for arm_label, results in arm_label_map:
+        for arm_label, results, check_score_range in arm_specs:
             failed = [r for r in results if not r["correct"]]
             if not failed:
                 continue
             lines.append(f"  {arm_label} ({len(failed)} failed / {len(results)} total):")
-            lines.append(f"    {'ID':16s}{'Label':42s}{'Expected':37s}Got")
+            lines.append(
+                f"    {'ID':16s}{'Label':34s}{'Verdict (got / expected)':40s}"
+                f"{'Score (got / exp. range)':26s}Failure reasons"
+            )
             for r in failed:
-                expected = "/".join(r["expected_verdicts"])
-                lines.append(f"    {r['id']:16s}{r['label']:42s}{expected:37s}{r['actual_verdict']}")
+                exp_v = "/".join(r["expected_verdicts"])
+                verdict_col = f"{r['actual_verdict']} / {exp_v}"
+                sr = r.get("expected_score_range")
+                if check_score_range and sr is not None and len(sr) == 2:
+                    score_col = f"{r['score']} / [{sr[0]}, {sr[1]}]"
+                else:
+                    score_col = f"{r['score']}" + ("  (no range check)" if not check_score_range else "")
+                reasons = "; ".join(failure_reasons(r, check_score_range=check_score_range))
+                lines.append(
+                    f"    {r['id']:16s}{r['label'][:34]:34s}{verdict_col:40s}{score_col:26s}{reasons}"
+                )
             lines.append("")
 
     lines.append("═" * 64)
@@ -283,7 +321,7 @@ def write_reports(
     json_path = REPORTS_DIR / "benchmark_results.json"
     json_data = {
         "timestamp": now.isoformat(),
-        "model": os.getenv("LLM_MODEL", "gpt-4o-mini"),
+        "model": config.llm.model,
         "commit": get_git_commit(),
         "arm_a": arm_a,
         "arm_b": arm_b,

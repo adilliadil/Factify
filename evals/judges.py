@@ -1,19 +1,36 @@
 """LLM-as-judge functions for evaluating extraction and analysis quality."""
 
 import json
-
-from openai import AsyncOpenAI
+import logging
 
 from backend.config import config
+from backend.llm_clients import LLMClient, create_client
 
-_judge_client: AsyncOpenAI | None = None
+logger = logging.getLogger(__name__)
+
+_judge_client: LLMClient | None = None
 
 
-def get_judge_client() -> AsyncOpenAI:
+def get_judge_client() -> LLMClient:
     global _judge_client
     if _judge_client is None:
-        _judge_client = AsyncOpenAI(base_url=config.judge.base_url, api_key=config.judge.api_key)
+        _judge_client = create_client(config.judge)
     return _judge_client
+
+
+def _parse_judge_json(raw: str | None, *, context: str) -> dict | None:
+    if raw is None:
+        logger.warning("%s: empty response content", context)
+        return None
+    try:
+        out = json.loads(raw)
+    except json.JSONDecodeError:
+        logger.warning("%s: invalid JSON (first 200 chars): %r", context, raw[:200])
+        return None
+    if not isinstance(out, dict):
+        logger.warning("%s: expected JSON object, got %s", context, type(out).__name__)
+        return None
+    return out
 
 
 CLAIM_EXTRACTION_JUDGE_PROMPT = """You are evaluating a claim extraction system.
@@ -82,6 +99,7 @@ async def judge_claim_extraction(
         should_exclude="\n".join(f"- {c}" for c in should_exclude) if should_exclude else "(none specified)",
     )
 
+    logger.debug("judge_claim_extraction model=%s", config.judge.model)
     resp = await get_judge_client().chat.completions.create(
         model=config.judge.model,
         messages=[
@@ -92,7 +110,15 @@ async def judge_claim_extraction(
         temperature=0,
     )
 
-    result = json.loads(resp.choices[0].message.content)
+    result = _parse_judge_json(resp.choices[0].message.content, context="judge_claim_extraction")
+    if result is None:
+        return {
+            "pass": False,
+            "reason": "Judge returned invalid or empty JSON",
+            "coverage_score": 0.0,
+            "missing_claims": [],
+            "spurious_claims": [],
+        }
 
     return {
         "pass": result.get("pass", False),
@@ -177,6 +203,7 @@ async def judge_search_relevance(
         sources=sources_text,
     )
 
+    logger.debug("judge_search_relevance model=%s sources=%d", config.judge.model, len(sources))
     resp = await get_judge_client().chat.completions.create(
         model=config.judge.model,
         messages=[
@@ -187,15 +214,24 @@ async def judge_search_relevance(
         temperature=0,
     )
 
-    result = json.loads(resp.choices[0].message.content)
+    parsed = _parse_judge_json(resp.choices[0].message.content, context="judge_search_relevance")
+    if parsed is None:
+        return {
+            "pass": False,
+            "reason": "Judge returned invalid or empty JSON",
+            "relevance_score": 0.0,
+            "coverage_score": 0.0,
+            "relevant_source_count": 0,
+            "irrelevant_sources": [],
+        }
 
     return {
-        "pass": result.get("pass", False),
-        "reason": result.get("reason", "No reason provided"),
-        "relevance_score": result.get("relevance_score", 0.0),
-        "coverage_score": result.get("coverage_score", 0.0),
-        "relevant_source_count": result.get("relevant_source_count", 0),
-        "irrelevant_sources": result.get("irrelevant_sources", []),
+        "pass": parsed.get("pass", False),
+        "reason": parsed.get("reason", "No reason provided"),
+        "relevance_score": parsed.get("relevance_score", 0.0),
+        "coverage_score": parsed.get("coverage_score", 0.0),
+        "relevant_source_count": parsed.get("relevant_source_count", 0),
+        "irrelevant_sources": parsed.get("irrelevant_sources", []),
     }
 
 
@@ -288,6 +324,7 @@ async def judge_analysis_quality(
         expected_verdicts=", ".join(expected_verdicts),
     )
 
+    logger.debug("judge_analysis_quality model=%s", config.judge.model)
     resp = await get_judge_client().chat.completions.create(
         model=config.judge.model,
         messages=[
@@ -298,15 +335,24 @@ async def judge_analysis_quality(
         temperature=0,
     )
 
-    result = json.loads(resp.choices[0].message.content)
+    parsed = _parse_judge_json(resp.choices[0].message.content, context="judge_analysis_quality")
+    if parsed is None:
+        return {
+            "pass": False,
+            "reason": "Judge returned invalid or empty JSON",
+            "verdict_correct": False,
+            "reasoning_sound": False,
+            "score_aligned": False,
+            "issues": [],
+        }
 
     return {
-        "pass": result.get("pass", False),
-        "reason": result.get("reason", "No reason provided"),
-        "verdict_correct": result.get("verdict_correct", False),
-        "reasoning_sound": result.get("reasoning_sound", False),
-        "score_aligned": result.get("score_aligned", False),
-        "issues": result.get("issues", []),
+        "pass": parsed.get("pass", False),
+        "reason": parsed.get("reason", "No reason provided"),
+        "verdict_correct": parsed.get("verdict_correct", False),
+        "reasoning_sound": parsed.get("reasoning_sound", False),
+        "score_aligned": parsed.get("score_aligned", False),
+        "issues": parsed.get("issues", []),
     }
 
 
@@ -400,6 +446,7 @@ async def judge_e2e_quality(
         description=description,
     )
 
+    logger.debug("judge_e2e_quality model=%s", config.judge.model)
     resp = await get_judge_client().chat.completions.create(
         model=config.judge.model,
         messages=[
@@ -410,14 +457,24 @@ async def judge_e2e_quality(
         temperature=0,
     )
 
-    result_json = json.loads(resp.choices[0].message.content)
+    parsed = _parse_judge_json(resp.choices[0].message.content, context="judge_e2e_quality")
+    if parsed is None:
+        return {
+            "pass": False,
+            "reason": "Judge returned invalid or empty JSON",
+            "claims_correct": False,
+            "verdict_correct": False,
+            "score_aligned": False,
+            "explanation_quality": "poor",
+            "issues": [],
+        }
 
     return {
-        "pass": result_json.get("pass", False),
-        "reason": result_json.get("reason", "No reason provided"),
-        "claims_correct": result_json.get("claims_correct", False),
-        "verdict_correct": result_json.get("verdict_correct", False),
-        "score_aligned": result_json.get("score_aligned", False),
-        "explanation_quality": result_json.get("explanation_quality", "poor"),
-        "issues": result_json.get("issues", []),
+        "pass": parsed.get("pass", False),
+        "reason": parsed.get("reason", "No reason provided"),
+        "claims_correct": parsed.get("claims_correct", False),
+        "verdict_correct": parsed.get("verdict_correct", False),
+        "score_aligned": parsed.get("score_aligned", False),
+        "explanation_quality": parsed.get("explanation_quality", "poor"),
+        "issues": parsed.get("issues", []),
     }

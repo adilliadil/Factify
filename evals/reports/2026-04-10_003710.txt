@@ -1,0 +1,48 @@
+Benchmark Report — 2026-04-10 00:37:10 UTC
+Model: gpt-5.4-nano
+Commit: 7eafc5e
+Datasets: 
+Total Tavily searches: 0
+────────────────────────────────────────────────────────────────
+
+── Overall Accuracy ──────────────────────────────────────────
+                       Arm A (Gold)  Arm B (Search)    Arm C (Full)
+  Combined                    62.0%            0.0%            0.0%
+
+── Within-One-Level Accuracy ─────────────────────────────────
+  Combined                    80.0%            0.0%            0.0%
+
+── Delta Analysis ───────────────────────────────────────────
+  Search delta  (A - B): +62.0%  ← gold evidence better
+  Extract delta (B - C): +0.0%  ← no difference
+
+── Per-Label Accuracy (Arm C — Full Pipeline) ──────────────
+── Confidence Calibration (Arm C) ───────────────────────────
+
+── Score Distribution (Arm C, mean ± std by label) ─────────
+
+── Failed Samples ───────────────────────────────────────────
+
+  Arm A — Gold Evidence (19 failed / 50 total):
+    ID              Label                             Verdict (got / expected)                Score (got / exp. range)  Failure reasons
+    av_001          Conflicting Evidence/Cherrypickingmostly_true / mixed/mostly_true/mostly_false85 / [25, 75]             score: got 85, expected in [25, 75]
+    av_002          Conflicting Evidence/Cherrypickingunverifiable / mixed/mostly_true/mostly_false50 / [25, 75]             verdict: got unverifiable, expected one of mixed/mostly_true/mostly_false
+    av_004          Conflicting Evidence/Cherrypickingunverifiable / mixed/mostly_true/mostly_false50 / [25, 75]             verdict: got unverifiable, expected one of mixed/mostly_true/mostly_false
+    av_005          Conflicting Evidence/Cherrypickingmostly_true / mixed/mostly_true/mostly_false78 / [25, 75]             score: got 78, expected in [25, 75]
+    av_006          Not Enough Evidence               mostly_false / unverifiable/mixed       20 / [30, 60]             verdict: got mostly_false, expected one of unverifiable/mixed; score: got 20, expected in [30, 60]
+    av_008          Refuted                           mostly_true / false/mostly_false        70 / [0, 40]              verdict: got mostly_true, expected one of false/mostly_false; score: got 70, expected in [0, 40]
+    av_015          Not Enough Evidence               mostly_false / unverifiable/mixed       35 / [30, 60]             verdict: got mostly_false, expected one of unverifiable/mixed
+    av_019          Conflicting Evidence/Cherrypickingunverifiable / mixed/mostly_true/mostly_false50 / [25, 75]             verdict: got unverifiable, expected one of mixed/mostly_true/mostly_false
+    av_023          Conflicting Evidence/Cherrypickingunverifiable / mixed/mostly_true/mostly_false50 / [25, 75]             verdict: got unverifiable, expected one of mixed/mostly_true/mostly_false
+    av_029          Refuted                           unverifiable / false/mostly_false       50 / [0, 40]              verdict: got unverifiable, expected one of false/mostly_false; score: got 50, expected in [0, 40]
+    av_030          Supported                         mixed / true/mostly_true                55 / [60, 100]            verdict: got mixed, expected one of true/mostly_true; score: got 55, expected in [60, 100]
+    av_031          Refuted                           unverifiable / false/mostly_false       10 / [0, 40]              verdict: got unverifiable, expected one of false/mostly_false
+    av_034          Not Enough Evidence               mostly_false / unverifiable/mixed       35 / [30, 60]             verdict: got mostly_false, expected one of unverifiable/mixed
+    av_037          Conflicting Evidence/Cherrypickingmostly_false / mixed/mostly_true/mostly_false15 / [25, 75]             score: got 15, expected in [25, 75]
+    av_038          Refuted                           unverifiable / false/mostly_false       50 / [0, 40]              verdict: got unverifiable, expected one of false/mostly_false; score: got 50, expected in [0, 40]
+    av_041          Supported                         unverifiable / true/mostly_true         50 / [60, 100]            verdict: got unverifiable, expected one of true/mostly_true; score: got 50, expected in [60, 100]
+    av_042          Not Enough Evidence               false / unverifiable/mixed              10 / [30, 60]             verdict: got false, expected one of unverifiable/mixed; score: got 10, expected in [30, 60]
+    av_047          Refuted                           mostly_true / false/mostly_false        85 / [0, 40]              verdict: got mostly_true, expected one of false/mostly_false; score: got 85, expected in [0, 40]
+    av_050          Conflicting Evidence/Cherrypickingmostly_true / mixed/mostly_true/mostly_false78 / [25, 75]             score: got 78, expected in [25, 75]
+
+════════════════════════════════════════════════════════════════

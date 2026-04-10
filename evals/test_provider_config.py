@@ -6,7 +6,10 @@ from backend.llm_clients import HttpChatClient, create_client
 
 
 @pytest.fixture(autouse=True)
-def reset_config():
+def reset_config(monkeypatch):
+    """Ignore real ``.env`` pipeline/judge model picks so tests control ``LLM_MODEL`` / ``JUDGE_MODEL``."""
+    monkeypatch.delenv("LLM_MODEL", raising=False)
+    monkeypatch.delenv("JUDGE_MODEL", raising=False)
     config.reset()
     yield
     config.reset()
@@ -169,6 +172,45 @@ def test_judge_resolves_registry_alias(monkeypatch):
     assert cfg.provider == "azure_inference"
     assert cfg.model == "gpt-5.4-nano"
     assert cfg.api_key == "aoai-key"
+    assert cfg.base_url == "https://aoai.example/chat"
+
+
+def test_gpt_registry_expands_bare_azure_host(monkeypatch):
+    monkeypatch.setenv("OPENAI_API_KEY", "dummy")
+    monkeypatch.setenv("LLM_MODEL", "gpt-nano")
+    monkeypatch.setenv("AZURE_OPENAI_BASE_URL", "https://202604-resource.cognitiveservices.azure.com")
+    monkeypatch.setenv("AZURE_OPENAI_KEY", "k")
+    monkeypatch.setenv("GPT_NANO_MODEL_NAME", "gpt-5.4-nano")
+    cfg = config.llm
+    assert cfg.base_url == (
+        "https://202604-resource.cognitiveservices.azure.com/openai/deployments/gpt-5.4-nano/"
+        "chat/completions?api-version=2024-08-01-preview"
+    )
+
+
+def test_gpt_registry_full_chat_url_unchanged(monkeypatch):
+    full = (
+        "https://x.cognitiveservices.azure.com/openai/deployments/gpt-5.4-nano/"
+        "chat/completions?api-version=2024-08-01-preview"
+    )
+    monkeypatch.setenv("OPENAI_API_KEY", "dummy")
+    monkeypatch.setenv("LLM_MODEL", "gpt-nano")
+    monkeypatch.setenv("AZURE_OPENAI_BASE_URL", full)
+    monkeypatch.setenv("AZURE_OPENAI_KEY", "k")
+    monkeypatch.setenv("GPT_NANO_MODEL_NAME", "gpt-5.4-nano")
+    cfg = config.llm
+    assert cfg.base_url == full
+
+
+def test_gpt_registry_api_version_override(monkeypatch):
+    monkeypatch.setenv("OPENAI_API_KEY", "dummy")
+    monkeypatch.setenv("LLM_MODEL", "gpt-nano")
+    monkeypatch.setenv("AZURE_OPENAI_BASE_URL", "https://resource.cognitiveservices.azure.com")
+    monkeypatch.setenv("AZURE_OPENAI_KEY", "k")
+    monkeypatch.setenv("GPT_NANO_MODEL_NAME", "my-deployment")
+    monkeypatch.setenv("AZURE_OPENAI_REGISTRY_API_VERSION", "2024-12-01-preview")
+    cfg = config.llm
+    assert "api-version=2024-12-01-preview" in (cfg.base_url or "")
 
 
 def test_create_client_dispatches_azure_openai():

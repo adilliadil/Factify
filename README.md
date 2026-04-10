@@ -78,7 +78,7 @@ Secondary models are registered when their backing env vars are set (see `.env.e
 |-------|------------------|
 | `grok-reasoning`, `grok-nonreasoning`, `kimi`, `deepseek-r` | `AZURE_BASE_URL`, `AZURE_API_KEY`, plus the corresponding `*_MODEL_NAME` |
 | `deepseek-v`, `llama-maverick` | `AZURE_WEIRDOS_BASE_URL`, `AZURE_WEIRDOS_KEY`, plus model name vars |
-| `gpt-nano`, `gpt-mini` | `AZURE_OPENAI_BASE_URL` (full `chat/completions` URL), `AZURE_OPENAI_KEY`, plus `GPT_*_MODEL_NAME` |
+| `gpt-nano`, `gpt-mini` | `AZURE_OPENAI_BASE_URL` (resource root or full `/openai/deployments/.../chat/completions` URL), `AZURE_OPENAI_KEY`, plus `GPT_*_MODEL_NAME` (deployment name) |
 
 At runtime, `config.models` exposes the resolved `ModelConfig` entries for tooling and benchmarks.
 

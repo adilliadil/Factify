@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## 0.2.7
+
+- Benchmark text reports: failed sample rows now include verdict vs expected, score vs expected range (Arm A gold only), and reconstructed failure reasons so score-only failures are visible. `expected_score_range` is included in structured results / JSON snapshot. Tests in `evals/test_benchmark_reporting.py`.
+
+## 0.2.6
+
+- Model registry (`gpt-nano`, `gpt-mini`): when `AZURE_OPENAI_BASE_URL` is a bare Azure resource host (no path), expand it to `/openai/deployments/<GPT_*_MODEL_NAME>/chat/completions?api-version=...` so requests hit the real chat API instead of the resource root (which can return an empty 200). Optional `AZURE_OPENAI_REGISTRY_API_VERSION` overrides the default API version. Documented in `.env.example` and `README.md`; tests in `evals/test_provider_config.py`.
+
 ## 0.2.5
 
 - Evals: live/benchmark gate now validates `config.llm`, `config.search`, and (for `live_api` only) `config.judge` via `ConfigError` messages instead of requiring `OPENAI_API_KEY`, `NEBIUS_API_KEY`, and `TAVILY_API_KEY` to all be set. Exposed `collect_eval_config_errors()` in `evals/conftest.py` with tests in `evals/test_config_helpers.py`.

@@ -16,6 +16,7 @@ import logging
 import os
 from dataclasses import dataclass
 from typing import Literal
+from urllib.parse import urlparse
 
 logger = logging.getLogger(__name__)
 
@@ -81,6 +82,30 @@ class ModelConfig:
 @dataclass(frozen=True)
 class SearchConfig:
     api_key: str
+
+
+def _gpt_registry_chat_completions_url(base_url: str, deployment_name: str) -> str:
+    """Expand bare Azure resource URLs for ``gpt-nano`` / ``gpt-mini`` registry aliases.
+
+    Azure OpenAI on ``*.cognitiveservices.azure.com`` expects
+    ``/openai/deployments/<deployment>/chat/completions?api-version=...``.
+    Posting JSON to the resource root often returns HTTP 200 with an empty body, which
+    breaks the inference HTTP client.
+
+    If ``base_url`` already contains ``chat/completions``, or has a non-root path, it
+    is returned unchanged. Optional ``AZURE_OPENAI_REGISTRY_API_VERSION`` overrides the
+    default API version used when expanding (default ``2024-08-01-preview``).
+    """
+    b = base_url.strip().rstrip("/")
+    if "chat/completions" in b:
+        return b
+    parsed = urlparse(b)
+    path = parsed.path or ""
+    if path not in ("", "/"):
+        return b
+    dep = deployment_name.strip()
+    api_ver = (os.getenv("AZURE_OPENAI_REGISTRY_API_VERSION") or "2024-08-01-preview").strip()
+    return f"{b}/openai/deployments/{dep}/chat/completions?api-version={api_ver}"
 
 
 def _build_model_registry() -> dict[str, ModelConfig]:
@@ -153,7 +178,9 @@ def _build_model_registry() -> dict[str, ModelConfig]:
         ):
             m = os.getenv(env_name)
             if m and m.strip():
-                add_azure_inference(alias, ao_url, ao_key, m)
+                add_azure_inference(
+                    alias, _gpt_registry_chat_completions_url(ao_url, m), ao_key, m
+                )
 
     return out
 

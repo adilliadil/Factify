@@ -1,10 +1,15 @@
 """Benchmark metrics computation, report formatting, and file output.
 
-Called by conftest.py hooks at session end to generate timestamped .txt and .json reports.
+Called by conftest.py hooks at session end to generate reports (``.txt`` + ``benchmark_results.json``,
+or JSON-only when ``BENCHMARK_OUTPUT_FILE`` is set for multi-model runs).
 Uses `backend.config` for the resolved pipeline model label (pytest `pythonpath` includes repo root).
+
+Set ``BENCHMARK_OUTPUT_FILE`` to an absolute path to write the JSON snapshot there instead of
+``reports/benchmark_results.json`` (used by ``run_benchmark`` for parallel LLM runs).
 """
 
 import json
+import os
 import statistics
 import subprocess
 from datetime import datetime, timezone
@@ -57,10 +62,17 @@ def failure_reasons(r: dict, *, check_score_range: bool) -> list[str]:
 
 # ── Aggregate metrics ─────────────────────────────────────────
 
+def _is_scored_row(r: dict) -> bool:
+    """Rows that count toward accuracy / within-one (excludes request failures and pytest skips)."""
+    return not r.get("request_failed") and not r.get("skipped")
+
+
 def accuracy(results: list[dict]) -> float:
-    if not results:
+    """Exact-match accuracy over rows where the pipeline returned a scored result (excludes skips)."""
+    eligible = [r for r in results if _is_scored_row(r)]
+    if not eligible:
         return 0.0
-    return sum(1 for r in results if r["correct"]) / len(results) * 100
+    return sum(1 for r in eligible if r["correct"]) / len(eligible) * 100
 
 
 def verdict_accuracy(results: list[dict]) -> float:
@@ -71,9 +83,42 @@ def verdict_accuracy(results: list[dict]) -> float:
 
 
 def within_one_accuracy(results: list[dict]) -> float:
+    """Within-one-level accuracy over scored rows (excludes request failures and pytest skips)."""
+    eligible = [r for r in results if _is_scored_row(r)]
+    if not eligible:
+        return 0.0
+    return sum(1 for r in eligible if r["within_one"]) / len(eligible) * 100
+
+
+def request_failure_rate(results: list[dict]) -> float:
+    """Share of benchmark rows where the API call failed before a result was stored."""
     if not results:
         return 0.0
-    return sum(1 for r in results if r["within_one"]) / len(results) * 100
+    return sum(1 for r in results if r.get("request_failed")) / len(results) * 100
+
+
+def skipped_rate(results: list[dict]) -> float:
+    """Share of benchmark rows where the test was skipped (e.g. Arm B no search sources)."""
+    if not results:
+        return 0.0
+    return sum(1 for r in results if r.get("skipped")) / len(results) * 100
+
+
+def _incorrect_assertion_count(arm: list[dict]) -> int:
+    """Rows where we got a scored result but verdict/score did not match gold."""
+    return sum(
+        1
+        for r in arm
+        if not r.get("correct") and _is_scored_row(r)
+    )
+
+
+def _request_failure_count(arm: list[dict]) -> int:
+    return sum(1 for r in arm if r.get("request_failed"))
+
+
+def _skipped_count(arm: list[dict]) -> int:
+    return sum(1 for r in arm if r.get("skipped"))
 
 
 def by_dataset(results: list[dict]) -> dict[str, list[dict]]:
@@ -93,6 +138,8 @@ def by_label(results: list[dict]) -> dict[str, list[dict]]:
 def confidence_calibration(results: list[dict]) -> dict[str, dict]:
     by_conf: dict[str, list[dict]] = {}
     for r in results:
+        if not _is_scored_row(r):
+            continue
         conf = r.get("confidence", "unknown")
         by_conf.setdefault(conf, []).append(r)
 
@@ -109,7 +156,7 @@ def confidence_calibration(results: list[dict]) -> dict[str, dict]:
 
 
 def score_distribution(results: list[dict]) -> dict[str, dict]:
-    bl = by_label(results)
+    bl = by_label([r for r in results if _is_scored_row(r)])
     dist = {}
     for label, items in sorted(bl.items()):
         scores = [r["score"] for r in items if r["score"] >= 0]
@@ -149,6 +196,8 @@ def build_structured_results(
             key = pf["key"]
             meta = sample_lookup.get(key, {})
             stored = result_data.get(f"{arm_key}:{key}", {})
+            request_failed = bool(pf.get("request_failed"))
+            skipped = bool(pf.get("skipped"))
 
             actual_verdict = stored.get("actual_verdict", "?")
             score = stored.get("score", -1)
@@ -156,6 +205,12 @@ def build_structured_results(
             expected = meta.get("expected_verdicts", [])
 
             verdict_correct = actual_verdict in expected if expected else False
+            within_one = (
+                False
+                if request_failed or skipped
+                else (pf["passed"] or within_one_level(actual_verdict, expected))
+            )
+
             results.append({
                 "dataset": meta.get("dataset", "Unknown"),
                 "id": meta.get("id", key),
@@ -166,9 +221,11 @@ def build_structured_results(
                 "actual_verdict": actual_verdict,
                 "score": score,
                 "confidence": conf,
+                "request_failed": request_failed,
+                "skipped": skipped,
                 "correct": pf["passed"],
                 "verdict_correct": verdict_correct,
-                "within_one": pf["passed"] or within_one_level(actual_verdict, expected),
+                "within_one": within_one,
             })
         arm_lists[arm_key] = results
     return arm_lists["arm_baseline"], arm_lists["arm_a"], arm_lists["arm_b"], arm_lists["arm_c"]
@@ -234,6 +291,34 @@ def format_report(
     lines.append(f"  {'Combined':18s} {bl_total:>14s}  {a_total:>14s}  {b_total:>14s}  {c_total:>14s}")
     lines.append("")
 
+    # Request failures (API error before result stored; excluded from accuracy above)
+    lines.append("── Request failures (%) ─────────────────────────────────────")
+    lines.append(f"{'':20s} {'Arm A (Gold)':>14s}  {'Arm B (Search)':>14s}  {'Arm C (Full)':>14s}")
+    for ds in all_datasets:
+        a_rf = f"{request_failure_rate(arm_a_by_ds.get(ds, [])):.1f}%" if ds in arm_a_by_ds else "—"
+        b_rf = f"{request_failure_rate(arm_b_by_ds.get(ds, [])):.1f}%"
+        c_rf = f"{request_failure_rate(arm_c_by_ds.get(ds, [])):.1f}%"
+        lines.append(f"  {ds:18s} {a_rf:>14s}  {b_rf:>14s}  {c_rf:>14s}")
+    a_rf_tot = f"{request_failure_rate(arm_a):.1f}%" if arm_a else "—"
+    b_rf_tot = f"{request_failure_rate(arm_b):.1f}%"
+    c_rf_tot = f"{request_failure_rate(arm_c):.1f}%"
+    lines.append(f"  {'Combined':18s} {a_rf_tot:>14s}  {b_rf_tot:>14s}  {c_rf_tot:>14s}")
+    lines.append("")
+
+    # Skipped (pytest.skip — excluded from accuracy / within-one above)
+    lines.append("── Skipped (%) ───────────────────────────────────────────────")
+    lines.append(f"{'':20s} {'Arm A (Gold)':>14s}  {'Arm B (Search)':>14s}  {'Arm C (Full)':>14s}")
+    for ds in all_datasets:
+        a_sk = f"{skipped_rate(arm_a_by_ds.get(ds, [])):.1f}%" if ds in arm_a_by_ds else "—"
+        b_sk = f"{skipped_rate(arm_b_by_ds.get(ds, [])):.1f}%"
+        c_sk = f"{skipped_rate(arm_c_by_ds.get(ds, [])):.1f}%"
+        lines.append(f"  {ds:18s} {a_sk:>14s}  {b_sk:>14s}  {c_sk:>14s}")
+    a_sk_tot = f"{skipped_rate(arm_a):.1f}%" if arm_a else "—"
+    b_sk_tot = f"{skipped_rate(arm_b):.1f}%"
+    c_sk_tot = f"{skipped_rate(arm_c):.1f}%"
+    lines.append(f"  {'Combined':18s} {a_sk_tot:>14s}  {b_sk_tot:>14s}  {c_sk_tot:>14s}")
+    lines.append("")
+
     # Within-One-Level Accuracy
     lines.append("── Within-One-Level Accuracy ─────────────────────────────────────────────────")
     bl_w1 = f"{within_one_accuracy(arm_baseline):.1f}%" if arm_baseline else "—"
@@ -278,8 +363,9 @@ def format_report(
         bl = by_label(ds_results)
         lines.append(f"  {ds}:")
         for label, items in sorted(bl.items()):
-            correct = sum(1 for i in items if i["correct"])
-            total = len(items)
+            eligible = [i for i in items if _is_scored_row(i)]
+            correct = sum(1 for i in eligible if i["correct"])
+            total = len(eligible)
             pct = correct / total * 100 if total else 0
             lines.append(f"    {label:40s} {pct:5.1f}%  ({correct}/{total})")
         lines.append("")
@@ -301,14 +387,30 @@ def format_report(
         lines.append(f"  {label:40s} {stats['mean']:5.1f} ± {stats['std']:4.1f}  (n={stats['count']})")
     lines.append("")
 
-    # Failed Samples
+    # Failed samples (incorrect verdicts / scores; skipped sample IDs listed above)
     arm_specs = [
         ("Arm 0 — Baseline (No Evidence)", arm_baseline, False),
         ("Arm A — Gold Evidence", arm_a, True),
         ("Arm B — Searched Evidence", arm_b, False),
         ("Arm C — Full Pipeline", arm_c, False),
     ]
-    failures_exist = any(not r["correct"] for _, results, _ in arm_specs for r in results)
+    any_skipped = any(r.get("skipped") for _, results, _ in arm_specs for r in results)
+    if any_skipped:
+        lines.append("── Skipped samples (pytest.skip — excluded from accuracy) ───")
+        lines.append("")
+        for arm_label, results, _ in arm_specs:
+            skipped_rows = [r for r in results if r.get("skipped")]
+            if skipped_rows:
+                lines.append(
+                    f"  {arm_label}: {', '.join(str(r['id']) for r in skipped_rows)}"
+                )
+        lines.append("")
+
+    # Failed Samples (Arm A also asserts score range; B/C assert verdict only — see test_benchmark.py)
+    failures_exist = any(
+        r.get("request_failed") or (not r["correct"] and _is_scored_row(r))
+        for _, results, _ in arm_specs for r in results
+    )
     if failures_exist:
         lines.append("── Failed Samples ───────────────────────────────────────────────────────────")
         lines.append("")
@@ -316,12 +418,24 @@ def format_report(
             failed = [r for r in results if not r["correct"]]
             if not failed:
                 continue
-            lines.append(f"  {arm_label} ({len(failed)} failed / {len(results)} total):")
+            req_failed = [r for r in failed if r.get("request_failed")]
+            incorrect = [r for r in failed if not r.get("request_failed") and not r.get("skipped")]
+            n_skip = sum(1 for r in results if r.get("skipped"))
+            lines.append(
+                f"  {arm_label} ({len(failed)} not passed / {len(results)} total"
+                f"{f', {len(req_failed)} request failure(s)' if req_failed else ''}"
+                f"{f', {n_skip} skipped' if n_skip else ''}):"
+            )
+            if req_failed:
+                lines.append(f"    Request failed (no stored result): {', '.join(str(r['id']) for r in req_failed)}")
+            if not incorrect:
+                lines.append("")
+                continue
             lines.append(
                 f"    {'ID':16s}{'Label':34s}{'Verdict (got / expected)':40s}"
                 f"{'Score (got / exp. range)':26s}Failure reasons"
             )
-            for r in failed:
+            for r in incorrect:
                 exp_v = "/".join(r["expected_verdicts"])
                 verdict_col = f"{r['actual_verdict']} / {exp_v}"
                 sr = r.get("expected_score_range")
@@ -339,6 +453,301 @@ def format_report(
     return "\n".join(lines)
 
 
+# ── Multi-model comparison (Markdown) ──────────────────────────
+
+def _sample_count_for_timing(arm_a: list[dict], arm_b: list[dict], arm_c: list[dict]) -> int:
+    """How many benchmark rows ran (used for average wall time per sample)."""
+    return max(len(arm_a), len(arm_b), len(arm_c))
+
+
+def _primary_arm_results(
+    arm_a: list[dict], arm_b: list[dict], arm_c: list[dict],
+) -> tuple[str, list[dict]]:
+    """Pick the first non-empty arm for per-label / calibration tables."""
+    if arm_a:
+        return ("Arm A (Gold)", arm_a)
+    if arm_b:
+        return ("Arm B (Search)", arm_b)
+    if arm_c:
+        return ("Arm C (Full)", arm_c)
+    return ("(none)", [])
+
+
+def _per_label_accuracy_table(
+    models: list[str],
+    runs: dict[str, dict],
+) -> list[str]:
+    """Build markdown rows: | Label | m1 | m2 | ... |"""
+    # Union of labels across models from primary arm
+    labels: set[str] = set()
+    primary_by_model: dict[str, list[dict]] = {}
+    for m in models:
+        d = runs[m]
+        arm_a = d.get("arm_a") or []
+        arm_b = d.get("arm_b") or []
+        arm_c = d.get("arm_c") or []
+        _, rows = _primary_arm_results(arm_a, arm_b, arm_c)
+        primary_by_model[m] = rows
+        for r in rows:
+            labels.add(r.get("label") or "unknown")
+
+    lines: list[str] = []
+    if not labels:
+        lines.append("_No per-label data._")
+        return lines
+
+    header = "| Label | " + " | ".join(models) + " |"
+    sep = "|---|" + "|".join("---" for _ in models) + "|"
+    lines.extend([header, sep])
+
+    for label in sorted(labels):
+        cells = []
+        for m in models:
+            items = [r for r in primary_by_model[m] if (r.get("label") or "unknown") == label]
+            if not items:
+                cells.append("—")
+            else:
+                acc = accuracy(items)
+                cells.append(f"{acc:.1f}%")
+        lines.append("| " + label.replace("|", "\\|") + " | " + " | ".join(cells) + " |")
+    return lines
+
+
+def _confidence_calibration_md(results: list[dict]) -> list[str]:
+    if not results:
+        return ["_No confidence data._"]
+    cal = confidence_calibration(results)
+    out = []
+    for conf, stats in sorted(cal.items()):
+        out.append(
+            f'- **{conf}**: {stats["accuracy"]:.1f}% correct ({stats["correct"]}/{stats["total"]})'
+        )
+    return out
+
+
+def format_comparison_report(
+    runs: dict[str, dict],
+    *,
+    samples_cap: int | None = None,
+    timestamp_iso: str | None = None,
+    commit: str | None = None,
+    benchmark_class: str | None = None,
+) -> str:
+    """Build a Markdown report comparing multiple benchmark JSON payloads.
+
+    Each value in ``runs`` should include ``arm_a``, ``arm_b``, ``arm_c`` (lists like JSON export),
+    and ``wall_time_s`` (float, seconds). Optional: ``pytest_exit_code`` (int). Row dicts may include
+    ``request_failed`` (bool) when the pipeline errored before ``store_benchmark_result``, or
+    ``skipped`` (bool) when the benchmark test called ``pytest.skip`` (e.g. no search sources).
+    Accuracy excludes both; separate tables report request-failure and skip rates.
+
+    Keys of ``runs`` are display names (usually LLM aliases).
+    """
+    now = timestamp_iso or datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
+    commit_s = commit if commit is not None else get_git_commit()
+    models = list(runs.keys())
+
+    lines: list[str] = [
+        "# Benchmark comparison report",
+        "",
+        f"**Date:** {now}  |  **Commit:** {commit_s}",
+    ]
+    if benchmark_class:
+        lines.append(f"**Test class:** `{benchmark_class}`")
+    if samples_cap is not None:
+        lines.append(f"**Sample cap:** {samples_cap} (first N combined benchmark rows)")
+    lines.append("")
+
+    # Timing
+    lines.append("## Timing")
+    lines.append("")
+    lines.append("| Model | Wall time | Avg / sample | Samples (max arm) | Pytest |")
+    lines.append("|---|---|---|---|---|")
+    for m in models:
+        d = runs[m]
+        wt = float(d.get("wall_time_s", 0.0))
+        arm_a = d.get("arm_a") or []
+        arm_b = d.get("arm_b") or []
+        arm_c = d.get("arm_c") or []
+        n = _sample_count_for_timing(arm_a, arm_b, arm_c)
+        avg = wt / n if n else 0.0
+        exit_code = d.get("pytest_exit_code")
+        exit_cell = "—" if exit_code is None else str(exit_code)
+        lines.append(
+            f"| `{m}` | {wt:.2f}s | {avg:.2f}s | {n} | {exit_cell} |"
+        )
+    lines.append("")
+
+    # Accuracy by arm
+    lines.append("## Accuracy by arm")
+    lines.append("")
+    lines.append("| Model | Arm A exact | Arm A w/in 1 | Arm B exact | Arm B w/in 1 | Arm C exact | Arm C w/in 1 |")
+    lines.append("|---|---|---|---|---|---|---|")
+    for m in models:
+        d = runs[m]
+        arm_a = d.get("arm_a") or []
+        arm_b = d.get("arm_b") or []
+        arm_c = d.get("arm_c") or []
+        def cells(arm: list[dict]) -> tuple[str, str]:
+            if not arm:
+                return ("—", "—")
+            return (f"{accuracy(arm):.1f}%", f"{within_one_accuracy(arm):.1f}%")
+
+        a1, a2 = cells(arm_a)
+        b1, b2 = cells(arm_b)
+        c1, c2 = cells(arm_c)
+        lines.append(f"| `{m}` | {a1} | {a2} | {b1} | {b2} | {c1} | {c2} |")
+    lines.append("")
+
+    # Request failure rate by arm (share of rows where the API call failed before a result was stored)
+    lines.append("## Request failures (% by arm)")
+    lines.append("")
+    lines.append("| Model | Arm A | Arm B | Arm C |")
+    lines.append("|---|---|---|---|")
+    for m in models:
+        d = runs[m]
+        arm_a = d.get("arm_a") or []
+        arm_b = d.get("arm_b") or []
+        arm_c = d.get("arm_c") or []
+
+        def rf_cell(arm: list[dict]) -> str:
+            if not arm:
+                return "—"
+            return f"{request_failure_rate(arm):.1f}%"
+
+        lines.append(f"| `{m}` | {rf_cell(arm_a)} | {rf_cell(arm_b)} | {rf_cell(arm_c)} |")
+    lines.append("")
+
+    # Skipped rate by arm (share of rows where pytest.skip ran, e.g. Arm B no sources)
+    lines.append("## Skipped (% by arm)")
+    lines.append("")
+    lines.append("| Model | Arm A | Arm B | Arm C |")
+    lines.append("|---|---|---|---|")
+    for m in models:
+        d = runs[m]
+        arm_a = d.get("arm_a") or []
+        arm_b = d.get("arm_b") or []
+        arm_c = d.get("arm_c") or []
+
+        def sk_cell(arm: list[dict]) -> str:
+            if not arm:
+                return "—"
+            return f"{skipped_rate(arm):.1f}%"
+
+        lines.append(f"| `{m}` | {sk_cell(arm_a)} | {sk_cell(arm_b)} | {sk_cell(arm_c)} |")
+    lines.append("")
+
+    # Per-label on primary arm
+    lines.append("## Per-label accuracy (primary arm)")
+    arm_label, _ = _primary_arm_results(
+        runs[models[0]].get("arm_a") or [],
+        runs[models[0]].get("arm_b") or [],
+        runs[models[0]].get("arm_c") or [],
+    )
+    lines.append(
+        f"_Per-label table: each column uses that model's primary arm (first non-empty among A, B, C); "
+        f"example from first model: **{arm_label}**._"
+    )
+    lines.append("")
+    lines.extend(_per_label_accuracy_table(models, runs))
+    lines.append("")
+
+    # Confidence calibration (primary arm of each model)
+    lines.append("## Confidence calibration (primary arm per model)")
+    lines.append("")
+    for m in models:
+        d = runs[m]
+        arm_a = d.get("arm_a") or []
+        arm_b = d.get("arm_b") or []
+        arm_c = d.get("arm_c") or []
+        _, rows = _primary_arm_results(arm_a, arm_b, arm_c)
+        lines.append(f"### `{m}`")
+        lines.extend(_confidence_calibration_md(rows))
+        lines.append("")
+
+    # Incorrect verdict / score (excludes request failures and skips; accuracy denominator matches)
+    lines.append("## Incorrect verdicts (counts, excl. request failures & skips)")
+    lines.append("")
+    lines.append("| Model | Arm A | Arm B | Arm C | Total |")
+    lines.append("|---|---|---|---|---|")
+    for m in models:
+        d = runs[m]
+        fa = _incorrect_assertion_count(d.get("arm_a") or [])
+        fb = _incorrect_assertion_count(d.get("arm_b") or [])
+        fc = _incorrect_assertion_count(d.get("arm_c") or [])
+        tot = fa + fb + fc
+        lines.append(f"| `{m}` | {fa} | {fb} | {fc} | {tot} |")
+    lines.append("")
+
+    # Request failures (counts)
+    lines.append("## Request failures (counts)")
+    lines.append("")
+    lines.append("| Model | Arm A | Arm B | Arm C | Total |")
+    lines.append("|---|---|---|---|---|")
+    req_fail_totals: list[tuple[int, str]] = []
+    for m in models:
+        d = runs[m]
+        fa = _request_failure_count(d.get("arm_a") or [])
+        fb = _request_failure_count(d.get("arm_b") or [])
+        fc = _request_failure_count(d.get("arm_c") or [])
+        tot = fa + fb + fc
+        req_fail_totals.append((tot, m))
+        lines.append(f"| `{m}` | {fa} | {fb} | {fc} | {tot} |")
+    lines.append("")
+
+    # Skipped (counts)
+    lines.append("## Skipped (counts)")
+    lines.append("")
+    lines.append("| Model | Arm A | Arm B | Arm C | Total |")
+    lines.append("|---|---|---|---|---|")
+    skip_totals: list[tuple[int, str]] = []
+    for m in models:
+        d = runs[m]
+        fa = _skipped_count(d.get("arm_a") or [])
+        fb = _skipped_count(d.get("arm_b") or [])
+        fc = _skipped_count(d.get("arm_c") or [])
+        tot = fa + fb + fc
+        skip_totals.append((tot, m))
+        lines.append(f"| `{m}` | {fa} | {fb} | {fc} | {tot} |")
+    lines.append("")
+
+    # Worst models by incorrect verdicts
+    inc_totals: list[tuple[int, str]] = []
+    for m in models:
+        d = runs[m]
+        fa = _incorrect_assertion_count(d.get("arm_a") or [])
+        fb = _incorrect_assertion_count(d.get("arm_b") or [])
+        fc = _incorrect_assertion_count(d.get("arm_c") or [])
+        inc_totals.append((fa + fb + fc, m))
+    inc_totals.sort(reverse=True)
+    if inc_totals and inc_totals[0][0] > 0:
+        lines.append(
+            "**Most incorrect verdicts (total across arms):** "
+            + ", ".join(f"`{x[1]}` ({x[0]})" for x in inc_totals[: min(5, len(inc_totals))] if x[0] > 0)
+        )
+        lines.append("")
+
+    req_fail_totals.sort(reverse=True)
+    if req_fail_totals and req_fail_totals[0][0] > 0:
+        lines.append(
+            "**Most request failures (total across arms):** "
+            + ", ".join(f"`{x[1]}` ({x[0]})" for x in req_fail_totals[: min(5, len(req_fail_totals))] if x[0] > 0)
+        )
+        lines.append("")
+
+    skip_totals.sort(reverse=True)
+    if skip_totals and skip_totals[0][0] > 0:
+        lines.append(
+            "**Most skipped rows (total across arms):** "
+            + ", ".join(f"`{x[1]}` ({x[0]})" for x in skip_totals[: min(5, len(skip_totals))] if x[0] > 0)
+        )
+        lines.append("")
+
+    lines.append("---")
+    lines.append("_Generated by `python -m evals.run_benchmark`._")
+    return "\n".join(lines)
+
+
 # ── File output ────────────────────────────────────────────────
 
 def write_reports(
@@ -347,18 +756,31 @@ def write_reports(
     arm_b: list[dict],
     arm_c: list[dict],
 ) -> Path:
-    """Generate and write both .txt and .json reports. Returns the .txt path."""
-    report_text = format_report(arm_baseline, arm_a, arm_b, arm_c)
-    print(f"\n\n{report_text}")
+    """Generate benchmark reports.
 
+    Standalone ``pytest`` runs write a timestamped ``.txt`` report and ``benchmark_results.json``.
+    When ``BENCHMARK_OUTPUT_FILE`` is set (``python -m evals.run_benchmark`` subprocesses), only
+    the JSON snapshot is written so the parent can emit a single Markdown comparison — no per-model
+    ``.txt`` spam under ``reports/``.
+
+    Returns the path to the primary artefact: ``.txt`` for standalone runs, otherwise the JSON path.
+    """
     REPORTS_DIR.mkdir(parents=True, exist_ok=True)
     now = datetime.now(timezone.utc)
+    out_override = os.environ.get("BENCHMARK_OUTPUT_FILE")
+    is_subprocess_run = bool(out_override)
 
-    txt_path = REPORTS_DIR / f"{now.strftime('%Y-%m-%d_%H%M%S')}.txt"
-    txt_path.write_text(report_text)
-    print(f"\nReport written to: {txt_path}")
+    primary_path: Path
+    if not is_subprocess_run:
+        report_text = format_report(arm_baseline, arm_a, arm_b, arm_c)
+        print(f"\n\n{report_text}")
+        primary_path = REPORTS_DIR / f"{now.strftime('%Y-%m-%d_%H%M%S')}.txt"
+        primary_path.write_text(report_text)
+        print(f"\nReport written to: {primary_path}")
+    else:
+        primary_path = Path(out_override).expanduser() if out_override else REPORTS_DIR / "benchmark_results.json"
 
-    json_path = REPORTS_DIR / "benchmark_results.json"
+    json_path = Path(out_override).expanduser() if out_override else REPORTS_DIR / "benchmark_results.json"
     json_data = {
         "timestamp": now.isoformat(),
         "model": config.llm.model,
@@ -368,7 +790,8 @@ def write_reports(
         "arm_b": arm_b,
         "arm_c": arm_c,
     }
+    json_path.parent.mkdir(parents=True, exist_ok=True)
     json_path.write_text(json.dumps(json_data, indent=2, ensure_ascii=False))
     print(f"JSON snapshot written to: {json_path}")
 
-    return txt_path
+    return primary_path

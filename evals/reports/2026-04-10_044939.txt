@@ -1,0 +1,226 @@
+Benchmark Report — 2026-04-10 04:49:39 UTC
+Model: gpt-5.4-nano
+Commit: c97165b
+Datasets: AVeriTeC (50 samples), PolitiFact (50 samples)
+Total Tavily searches: 200
+────────────────────────────────────────────────────────────────
+
+── Overall Accuracy ──────────────────────────────────────────
+                       Arm A (Gold)  Arm B (Search)    Arm C (Full)
+  AVeriTeC                    62.0%           64.0%           26.0%
+  PolitiFact                      —           20.0%            0.0%
+  Combined                    62.0%           42.0%           13.0%
+
+── Within-One-Level Accuracy ─────────────────────────────────
+  Combined                    62.0%           42.0%           13.0%
+
+── Delta Analysis ───────────────────────────────────────────
+  Search delta  (A - B): -2.0%  ← search helps
+  Extract delta (B - C): +29.0%  ← extraction hurts
+
+── Per-Label Accuracy (Arm C — Full Pipeline) ──────────────
+  AVeriTeC:
+    Conflicting Evidence/Cherrypicking         0.0%  (0/13)
+    Not Enough Evidence                      100.0%  (13/13)
+    Refuted                                    0.0%  (0/12)
+    Supported                                  0.0%  (0/12)
+
+  PolitiFact:
+    barely-true                                0.0%  (0/9)
+    false                                      0.0%  (0/9)
+    half-true                                  0.0%  (0/8)
+    mostly-true                                0.0%  (0/8)
+    pants-fire                                 0.0%  (0/8)
+    true                                       0.0%  (0/8)
+
+── Confidence Calibration (Arm C) ───────────────────────────
+  When system says "unknown": 13.0% actually correct  (13/100)
+
+── Score Distribution (Arm C, mean ± std by label) ─────────
+  Conflicting Evidence/Cherrypicking         0.0 ±  0.0  (n=0)
+  Not Enough Evidence                        0.0 ±  0.0  (n=0)
+  Refuted                                    0.0 ±  0.0  (n=0)
+  Supported                                  0.0 ±  0.0  (n=0)
+  barely-true                                0.0 ±  0.0  (n=0)
+  false                                      0.0 ±  0.0  (n=0)
+  half-true                                  0.0 ±  0.0  (n=0)
+  mostly-true                                0.0 ±  0.0  (n=0)
+  pants-fire                                 0.0 ±  0.0  (n=0)
+  true                                       0.0 ±  0.0  (n=0)
+
+── Failed Samples ───────────────────────────────────────────
+
+  Arm A — Gold Evidence (19 failed / 50 total):
+    ID              Label                             Verdict (got / expected)                Score (got / exp. range)  Failure reasons
+    av_001          Conflicting Evidence/Cherrypicking? / mixed/mostly_true/mostly_false      -1 / [25, 75]             verdict: got ?, expected one of mixed/mostly_true/mostly_false; score: got -1, expected in [25, 75]
+    av_002          Conflicting Evidence/Cherrypicking? / mixed/mostly_true/mostly_false      -1 / [25, 75]             verdict: got ?, expected one of mixed/mostly_true/mostly_false; score: got -1, expected in [25, 75]
+    av_004          Conflicting Evidence/Cherrypicking? / mixed/mostly_true/mostly_false      -1 / [25, 75]             verdict: got ?, expected one of mixed/mostly_true/mostly_false; score: got -1, expected in [25, 75]
+    av_005          Conflicting Evidence/Cherrypicking? / mixed/mostly_true/mostly_false      -1 / [25, 75]             verdict: got ?, expected one of mixed/mostly_true/mostly_false; score: got -1, expected in [25, 75]
+    av_006          Not Enough Evidence               ? / unverifiable/mixed                  -1 / [30, 60]             verdict: got ?, expected one of unverifiable/mixed; score: got -1, expected in [30, 60]
+    av_008          Refuted                           ? / false/mostly_false                  -1 / [0, 40]              verdict: got ?, expected one of false/mostly_false; score: got -1, expected in [0, 40]
+    av_019          Conflicting Evidence/Cherrypicking? / mixed/mostly_true/mostly_false      -1 / [25, 75]             verdict: got ?, expected one of mixed/mostly_true/mostly_false; score: got -1, expected in [25, 75]
+    av_023          Conflicting Evidence/Cherrypicking? / mixed/mostly_true/mostly_false      -1 / [25, 75]             verdict: got ?, expected one of mixed/mostly_true/mostly_false; score: got -1, expected in [25, 75]
+    av_029          Refuted                           ? / false/mostly_false                  -1 / [0, 40]              verdict: got ?, expected one of false/mostly_false; score: got -1, expected in [0, 40]
+    av_030          Supported                         ? / true/mostly_true                    -1 / [60, 100]            verdict: got ?, expected one of true/mostly_true; score: got -1, expected in [60, 100]
+    av_031          Refuted                           ? / false/mostly_false                  -1 / [0, 40]              verdict: got ?, expected one of false/mostly_false; score: got -1, expected in [0, 40]
+    av_032          Supported                         ? / true/mostly_true                    -1 / [60, 100]            verdict: got ?, expected one of true/mostly_true; score: got -1, expected in [60, 100]
+    av_034          Not Enough Evidence               ? / unverifiable/mixed                  -1 / [30, 60]             verdict: got ?, expected one of unverifiable/mixed; score: got -1, expected in [30, 60]
+    av_037          Conflicting Evidence/Cherrypicking? / mixed/mostly_true/mostly_false      -1 / [25, 75]             verdict: got ?, expected one of mixed/mostly_true/mostly_false; score: got -1, expected in [25, 75]
+    av_038          Refuted                           ? / false/mostly_false                  -1 / [0, 40]              verdict: got ?, expected one of false/mostly_false; score: got -1, expected in [0, 40]
+    av_041          Supported                         ? / true/mostly_true                    -1 / [60, 100]            verdict: got ?, expected one of true/mostly_true; score: got -1, expected in [60, 100]
+    av_042          Not Enough Evidence               ? / unverifiable/mixed                  -1 / [30, 60]             verdict: got ?, expected one of unverifiable/mixed; score: got -1, expected in [30, 60]
+    av_047          Refuted                           ? / false/mostly_false                  -1 / [0, 40]              verdict: got ?, expected one of false/mostly_false; score: got -1, expected in [0, 40]
+    av_050          Conflicting Evidence/Cherrypicking? / mixed/mostly_true/mostly_false      -1 / [25, 75]             verdict: got ?, expected one of mixed/mostly_true/mostly_false; score: got -1, expected in [25, 75]
+
+  Arm B — Searched Evidence (58 failed / 100 total):
+    ID              Label                             Verdict (got / expected)                Score (got / exp. range)  Failure reasons
+    av_002          Conflicting Evidence/Cherrypicking? / mixed/mostly_true/mostly_false      -1  (no range check)      verdict: got ?, expected one of mixed/mostly_true/mostly_false
+    av_006          Not Enough Evidence               ? / unverifiable/mixed                  -1  (no range check)      verdict: got ?, expected one of unverifiable/mixed
+    av_007          Not Enough Evidence               ? / unverifiable/mixed                  -1  (no range check)      verdict: got ?, expected one of unverifiable/mixed
+    av_008          Refuted                           ? / false/mostly_false                  -1  (no range check)      verdict: got ?, expected one of false/mostly_false
+    av_009          Supported                         ? / true/mostly_true                    -1  (no range check)      verdict: got ?, expected one of true/mostly_true
+    av_011          Supported                         ? / true/mostly_true                    -1  (no range check)      verdict: got ?, expected one of true/mostly_true
+    av_012          Not Enough Evidence               ? / unverifiable/mixed                  -1  (no range check)      verdict: got ?, expected one of unverifiable/mixed
+    av_021          Not Enough Evidence               ? / unverifiable/mixed                  -1  (no range check)      verdict: got ?, expected one of unverifiable/mixed
+    av_024          Not Enough Evidence               ? / unverifiable/mixed                  -1  (no range check)      verdict: got ?, expected one of unverifiable/mixed
+    av_028          Conflicting Evidence/Cherrypicking? / mixed/mostly_true/mostly_false      -1  (no range check)      verdict: got ?, expected one of mixed/mostly_true/mostly_false
+    av_031          Refuted                           ? / false/mostly_false                  -1  (no range check)      verdict: got ?, expected one of false/mostly_false
+    av_032          Supported                         ? / true/mostly_true                    -1  (no range check)      verdict: got ?, expected one of true/mostly_true
+    av_034          Not Enough Evidence               ? / unverifiable/mixed                  -1  (no range check)      verdict: got ?, expected one of unverifiable/mixed
+    av_038          Refuted                           ? / false/mostly_false                  -1  (no range check)      verdict: got ?, expected one of false/mostly_false
+    av_039          Not Enough Evidence               ? / unverifiable/mixed                  -1  (no range check)      verdict: got ?, expected one of unverifiable/mixed
+    av_041          Supported                         ? / true/mostly_true                    -1  (no range check)      verdict: got ?, expected one of true/mostly_true
+    av_043          Refuted                           ? / false/mostly_false                  -1  (no range check)      verdict: got ?, expected one of false/mostly_false
+    av_050          Conflicting Evidence/Cherrypicking? / mixed/mostly_true/mostly_false      -1  (no range check)      verdict: got ?, expected one of mixed/mostly_true/mostly_false
+    pf_001          false                             ? / false/mostly_false                  -1  (no range check)      verdict: got ?, expected one of false/mostly_false
+    pf_002          false                             ? / false/mostly_false                  -1  (no range check)      verdict: got ?, expected one of false/mostly_false
+    pf_003          true                              ? / true                                -1  (no range check)      verdict: got ?, expected one of true
+    pf_004          barely-true                       ? / mostly_false/mixed                  -1  (no range check)      verdict: got ?, expected one of mostly_false/mixed
+    pf_007          false                             ? / false/mostly_false                  -1  (no range check)      verdict: got ?, expected one of false/mostly_false
+    pf_009          true                              ? / true                                -1  (no range check)      verdict: got ?, expected one of true
+    pf_010          mostly-true                       ? / mostly_true/true                    -1  (no range check)      verdict: got ?, expected one of mostly_true/true
+    pf_011          true                              ? / true                                -1  (no range check)      verdict: got ?, expected one of true
+    pf_017          true                              ? / true                                -1  (no range check)      verdict: got ?, expected one of true
+    pf_020          pants-fire                        ? / false                               -1  (no range check)      verdict: got ?, expected one of false
+    pf_021          half-true                         ? / mixed/mostly_true/mostly_false      -1  (no range check)      verdict: got ?, expected one of mixed/mostly_true/mostly_false
+    pf_022          mostly-true                       ? / mostly_true/true                    -1  (no range check)      verdict: got ?, expected one of mostly_true/true
+    pf_023          false                             ? / false/mostly_false                  -1  (no range check)      verdict: got ?, expected one of false/mostly_false
+    pf_024          half-true                         ? / mixed/mostly_true/mostly_false      -1  (no range check)      verdict: got ?, expected one of mixed/mostly_true/mostly_false
+    pf_025          mostly-true                       ? / mostly_true/true                    -1  (no range check)      verdict: got ?, expected one of mostly_true/true
+    pf_026          barely-true                       ? / mostly_false/mixed                  -1  (no range check)      verdict: got ?, expected one of mostly_false/mixed
+    pf_027          pants-fire                        ? / false                               -1  (no range check)      verdict: got ?, expected one of false
+    pf_028          barely-true                       ? / mostly_false/mixed                  -1  (no range check)      verdict: got ?, expected one of mostly_false/mixed
+    pf_029          mostly-true                       ? / mostly_true/true                    -1  (no range check)      verdict: got ?, expected one of mostly_true/true
+    pf_030          true                              ? / true                                -1  (no range check)      verdict: got ?, expected one of true
+    pf_031          mostly-true                       ? / mostly_true/true                    -1  (no range check)      verdict: got ?, expected one of mostly_true/true
+    pf_032          true                              ? / true                                -1  (no range check)      verdict: got ?, expected one of true
+    pf_033          pants-fire                        ? / false                               -1  (no range check)      verdict: got ?, expected one of false
+    pf_034          false                             ? / false/mostly_false                  -1  (no range check)      verdict: got ?, expected one of false/mostly_false
+    pf_035          true                              ? / true                                -1  (no range check)      verdict: got ?, expected one of true
+    pf_036          barely-true                       ? / mostly_false/mixed                  -1  (no range check)      verdict: got ?, expected one of mostly_false/mixed
+    pf_037          false                             ? / false/mostly_false                  -1  (no range check)      verdict: got ?, expected one of false/mostly_false
+    pf_038          pants-fire                        ? / false                               -1  (no range check)      verdict: got ?, expected one of false
+    pf_039          half-true                         ? / mixed/mostly_true/mostly_false      -1  (no range check)      verdict: got ?, expected one of mixed/mostly_true/mostly_false
+    pf_040          pants-fire                        ? / false                               -1  (no range check)      verdict: got ?, expected one of false
+    pf_041          pants-fire                        ? / false                               -1  (no range check)      verdict: got ?, expected one of false
+    pf_042          half-true                         ? / mixed/mostly_true/mostly_false      -1  (no range check)      verdict: got ?, expected one of mixed/mostly_true/mostly_false
+    pf_043          pants-fire                        ? / false                               -1  (no range check)      verdict: got ?, expected one of false
+    pf_044          barely-true                       ? / mostly_false/mixed                  -1  (no range check)      verdict: got ?, expected one of mostly_false/mixed
+    pf_045          half-true                         ? / mixed/mostly_true/mostly_false      -1  (no range check)      verdict: got ?, expected one of mixed/mostly_true/mostly_false
+    pf_046          barely-true                       ? / mostly_false/mixed                  -1  (no range check)      verdict: got ?, expected one of mostly_false/mixed
+    pf_047          pants-fire                        ? / false                               -1  (no range check)      verdict: got ?, expected one of false
+    pf_048          mostly-true                       ? / mostly_true/true                    -1  (no range check)      verdict: got ?, expected one of mostly_true/true
+    pf_049          true                              ? / true                                -1  (no range check)      verdict: got ?, expected one of true
+    pf_050          barely-true                       ? / mostly_false/mixed                  -1  (no range check)      verdict: got ?, expected one of mostly_false/mixed
+
+  Arm C — Full Pipeline (87 failed / 100 total):
+    ID              Label                             Verdict (got / expected)                Score (got / exp. range)  Failure reasons
+    av_001          Conflicting Evidence/Cherrypicking? / mixed/mostly_true/mostly_false      -1  (no range check)      verdict: got ?, expected one of mixed/mostly_true/mostly_false
+    av_002          Conflicting Evidence/Cherrypicking? / mixed/mostly_true/mostly_false      -1  (no range check)      verdict: got ?, expected one of mixed/mostly_true/mostly_false
+    av_003          Supported                         ? / true/mostly_true                    -1  (no range check)      verdict: got ?, expected one of true/mostly_true
+    av_004          Conflicting Evidence/Cherrypicking? / mixed/mostly_true/mostly_false      -1  (no range check)      verdict: got ?, expected one of mixed/mostly_true/mostly_false
+    av_005          Conflicting Evidence/Cherrypicking? / mixed/mostly_true/mostly_false      -1  (no range check)      verdict: got ?, expected one of mixed/mostly_true/mostly_false
+    av_008          Refuted                           ? / false/mostly_false                  -1  (no range check)      verdict: got ?, expected one of false/mostly_false
+    av_009          Supported                         ? / true/mostly_true                    -1  (no range check)      verdict: got ?, expected one of true/mostly_true
+    av_010          Refuted                           ? / false/mostly_false                  -1  (no range check)      verdict: got ?, expected one of false/mostly_false
+    av_011          Supported                         ? / true/mostly_true                    -1  (no range check)      verdict: got ?, expected one of true/mostly_true
+    av_013          Refuted                           ? / false/mostly_false                  -1  (no range check)      verdict: got ?, expected one of false/mostly_false
+    av_017          Supported                         ? / true/mostly_true                    -1  (no range check)      verdict: got ?, expected one of true/mostly_true
+    av_019          Conflicting Evidence/Cherrypicking? / mixed/mostly_true/mostly_false      -1  (no range check)      verdict: got ?, expected one of mixed/mostly_true/mostly_false
+    av_020          Supported                         ? / true/mostly_true                    -1  (no range check)      verdict: got ?, expected one of true/mostly_true
+    av_022          Refuted                           ? / false/mostly_false                  -1  (no range check)      verdict: got ?, expected one of false/mostly_false
+    av_023          Conflicting Evidence/Cherrypicking? / mixed/mostly_true/mostly_false      -1  (no range check)      verdict: got ?, expected one of mixed/mostly_true/mostly_false
+    av_025          Refuted                           ? / false/mostly_false                  -1  (no range check)      verdict: got ?, expected one of false/mostly_false
+    av_026          Conflicting Evidence/Cherrypicking? / mixed/mostly_true/mostly_false      -1  (no range check)      verdict: got ?, expected one of mixed/mostly_true/mostly_false
+    av_027          Refuted                           ? / false/mostly_false                  -1  (no range check)      verdict: got ?, expected one of false/mostly_false
+    av_028          Conflicting Evidence/Cherrypicking? / mixed/mostly_true/mostly_false      -1  (no range check)      verdict: got ?, expected one of mixed/mostly_true/mostly_false
+    av_029          Refuted                           ? / false/mostly_false                  -1  (no range check)      verdict: got ?, expected one of false/mostly_false
+    av_030          Supported                         ? / true/mostly_true                    -1  (no range check)      verdict: got ?, expected one of true/mostly_true
+    av_031          Refuted                           ? / false/mostly_false                  -1  (no range check)      verdict: got ?, expected one of false/mostly_false
+    av_032          Supported                         ? / true/mostly_true                    -1  (no range check)      verdict: got ?, expected one of true/mostly_true
+    av_033          Supported                         ? / true/mostly_true                    -1  (no range check)      verdict: got ?, expected one of true/mostly_true
+    av_035          Supported                         ? / true/mostly_true                    -1  (no range check)      verdict: got ?, expected one of true/mostly_true
+    av_036          Conflicting Evidence/Cherrypicking? / mixed/mostly_true/mostly_false      -1  (no range check)      verdict: got ?, expected one of mixed/mostly_true/mostly_false
+    av_037          Conflicting Evidence/Cherrypicking? / mixed/mostly_true/mostly_false      -1  (no range check)      verdict: got ?, expected one of mixed/mostly_true/mostly_false
+    av_038          Refuted                           ? / false/mostly_false                  -1  (no range check)      verdict: got ?, expected one of false/mostly_false
+    av_040          Supported                         ? / true/mostly_true                    -1  (no range check)      verdict: got ?, expected one of true/mostly_true
+    av_041          Supported                         ? / true/mostly_true                    -1  (no range check)      verdict: got ?, expected one of true/mostly_true
+    av_043          Refuted                           ? / false/mostly_false                  -1  (no range check)      verdict: got ?, expected one of false/mostly_false
+    av_044          Conflicting Evidence/Cherrypicking? / mixed/mostly_true/mostly_false      -1  (no range check)      verdict: got ?, expected one of mixed/mostly_true/mostly_false
+    av_046          Conflicting Evidence/Cherrypicking? / mixed/mostly_true/mostly_false      -1  (no range check)      verdict: got ?, expected one of mixed/mostly_true/mostly_false
+    av_047          Refuted                           ? / false/mostly_false                  -1  (no range check)      verdict: got ?, expected one of false/mostly_false
+    av_048          Refuted                           ? / false/mostly_false                  -1  (no range check)      verdict: got ?, expected one of false/mostly_false
+    av_049          Supported                         ? / true/mostly_true                    -1  (no range check)      verdict: got ?, expected one of true/mostly_true
+    av_050          Conflicting Evidence/Cherrypicking? / mixed/mostly_true/mostly_false      -1  (no range check)      verdict: got ?, expected one of mixed/mostly_true/mostly_false
+    pf_001          false                             ? / false/mostly_false                  -1  (no range check)      verdict: got ?, expected one of false/mostly_false
+    pf_002          false                             ? / false/mostly_false                  -1  (no range check)      verdict: got ?, expected one of false/mostly_false
+    pf_003          true                              ? / true                                -1  (no range check)      verdict: got ?, expected one of true
+    pf_004          barely-true                       ? / mostly_false/mixed                  -1  (no range check)      verdict: got ?, expected one of mostly_false/mixed
+    pf_005          barely-true                       ? / mostly_false/mixed                  -1  (no range check)      verdict: got ?, expected one of mostly_false/mixed
+    pf_006          false                             ? / false/mostly_false                  -1  (no range check)      verdict: got ?, expected one of false/mostly_false
+    pf_007          false                             ? / false/mostly_false                  -1  (no range check)      verdict: got ?, expected one of false/mostly_false
+    pf_008          mostly-true                       ? / mostly_true/true                    -1  (no range check)      verdict: got ?, expected one of mostly_true/true
+    pf_009          true                              ? / true                                -1  (no range check)      verdict: got ?, expected one of true
+    pf_010          mostly-true                       ? / mostly_true/true                    -1  (no range check)      verdict: got ?, expected one of mostly_true/true
+    pf_011          true                              ? / true                                -1  (no range check)      verdict: got ?, expected one of true
+    pf_012          false                             ? / false/mostly_false                  -1  (no range check)      verdict: got ?, expected one of false/mostly_false
+    pf_013          mostly-true                       ? / mostly_true/true                    -1  (no range check)      verdict: got ?, expected one of mostly_true/true
+    pf_014          half-true                         ? / mixed/mostly_true/mostly_false      -1  (no range check)      verdict: got ?, expected one of mixed/mostly_true/mostly_false
+    pf_015          false                             ? / false/mostly_false                  -1  (no range check)      verdict: got ?, expected one of false/mostly_false
+    pf_016          half-true                         ? / mixed/mostly_true/mostly_false      -1  (no range check)      verdict: got ?, expected one of mixed/mostly_true/mostly_false
+    pf_017          true                              ? / true                                -1  (no range check)      verdict: got ?, expected one of true
+    pf_018          half-true                         ? / mixed/mostly_true/mostly_false      -1  (no range check)      verdict: got ?, expected one of mixed/mostly_true/mostly_false
+    pf_019          barely-true                       ? / mostly_false/mixed                  -1  (no range check)      verdict: got ?, expected one of mostly_false/mixed
+    pf_020          pants-fire                        ? / false                               -1  (no range check)      verdict: got ?, expected one of false
+    pf_021          half-true                         ? / mixed/mostly_true/mostly_false      -1  (no range check)      verdict: got ?, expected one of mixed/mostly_true/mostly_false
+    pf_022          mostly-true                       ? / mostly_true/true                    -1  (no range check)      verdict: got ?, expected one of mostly_true/true
+    pf_023          false                             ? / false/mostly_false                  -1  (no range check)      verdict: got ?, expected one of false/mostly_false
+    pf_024          half-true                         ? / mixed/mostly_true/mostly_false      -1  (no range check)      verdict: got ?, expected one of mixed/mostly_true/mostly_false
+    pf_025          mostly-true                       ? / mostly_true/true                    -1  (no range check)      verdict: got ?, expected one of mostly_true/true
+    pf_026          barely-true                       ? / mostly_false/mixed                  -1  (no range check)      verdict: got ?, expected one of mostly_false/mixed
+    pf_027          pants-fire                        ? / false                               -1  (no range check)      verdict: got ?, expected one of false
+    pf_028          barely-true                       ? / mostly_false/mixed                  -1  (no range check)      verdict: got ?, expected one of mostly_false/mixed
+    pf_029          mostly-true                       ? / mostly_true/true                    -1  (no range check)      verdict: got ?, expected one of mostly_true/true
+    pf_030          true                              ? / true                                -1  (no range check)      verdict: got ?, expected one of true
+    pf_031          mostly-true                       ? / mostly_true/true                    -1  (no range check)      verdict: got ?, expected one of mostly_true/true
+    pf_032          true                              ? / true                                -1  (no range check)      verdict: got ?, expected one of true
+    pf_033          pants-fire                        ? / false                               -1  (no range check)      verdict: got ?, expected one of false
+    pf_034          false                             ? / false/mostly_false                  -1  (no range check)      verdict: got ?, expected one of false/mostly_false
+    pf_035          true                              ? / true                                -1  (no range check)      verdict: got ?, expected one of true
+    pf_036          barely-true                       ? / mostly_false/mixed                  -1  (no range check)      verdict: got ?, expected one of mostly_false/mixed
+    pf_037          false                             ? / false/mostly_false                  -1  (no range check)      verdict: got ?, expected one of false/mostly_false
+    pf_038          pants-fire                        ? / false                               -1  (no range check)      verdict: got ?, expected one of false
+    pf_039          half-true                         ? / mixed/mostly_true/mostly_false      -1  (no range check)      verdict: got ?, expected one of mixed/mostly_true/mostly_false
+    pf_040          pants-fire                        ? / false                               -1  (no range check)      verdict: got ?, expected one of false
+    pf_041          pants-fire                        ? / false                               -1  (no range check)      verdict: got ?, expected one of false
+    pf_042          half-true                         ? / mixed/mostly_true/mostly_false      -1  (no range check)      verdict: got ?, expected one of mixed/mostly_true/mostly_false
+    pf_043          pants-fire                        ? / false                               -1  (no range check)      verdict: got ?, expected one of false
+    pf_044          barely-true                       ? / mostly_false/mixed                  -1  (no range check)      verdict: got ?, expected one of mostly_false/mixed
+    pf_045          half-true                         ? / mixed/mostly_true/mostly_false      -1  (no range check)      verdict: got ?, expected one of mixed/mostly_true/mostly_false
+    pf_046          barely-true                       ? / mostly_false/mixed                  -1  (no range check)      verdict: got ?, expected one of mostly_false/mixed
+    pf_047          pants-fire                        ? / false                               -1  (no range check)      verdict: got ?, expected one of false
+    pf_048          mostly-true                       ? / mostly_true/true                    -1  (no range check)      verdict: got ?, expected one of mostly_true/true
+    pf_049          true                              ? / true                                -1  (no range check)      verdict: got ?, expected one of true
+    pf_050          barely-true                       ? / mostly_false/mixed                  -1  (no range check)      verdict: got ?, expected one of mostly_false/mixed
+
+════════════════════════════════════════════════════════════════

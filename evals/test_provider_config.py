@@ -2,7 +2,7 @@ import pytest
 from openai import AsyncAzureOpenAI, AsyncOpenAI
 
 from backend.config import ConfigError, ModelConfig, config
-from backend.llm_clients import HttpChatClient, create_client
+from backend.llm_clients import GrokChatClient, HttpChatClient, create_client
 
 
 @pytest.fixture(autouse=True)
@@ -109,6 +109,29 @@ def test_model_registry_resolves_llm_alias(monkeypatch):
     assert cfg.base_url == "https://example.azure.com/chat?api-version=1"
 
 
+def test_registry_marks_grok_aliases_as_grok_client_kind(monkeypatch):
+    monkeypatch.setenv("OPENAI_API_KEY", "dummy")
+    monkeypatch.setenv("AZURE_BASE_URL", "https://foundry.example/models/chat/completions")
+    monkeypatch.setenv("AZURE_API_KEY", "azure-key")
+    monkeypatch.setenv("GROK_REASONING_MODEL_NAME", "grok-4-20-reasoning")
+    monkeypatch.setenv("GROK_NONREASONING_MODEL_NAME", "grok-4-20")
+    monkeypatch.setenv("KIMI_MODEL_NAME", "Kimi-K2.5")
+    reg = config.models
+    assert reg["grok-reasoning"].client_kind == "grok"
+    assert reg["grok-nonreasoning"].client_kind == "grok"
+    assert reg["grok-reasoning"].grok_max_completion_tokens == 4000
+    assert reg["kimi"].client_kind is None
+
+
+def test_grok_registry_respects_grok_max_completion_tokens_env(monkeypatch):
+    monkeypatch.setenv("OPENAI_API_KEY", "dummy")
+    monkeypatch.setenv("AZURE_BASE_URL", "https://x")
+    monkeypatch.setenv("AZURE_API_KEY", "k")
+    monkeypatch.setenv("GROK_REASONING_MODEL_NAME", "grok-r")
+    monkeypatch.setenv("GROK_MAX_COMPLETION_TOKENS", "8192")
+    assert config.models["grok-reasoning"].grok_max_completion_tokens == 8192
+
+
 def test_model_registry_exposed_on_config(monkeypatch):
     monkeypatch.setenv("OPENAI_API_KEY", "dummy")
     monkeypatch.setenv("AZURE_BASE_URL", "https://x")
@@ -213,6 +236,23 @@ def test_gpt_registry_api_version_override(monkeypatch):
     assert "api-version=2024-12-01-preview" in (cfg.base_url or "")
 
 
+def test_gpt_5_4_registry_alias(monkeypatch):
+    monkeypatch.setenv("OPENAI_API_KEY", "dummy")
+    monkeypatch.setenv("LLM_MODEL", "gpt-5.4")
+    monkeypatch.setenv("AZURE_OPENAI_BASE_URL", "https://202604-resource.cognitiveservices.azure.com")
+    monkeypatch.setenv("AZURE_OPENAI_KEY", "k")
+    monkeypatch.setenv("GPT_MODEL_NAME", "gpt-5.4")
+    cfg = config.llm
+    assert cfg.provider == "azure_inference"
+    assert cfg.model == "gpt-5.4"
+    assert cfg.base_url == (
+        "https://202604-resource.cognitiveservices.azure.com/openai/deployments/gpt-5.4/"
+        "chat/completions?api-version=2024-08-01-preview"
+    )
+    assert "gpt-5.4" in config.models
+    assert config.models["gpt-5.4"].model == "gpt-5.4"
+
+
 def test_create_client_dispatches_azure_openai():
     az = create_client(
         ModelConfig(
@@ -241,3 +281,14 @@ def test_create_client_openai_and_inference():
         )
     )
     assert isinstance(inf, HttpChatClient)
+
+    grok = create_client(
+        ModelConfig(
+            provider="azure_inference",
+            model="m",
+            api_key="k",
+            base_url="https://example.com/v1/chat/completions",
+            client_kind="grok",
+        )
+    )
+    assert isinstance(grok, GrokChatClient)

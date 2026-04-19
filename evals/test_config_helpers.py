@@ -7,6 +7,7 @@ from conftest import collect_eval_config_errors
 from backend.config import (
     ConfigError,
     Provider,
+    _http_inference_max_retries_from_env,
     _optional_env,
     _parse_provider,
     _require_env,
@@ -49,6 +50,26 @@ def test_optional_env_none_when_all_missing(monkeypatch):
     monkeypatch.delenv("A", raising=False)
     monkeypatch.delenv("B", raising=False)
     assert _optional_env("A", "B") is None
+
+
+def test_http_inference_max_retries_from_env_default(monkeypatch):
+    monkeypatch.delenv("HTTP_INFERENCE_MAX_RETRIES", raising=False)
+    assert _http_inference_max_retries_from_env() == 3
+
+
+def test_http_inference_max_retries_from_env_explicit(monkeypatch):
+    monkeypatch.setenv("HTTP_INFERENCE_MAX_RETRIES", "5")
+    assert _http_inference_max_retries_from_env() == 5
+
+
+def test_http_inference_max_retries_from_env_invalid_uses_default(monkeypatch):
+    monkeypatch.setenv("HTTP_INFERENCE_MAX_RETRIES", "not-a-number")
+    assert _http_inference_max_retries_from_env() == 3
+
+
+def test_http_inference_max_retries_from_env_negative_uses_default(monkeypatch):
+    monkeypatch.setenv("HTTP_INFERENCE_MAX_RETRIES", "-1")
+    assert _http_inference_max_retries_from_env() == 3
 
 
 @pytest.mark.parametrize(

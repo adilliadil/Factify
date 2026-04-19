@@ -7,7 +7,12 @@ Auto-discovers all benchmark_*.json files in evals/datasets/ and runs:
   Arm C — full fact_check() pipeline
 
 Reports are auto-generated at session end (see conftest.py hooks).
+
+Set ``BENCHMARK_MAX_SAMPLES`` (positive integer) to cap how many samples are taken
+from the start of the combined benchmark list (used by ``run_benchmark``).
 """
+
+import os
 
 import pytest
 from conftest import load_all_benchmark_samples, store_benchmark_result
@@ -16,6 +21,9 @@ from backend.search import search_claim
 from backend.pipeline import fact_check
 
 ALL_SAMPLES = load_all_benchmark_samples()
+_max_raw = os.environ.get("BENCHMARK_MAX_SAMPLES", "").strip()
+if _max_raw.isdigit():
+    ALL_SAMPLES = ALL_SAMPLES[: int(_max_raw)]
 GOLD_SAMPLES = [(ds, s) for ds, s in ALL_SAMPLES if s.get("gold_evidence")]
 
 

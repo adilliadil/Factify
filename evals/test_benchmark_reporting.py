@@ -63,6 +63,46 @@ def test_verdict_accuracy_ignores_score_failures():
     assert br.accuracy(rows) == pytest.approx(33.3, abs=0.1)
 
 
+def test_accuracy_excludes_request_failures():
+    rows = [
+        {"correct": True, "within_one": True, "request_failed": False},
+        {"correct": False, "within_one": False, "request_failed": True},
+        {"correct": False, "within_one": False, "request_failed": False},
+    ]
+    assert br.accuracy(rows) == 50.0
+    assert br.within_one_accuracy(rows) == 50.0
+
+
+def test_accuracy_excludes_skipped_rows():
+    rows = [
+        {"correct": True, "within_one": True, "request_failed": False, "skipped": False},
+        {"correct": False, "within_one": False, "skipped": True},
+        {"correct": False, "within_one": False, "request_failed": False, "skipped": False},
+    ]
+    assert br.accuracy(rows) == 50.0
+    assert br.within_one_accuracy(rows) == 50.0
+
+
+def test_skipped_rate():
+    rows = [
+        {"skipped": True},
+        {"skipped": False},
+        {"skipped": True},
+    ]
+    assert br.skipped_rate(rows) == pytest.approx(100 * 2 / 3)
+    assert br.skipped_rate([]) == 0.0
+
+
+def test_request_failure_rate():
+    rows = [
+        {"request_failed": True},
+        {"request_failed": False},
+        {"request_failed": True},
+    ]
+    assert br.request_failure_rate(rows) == pytest.approx(100 * 2 / 3)
+    assert br.request_failure_rate([]) == 0.0
+
+
 def test_by_dataset_and_by_label():
     rows = [
         {"dataset": "a", "label": "x", "correct": True},
@@ -79,6 +119,26 @@ def test_confidence_calibration():
     ]
     cal = br.confidence_calibration(rows)
     assert cal["high"]["total"] == 2
+    assert cal["high"]["correct"] == 1
+
+
+def test_confidence_calibration_excludes_request_failures():
+    rows = [
+        {"confidence": "high", "correct": False, "request_failed": True},
+        {"confidence": "high", "correct": True, "request_failed": False},
+    ]
+    cal = br.confidence_calibration(rows)
+    assert cal["high"]["total"] == 1
+    assert cal["high"]["correct"] == 1
+
+
+def test_confidence_calibration_excludes_skipped():
+    rows = [
+        {"confidence": "high", "correct": False, "skipped": True},
+        {"confidence": "high", "correct": True, "skipped": False},
+    ]
+    cal = br.confidence_calibration(rows)
+    assert cal["high"]["total"] == 1
     assert cal["high"]["correct"] == 1
 
 
@@ -113,6 +173,7 @@ def test_build_structured_results_merges_pass_fail_and_stored():
     assert arm_a[0]["actual_verdict"] == "true"
     assert arm_a[0]["correct"] is True
     assert arm_a[0]["verdict_correct"] is True
+    assert arm_a[0]["request_failed"] is False
     assert arm_a[0]["expected_score_range"] == [40, 90]
 
 
@@ -146,6 +207,55 @@ def test_build_structured_results_baseline_arm():
     assert arm_bl[1]["verdict_correct"] is False
 
 
+def test_build_structured_results_request_failed_no_stored_result():
+    pass_fail = {
+        "arm_baseline": [],
+        "arm_a": [{"key": "ds-1", "passed": False, "request_failed": True}],
+        "arm_b": [],
+        "arm_c": [],
+    }
+    result_data: dict = {}
+    sample_lookup = {
+        "ds-1": {
+            "dataset": "ds",
+            "id": "1",
+            "claim": "c",
+            "label": "lab",
+            "expected_verdicts": ["true"],
+            "expected_score_range": [40, 90],
+        },
+    }
+    _, arm_a, _, _ = br.build_structured_results(pass_fail, result_data, sample_lookup)
+    assert arm_a[0]["request_failed"] is True
+    assert arm_a[0]["correct"] is False
+    assert arm_a[0]["within_one"] is False
+    assert arm_a[0]["actual_verdict"] == "?"
+
+
+def test_build_structured_results_skipped():
+    pass_fail = {
+        "arm_baseline": [],
+        "arm_a": [],
+        "arm_b": [{"key": "ds-1", "passed": False, "skipped": True, "request_failed": False}],
+        "arm_c": [],
+    }
+    result_data: dict = {}
+    sample_lookup = {
+        "ds-1": {
+            "dataset": "ds",
+            "id": "1",
+            "claim": "c",
+            "label": "lab",
+            "expected_verdicts": ["true"],
+        },
+    }
+    _, _, arm_b, _ = br.build_structured_results(pass_fail, result_data, sample_lookup)
+    assert len(arm_b) == 1
+    assert arm_b[0]["skipped"] is True
+    assert arm_b[0]["correct"] is False
+    assert arm_b[0]["within_one"] is False
+
+
 def test_format_report_contains_model_and_sections(monkeypatch):
     monkeypatch.setenv("OPENAI_API_KEY", "k")
     monkeypatch.setenv("LLM_MODEL", "gpt-4o-mini")
@@ -172,6 +282,37 @@ def test_format_report_contains_model_and_sections(monkeypatch):
     assert "gpt-4o-mini" in text
     assert "Overall Accuracy" in text
     assert "Arm 0 (None)" in text
+    assert "Request failures" in text
+    assert "Skipped (%)" in text
+    config.reset()
+
+
+def test_format_report_skipped_samples_section(monkeypatch):
+    monkeypatch.setenv("OPENAI_API_KEY", "k")
+    monkeypatch.setenv("LLM_MODEL", "gpt-4o-mini")
+    from backend.config import config
+
+    config.reset()
+    arm_b = [
+        {
+            "dataset": "ds",
+            "id": "s1",
+            "claim": "",
+            "label": "l",
+            "expected_verdicts": ["true"],
+            "actual_verdict": "?",
+            "score": -1,
+            "confidence": "unknown",
+            "correct": False,
+            "within_one": False,
+            "skipped": True,
+            "request_failed": False,
+        },
+    ]
+    text = br.format_report([], [], arm_b, [])
+    assert "Skipped samples" in text
+    assert "s1" in text
+    assert "Skipped (%)" in text
     config.reset()
 
 
@@ -217,4 +358,42 @@ def test_write_reports_writes_txt_and_json(tmp_path, monkeypatch):
     data = json.loads((tmp_path / "benchmark_results.json").read_text())
     assert data["model"] == "m"
     assert "arm_baseline" in data
+    config.reset()
+
+
+def test_write_reports_respects_benchmark_output_file(tmp_path, monkeypatch):
+    monkeypatch.setenv("OPENAI_API_KEY", "k")
+    monkeypatch.setenv("LLM_MODEL", "custom-model")
+    custom = tmp_path / "subdir" / "out.json"
+    monkeypatch.setenv("BENCHMARK_OUTPUT_FILE", str(custom))
+    from backend.config import config
+
+    config.reset()
+    monkeypatch.setattr(br, "REPORTS_DIR", tmp_path)
+    ret = br.write_reports([], [], [], [])
+    assert custom.is_file()
+    assert ret == custom
+    data = json.loads(custom.read_text())
+    assert data["model"] == "custom-model"
+    # Multi-model subprocess runs must not create a per-model .txt under REPORTS_DIR
+    assert not any(tmp_path.glob("*.txt"))
+    monkeypatch.delenv("BENCHMARK_OUTPUT_FILE", raising=False)
+    config.reset()
+
+
+def test_write_reports_skips_txt_when_subprocess_run(tmp_path, monkeypatch):
+    """When BENCHMARK_OUTPUT_FILE is set, only JSON is written (no timestamped .txt)."""
+    monkeypatch.setenv("OPENAI_API_KEY", "k")
+    monkeypatch.setenv("LLM_MODEL", "m")
+    out = tmp_path / "run.json"
+    monkeypatch.setenv("BENCHMARK_OUTPUT_FILE", str(out))
+    from backend.config import config
+
+    config.reset()
+    monkeypatch.setattr(br, "REPORTS_DIR", tmp_path)
+    p = br.write_reports([], [], [], [])
+    assert p.suffix == ".json"
+    assert p == out
+    assert not any(tmp_path.glob("*.txt"))
+    monkeypatch.delenv("BENCHMARK_OUTPUT_FILE", raising=False)
     config.reset()

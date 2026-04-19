@@ -1,0 +1,972 @@
+{
+  "timestamp": "2026-04-10T05:18:19.004821+00:00",
+  "model": "gpt-5.4-nano",
+  "commit": "c97165b",
+  "arm_a": [
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_001",
+      "claim": "Indian Railways has been completely privatized, and as a result, scores of people working in the Railways would lose their jobs.",
+      "label": "Conflicting Evidence/Cherrypicking",
+      "expected_verdicts": [
+        "mixed",
+        "mostly_true",
+        "mostly_false"
+      ],
+      "expected_score_range": [
+        25,
+        75
+      ],
+      "actual_verdict": "?",
+      "score": -1,
+      "confidence": "unknown",
+      "correct": false,
+      "within_one": false
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_002",
+      "claim": "Donald Trump said: \"Biden also vowed to oppose school choice and close down charter schools, ripping away the ladder of opportunity for Black and Hispanic children.\"",
+      "label": "Conflicting Evidence/Cherrypicking",
+      "expected_verdicts": [
+        "mixed",
+        "mostly_true",
+        "mostly_false"
+      ],
+      "expected_score_range": [
+        25,
+        75
+      ],
+      "actual_verdict": "?",
+      "score": -1,
+      "confidence": "unknown",
+      "correct": false,
+      "within_one": false
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_003",
+      "claim": "At independence, Nigeria had a population of 45 million",
+      "label": "Supported",
+      "expected_verdicts": [
+        "true",
+        "mostly_true"
+      ],
+      "expected_score_range": [
+        60,
+        100
+      ],
+      "actual_verdict": "?",
+      "score": -1,
+      "confidence": "unknown",
+      "correct": true,
+      "within_one": true
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_004",
+      "claim": "The U.S. surgeon general and the Centers for Disease Control both previously said that ‘masks are not effective in preventing [the] general public from catching coronavirus.’",
+      "label": "Conflicting Evidence/Cherrypicking",
+      "expected_verdicts": [
+        "mixed",
+        "mostly_true",
+        "mostly_false"
+      ],
+      "expected_score_range": [
+        25,
+        75
+      ],
+      "actual_verdict": "?",
+      "score": -1,
+      "confidence": "unknown",
+      "correct": false,
+      "within_one": false
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_005",
+      "claim": "Russia sent medical aid to the US, in the form of medical equipment to help coronavirus patients.",
+      "label": "Conflicting Evidence/Cherrypicking",
+      "expected_verdicts": [
+        "mixed",
+        "mostly_true",
+        "mostly_false"
+      ],
+      "expected_score_range": [
+        25,
+        75
+      ],
+      "actual_verdict": "?",
+      "score": -1,
+      "confidence": "unknown",
+      "correct": false,
+      "within_one": false
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_006",
+      "claim": "Nigeria was the third most terrorised in the world in 2020, after Afghanistan and Iraq.",
+      "label": "Not Enough Evidence",
+      "expected_verdicts": [
+        "unverifiable",
+        "mixed"
+      ],
+      "expected_score_range": [
+        30,
+        60
+      ],
+      "actual_verdict": "?",
+      "score": -1,
+      "confidence": "unknown",
+      "correct": false,
+      "within_one": false
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_007",
+      "claim": "Illegal drug, border crossings, and human smuggling activities have decreased in areas where barriers are deployed in the United States.",
+      "label": "Not Enough Evidence",
+      "expected_verdicts": [
+        "unverifiable",
+        "mixed"
+      ],
+      "expected_score_range": [
+        30,
+        60
+      ],
+      "actual_verdict": "?",
+      "score": -1,
+      "confidence": "unknown",
+      "correct": true,
+      "within_one": true
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_008",
+      "claim": "Since 2002, South Africa’s police force has grown by 50%.",
+      "label": "Refuted",
+      "expected_verdicts": [
+        "false",
+        "mostly_false"
+      ],
+      "expected_score_range": [
+        0,
+        40
+      ],
+      "actual_verdict": "?",
+      "score": -1,
+      "confidence": "unknown",
+      "correct": false,
+      "within_one": false
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_009",
+      "claim": "Today, Nigeria grapple has a population exceeding 200 million.",
+      "label": "Supported",
+      "expected_verdicts": [
+        "true",
+        "mostly_true"
+      ],
+      "expected_score_range": [
+        60,
+        100
+      ],
+      "actual_verdict": "?",
+      "score": -1,
+      "confidence": "unknown",
+      "correct": true,
+      "within_one": true
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_010",
+      "claim": "UNESCO declared Nadar community as the most ancient race in the world.",
+      "label": "Refuted",
+      "expected_verdicts": [
+        "false",
+        "mostly_false"
+      ],
+      "expected_score_range": [
+        0,
+        40
+      ],
+      "actual_verdict": "?",
+      "score": -1,
+      "confidence": "unknown",
+      "correct": true,
+      "within_one": true
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_011",
+      "claim": "Fact Check: WHO has not approved home remedy for COVID-19, don’t fall for misinformation",
+      "label": "Supported",
+      "expected_verdicts": [
+        "true",
+        "mostly_true"
+      ],
+      "expected_score_range": [
+        60,
+        100
+      ],
+      "actual_verdict": "?",
+      "score": -1,
+      "confidence": "unknown",
+      "correct": true,
+      "within_one": true
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_012",
+      "claim": "Hunter Biden (son of US president Joe Biden)  had 25,000 pics of him torturing and raping children under 10 in China on his laptop.",
+      "label": "Not Enough Evidence",
+      "expected_verdicts": [
+        "unverifiable",
+        "mixed"
+      ],
+      "expected_score_range": [
+        30,
+        60
+      ],
+      "actual_verdict": "?",
+      "score": -1,
+      "confidence": "unknown",
+      "correct": true,
+      "within_one": true
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_013",
+      "claim": "Dr. Ebeneezer, a medical doctor and a herbal practitioner at the Amuzu Hospital has instructed men to have sex at least 21 times a month to avoid prostate cancer.",
+      "label": "Refuted",
+      "expected_verdicts": [
+        "false",
+        "mostly_false"
+      ],
+      "expected_score_range": [
+        0,
+        40
+      ],
+      "actual_verdict": "?",
+      "score": -1,
+      "confidence": "unknown",
+      "correct": true,
+      "within_one": true
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_014",
+      "claim": "There was a 40% drop in oil prices in Nigeria.",
+      "label": "Not Enough Evidence",
+      "expected_verdicts": [
+        "unverifiable",
+        "mixed"
+      ],
+      "expected_score_range": [
+        30,
+        60
+      ],
+      "actual_verdict": "?",
+      "score": -1,
+      "confidence": "unknown",
+      "correct": true,
+      "within_one": true
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_015",
+      "claim": "In the US lockdowns are partly responsible for excess deaths not directly attributed to COVID-19 which were observed in 2020.",
+      "label": "Not Enough Evidence",
+      "expected_verdicts": [
+        "unverifiable",
+        "mixed"
+      ],
+      "expected_score_range": [
+        30,
+        60
+      ],
+      "actual_verdict": "?",
+      "score": -1,
+      "confidence": "unknown",
+      "correct": false,
+      "within_one": false
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_016",
+      "claim": "You see the number today? 33.1 GDP. The biggest in the history of our country by almost triple, right? Almost triple. Now it’s very much bigger than any GDP we’ve ever had. You have to go back to the 1950s, and then it’s less than half. This is the greatest number, 33.1 percent.",
+      "label": "Not Enough Evidence",
+      "expected_verdicts": [
+        "unverifiable",
+        "mixed"
+      ],
+      "expected_score_range": [
+        30,
+        60
+      ],
+      "actual_verdict": "?",
+      "score": -1,
+      "confidence": "unknown",
+      "correct": true,
+      "within_one": true
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_017",
+      "claim": "Because of a so-called trade war with China, America lost 300,000 manufacturing jobs.",
+      "label": "Supported",
+      "expected_verdicts": [
+        "true",
+        "mostly_true"
+      ],
+      "expected_score_range": [
+        60,
+        100
+      ],
+      "actual_verdict": "?",
+      "score": -1,
+      "confidence": "unknown",
+      "correct": true,
+      "within_one": true
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_018",
+      "claim": "There was a 40% drop in the price of oil, Nigeria's main export.",
+      "label": "Not Enough Evidence",
+      "expected_verdicts": [
+        "unverifiable",
+        "mixed"
+      ],
+      "expected_score_range": [
+        30,
+        60
+      ],
+      "actual_verdict": "?",
+      "score": -1,
+      "confidence": "unknown",
+      "correct": true,
+      "within_one": true
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_019",
+      "claim": "Twitter now putting warnings on tweets that are just unedited clips of Biden saying he would end fracking",
+      "label": "Conflicting Evidence/Cherrypicking",
+      "expected_verdicts": [
+        "mixed",
+        "mostly_true",
+        "mostly_false"
+      ],
+      "expected_score_range": [
+        25,
+        75
+      ],
+      "actual_verdict": "?",
+      "score": -1,
+      "confidence": "unknown",
+      "correct": false,
+      "within_one": false
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_020",
+      "claim": "Edo State in Nigeria has a 19% unemployment rate.",
+      "label": "Supported",
+      "expected_verdicts": [
+        "true",
+        "mostly_true"
+      ],
+      "expected_score_range": [
+        60,
+        100
+      ],
+      "actual_verdict": "?",
+      "score": -1,
+      "confidence": "unknown",
+      "correct": true,
+      "within_one": true
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_021",
+      "claim": "Fuel in Nigeria in 2020 was not cheaper than that in Saudi Arabia.",
+      "label": "Not Enough Evidence",
+      "expected_verdicts": [
+        "unverifiable",
+        "mixed"
+      ],
+      "expected_score_range": [
+        30,
+        60
+      ],
+      "actual_verdict": "?",
+      "score": -1,
+      "confidence": "unknown",
+      "correct": true,
+      "within_one": true
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_022",
+      "claim": "The Nigerian government is donating $600 million to Democratic presidential nominee Joe Biden’s campaign.",
+      "label": "Refuted",
+      "expected_verdicts": [
+        "false",
+        "mostly_false"
+      ],
+      "expected_score_range": [
+        0,
+        40
+      ],
+      "actual_verdict": "?",
+      "score": -1,
+      "confidence": "unknown",
+      "correct": true,
+      "within_one": true
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_023",
+      "claim": "Even if your mail-in ballot is postmarked prior to the Election day but arrives after the Election day it will be thrown out.",
+      "label": "Conflicting Evidence/Cherrypicking",
+      "expected_verdicts": [
+        "mixed",
+        "mostly_true",
+        "mostly_false"
+      ],
+      "expected_score_range": [
+        25,
+        75
+      ],
+      "actual_verdict": "?",
+      "score": -1,
+      "confidence": "unknown",
+      "correct": false,
+      "within_one": false
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_024",
+      "claim": "There was a 40% drop in oil prices in Nigeria in 2020.",
+      "label": "Not Enough Evidence",
+      "expected_verdicts": [
+        "unverifiable",
+        "mixed"
+      ],
+      "expected_score_range": [
+        30,
+        60
+      ],
+      "actual_verdict": "?",
+      "score": -1,
+      "confidence": "unknown",
+      "correct": true,
+      "within_one": true
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_025",
+      "claim": "Joe Biden proposed a US wide 2% property tax increase.",
+      "label": "Refuted",
+      "expected_verdicts": [
+        "false",
+        "mostly_false"
+      ],
+      "expected_score_range": [
+        0,
+        40
+      ],
+      "actual_verdict": "?",
+      "score": -1,
+      "confidence": "unknown",
+      "correct": true,
+      "within_one": true
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_026",
+      "claim": "The UK public won’t be able to claim compensation if unlicensed vaccines damage our health.",
+      "label": "Conflicting Evidence/Cherrypicking",
+      "expected_verdicts": [
+        "mixed",
+        "mostly_true",
+        "mostly_false"
+      ],
+      "expected_score_range": [
+        25,
+        75
+      ],
+      "actual_verdict": "?",
+      "score": -1,
+      "confidence": "unknown",
+      "correct": true,
+      "within_one": true
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_027",
+      "claim": "The PLAAF has shot down an Indian Sukhoi Su-30 fighter jet in Tibet.",
+      "label": "Refuted",
+      "expected_verdicts": [
+        "false",
+        "mostly_false"
+      ],
+      "expected_score_range": [
+        0,
+        40
+      ],
+      "actual_verdict": "?",
+      "score": -1,
+      "confidence": "unknown",
+      "correct": true,
+      "within_one": true
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_028",
+      "claim": "U.S. President Donald Trump has suspended all travel from China.",
+      "label": "Conflicting Evidence/Cherrypicking",
+      "expected_verdicts": [
+        "mixed",
+        "mostly_true",
+        "mostly_false"
+      ],
+      "expected_score_range": [
+        25,
+        75
+      ],
+      "actual_verdict": "?",
+      "score": -1,
+      "confidence": "unknown",
+      "correct": true,
+      "within_one": true
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_029",
+      "claim": "Before the first case of the coronavirus spread within the United States, the president Donald Trump took unprecedented action and suspended all travel from China.",
+      "label": "Refuted",
+      "expected_verdicts": [
+        "false",
+        "mostly_false"
+      ],
+      "expected_score_range": [
+        0,
+        40
+      ],
+      "actual_verdict": "?",
+      "score": -1,
+      "confidence": "unknown",
+      "correct": false,
+      "within_one": false
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_030",
+      "claim": "A Pakistani website was hacked by an Indian cyber group to wish Pawan Kalyan a Happy Birthday.",
+      "label": "Supported",
+      "expected_verdicts": [
+        "true",
+        "mostly_true"
+      ],
+      "expected_score_range": [
+        60,
+        100
+      ],
+      "actual_verdict": "?",
+      "score": -1,
+      "confidence": "unknown",
+      "correct": false,
+      "within_one": false
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_031",
+      "claim": "The eligibility criteria for applying to take the exam for the Union Public Service Commission (UPSC) of India, differentiates depending on whether you are a Hindu or a Muslim.",
+      "label": "Refuted",
+      "expected_verdicts": [
+        "false",
+        "mostly_false"
+      ],
+      "expected_score_range": [
+        0,
+        40
+      ],
+      "actual_verdict": "?",
+      "score": -1,
+      "confidence": "unknown",
+      "correct": false,
+      "within_one": false
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_032",
+      "claim": "Hunter Biden was chairman of the Nobel Peace Prize winning World Food Program.",
+      "label": "Supported",
+      "expected_verdicts": [
+        "true",
+        "mostly_true"
+      ],
+      "expected_score_range": [
+        60,
+        100
+      ],
+      "actual_verdict": "?",
+      "score": -1,
+      "confidence": "unknown",
+      "correct": true,
+      "within_one": true
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_033",
+      "claim": "Officer who wore Trump 2020 mask to polls to face disciplinary action",
+      "label": "Supported",
+      "expected_verdicts": [
+        "true",
+        "mostly_true"
+      ],
+      "expected_score_range": [
+        60,
+        100
+      ],
+      "actual_verdict": "?",
+      "score": -1,
+      "confidence": "unknown",
+      "correct": true,
+      "within_one": true
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_034",
+      "claim": "Ivermectin is a treatment for coronavirus.",
+      "label": "Not Enough Evidence",
+      "expected_verdicts": [
+        "unverifiable",
+        "mixed"
+      ],
+      "expected_score_range": [
+        30,
+        60
+      ],
+      "actual_verdict": "?",
+      "score": -1,
+      "confidence": "unknown",
+      "correct": false,
+      "within_one": false
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_035",
+      "claim": "Schools have resumed in New Brunswick, Canada despite the COVID-19 pandemic",
+      "label": "Supported",
+      "expected_verdicts": [
+        "true",
+        "mostly_true"
+      ],
+      "expected_score_range": [
+        60,
+        100
+      ],
+      "actual_verdict": "?",
+      "score": -1,
+      "confidence": "unknown",
+      "correct": true,
+      "within_one": true
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_036",
+      "claim": "New Zealand spends less on pensions than most wealthy countries, spending 4.4 per cent of GDP",
+      "label": "Conflicting Evidence/Cherrypicking",
+      "expected_verdicts": [
+        "mixed",
+        "mostly_true",
+        "mostly_false"
+      ],
+      "expected_score_range": [
+        25,
+        75
+      ],
+      "actual_verdict": "?",
+      "score": -1,
+      "confidence": "unknown",
+      "correct": true,
+      "within_one": true
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_037",
+      "claim": "Black Lives Matter wants to destroy the nuclear family.",
+      "label": "Conflicting Evidence/Cherrypicking",
+      "expected_verdicts": [
+        "mixed",
+        "mostly_true",
+        "mostly_false"
+      ],
+      "expected_score_range": [
+        25,
+        75
+      ],
+      "actual_verdict": "?",
+      "score": -1,
+      "confidence": "unknown",
+      "correct": false,
+      "within_one": false
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_038",
+      "claim": "PTFE Sprayed On Blue Masks Causes Symptoms Similar To COVID-19",
+      "label": "Refuted",
+      "expected_verdicts": [
+        "false",
+        "mostly_false"
+      ],
+      "expected_score_range": [
+        0,
+        40
+      ],
+      "actual_verdict": "?",
+      "score": -1,
+      "confidence": "unknown",
+      "correct": false,
+      "within_one": false
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_039",
+      "claim": "More cops have died from COVID this year than have been killed on patrol.",
+      "label": "Not Enough Evidence",
+      "expected_verdicts": [
+        "unverifiable",
+        "mixed"
+      ],
+      "expected_score_range": [
+        30,
+        60
+      ],
+      "actual_verdict": "?",
+      "score": -1,
+      "confidence": "unknown",
+      "correct": true,
+      "within_one": true
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_040",
+      "claim": "President Trump announces  he has tested positive for Covid-19.",
+      "label": "Supported",
+      "expected_verdicts": [
+        "true",
+        "mostly_true"
+      ],
+      "expected_score_range": [
+        60,
+        100
+      ],
+      "actual_verdict": "?",
+      "score": -1,
+      "confidence": "unknown",
+      "correct": true,
+      "within_one": true
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_041",
+      "claim": "Joe and Jill Biden's income has increased recently.",
+      "label": "Supported",
+      "expected_verdicts": [
+        "true",
+        "mostly_true"
+      ],
+      "expected_score_range": [
+        60,
+        100
+      ],
+      "actual_verdict": "?",
+      "score": -1,
+      "confidence": "unknown",
+      "correct": false,
+      "within_one": false
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_042",
+      "claim": "No one lost their health care because of the Wellmark and Iowa Farm Bureau Health Plan Bill.",
+      "label": "Not Enough Evidence",
+      "expected_verdicts": [
+        "unverifiable",
+        "mixed"
+      ],
+      "expected_score_range": [
+        30,
+        60
+      ],
+      "actual_verdict": "?",
+      "score": -1,
+      "confidence": "unknown",
+      "correct": false,
+      "within_one": false
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_043",
+      "claim": "MPs are not following workplace Covid guidance by wearing masks.",
+      "label": "Refuted",
+      "expected_verdicts": [
+        "false",
+        "mostly_false"
+      ],
+      "expected_score_range": [
+        0,
+        40
+      ],
+      "actual_verdict": "?",
+      "score": -1,
+      "confidence": "unknown",
+      "correct": true,
+      "within_one": true
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_044",
+      "claim": "UK Employees unable to work in tier 3 areas will get a combination of Job Support Scheme and Universal Credit, which will mean they get 80% of their wages.",
+      "label": "Conflicting Evidence/Cherrypicking",
+      "expected_verdicts": [
+        "mixed",
+        "mostly_true",
+        "mostly_false"
+      ],
+      "expected_score_range": [
+        25,
+        75
+      ],
+      "actual_verdict": "?",
+      "score": -1,
+      "confidence": "unknown",
+      "correct": true,
+      "within_one": true
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_045",
+      "claim": "The alleged concerns of the United States over Cuba's cooperation, in this case about the ‘More Doctors’ program, are neither legitimate nor pertinent to be discussed at PAHO [Pan American Health Organization].",
+      "label": "Not Enough Evidence",
+      "expected_verdicts": [
+        "unverifiable",
+        "mixed"
+      ],
+      "expected_score_range": [
+        30,
+        60
+      ],
+      "actual_verdict": "?",
+      "score": -1,
+      "confidence": "unknown",
+      "correct": true,
+      "within_one": true
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_046",
+      "claim": "US Miami-Dade County Mayor Carlos Giminez kept his taxpayer-funded Mercedes-Benz after slashing $400 million in government jobs and spending.",
+      "label": "Conflicting Evidence/Cherrypicking",
+      "expected_verdicts": [
+        "mixed",
+        "mostly_true",
+        "mostly_false"
+      ],
+      "expected_score_range": [
+        25,
+        75
+      ],
+      "actual_verdict": "?",
+      "score": -1,
+      "confidence": "unknown",
+      "correct": true,
+      "within_one": true
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_047",
+      "claim": "Muslim candidates can qualify with lower marks than others in the UPCS (i.e. Union Public Service Commission for recruitment to higher Civil Services of the Government of India) exam",
+      "label": "Refuted",
+      "expected_verdicts": [
+        "false",
+        "mostly_false"
+      ],
+      "expected_score_range": [
+        0,
+        40
+      ],
+      "actual_verdict": "?",
+      "score": -1,
+      "confidence": "unknown",
+      "correct": false,
+      "within_one": false
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_048",
+      "claim": "The CDC has removed the “Covid-19 Pandemic” and replaced it with “Covid-19 Outbreak” on their website.",
+      "label": "Refuted",
+      "expected_verdicts": [
+        "false",
+        "mostly_false"
+      ],
+      "expected_score_range": [
+        0,
+        40
+      ],
+      "actual_verdict": "?",
+      "score": -1,
+      "confidence": "unknown",
+      "correct": true,
+      "within_one": true
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_049",
+      "claim": "The wife of  Lal Bahadur Shastri (ex Prime minister of India) repaid his car loan after his death.",
+      "label": "Supported",
+      "expected_verdicts": [
+        "true",
+        "mostly_true"
+      ],
+      "expected_score_range": [
+        60,
+        100
+      ],
+      "actual_verdict": "?",
+      "score": -1,
+      "confidence": "unknown",
+      "correct": true,
+      "within_one": true
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_050",
+      "claim": "Sunil Gavaskar said that \"Virat Kohli has only trained against Anushka [Sharma]'s balls during the lockdown\"",
+      "label": "Conflicting Evidence/Cherrypicking",
+      "expected_verdicts": [
+        "mixed",
+        "mostly_true",
+        "mostly_false"
+      ],
+      "expected_score_range": [
+        25,
+        75
+      ],
+      "actual_verdict": "?",
+      "score": -1,
+      "confidence": "unknown",
+      "correct": false,
+      "within_one": false
+    }
+  ],
+  "arm_b": [],
+  "arm_c": []
+}

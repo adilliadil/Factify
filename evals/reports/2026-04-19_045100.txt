@@ -1,0 +1,250 @@
+Benchmark Report — 2026-04-19 04:51:00 UTC
+Model: gpt-5.4-nano
+Commit: 8ab556d
+Datasets: AVeriTeC (50 samples), PolitiFact (50 samples)
+Total Tavily searches: 200
+────────────────────────────────────────────────────────────────────────────────
+
+── Overall Accuracy ──────────────────────────────────────────────────────────
+                       Arm 0 (None)    Arm A (Gold)  Arm B (Search)    Arm C (Full)
+  AVeriTeC                    26.0%           72.0%           66.0%           68.0%
+  PolitiFact                   0.0%               —           56.0%           52.0%
+  Combined                    13.0%           72.0%           61.0%           60.0%
+
+── Within-One-Level Accuracy ─────────────────────────────────────────────────
+  Combined                    41.0%           84.0%           85.0%           83.0%
+
+── Delta Analysis (verdict-only) ────────────────────────────────────────────
+  Evidence delta (B - 0): +48.0%  ← search evidence helps
+  Gold delta    (A - 0): +52.0%  ← gold evidence helps
+  Search delta  (A - B): +12.0%  ← gold evidence better
+  Extract delta (B - C): +1.0%  ← extraction hurts
+
+── Per-Label Accuracy (Arm C — Full Pipeline) ──────────────────────────────
+  AVeriTeC:
+    Conflicting Evidence/Cherrypicking        61.5%  (8/13)
+    Not Enough Evidence                       53.8%  (7/13)
+    Refuted                                   66.7%  (8/12)
+    Supported                                 91.7%  (11/12)
+
+  PolitiFact:
+    barely-true                               66.7%  (6/9)
+    false                                     77.8%  (7/9)
+    half-true                                 75.0%  (6/8)
+    mostly-true                               50.0%  (4/8)
+    pants-fire                                25.0%  (2/8)
+    true                                      12.5%  (1/8)
+
+── Confidence Calibration (Arm C) ───────────────────────────────────────────
+  When system says "high": 58.1% actually correct  (18/31)
+  When system says "low": 47.1% actually correct  (8/17)
+  When system says "medium": 70.8% actually correct  (34/48)
+  When system says "unknown": 0.0% actually correct  (0/4)
+
+── Score Distribution (Arm C, mean ± std by label) ─────────────────────────
+  Conflicting Evidence/Cherrypicking        52.7 ± 29.3  (n=13)
+  Not Enough Evidence                       40.4 ± 24.1  (n=12)
+  Refuted                                   38.6 ± 29.1  (n=12)
+  Supported                                 78.3 ± 11.9  (n=12)
+  barely-true                               36.6 ± 18.2  (n=8)
+  false                                     32.4 ± 13.8  (n=9)
+  half-true                                 59.6 ± 20.5  (n=8)
+  mostly-true                               69.9 ± 23.4  (n=7)
+  pants-fire                                40.0 ± 33.2  (n=8)
+  true                                      65.9 ± 26.2  (n=7)
+
+── Failed Samples ───────────────────────────────────────────────────────────
+
+  Arm 0 — Baseline (No Evidence) (87 failed / 100 total):
+    ID              Label                             Verdict (got / expected)                Score (got / exp. range)  Failure reasons
+    av_001          Conflicting Evidence/Cherrypickingunverifiable / mixed/mostly_true/mostly_false50  (no range check)      verdict: got unverifiable, expected one of mixed/mostly_true/mostly_false
+    av_002          Conflicting Evidence/Cherrypickingunverifiable / mixed/mostly_true/mostly_false50  (no range check)      verdict: got unverifiable, expected one of mixed/mostly_true/mostly_false
+    av_003          Supported                         unverifiable / true/mostly_true         50  (no range check)      verdict: got unverifiable, expected one of true/mostly_true
+    av_004          Conflicting Evidence/Cherrypickingunverifiable / mixed/mostly_true/mostly_false50  (no range check)      verdict: got unverifiable, expected one of mixed/mostly_true/mostly_false
+    av_005          Conflicting Evidence/Cherrypickingunverifiable / mixed/mostly_true/mostly_false50  (no range check)      verdict: got unverifiable, expected one of mixed/mostly_true/mostly_false
+    av_008          Refuted                           unverifiable / false/mostly_false       50  (no range check)      verdict: got unverifiable, expected one of false/mostly_false
+    av_009          Supported                         unverifiable / true/mostly_true         50  (no range check)      verdict: got unverifiable, expected one of true/mostly_true
+    av_010          Refuted                           unverifiable / false/mostly_false       50  (no range check)      verdict: got unverifiable, expected one of false/mostly_false
+    av_011          Supported                         unverifiable / true/mostly_true         50  (no range check)      verdict: got unverifiable, expected one of true/mostly_true
+    av_013          Refuted                           unverifiable / false/mostly_false       50  (no range check)      verdict: got unverifiable, expected one of false/mostly_false
+    av_017          Supported                         unverifiable / true/mostly_true         50  (no range check)      verdict: got unverifiable, expected one of true/mostly_true
+    av_019          Conflicting Evidence/Cherrypickingunverifiable / mixed/mostly_true/mostly_false50  (no range check)      verdict: got unverifiable, expected one of mixed/mostly_true/mostly_false
+    av_020          Supported                         unverifiable / true/mostly_true         50  (no range check)      verdict: got unverifiable, expected one of true/mostly_true
+    av_022          Refuted                           unverifiable / false/mostly_false       50  (no range check)      verdict: got unverifiable, expected one of false/mostly_false
+    av_023          Conflicting Evidence/Cherrypickingunverifiable / mixed/mostly_true/mostly_false50  (no range check)      verdict: got unverifiable, expected one of mixed/mostly_true/mostly_false
+    av_025          Refuted                           unverifiable / false/mostly_false       50  (no range check)      verdict: got unverifiable, expected one of false/mostly_false
+    av_026          Conflicting Evidence/Cherrypickingunverifiable / mixed/mostly_true/mostly_false50  (no range check)      verdict: got unverifiable, expected one of mixed/mostly_true/mostly_false
+    av_027          Refuted                           unverifiable / false/mostly_false       50  (no range check)      verdict: got unverifiable, expected one of false/mostly_false
+    av_028          Conflicting Evidence/Cherrypickingunverifiable / mixed/mostly_true/mostly_false50  (no range check)      verdict: got unverifiable, expected one of mixed/mostly_true/mostly_false
+    av_029          Refuted                           unverifiable / false/mostly_false       50  (no range check)      verdict: got unverifiable, expected one of false/mostly_false
+    av_030          Supported                         unverifiable / true/mostly_true         50  (no range check)      verdict: got unverifiable, expected one of true/mostly_true
+    av_031          Refuted                           unverifiable / false/mostly_false       50  (no range check)      verdict: got unverifiable, expected one of false/mostly_false
+    av_032          Supported                         unverifiable / true/mostly_true         50  (no range check)      verdict: got unverifiable, expected one of true/mostly_true
+    av_033          Supported                         unverifiable / true/mostly_true         50  (no range check)      verdict: got unverifiable, expected one of true/mostly_true
+    av_035          Supported                         unverifiable / true/mostly_true         50  (no range check)      verdict: got unverifiable, expected one of true/mostly_true
+    av_036          Conflicting Evidence/Cherrypickingunverifiable / mixed/mostly_true/mostly_false50  (no range check)      verdict: got unverifiable, expected one of mixed/mostly_true/mostly_false
+    av_037          Conflicting Evidence/Cherrypickingunverifiable / mixed/mostly_true/mostly_false50  (no range check)      verdict: got unverifiable, expected one of mixed/mostly_true/mostly_false
+    av_038          Refuted                           unverifiable / false/mostly_false       50  (no range check)      verdict: got unverifiable, expected one of false/mostly_false
+    av_040          Supported                         unverifiable / true/mostly_true         50  (no range check)      verdict: got unverifiable, expected one of true/mostly_true
+    av_041          Supported                         unverifiable / true/mostly_true         50  (no range check)      verdict: got unverifiable, expected one of true/mostly_true
+    av_043          Refuted                           unverifiable / false/mostly_false       50  (no range check)      verdict: got unverifiable, expected one of false/mostly_false
+    av_044          Conflicting Evidence/Cherrypickingunverifiable / mixed/mostly_true/mostly_false50  (no range check)      verdict: got unverifiable, expected one of mixed/mostly_true/mostly_false
+    av_046          Conflicting Evidence/Cherrypickingunverifiable / mixed/mostly_true/mostly_false50  (no range check)      verdict: got unverifiable, expected one of mixed/mostly_true/mostly_false
+    av_047          Refuted                           unverifiable / false/mostly_false       50  (no range check)      verdict: got unverifiable, expected one of false/mostly_false
+    av_048          Refuted                           unverifiable / false/mostly_false       50  (no range check)      verdict: got unverifiable, expected one of false/mostly_false
+    av_049          Supported                         unverifiable / true/mostly_true         50  (no range check)      verdict: got unverifiable, expected one of true/mostly_true
+    av_050          Conflicting Evidence/Cherrypickingunverifiable / mixed/mostly_true/mostly_false50  (no range check)      verdict: got unverifiable, expected one of mixed/mostly_true/mostly_false
+    pf_001          false                             unverifiable / false/mostly_false       50  (no range check)      verdict: got unverifiable, expected one of false/mostly_false
+    pf_002          false                             unverifiable / false/mostly_false       50  (no range check)      verdict: got unverifiable, expected one of false/mostly_false
+    pf_003          true                              unverifiable / true                     50  (no range check)      verdict: got unverifiable, expected one of true
+    pf_004          barely-true                       unverifiable / mostly_false/mixed       50  (no range check)      verdict: got unverifiable, expected one of mostly_false/mixed
+    pf_005          barely-true                       unverifiable / mostly_false/mixed       50  (no range check)      verdict: got unverifiable, expected one of mostly_false/mixed
+    pf_006          false                             unverifiable / false/mostly_false       50  (no range check)      verdict: got unverifiable, expected one of false/mostly_false
+    pf_007          false                             unverifiable / false/mostly_false       50  (no range check)      verdict: got unverifiable, expected one of false/mostly_false
+    pf_008          mostly-true                       unverifiable / mostly_true/true         50  (no range check)      verdict: got unverifiable, expected one of mostly_true/true
+    pf_009          true                              unverifiable / true                     50  (no range check)      verdict: got unverifiable, expected one of true
+    pf_010          mostly-true                       unverifiable / mostly_true/true         50  (no range check)      verdict: got unverifiable, expected one of mostly_true/true
+    pf_011          true                              unverifiable / true                     50  (no range check)      verdict: got unverifiable, expected one of true
+    pf_012          false                             unverifiable / false/mostly_false       50  (no range check)      verdict: got unverifiable, expected one of false/mostly_false
+    pf_013          mostly-true                       unverifiable / mostly_true/true         50  (no range check)      verdict: got unverifiable, expected one of mostly_true/true
+    pf_014          half-true                         unverifiable / mixed/mostly_true/mostly_false50  (no range check)      verdict: got unverifiable, expected one of mixed/mostly_true/mostly_false
+    pf_015          false                             unverifiable / false/mostly_false       50  (no range check)      verdict: got unverifiable, expected one of false/mostly_false
+    pf_016          half-true                         unverifiable / mixed/mostly_true/mostly_false50  (no range check)      verdict: got unverifiable, expected one of mixed/mostly_true/mostly_false
+    pf_017          true                              unverifiable / true                     50  (no range check)      verdict: got unverifiable, expected one of true
+    pf_018          half-true                         unverifiable / mixed/mostly_true/mostly_false50  (no range check)      verdict: got unverifiable, expected one of mixed/mostly_true/mostly_false
+    pf_019          barely-true                       unverifiable / mostly_false/mixed       50  (no range check)      verdict: got unverifiable, expected one of mostly_false/mixed
+    pf_020          pants-fire                        unverifiable / false                    50  (no range check)      verdict: got unverifiable, expected one of false
+    pf_021          half-true                         unverifiable / mixed/mostly_true/mostly_false50  (no range check)      verdict: got unverifiable, expected one of mixed/mostly_true/mostly_false
+    pf_022          mostly-true                       unverifiable / mostly_true/true         50  (no range check)      verdict: got unverifiable, expected one of mostly_true/true
+    pf_023          false                             unverifiable / false/mostly_false       50  (no range check)      verdict: got unverifiable, expected one of false/mostly_false
+    pf_024          half-true                         unverifiable / mixed/mostly_true/mostly_false50  (no range check)      verdict: got unverifiable, expected one of mixed/mostly_true/mostly_false
+    pf_025          mostly-true                       unverifiable / mostly_true/true         50  (no range check)      verdict: got unverifiable, expected one of mostly_true/true
+    pf_026          barely-true                       unverifiable / mostly_false/mixed       50  (no range check)      verdict: got unverifiable, expected one of mostly_false/mixed
+    pf_027          pants-fire                        unverifiable / false                    50  (no range check)      verdict: got unverifiable, expected one of false
+    pf_028          barely-true                       unverifiable / mostly_false/mixed       50  (no range check)      verdict: got unverifiable, expected one of mostly_false/mixed
+    pf_029          mostly-true                       unverifiable / mostly_true/true         50  (no range check)      verdict: got unverifiable, expected one of mostly_true/true
+    pf_030          true                              unverifiable / true                     50  (no range check)      verdict: got unverifiable, expected one of true
+    pf_031          mostly-true                       unverifiable / mostly_true/true         50  (no range check)      verdict: got unverifiable, expected one of mostly_true/true
+    pf_032          true                              unverifiable / true                     50  (no range check)      verdict: got unverifiable, expected one of true
+    pf_033          pants-fire                        unverifiable / false                    50  (no range check)      verdict: got unverifiable, expected one of false
+    pf_034          false                             unverifiable / false/mostly_false       50  (no range check)      verdict: got unverifiable, expected one of false/mostly_false
+    pf_035          true                              unverifiable / true                     50  (no range check)      verdict: got unverifiable, expected one of true
+    pf_036          barely-true                       unverifiable / mostly_false/mixed       50  (no range check)      verdict: got unverifiable, expected one of mostly_false/mixed
+    pf_037          false                             unverifiable / false/mostly_false       50  (no range check)      verdict: got unverifiable, expected one of false/mostly_false
+    pf_038          pants-fire                        unverifiable / false                    50  (no range check)      verdict: got unverifiable, expected one of false
+    pf_039          half-true                         unverifiable / mixed/mostly_true/mostly_false50  (no range check)      verdict: got unverifiable, expected one of mixed/mostly_true/mostly_false
+    pf_040          pants-fire                        unverifiable / false                    50  (no range check)      verdict: got unverifiable, expected one of false
+    pf_041          pants-fire                        unverifiable / false                    50  (no range check)      verdict: got unverifiable, expected one of false
+    pf_042          half-true                         unverifiable / mixed/mostly_true/mostly_false50  (no range check)      verdict: got unverifiable, expected one of mixed/mostly_true/mostly_false
+    pf_043          pants-fire                        unverifiable / false                    50  (no range check)      verdict: got unverifiable, expected one of false
+    pf_044          barely-true                       unverifiable / mostly_false/mixed       50  (no range check)      verdict: got unverifiable, expected one of mostly_false/mixed
+    pf_045          half-true                         unverifiable / mixed/mostly_true/mostly_false50  (no range check)      verdict: got unverifiable, expected one of mixed/mostly_true/mostly_false
+    pf_046          barely-true                       unverifiable / mostly_false/mixed       50  (no range check)      verdict: got unverifiable, expected one of mostly_false/mixed
+    pf_047          pants-fire                        unverifiable / false                    50  (no range check)      verdict: got unverifiable, expected one of false
+    pf_048          mostly-true                       unverifiable / mostly_true/true         50  (no range check)      verdict: got unverifiable, expected one of mostly_true/true
+    pf_049          true                              unverifiable / true                     50  (no range check)      verdict: got unverifiable, expected one of true
+    pf_050          barely-true                       unverifiable / mostly_false/mixed       50  (no range check)      verdict: got unverifiable, expected one of mostly_false/mixed
+
+  Arm A — Gold Evidence (14 failed / 50 total):
+    ID              Label                             Verdict (got / expected)                Score (got / exp. range)  Failure reasons
+    av_001          Conflicting Evidence/Cherrypickingmostly_true / mixed/mostly_true/mostly_false85 / [25, 75]             score: got 85, expected in [25, 75]
+    av_002          Conflicting Evidence/Cherrypickingunverifiable / mixed/mostly_true/mostly_false50 / [25, 75]             verdict: got unverifiable, expected one of mixed/mostly_true/mostly_false
+    av_008          Refuted                           mostly_true / false/mostly_false        70 / [0, 40]              verdict: got mostly_true, expected one of false/mostly_false; score: got 70, expected in [0, 40]
+    av_013          Refuted                           mixed / false/mostly_false              55 / [0, 40]              verdict: got mixed, expected one of false/mostly_false; score: got 55, expected in [0, 40]
+    av_019          Conflicting Evidence/Cherrypickingunverifiable / mixed/mostly_true/mostly_false50 / [25, 75]             verdict: got unverifiable, expected one of mixed/mostly_true/mostly_false
+    av_023          Conflicting Evidence/Cherrypickingunverifiable / mixed/mostly_true/mostly_false50 / [25, 75]             verdict: got unverifiable, expected one of mixed/mostly_true/mostly_false
+    av_030          Supported                         mixed / true/mostly_true                55 / [60, 100]            verdict: got mixed, expected one of true/mostly_true; score: got 55, expected in [60, 100]
+    av_031          Refuted                           mostly_true / false/mostly_false        85 / [0, 40]              verdict: got mostly_true, expected one of false/mostly_false; score: got 85, expected in [0, 40]
+    av_037          Conflicting Evidence/Cherrypickingmostly_false / mixed/mostly_true/mostly_false15 / [25, 75]             score: got 15, expected in [25, 75]
+    av_038          Refuted                           unverifiable / false/mostly_false       50 / [0, 40]              verdict: got unverifiable, expected one of false/mostly_false; score: got 50, expected in [0, 40]
+    av_041          Supported                         unverifiable / true/mostly_true         50 / [60, 100]            verdict: got unverifiable, expected one of true/mostly_true; score: got 50, expected in [60, 100]
+    av_042          Not Enough Evidence               false / unverifiable/mixed              10 / [30, 60]             verdict: got false, expected one of unverifiable/mixed; score: got 10, expected in [30, 60]
+    av_047          Refuted                           mostly_true / false/mostly_false        85 / [0, 40]              verdict: got mostly_true, expected one of false/mostly_false; score: got 85, expected in [0, 40]
+    av_050          Conflicting Evidence/Cherrypickingmostly_true / mixed/mostly_true/mostly_false78 / [25, 75]             score: got 78, expected in [25, 75]
+
+  Arm B — Searched Evidence (39 failed / 100 total):
+    ID              Label                             Verdict (got / expected)                Score (got / exp. range)  Failure reasons
+    av_002          Conflicting Evidence/Cherrypickingfalse / mixed/mostly_true/mostly_false  10  (no range check)      verdict: got false, expected one of mixed/mostly_true/mostly_false
+    av_003          Supported                         unverifiable / true/mostly_true         50  (no range check)      verdict: got unverifiable, expected one of true/mostly_true
+    av_006          Not Enough Evidence               true / unverifiable/mixed               95  (no range check)      verdict: got true, expected one of unverifiable/mixed
+    av_008          Refuted                           unverifiable / false/mostly_false       50  (no range check)      verdict: got unverifiable, expected one of false/mostly_false
+    av_009          Supported                         mostly_false / true/mostly_true         20  (no range check)      verdict: got mostly_false, expected one of true/mostly_true
+    av_011          Supported                         mixed / true/mostly_true                55  (no range check)      verdict: got mixed, expected one of true/mostly_true
+    av_012          Not Enough Evidence               false / unverifiable/mixed              5  (no range check)       verdict: got false, expected one of unverifiable/mixed
+    av_021          Not Enough Evidence               mostly_false / unverifiable/mixed       25  (no range check)      verdict: got mostly_false, expected one of unverifiable/mixed
+    av_024          Not Enough Evidence               mostly_false / unverifiable/mixed       35  (no range check)      verdict: got mostly_false, expected one of unverifiable/mixed
+    av_028          Conflicting Evidence/Cherrypickingfalse / mixed/mostly_true/mostly_false  10  (no range check)      verdict: got false, expected one of mixed/mostly_true/mostly_false
+    av_031          Refuted                           mostly_true / false/mostly_false        85  (no range check)      verdict: got mostly_true, expected one of false/mostly_false
+    av_034          Not Enough Evidence               mostly_false / unverifiable/mixed       25  (no range check)      verdict: got mostly_false, expected one of unverifiable/mixed
+    av_038          Refuted                           mostly_true / false/mostly_false        78  (no range check)      verdict: got mostly_true, expected one of false/mostly_false
+    av_039          Not Enough Evidence               mostly_true / unverifiable/mixed        78  (no range check)      verdict: got mostly_true, expected one of unverifiable/mixed
+    av_043          Refuted                           mostly_true / false/mostly_false        65  (no range check)      verdict: got mostly_true, expected one of false/mostly_false
+    av_047          Refuted                           unverifiable / false/mostly_false       50  (no range check)      verdict: got unverifiable, expected one of false/mostly_false
+    av_050          Conflicting Evidence/Cherrypickingtrue / mixed/mostly_true/mostly_false   92  (no range check)      verdict: got true, expected one of mixed/mostly_true/mostly_false
+    pf_002          false                             mostly_true / false/mostly_false        78  (no range check)      verdict: got mostly_true, expected one of false/mostly_false
+    pf_004          barely-true                       false / mostly_false/mixed              15  (no range check)      verdict: got false, expected one of mostly_false/mixed
+    pf_005          barely-true                       mostly_true / mostly_false/mixed        62  (no range check)      verdict: got mostly_true, expected one of mostly_false/mixed
+    pf_009          true                              ? / true                                -1  (no range check)      verdict: got ?, expected one of true
+    pf_011          true                              mostly_true / true                      85  (no range check)      verdict: got mostly_true, expected one of true
+    pf_017          true                              unverifiable / true                     50  (no range check)      verdict: got unverifiable, expected one of true
+    pf_020          pants-fire                        unverifiable / false                    50  (no range check)      verdict: got unverifiable, expected one of false
+    pf_023          false                             mostly_true / false/mostly_false        85  (no range check)      verdict: got mostly_true, expected one of false/mostly_false
+    pf_025          mostly-true                       unverifiable / mostly_true/true         50  (no range check)      verdict: got unverifiable, expected one of mostly_true/true
+    pf_030          true                              mostly_true / true                      65  (no range check)      verdict: got mostly_true, expected one of true
+    pf_032          true                              mostly_true / true                      85  (no range check)      verdict: got mostly_true, expected one of true
+    pf_034          false                             mixed / false/mostly_false              55  (no range check)      verdict: got mixed, expected one of false/mostly_false
+    pf_035          true                              mostly_true / true                      88  (no range check)      verdict: got mostly_true, expected one of true
+    pf_038          pants-fire                        mostly_false / false                    20  (no range check)      verdict: got mostly_false, expected one of false
+    pf_039          half-true                         false / mixed/mostly_true/mostly_false  20  (no range check)      verdict: got false, expected one of mixed/mostly_true/mostly_false
+    pf_040          pants-fire                        mostly_true / false                     70  (no range check)      verdict: got mostly_true, expected one of false
+    pf_041          pants-fire                        mostly_false / false                    15  (no range check)      verdict: got mostly_false, expected one of false
+    pf_043          pants-fire                        mostly_true / false                     70  (no range check)      verdict: got mostly_true, expected one of false
+    pf_047          pants-fire                        mostly_false / false                    25  (no range check)      verdict: got mostly_false, expected one of false
+    pf_048          mostly-true                       ? / mostly_true/true                    -1  (no range check)      verdict: got ?, expected one of mostly_true/true
+    pf_049          true                              mostly_false / true                     35  (no range check)      verdict: got mostly_false, expected one of true
+    pf_050          barely-true                       mostly_true / mostly_false/mixed        78  (no range check)      verdict: got mostly_true, expected one of mostly_false/mixed
+
+  Arm C — Full Pipeline (40 failed / 100 total):
+    ID              Label                             Verdict (got / expected)                Score (got / exp. range)  Failure reasons
+    av_004          Conflicting Evidence/Cherrypickingtrue / mixed/mostly_true/mostly_false   92  (no range check)      verdict: got true, expected one of mixed/mostly_true/mostly_false
+    av_006          Not Enough Evidence               mostly_true / unverifiable/mixed        92  (no range check)      verdict: got mostly_true, expected one of unverifiable/mixed
+    av_008          Refuted                           unverifiable / false/mostly_false       50  (no range check)      verdict: got unverifiable, expected one of false/mostly_false
+    av_010          Refuted                           unverifiable / false/mostly_false       50  (no range check)      verdict: got unverifiable, expected one of false/mostly_false
+    av_012          Not Enough Evidence               false / unverifiable/mixed              10  (no range check)      verdict: got false, expected one of unverifiable/mixed
+    av_016          Not Enough Evidence               mostly_false / unverifiable/mixed       28  (no range check)      verdict: got mostly_false, expected one of unverifiable/mixed
+    av_019          Conflicting Evidence/Cherrypickingfalse / mixed/mostly_true/mostly_false  15  (no range check)      verdict: got false, expected one of mixed/mostly_true/mostly_false
+    av_021          Not Enough Evidence               mostly_false / unverifiable/mixed       25  (no range check)      verdict: got mostly_false, expected one of unverifiable/mixed
+    av_028          Conflicting Evidence/Cherrypickingfalse / mixed/mostly_true/mostly_false  15  (no range check)      verdict: got false, expected one of mixed/mostly_true/mostly_false
+    av_030          Supported                         mixed / true/mostly_true                55  (no range check)      verdict: got mixed, expected one of true/mostly_true
+    av_031          Refuted                           mostly_true / false/mostly_false        85  (no range check)      verdict: got mostly_true, expected one of false/mostly_false
+    av_034          Not Enough Evidence               mostly_false / unverifiable/mixed       35  (no range check)      verdict: got mostly_false, expected one of unverifiable/mixed
+    av_039          Not Enough Evidence               ? / unverifiable/mixed                  -1  (no range check)      verdict: got ?, expected one of unverifiable/mixed
+    av_043          Refuted                           mostly_true / false/mostly_false        70  (no range check)      verdict: got mostly_true, expected one of false/mostly_false
+    av_044          Conflicting Evidence/Cherrypickingunverifiable / mixed/mostly_true/mostly_false50  (no range check)      verdict: got unverifiable, expected one of mixed/mostly_true/mostly_false
+    av_050          Conflicting Evidence/Cherrypickingtrue / mixed/mostly_true/mostly_false   95  (no range check)      verdict: got true, expected one of mixed/mostly_true/mostly_false
+    pf_002          false                             mixed / false/mostly_false              35  (no range check)      verdict: got mixed, expected one of false/mostly_false
+    pf_004          barely-true                       false / mostly_false/mixed              15  (no range check)      verdict: got false, expected one of mostly_false/mixed
+    pf_009          true                              ? / true                                -1  (no range check)      verdict: got ?, expected one of true
+    pf_011          true                              mostly_true / true                      70  (no range check)      verdict: got mostly_true, expected one of true
+    pf_012          false                             mostly_true / false/mostly_false        62  (no range check)      verdict: got mostly_true, expected one of false/mostly_false
+    pf_016          half-true                         true / mixed/mostly_true/mostly_false   92  (no range check)      verdict: got true, expected one of mixed/mostly_true/mostly_false
+    pf_017          true                              mostly_false / true                     20  (no range check)      verdict: got mostly_false, expected one of true
+    pf_020          pants-fire                        true / false                            95  (no range check)      verdict: got true, expected one of false
+    pf_022          mostly-true                       mixed / mostly_true/true                35  (no range check)      verdict: got mixed, expected one of mostly_true/true
+    pf_025          mostly-true                       unverifiable / mostly_true/true         50  (no range check)      verdict: got unverifiable, expected one of mostly_true/true
+    pf_030          true                              mixed / true                            55  (no range check)      verdict: got mixed, expected one of true
+    pf_031          mostly-true                       mixed / mostly_true/true                55  (no range check)      verdict: got mixed, expected one of mostly_true/true
+    pf_032          true                              mostly_true / true                      85  (no range check)      verdict: got mostly_true, expected one of true
+    pf_033          pants-fire                        mostly_false / false                    20  (no range check)      verdict: got mostly_false, expected one of false
+    pf_035          true                              mostly_true / true                      86  (no range check)      verdict: got mostly_true, expected one of true
+    pf_038          pants-fire                        mostly_false / false                    15  (no range check)      verdict: got mostly_false, expected one of false
+    pf_039          half-true                         unverifiable / mixed/mostly_true/mostly_false50  (no range check)      verdict: got unverifiable, expected one of mixed/mostly_true/mostly_false
+    pf_040          pants-fire                        mostly_true / false                     70  (no range check)      verdict: got mostly_true, expected one of false
+    pf_043          pants-fire                        mostly_true / false                     70  (no range check)      verdict: got mostly_true, expected one of false
+    pf_044          barely-true                       ? / mostly_false/mixed                  -1  (no range check)      verdict: got ?, expected one of mostly_false/mixed
+    pf_047          pants-fire                        mostly_false / false                    25  (no range check)      verdict: got mostly_false, expected one of false
+    pf_048          mostly-true                       ? / mostly_true/true                    -1  (no range check)      verdict: got ?, expected one of mostly_true/true
+    pf_049          true                              unverifiable / true                     50  (no range check)      verdict: got unverifiable, expected one of true
+    pf_050          barely-true                       mostly_true / mostly_false/mixed        78  (no range check)      verdict: got mostly_true, expected one of mostly_false/mixed
+
+════════════════════════════════════════════════════════════════════════════════

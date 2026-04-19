@@ -53,6 +53,16 @@ def test_accuracy_and_within_one():
     assert br.within_one_accuracy(rows) == 100.0
 
 
+def test_verdict_accuracy_ignores_score_failures():
+    rows = [
+        {"verdict_correct": True, "correct": False},  # score-only failure
+        {"verdict_correct": True, "correct": True},
+        {"verdict_correct": False, "correct": False},
+    ]
+    assert br.verdict_accuracy(rows) == pytest.approx(66.7, abs=0.1)
+    assert br.accuracy(rows) == pytest.approx(33.3, abs=0.1)
+
+
 def test_by_dataset_and_by_label():
     rows = [
         {"dataset": "a", "label": "x", "correct": True},
@@ -101,6 +111,7 @@ def test_build_structured_results_merges_pass_fail_and_stored():
     assert len(arm_a) == 1
     assert arm_a[0]["actual_verdict"] == "true"
     assert arm_a[0]["correct"] is True
+    assert arm_a[0]["verdict_correct"] is True
     assert arm_a[0]["expected_score_range"] == [40, 90]
 
 
@@ -121,6 +132,7 @@ def test_format_report_contains_model_and_sections(monkeypatch):
             "score": 90,
             "confidence": "high",
             "correct": True,
+            "verdict_correct": True,
             "within_one": True,
         },
     ]
@@ -149,6 +161,7 @@ def test_format_report_failed_samples_shows_reasons(monkeypatch):
             "score": 85,
             "confidence": "high",
             "correct": False,
+            "verdict_correct": True,
             "within_one": True,
         },
     ]

@@ -63,6 +63,13 @@ def accuracy(results: list[dict]) -> float:
     return sum(1 for r in results if r["correct"]) / len(results) * 100
 
 
+def verdict_accuracy(results: list[dict]) -> float:
+    """Accuracy based on verdict correctness only (ignores score-range checks)."""
+    if not results:
+        return 0.0
+    return sum(1 for r in results if r["verdict_correct"]) / len(results) * 100
+
+
 def within_one_accuracy(results: list[dict]) -> float:
     if not results:
         return 0.0
@@ -148,6 +155,7 @@ def build_structured_results(
             conf = stored.get("confidence", "unknown")
             expected = meta.get("expected_verdicts", [])
 
+            verdict_correct = actual_verdict in expected if expected else False
             results.append({
                 "dataset": meta.get("dataset", "Unknown"),
                 "id": meta.get("id", key),
@@ -159,6 +167,7 @@ def build_structured_results(
                 "score": score,
                 "confidence": conf,
                 "correct": pf["passed"],
+                "verdict_correct": verdict_correct,
                 "within_one": pf["passed"] or within_one_level(actual_verdict, expected),
             })
         arm_lists[arm_key] = results
@@ -221,14 +230,15 @@ def format_report(
     lines.append(f"  {'Combined':18s} {a_w1:>14s}  {b_w1:>14s}  {c_w1:>14s}")
     lines.append("")
 
-    # Delta Analysis
-    lines.append("── Delta Analysis ───────────────────────────────────────────")
+    # Delta Analysis (verdict-only so Arms are compared on equal footing;
+    # Arm A also checks score range, which would unfairly penalise it)
+    lines.append("── Delta Analysis (verdict-only) ────────────────────────────")
     if arm_a:
         arm_b_comparable = [r for r in arm_b if r["dataset"] in arm_a_by_ds]
-        search_delta = accuracy(arm_a) - accuracy(arm_b_comparable)
+        search_delta = verdict_accuracy(arm_a) - verdict_accuracy(arm_b_comparable)
         direction = "search helps" if search_delta < 0 else "gold evidence better" if search_delta > 0 else "no difference"
         lines.append(f"  Search delta  (A - B): {search_delta:+.1f}%  ← {direction}")
-    extract_delta = accuracy(arm_b) - accuracy(arm_c)
+    extract_delta = verdict_accuracy(arm_b) - verdict_accuracy(arm_c)
     direction = "extraction helps" if extract_delta < 0 else "extraction hurts" if extract_delta > 0 else "no difference"
     lines.append(f"  Extract delta (B - C): {extract_delta:+.1f}%  ← {direction}")
     lines.append("")

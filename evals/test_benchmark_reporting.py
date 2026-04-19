@@ -234,6 +234,7 @@ def test_build_structured_results_request_failed_no_stored_result():
 
 def test_build_structured_results_skipped():
     pass_fail = {
+        "arm_baseline": [],
         "arm_a": [],
         "arm_b": [{"key": "ds-1", "passed": False, "skipped": True, "request_failed": False}],
         "arm_c": [],
@@ -248,7 +249,7 @@ def test_build_structured_results_skipped():
             "expected_verdicts": ["true"],
         },
     }
-    _, arm_b, _ = br.build_structured_results(pass_fail, result_data, sample_lookup)
+    _, _, arm_b, _ = br.build_structured_results(pass_fail, result_data, sample_lookup)
     assert len(arm_b) == 1
     assert arm_b[0]["skipped"] is True
     assert arm_b[0]["correct"] is False
@@ -308,7 +309,7 @@ def test_format_report_skipped_samples_section(monkeypatch):
             "request_failed": False,
         },
     ]
-    text = br.format_report([], arm_b, [])
+    text = br.format_report([], [], arm_b, [])
     assert "Skipped samples" in text
     assert "s1" in text
     assert "Skipped (%)" in text

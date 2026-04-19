@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## 0.2.23
+
+- **Tests:** `evals/test_benchmark_reporting.py` skipped-sample cases updated for four-arm **`build_structured_results`** / **`format_report`** (`arm_baseline` in pass-fail dict; four arguments to `format_report`).
+
 ## 0.2.22
 
 - **Rebase:** resolved conflicts when applying **Benching multi-LLM** onto the rebased WIP: merged changelog with **0.2.21**–**0.2.14** from that branch; combined `evals/benchmark_reporting.py` failed-samples / skipped-sample section; took **`evals/reports/benchmark_results.json`** from the incoming commit. Removed **`evals/__init__.py`** (PEP 420 namespace; see **0.2.21**).

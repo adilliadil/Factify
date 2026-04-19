@@ -98,8 +98,10 @@ def pytest_runtest_logreport(report):
     else:
         return
 
-    # ``request_failed``: call raised before ``store_benchmark_result`` (not skipped / setup failure).
+    # ``request_failed``: call failed before ``store_benchmark_result`` (not skipped).
+    # ``skipped``: ``pytest.skip`` during the call (e.g. Arm B no Tavily sources).
     outcome = getattr(report, "outcome", None)
+    skipped = outcome == "skipped"
     request_failed = (
         outcome == "failed"
         and f"{arm}:{param_key}" not in _benchmark_result_data
@@ -108,6 +110,7 @@ def pytest_runtest_logreport(report):
     _benchmark_pass_fail[arm].append({
         "key": param_key,
         "passed": report.passed,
+        "skipped": skipped,
         "request_failed": request_failed,
     })
 

@@ -41,6 +41,7 @@ def test_safe_filename_fragment():
     from evals.run_benchmark import _safe_filename_fragment
 
     assert _safe_filename_fragment("gpt-nano") == "gpt-nano"
+    assert _safe_filename_fragment("gpt-5.4") == "gpt-5.4"
     assert ".." not in _safe_filename_fragment("a/b:c")
 
 
@@ -48,6 +49,24 @@ def test_load_dotenv_for_cli_runs_without_error():
     from evals.run_benchmark import _load_dotenv_for_cli
 
     _load_dotenv_for_cli()
+
+
+def test_warn_if_not_registry_alias_hints_gpt_5_4(monkeypatch, capsys):
+    """gpt-5.4 is omitted from the registry until GPT_MODEL_NAME is set."""
+    from backend.config import config
+    from evals.run_benchmark import _warn_if_not_registry_alias
+
+    monkeypatch.setenv("OPENAI_API_KEY", "dummy")
+    monkeypatch.setenv("AZURE_OPENAI_BASE_URL", "https://x.cognitiveservices.azure.com")
+    monkeypatch.setenv("AZURE_OPENAI_KEY", "k")
+    monkeypatch.setenv("GPT_NANO_MODEL_NAME", "gpt-5.4-nano")
+    monkeypatch.delenv("GPT_MODEL_NAME", raising=False)
+    monkeypatch.delenv("GPT_MINI_MODEL_NAME", raising=False)
+    config.reset()
+    _warn_if_not_registry_alias(["gpt-5.4"])
+    err = capsys.readouterr().err
+    assert "GPT_MODEL_NAME" in err
+    assert "AZURE_OPENAI" in err
 
 
 def test_format_comparison_report_structure():
@@ -104,8 +123,10 @@ def test_format_comparison_report_structure():
     assert "10.00s" in md or "10.0" in md
     assert "Accuracy by arm" in md
     assert "Request failures (% by arm)" in md
+    assert "Skipped (% by arm)" in md
     assert "Incorrect verdicts (counts" in md
     assert "Request failures (counts)" in md
+    assert "Skipped (counts)" in md
     assert "Per-label accuracy" in md
 
 

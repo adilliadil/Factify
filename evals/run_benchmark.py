@@ -2,9 +2,12 @@
 
 Example::
 
-    python -m evals.run_benchmark --models gpt-nano kimi --samples 10 --class TestGoldEvidenceAnalysis
+    python -m evals.run_benchmark --models gpt-5.4 gpt-nano kimi --samples 10 --class TestGoldEvidenceAnalysis
 
 Requires the same credentials as ``pytest evals/test_benchmark.py -m benchmark`` (see README).
+
+Subprocesses invoke pytest with ``--tb line`` so failures still print a one-line traceback without
+flooding the comparison log (``-q`` remains enabled).
 """
 
 from __future__ import annotations
@@ -48,6 +51,20 @@ def _safe_filename_fragment(name: str) -> str:
     return re.sub(r"[^a-zA-Z0-9._-]+", "_", name).strip("_") or "model"
 
 
+# Aliases that only appear in ``config.models`` when their backing env var is non-empty.
+_REGISTRY_ENV_HINTS: dict[str, str] = {
+    "gpt-nano": "set GPT_NANO_MODEL_NAME (deployment name) with AZURE_OPENAI_BASE_URL and AZURE_OPENAI_KEY",
+    "gpt-mini": "set GPT_MINI_MODEL_NAME (deployment name) with AZURE_OPENAI_BASE_URL and AZURE_OPENAI_KEY",
+    "gpt-5.4": "set GPT_MODEL_NAME (deployment name) with AZURE_OPENAI_BASE_URL and AZURE_OPENAI_KEY",
+    "grok-reasoning": "set GROK_REASONING_MODEL_NAME with AZURE_BASE_URL and AZURE_API_KEY",
+    "grok-nonreasoning": "set GROK_NONREASONING_MODEL_NAME with AZURE_BASE_URL and AZURE_API_KEY",
+    "kimi": "set KIMI_MODEL_NAME with AZURE_BASE_URL and AZURE_API_KEY",
+    "deepseek-r": "set DEEPSEEK_R_MODEL_NAME with AZURE_BASE_URL and AZURE_API_KEY",
+    "deepseek-v": "set DEEPSEEK_V_MODEL_NAME with AZURE_WEIRDOS_BASE_URL and AZURE_WEIRDOS_KEY",
+    "llama-maverick": "set LLAMA_MODEL_NAME with AZURE_WEIRDOS_BASE_URL and AZURE_WEIRDOS_KEY",
+}
+
+
 def _warn_if_not_registry_alias(models: list[str]) -> None:
     """Warn when a model id is not in ``config.models`` (may still be valid via generic LLM_MODEL)."""
     from backend.config import config
@@ -60,11 +77,14 @@ def _warn_if_not_registry_alias(models: list[str]) -> None:
 
     for m in models:
         if m not in reg:
-            print(
+            msg = (
                 f"Warning: {m!r} is not in the model registry (config.models). "
-                "If you intend a raw provider model id, ensure LLM_PROVIDER and keys are set.",
-                file=sys.stderr,
+                "If you intend a raw provider model id, ensure LLM_PROVIDER and keys are set."
             )
+            hint = _REGISTRY_ENV_HINTS.get(m)
+            if hint:
+                msg += f" For this alias, {hint} (see .env.example)."
+            print(msg, file=sys.stderr)
 
 
 def _build_pytest_cmd(benchmark_class: str | None) -> list[str]:
@@ -79,7 +99,7 @@ def _build_pytest_cmd(benchmark_class: str | None) -> list[str]:
         "-m",
         "benchmark",
         "--tb",
-        "no",
+        "line",
         "-q",
     ]
     if benchmark_class:

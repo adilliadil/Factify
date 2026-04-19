@@ -1,0 +1,1286 @@
+{
+  "timestamp": "2026-04-19T12:53:42.167607+00:00",
+  "model": "Llama-4-Maverick-17B-128E-Instruct-FP8",
+  "commit": "1f80f25",
+  "arm_a": [
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_001",
+      "claim": "Indian Railways has been completely privatized, and as a result, scores of people working in the Railways would lose their jobs.",
+      "label": "Conflicting Evidence/Cherrypicking",
+      "expected_verdicts": [
+        "mixed",
+        "mostly_true",
+        "mostly_false"
+      ],
+      "expected_score_range": [
+        25,
+        75
+      ],
+      "actual_verdict": "unverifiable",
+      "score": 50,
+      "confidence": "low",
+      "request_failed": false,
+      "skipped": false,
+      "correct": false,
+      "within_one": false
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_002",
+      "claim": "Donald Trump said: \"Biden also vowed to oppose school choice and close down charter schools, ripping away the ladder of opportunity for Black and Hispanic children.\"",
+      "label": "Conflicting Evidence/Cherrypicking",
+      "expected_verdicts": [
+        "mixed",
+        "mostly_true",
+        "mostly_false"
+      ],
+      "expected_score_range": [
+        25,
+        75
+      ],
+      "actual_verdict": "unverifiable",
+      "score": 50,
+      "confidence": "low",
+      "request_failed": false,
+      "skipped": false,
+      "correct": false,
+      "within_one": false
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_003",
+      "claim": "At independence, Nigeria had a population of 45 million",
+      "label": "Supported",
+      "expected_verdicts": [
+        "true",
+        "mostly_true"
+      ],
+      "expected_score_range": [
+        60,
+        100
+      ],
+      "actual_verdict": "unverifiable",
+      "score": 50,
+      "confidence": "low",
+      "request_failed": false,
+      "skipped": false,
+      "correct": false,
+      "within_one": true
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_004",
+      "claim": "The U.S. surgeon general and the Centers for Disease Control both previously said that ‘masks are not effective in preventing [the] general public from catching coronavirus.’",
+      "label": "Conflicting Evidence/Cherrypicking",
+      "expected_verdicts": [
+        "mixed",
+        "mostly_true",
+        "mostly_false"
+      ],
+      "expected_score_range": [
+        25,
+        75
+      ],
+      "actual_verdict": "unverifiable",
+      "score": 50,
+      "confidence": "low",
+      "request_failed": false,
+      "skipped": false,
+      "correct": false,
+      "within_one": false
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_005",
+      "claim": "Russia sent medical aid to the US, in the form of medical equipment to help coronavirus patients.",
+      "label": "Conflicting Evidence/Cherrypicking",
+      "expected_verdicts": [
+        "mixed",
+        "mostly_true",
+        "mostly_false"
+      ],
+      "expected_score_range": [
+        25,
+        75
+      ],
+      "actual_verdict": "unverifiable",
+      "score": 50,
+      "confidence": "low",
+      "request_failed": false,
+      "skipped": false,
+      "correct": false,
+      "within_one": false
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_006",
+      "claim": "Nigeria was the third most terrorised in the world in 2020, after Afghanistan and Iraq.",
+      "label": "Not Enough Evidence",
+      "expected_verdicts": [
+        "unverifiable",
+        "mixed"
+      ],
+      "expected_score_range": [
+        30,
+        60
+      ],
+      "actual_verdict": "unverifiable",
+      "score": 50,
+      "confidence": "low",
+      "request_failed": false,
+      "skipped": false,
+      "correct": true,
+      "within_one": true
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_007",
+      "claim": "Illegal drug, border crossings, and human smuggling activities have decreased in areas where barriers are deployed in the United States.",
+      "label": "Not Enough Evidence",
+      "expected_verdicts": [
+        "unverifiable",
+        "mixed"
+      ],
+      "expected_score_range": [
+        30,
+        60
+      ],
+      "actual_verdict": "unverifiable",
+      "score": 50,
+      "confidence": "low",
+      "request_failed": false,
+      "skipped": false,
+      "correct": true,
+      "within_one": true
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_008",
+      "claim": "Since 2002, South Africa’s police force has grown by 50%.",
+      "label": "Refuted",
+      "expected_verdicts": [
+        "false",
+        "mostly_false"
+      ],
+      "expected_score_range": [
+        0,
+        40
+      ],
+      "actual_verdict": "unverifiable",
+      "score": 50,
+      "confidence": "low",
+      "request_failed": false,
+      "skipped": false,
+      "correct": false,
+      "within_one": false
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_009",
+      "claim": "Today, Nigeria grapple has a population exceeding 200 million.",
+      "label": "Supported",
+      "expected_verdicts": [
+        "true",
+        "mostly_true"
+      ],
+      "expected_score_range": [
+        60,
+        100
+      ],
+      "actual_verdict": "unverifiable",
+      "score": 50,
+      "confidence": "low",
+      "request_failed": false,
+      "skipped": false,
+      "correct": false,
+      "within_one": true
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_010",
+      "claim": "UNESCO declared Nadar community as the most ancient race in the world.",
+      "label": "Refuted",
+      "expected_verdicts": [
+        "false",
+        "mostly_false"
+      ],
+      "expected_score_range": [
+        0,
+        40
+      ],
+      "actual_verdict": "unverifiable",
+      "score": 50,
+      "confidence": "low",
+      "request_failed": false,
+      "skipped": false,
+      "correct": false,
+      "within_one": false
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_011",
+      "claim": "Fact Check: WHO has not approved home remedy for COVID-19, don’t fall for misinformation",
+      "label": "Supported",
+      "expected_verdicts": [
+        "true",
+        "mostly_true"
+      ],
+      "expected_score_range": [
+        60,
+        100
+      ],
+      "actual_verdict": "unverifiable",
+      "score": 50,
+      "confidence": "low",
+      "request_failed": false,
+      "skipped": false,
+      "correct": false,
+      "within_one": true
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_012",
+      "claim": "Hunter Biden (son of US president Joe Biden)  had 25,000 pics of him torturing and raping children under 10 in China on his laptop.",
+      "label": "Not Enough Evidence",
+      "expected_verdicts": [
+        "unverifiable",
+        "mixed"
+      ],
+      "expected_score_range": [
+        30,
+        60
+      ],
+      "actual_verdict": "unverifiable",
+      "score": 50,
+      "confidence": "low",
+      "request_failed": false,
+      "skipped": false,
+      "correct": true,
+      "within_one": true
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_013",
+      "claim": "Dr. Ebeneezer, a medical doctor and a herbal practitioner at the Amuzu Hospital has instructed men to have sex at least 21 times a month to avoid prostate cancer.",
+      "label": "Refuted",
+      "expected_verdicts": [
+        "false",
+        "mostly_false"
+      ],
+      "expected_score_range": [
+        0,
+        40
+      ],
+      "actual_verdict": "unverifiable",
+      "score": 50,
+      "confidence": "low",
+      "request_failed": false,
+      "skipped": false,
+      "correct": false,
+      "within_one": false
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_014",
+      "claim": "There was a 40% drop in oil prices in Nigeria.",
+      "label": "Not Enough Evidence",
+      "expected_verdicts": [
+        "unverifiable",
+        "mixed"
+      ],
+      "expected_score_range": [
+        30,
+        60
+      ],
+      "actual_verdict": "unverifiable",
+      "score": 50,
+      "confidence": "low",
+      "request_failed": false,
+      "skipped": false,
+      "correct": true,
+      "within_one": true
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_015",
+      "claim": "In the US lockdowns are partly responsible for excess deaths not directly attributed to COVID-19 which were observed in 2020.",
+      "label": "Not Enough Evidence",
+      "expected_verdicts": [
+        "unverifiable",
+        "mixed"
+      ],
+      "expected_score_range": [
+        30,
+        60
+      ],
+      "actual_verdict": "unverifiable",
+      "score": 50,
+      "confidence": "low",
+      "request_failed": false,
+      "skipped": false,
+      "correct": true,
+      "within_one": true
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_016",
+      "claim": "You see the number today? 33.1 GDP. The biggest in the history of our country by almost triple, right? Almost triple. Now it’s very much bigger than any GDP we’ve ever had. You have to go back to the 1950s, and then it’s less than half. This is the greatest number, 33.1 percent.",
+      "label": "Not Enough Evidence",
+      "expected_verdicts": [
+        "unverifiable",
+        "mixed"
+      ],
+      "expected_score_range": [
+        30,
+        60
+      ],
+      "actual_verdict": "unverifiable",
+      "score": 50,
+      "confidence": "low",
+      "request_failed": false,
+      "skipped": false,
+      "correct": true,
+      "within_one": true
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_017",
+      "claim": "Because of a so-called trade war with China, America lost 300,000 manufacturing jobs.",
+      "label": "Supported",
+      "expected_verdicts": [
+        "true",
+        "mostly_true"
+      ],
+      "expected_score_range": [
+        60,
+        100
+      ],
+      "actual_verdict": "unverifiable",
+      "score": 50,
+      "confidence": "low",
+      "request_failed": false,
+      "skipped": false,
+      "correct": false,
+      "within_one": true
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_018",
+      "claim": "There was a 40% drop in the price of oil, Nigeria's main export.",
+      "label": "Not Enough Evidence",
+      "expected_verdicts": [
+        "unverifiable",
+        "mixed"
+      ],
+      "expected_score_range": [
+        30,
+        60
+      ],
+      "actual_verdict": "unverifiable",
+      "score": 50,
+      "confidence": "low",
+      "request_failed": false,
+      "skipped": false,
+      "correct": true,
+      "within_one": true
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_019",
+      "claim": "Twitter now putting warnings on tweets that are just unedited clips of Biden saying he would end fracking",
+      "label": "Conflicting Evidence/Cherrypicking",
+      "expected_verdicts": [
+        "mixed",
+        "mostly_true",
+        "mostly_false"
+      ],
+      "expected_score_range": [
+        25,
+        75
+      ],
+      "actual_verdict": "unverifiable",
+      "score": 50,
+      "confidence": "low",
+      "request_failed": false,
+      "skipped": false,
+      "correct": false,
+      "within_one": false
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_020",
+      "claim": "Edo State in Nigeria has a 19% unemployment rate.",
+      "label": "Supported",
+      "expected_verdicts": [
+        "true",
+        "mostly_true"
+      ],
+      "expected_score_range": [
+        60,
+        100
+      ],
+      "actual_verdict": "unverifiable",
+      "score": 50,
+      "confidence": "low",
+      "request_failed": false,
+      "skipped": false,
+      "correct": false,
+      "within_one": true
+    }
+  ],
+  "arm_b": [
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_001",
+      "claim": "Indian Railways has been completely privatized, and as a result, scores of people working in the Railways would lose their jobs.",
+      "label": "Conflicting Evidence/Cherrypicking",
+      "expected_verdicts": [
+        "mixed",
+        "mostly_true",
+        "mostly_false"
+      ],
+      "expected_score_range": [
+        25,
+        75
+      ],
+      "actual_verdict": "?",
+      "score": -1,
+      "confidence": "unknown",
+      "request_failed": false,
+      "skipped": true,
+      "correct": false,
+      "within_one": false
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_002",
+      "claim": "Donald Trump said: \"Biden also vowed to oppose school choice and close down charter schools, ripping away the ladder of opportunity for Black and Hispanic children.\"",
+      "label": "Conflicting Evidence/Cherrypicking",
+      "expected_verdicts": [
+        "mixed",
+        "mostly_true",
+        "mostly_false"
+      ],
+      "expected_score_range": [
+        25,
+        75
+      ],
+      "actual_verdict": "?",
+      "score": -1,
+      "confidence": "unknown",
+      "request_failed": false,
+      "skipped": true,
+      "correct": false,
+      "within_one": false
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_003",
+      "claim": "At independence, Nigeria had a population of 45 million",
+      "label": "Supported",
+      "expected_verdicts": [
+        "true",
+        "mostly_true"
+      ],
+      "expected_score_range": [
+        60,
+        100
+      ],
+      "actual_verdict": "?",
+      "score": -1,
+      "confidence": "unknown",
+      "request_failed": false,
+      "skipped": true,
+      "correct": false,
+      "within_one": false
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_004",
+      "claim": "The U.S. surgeon general and the Centers for Disease Control both previously said that ‘masks are not effective in preventing [the] general public from catching coronavirus.’",
+      "label": "Conflicting Evidence/Cherrypicking",
+      "expected_verdicts": [
+        "mixed",
+        "mostly_true",
+        "mostly_false"
+      ],
+      "expected_score_range": [
+        25,
+        75
+      ],
+      "actual_verdict": "?",
+      "score": -1,
+      "confidence": "unknown",
+      "request_failed": false,
+      "skipped": true,
+      "correct": false,
+      "within_one": false
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_005",
+      "claim": "Russia sent medical aid to the US, in the form of medical equipment to help coronavirus patients.",
+      "label": "Conflicting Evidence/Cherrypicking",
+      "expected_verdicts": [
+        "mixed",
+        "mostly_true",
+        "mostly_false"
+      ],
+      "expected_score_range": [
+        25,
+        75
+      ],
+      "actual_verdict": "?",
+      "score": -1,
+      "confidence": "unknown",
+      "request_failed": false,
+      "skipped": true,
+      "correct": false,
+      "within_one": false
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_006",
+      "claim": "Nigeria was the third most terrorised in the world in 2020, after Afghanistan and Iraq.",
+      "label": "Not Enough Evidence",
+      "expected_verdicts": [
+        "unverifiable",
+        "mixed"
+      ],
+      "expected_score_range": [
+        30,
+        60
+      ],
+      "actual_verdict": "?",
+      "score": -1,
+      "confidence": "unknown",
+      "request_failed": false,
+      "skipped": true,
+      "correct": false,
+      "within_one": false
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_007",
+      "claim": "Illegal drug, border crossings, and human smuggling activities have decreased in areas where barriers are deployed in the United States.",
+      "label": "Not Enough Evidence",
+      "expected_verdicts": [
+        "unverifiable",
+        "mixed"
+      ],
+      "expected_score_range": [
+        30,
+        60
+      ],
+      "actual_verdict": "?",
+      "score": -1,
+      "confidence": "unknown",
+      "request_failed": false,
+      "skipped": true,
+      "correct": false,
+      "within_one": false
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_008",
+      "claim": "Since 2002, South Africa’s police force has grown by 50%.",
+      "label": "Refuted",
+      "expected_verdicts": [
+        "false",
+        "mostly_false"
+      ],
+      "expected_score_range": [
+        0,
+        40
+      ],
+      "actual_verdict": "?",
+      "score": -1,
+      "confidence": "unknown",
+      "request_failed": false,
+      "skipped": true,
+      "correct": false,
+      "within_one": false
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_009",
+      "claim": "Today, Nigeria grapple has a population exceeding 200 million.",
+      "label": "Supported",
+      "expected_verdicts": [
+        "true",
+        "mostly_true"
+      ],
+      "expected_score_range": [
+        60,
+        100
+      ],
+      "actual_verdict": "?",
+      "score": -1,
+      "confidence": "unknown",
+      "request_failed": false,
+      "skipped": true,
+      "correct": false,
+      "within_one": false
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_010",
+      "claim": "UNESCO declared Nadar community as the most ancient race in the world.",
+      "label": "Refuted",
+      "expected_verdicts": [
+        "false",
+        "mostly_false"
+      ],
+      "expected_score_range": [
+        0,
+        40
+      ],
+      "actual_verdict": "?",
+      "score": -1,
+      "confidence": "unknown",
+      "request_failed": false,
+      "skipped": true,
+      "correct": false,
+      "within_one": false
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_011",
+      "claim": "Fact Check: WHO has not approved home remedy for COVID-19, don’t fall for misinformation",
+      "label": "Supported",
+      "expected_verdicts": [
+        "true",
+        "mostly_true"
+      ],
+      "expected_score_range": [
+        60,
+        100
+      ],
+      "actual_verdict": "?",
+      "score": -1,
+      "confidence": "unknown",
+      "request_failed": false,
+      "skipped": true,
+      "correct": false,
+      "within_one": false
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_012",
+      "claim": "Hunter Biden (son of US president Joe Biden)  had 25,000 pics of him torturing and raping children under 10 in China on his laptop.",
+      "label": "Not Enough Evidence",
+      "expected_verdicts": [
+        "unverifiable",
+        "mixed"
+      ],
+      "expected_score_range": [
+        30,
+        60
+      ],
+      "actual_verdict": "?",
+      "score": -1,
+      "confidence": "unknown",
+      "request_failed": false,
+      "skipped": true,
+      "correct": false,
+      "within_one": false
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_013",
+      "claim": "Dr. Ebeneezer, a medical doctor and a herbal practitioner at the Amuzu Hospital has instructed men to have sex at least 21 times a month to avoid prostate cancer.",
+      "label": "Refuted",
+      "expected_verdicts": [
+        "false",
+        "mostly_false"
+      ],
+      "expected_score_range": [
+        0,
+        40
+      ],
+      "actual_verdict": "?",
+      "score": -1,
+      "confidence": "unknown",
+      "request_failed": false,
+      "skipped": true,
+      "correct": false,
+      "within_one": false
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_014",
+      "claim": "There was a 40% drop in oil prices in Nigeria.",
+      "label": "Not Enough Evidence",
+      "expected_verdicts": [
+        "unverifiable",
+        "mixed"
+      ],
+      "expected_score_range": [
+        30,
+        60
+      ],
+      "actual_verdict": "?",
+      "score": -1,
+      "confidence": "unknown",
+      "request_failed": false,
+      "skipped": true,
+      "correct": false,
+      "within_one": false
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_015",
+      "claim": "In the US lockdowns are partly responsible for excess deaths not directly attributed to COVID-19 which were observed in 2020.",
+      "label": "Not Enough Evidence",
+      "expected_verdicts": [
+        "unverifiable",
+        "mixed"
+      ],
+      "expected_score_range": [
+        30,
+        60
+      ],
+      "actual_verdict": "?",
+      "score": -1,
+      "confidence": "unknown",
+      "request_failed": false,
+      "skipped": true,
+      "correct": false,
+      "within_one": false
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_016",
+      "claim": "You see the number today? 33.1 GDP. The biggest in the history of our country by almost triple, right? Almost triple. Now it’s very much bigger than any GDP we’ve ever had. You have to go back to the 1950s, and then it’s less than half. This is the greatest number, 33.1 percent.",
+      "label": "Not Enough Evidence",
+      "expected_verdicts": [
+        "unverifiable",
+        "mixed"
+      ],
+      "expected_score_range": [
+        30,
+        60
+      ],
+      "actual_verdict": "?",
+      "score": -1,
+      "confidence": "unknown",
+      "request_failed": false,
+      "skipped": true,
+      "correct": false,
+      "within_one": false
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_017",
+      "claim": "Because of a so-called trade war with China, America lost 300,000 manufacturing jobs.",
+      "label": "Supported",
+      "expected_verdicts": [
+        "true",
+        "mostly_true"
+      ],
+      "expected_score_range": [
+        60,
+        100
+      ],
+      "actual_verdict": "?",
+      "score": -1,
+      "confidence": "unknown",
+      "request_failed": false,
+      "skipped": true,
+      "correct": false,
+      "within_one": false
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_018",
+      "claim": "There was a 40% drop in the price of oil, Nigeria's main export.",
+      "label": "Not Enough Evidence",
+      "expected_verdicts": [
+        "unverifiable",
+        "mixed"
+      ],
+      "expected_score_range": [
+        30,
+        60
+      ],
+      "actual_verdict": "?",
+      "score": -1,
+      "confidence": "unknown",
+      "request_failed": false,
+      "skipped": true,
+      "correct": false,
+      "within_one": false
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_019",
+      "claim": "Twitter now putting warnings on tweets that are just unedited clips of Biden saying he would end fracking",
+      "label": "Conflicting Evidence/Cherrypicking",
+      "expected_verdicts": [
+        "mixed",
+        "mostly_true",
+        "mostly_false"
+      ],
+      "expected_score_range": [
+        25,
+        75
+      ],
+      "actual_verdict": "?",
+      "score": -1,
+      "confidence": "unknown",
+      "request_failed": false,
+      "skipped": true,
+      "correct": false,
+      "within_one": false
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_020",
+      "claim": "Edo State in Nigeria has a 19% unemployment rate.",
+      "label": "Supported",
+      "expected_verdicts": [
+        "true",
+        "mostly_true"
+      ],
+      "expected_score_range": [
+        60,
+        100
+      ],
+      "actual_verdict": "?",
+      "score": -1,
+      "confidence": "unknown",
+      "request_failed": false,
+      "skipped": true,
+      "correct": false,
+      "within_one": false
+    }
+  ],
+  "arm_c": [
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_001",
+      "claim": "Indian Railways has been completely privatized, and as a result, scores of people working in the Railways would lose their jobs.",
+      "label": "Conflicting Evidence/Cherrypicking",
+      "expected_verdicts": [
+        "mixed",
+        "mostly_true",
+        "mostly_false"
+      ],
+      "expected_score_range": [
+        25,
+        75
+      ],
+      "actual_verdict": "unverifiable",
+      "score": 50,
+      "confidence": "low",
+      "request_failed": false,
+      "skipped": false,
+      "correct": false,
+      "within_one": false
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_002",
+      "claim": "Donald Trump said: \"Biden also vowed to oppose school choice and close down charter schools, ripping away the ladder of opportunity for Black and Hispanic children.\"",
+      "label": "Conflicting Evidence/Cherrypicking",
+      "expected_verdicts": [
+        "mixed",
+        "mostly_true",
+        "mostly_false"
+      ],
+      "expected_score_range": [
+        25,
+        75
+      ],
+      "actual_verdict": "unverifiable",
+      "score": 50,
+      "confidence": "low",
+      "request_failed": false,
+      "skipped": false,
+      "correct": false,
+      "within_one": false
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_003",
+      "claim": "At independence, Nigeria had a population of 45 million",
+      "label": "Supported",
+      "expected_verdicts": [
+        "true",
+        "mostly_true"
+      ],
+      "expected_score_range": [
+        60,
+        100
+      ],
+      "actual_verdict": "unverifiable",
+      "score": 50,
+      "confidence": "low",
+      "request_failed": false,
+      "skipped": false,
+      "correct": false,
+      "within_one": true
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_004",
+      "claim": "The U.S. surgeon general and the Centers for Disease Control both previously said that ‘masks are not effective in preventing [the] general public from catching coronavirus.’",
+      "label": "Conflicting Evidence/Cherrypicking",
+      "expected_verdicts": [
+        "mixed",
+        "mostly_true",
+        "mostly_false"
+      ],
+      "expected_score_range": [
+        25,
+        75
+      ],
+      "actual_verdict": "unverifiable",
+      "score": 50,
+      "confidence": "low",
+      "request_failed": false,
+      "skipped": false,
+      "correct": false,
+      "within_one": false
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_005",
+      "claim": "Russia sent medical aid to the US, in the form of medical equipment to help coronavirus patients.",
+      "label": "Conflicting Evidence/Cherrypicking",
+      "expected_verdicts": [
+        "mixed",
+        "mostly_true",
+        "mostly_false"
+      ],
+      "expected_score_range": [
+        25,
+        75
+      ],
+      "actual_verdict": "unverifiable",
+      "score": 50,
+      "confidence": "low",
+      "request_failed": false,
+      "skipped": false,
+      "correct": false,
+      "within_one": false
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_006",
+      "claim": "Nigeria was the third most terrorised in the world in 2020, after Afghanistan and Iraq.",
+      "label": "Not Enough Evidence",
+      "expected_verdicts": [
+        "unverifiable",
+        "mixed"
+      ],
+      "expected_score_range": [
+        30,
+        60
+      ],
+      "actual_verdict": "unverifiable",
+      "score": 50,
+      "confidence": "low",
+      "request_failed": false,
+      "skipped": false,
+      "correct": true,
+      "within_one": true
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_007",
+      "claim": "Illegal drug, border crossings, and human smuggling activities have decreased in areas where barriers are deployed in the United States.",
+      "label": "Not Enough Evidence",
+      "expected_verdicts": [
+        "unverifiable",
+        "mixed"
+      ],
+      "expected_score_range": [
+        30,
+        60
+      ],
+      "actual_verdict": "unverifiable",
+      "score": 50,
+      "confidence": "low",
+      "request_failed": false,
+      "skipped": false,
+      "correct": true,
+      "within_one": true
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_008",
+      "claim": "Since 2002, South Africa’s police force has grown by 50%.",
+      "label": "Refuted",
+      "expected_verdicts": [
+        "false",
+        "mostly_false"
+      ],
+      "expected_score_range": [
+        0,
+        40
+      ],
+      "actual_verdict": "unverifiable",
+      "score": 50,
+      "confidence": "low",
+      "request_failed": false,
+      "skipped": false,
+      "correct": false,
+      "within_one": false
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_009",
+      "claim": "Today, Nigeria grapple has a population exceeding 200 million.",
+      "label": "Supported",
+      "expected_verdicts": [
+        "true",
+        "mostly_true"
+      ],
+      "expected_score_range": [
+        60,
+        100
+      ],
+      "actual_verdict": "unverifiable",
+      "score": 50,
+      "confidence": "low",
+      "request_failed": false,
+      "skipped": false,
+      "correct": false,
+      "within_one": true
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_010",
+      "claim": "UNESCO declared Nadar community as the most ancient race in the world.",
+      "label": "Refuted",
+      "expected_verdicts": [
+        "false",
+        "mostly_false"
+      ],
+      "expected_score_range": [
+        0,
+        40
+      ],
+      "actual_verdict": "unverifiable",
+      "score": 50,
+      "confidence": "low",
+      "request_failed": false,
+      "skipped": false,
+      "correct": false,
+      "within_one": false
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_011",
+      "claim": "Fact Check: WHO has not approved home remedy for COVID-19, don’t fall for misinformation",
+      "label": "Supported",
+      "expected_verdicts": [
+        "true",
+        "mostly_true"
+      ],
+      "expected_score_range": [
+        60,
+        100
+      ],
+      "actual_verdict": "unverifiable",
+      "score": 50,
+      "confidence": "low",
+      "request_failed": false,
+      "skipped": false,
+      "correct": false,
+      "within_one": true
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_012",
+      "claim": "Hunter Biden (son of US president Joe Biden)  had 25,000 pics of him torturing and raping children under 10 in China on his laptop.",
+      "label": "Not Enough Evidence",
+      "expected_verdicts": [
+        "unverifiable",
+        "mixed"
+      ],
+      "expected_score_range": [
+        30,
+        60
+      ],
+      "actual_verdict": "unverifiable",
+      "score": 0,
+      "confidence": "low",
+      "request_failed": false,
+      "skipped": false,
+      "correct": true,
+      "within_one": true
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_013",
+      "claim": "Dr. Ebeneezer, a medical doctor and a herbal practitioner at the Amuzu Hospital has instructed men to have sex at least 21 times a month to avoid prostate cancer.",
+      "label": "Refuted",
+      "expected_verdicts": [
+        "false",
+        "mostly_false"
+      ],
+      "expected_score_range": [
+        0,
+        40
+      ],
+      "actual_verdict": "unverifiable",
+      "score": 50,
+      "confidence": "low",
+      "request_failed": false,
+      "skipped": false,
+      "correct": false,
+      "within_one": false
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_014",
+      "claim": "There was a 40% drop in oil prices in Nigeria.",
+      "label": "Not Enough Evidence",
+      "expected_verdicts": [
+        "unverifiable",
+        "mixed"
+      ],
+      "expected_score_range": [
+        30,
+        60
+      ],
+      "actual_verdict": "unverifiable",
+      "score": 50,
+      "confidence": "low",
+      "request_failed": false,
+      "skipped": false,
+      "correct": true,
+      "within_one": true
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_015",
+      "claim": "In the US lockdowns are partly responsible for excess deaths not directly attributed to COVID-19 which were observed in 2020.",
+      "label": "Not Enough Evidence",
+      "expected_verdicts": [
+        "unverifiable",
+        "mixed"
+      ],
+      "expected_score_range": [
+        30,
+        60
+      ],
+      "actual_verdict": "unverifiable",
+      "score": 50,
+      "confidence": "low",
+      "request_failed": false,
+      "skipped": false,
+      "correct": true,
+      "within_one": true
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_016",
+      "claim": "You see the number today? 33.1 GDP. The biggest in the history of our country by almost triple, right? Almost triple. Now it’s very much bigger than any GDP we’ve ever had. You have to go back to the 1950s, and then it’s less than half. This is the greatest number, 33.1 percent.",
+      "label": "Not Enough Evidence",
+      "expected_verdicts": [
+        "unverifiable",
+        "mixed"
+      ],
+      "expected_score_range": [
+        30,
+        60
+      ],
+      "actual_verdict": "unverifiable",
+      "score": 50,
+      "confidence": "low",
+      "request_failed": false,
+      "skipped": false,
+      "correct": true,
+      "within_one": true
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_017",
+      "claim": "Because of a so-called trade war with China, America lost 300,000 manufacturing jobs.",
+      "label": "Supported",
+      "expected_verdicts": [
+        "true",
+        "mostly_true"
+      ],
+      "expected_score_range": [
+        60,
+        100
+      ],
+      "actual_verdict": "unverifiable",
+      "score": 50,
+      "confidence": "low",
+      "request_failed": false,
+      "skipped": false,
+      "correct": false,
+      "within_one": true
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_018",
+      "claim": "There was a 40% drop in the price of oil, Nigeria's main export.",
+      "label": "Not Enough Evidence",
+      "expected_verdicts": [
+        "unverifiable",
+        "mixed"
+      ],
+      "expected_score_range": [
+        30,
+        60
+      ],
+      "actual_verdict": "unverifiable",
+      "score": 0,
+      "confidence": "low",
+      "request_failed": false,
+      "skipped": false,
+      "correct": true,
+      "within_one": true
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_019",
+      "claim": "Twitter now putting warnings on tweets that are just unedited clips of Biden saying he would end fracking",
+      "label": "Conflicting Evidence/Cherrypicking",
+      "expected_verdicts": [
+        "mixed",
+        "mostly_true",
+        "mostly_false"
+      ],
+      "expected_score_range": [
+        25,
+        75
+      ],
+      "actual_verdict": "unverifiable",
+      "score": 50,
+      "confidence": "low",
+      "request_failed": false,
+      "skipped": false,
+      "correct": false,
+      "within_one": false
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_020",
+      "claim": "Edo State in Nigeria has a 19% unemployment rate.",
+      "label": "Supported",
+      "expected_verdicts": [
+        "true",
+        "mostly_true"
+      ],
+      "expected_score_range": [
+        60,
+        100
+      ],
+      "actual_verdict": "unverifiable",
+      "score": 50,
+      "confidence": "low",
+      "request_failed": false,
+      "skipped": false,
+      "correct": false,
+      "within_one": true
+    }
+  ]
+}

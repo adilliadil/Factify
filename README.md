@@ -56,7 +56,7 @@ cp .env.example .env
 | `TAVILY_API_KEY` | Yes | — | Tavily key for web search |
 | `NEBIUS_API_KEY` | Yes (evals) | — | Nebius key for eval judge model |
 | `LLM_PROVIDER` | No | `openai` | `openai`, `openai_compatible`/`nebius`, `azure` (Azure OpenAI), or `azure_inference` (Azure model inference endpoint) |
-| `LLM_MODEL` | No | `gpt-4o-mini` | Model ID for the pipeline, **or** a [model registry](#model-registry) alias (e.g. `kimi`, `gpt-nano`) |
+| `LLM_MODEL` | No | `gpt-4o-mini` | Model ID for the pipeline, **or** a [model registry](#model-registry) alias (e.g. `kimi`, `gpt-nano`, `gpt-5.4`) |
 | `LLM_BASE_URL` | No | `https://api.openai.com/v1` | Base URL for the LLM provider (ignored when using a registry alias that supplies its own endpoint) |
 | `AZURE_OPENAI_API_KEY` | Azure only | — | Azure OpenAI API key (when `LLM_PROVIDER=azure`) |
 | `AZURE_OPENAI_ENDPOINT` | Azure only | — | Azure OpenAI endpoint (when `LLM_PROVIDER=azure`) |
@@ -76,9 +76,10 @@ Secondary models are registered when their backing env vars are set (see `.env.e
 
 | Alias | Env vars (group) |
 |-------|------------------|
-| `grok-reasoning`, `grok-nonreasoning`, `kimi`, `deepseek-r` | `AZURE_BASE_URL`, `AZURE_API_KEY`, plus the corresponding `*_MODEL_NAME` |
+| `grok-reasoning`, `grok-nonreasoning` | `AZURE_BASE_URL`, `AZURE_API_KEY`, `GROK_REASONING_MODEL_NAME` / `GROK_NONREASONING_MODEL_NAME`; optional **`GROK_MAX_COMPLETION_TOKENS`** (default **4000**). These aliases use **`GrokChatClient`**: **Bearer** auth against Azure AI Foundry and a Grok-tuned body (`max_completion_tokens`, `top_p`). |
+| `kimi`, `deepseek-r` | `AZURE_BASE_URL`, `AZURE_API_KEY`, plus `KIMI_MODEL_NAME` / `DEEPSEEK_R_MODEL_NAME` (standard `HttpChatClient` / `api-key` header) |
 | `deepseek-v`, `llama-maverick` | `AZURE_WEIRDOS_BASE_URL`, `AZURE_WEIRDOS_KEY`, plus model name vars |
-| `gpt-nano`, `gpt-mini` | `AZURE_OPENAI_BASE_URL` (resource root or full `/openai/deployments/.../chat/completions` URL), `AZURE_OPENAI_KEY`, plus `GPT_*_MODEL_NAME` (deployment name) |
+| `gpt-nano`, `gpt-mini`, `gpt-5.4` | `AZURE_OPENAI_BASE_URL` (resource root or full `/openai/deployments/.../chat/completions` URL), `AZURE_OPENAI_KEY`, plus `GPT_NANO_MODEL_NAME` / `GPT_MINI_MODEL_NAME` / `GPT_MODEL_NAME` (deployment names) |
 
 At runtime, `config.models` exposes the resolved `ModelConfig` entries for tooling and benchmarks.
 
@@ -156,10 +157,10 @@ For a **standalone** `pytest … -m benchmark` session, a timestamped `.txt` rep
 From the project root, run the same benchmark arm across several pipeline models (registry aliases or raw `LLM_MODEL` values) **in parallel** and emit a single Markdown report (wall-clock time, average time per sample, accuracy tables). Each subprocess runs pytest with **working directory `evals/`** (same import layout as `python -m pytest` from that folder), writes JSON via `BENCHMARK_OUTPUT_FILE`, and caps rows with `BENCHMARK_MAX_SAMPLES` when you pass `--samples`.
 
 ```bash
-python -m evals.run_benchmark --models gpt-nano kimi grok-reasoning --samples 10 --class TestGoldEvidenceAnalysis
+python -m evals.run_benchmark --models gpt-5.4 gpt-nano gpt-mini kimi --samples 10 --class TestGoldEvidenceAnalysis
 ```
 
-Reports are written under `evals/reports/comparison_<timestamp>/` (`comparison_<timestamp>.md` plus per-model `benchmark_<alias>.json`). Aliases not present in `config.models` still work if your `.env` resolves `LLM_MODEL` for a generic provider; a warning is printed.
+Reports are written under `evals/reports/comparison_<timestamp>/` (`comparison_<timestamp>.md` plus per-model `benchmark_<alias>.json`). Each registry alias needs its env group fully set (for example `gpt-5.4` requires **`GPT_MODEL_NAME`** as well as `AZURE_OPENAI_BASE_URL` / `AZURE_OPENAI_KEY`, same as nano/mini). Aliases not present in `config.models` still work if your subprocess `LLM_MODEL` resolves via a generic provider; a warning is printed with a hint when the CLI recognises the alias name.
 
 Unit tests (mocked) inject placeholder keys so they run without real credentials. Benchmark and quality (`live_api`) tests skip unless `backend.config` can load the pipeline LLM, Tavily search, and (for quality suites) the judge model from your `.env` — matching whatever providers you configure.
 Unit tests (mocked) run without API keys. Quality and benchmark tests require `OPENAI_API_KEY` and `TAVILY_API_KEY`.
@@ -174,7 +175,7 @@ flowchart TB
     subgraph Mopt["Optional — multi-LLM benchmark"]
         direction TB
         M1["run_benchmark.py · parallel pytest per alias"]
-        M2["Markdown report · timing, accuracy, request-failure rate"]
+        M2["Markdown report · timing, accuracy, request-failure & skip rates"]
         M1 --> M2
     end
 

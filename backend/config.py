@@ -43,6 +43,60 @@ def _optional_env(*names: str) -> str | None:
     return None
 
 
+def _http_inference_max_retries_from_env(*, default: int = 3) -> int:
+    """Retries after transient HTTP failures for ``azure_inference`` (429, 5xx, request errors).
+
+    Initial attempt plus this many retries. Set via ``HTTP_INFERENCE_MAX_RETRIES`` (default ``3``).
+    """
+    raw = os.getenv("HTTP_INFERENCE_MAX_RETRIES")
+    if raw is None or not str(raw).strip():
+        return default
+    try:
+        n = int(str(raw).strip(), 10)
+    except ValueError:
+        logger.warning(
+            "Invalid HTTP_INFERENCE_MAX_RETRIES=%r; using default %s",
+            raw,
+            default,
+        )
+        return default
+    if n < 0:
+        logger.warning(
+            "HTTP_INFERENCE_MAX_RETRIES must be >= 0; got %s; using default %s",
+            n,
+            default,
+        )
+        return default
+    return n
+
+
+def _grok_max_completion_tokens_from_env(*, default: int = 4000) -> int:
+    """Max completion tokens for Grok on Azure AI Foundry (reasoning uses many internal tokens).
+
+    Set via ``GROK_MAX_COMPLETION_TOKENS`` (default ``4000``).
+    """
+    raw = os.getenv("GROK_MAX_COMPLETION_TOKENS")
+    if raw is None or not str(raw).strip():
+        return default
+    try:
+        n = int(str(raw).strip(), 10)
+    except ValueError:
+        logger.warning(
+            "Invalid GROK_MAX_COMPLETION_TOKENS=%r; using default %s",
+            raw,
+            default,
+        )
+        return default
+    if n < 1:
+        logger.warning(
+            "GROK_MAX_COMPLETION_TOKENS must be >= 1; got %s; using default %s",
+            n,
+            default,
+        )
+        return default
+    return n
+
+
 def _parse_provider(name: str, default: Provider) -> Provider:
     raw = (os.getenv(name, default) or default).strip().lower()
     aliases: dict[str, Provider] = {
@@ -77,6 +131,9 @@ class ModelConfig:
     azure_endpoint: str | None = None
     azure_api_version: str | None = None
     api_key_header: str = "api-key"  # for azure_inference (e.g. api-key header)
+    http_inference_max_retries: int = 3  # azure_inference only; env HTTP_INFERENCE_MAX_RETRIES
+    client_kind: str | None = None  # e.g. "grok" -> GrokChatClient (Bearer + Grok payload)
+    grok_max_completion_tokens: int = 4000  # used when client_kind == "grok"; env GROK_MAX_COMPLETION_TOKENS
 
 
 @dataclass(frozen=True)
@@ -85,7 +142,7 @@ class SearchConfig:
 
 
 def _gpt_registry_chat_completions_url(base_url: str, deployment_name: str) -> str:
-    """Expand bare Azure resource URLs for ``gpt-nano`` / ``gpt-mini`` registry aliases.
+    """Expand bare Azure resource URLs for ``gpt-nano`` / ``gpt-mini`` / ``gpt-5.4`` registry aliases.
 
     Azure OpenAI on ``*.cognitiveservices.azure.com`` expects
     ``/openai/deployments/<deployment>/chat/completions?api-version=...``.
@@ -118,6 +175,7 @@ def _build_model_registry() -> dict[str, ModelConfig]:
             model=model_name.strip(),
             api_key=api_key,
             base_url=url,
+            http_inference_max_retries=_http_inference_max_retries_from_env(),
         )
         logger.info("Model registry: alias %r -> model %r (azure_inference)", alias, model_name.strip())
 
@@ -132,9 +190,24 @@ def _build_model_registry() -> dict[str, ModelConfig]:
             "AZURE_API_KEY is set but AZURE_BASE_URL is missing; skipping grok/kimi/deepseek-r registry entries"
         )
     if azure_url and azure_key:
+        grok_tokens = _grok_max_completion_tokens_from_env()
         for alias, env_name in (
             ("grok-reasoning", "GROK_REASONING_MODEL_NAME"),
             ("grok-nonreasoning", "GROK_NONREASONING_MODEL_NAME"),
+        ):
+            m = os.getenv(env_name)
+            if m and m.strip():
+                out[alias] = ModelConfig(
+                    provider="azure_inference",
+                    model=m.strip(),
+                    api_key=azure_key,
+                    base_url=azure_url,
+                    http_inference_max_retries=_http_inference_max_retries_from_env(),
+                    client_kind="grok",
+                    grok_max_completion_tokens=grok_tokens,
+                )
+                logger.info("Model registry: alias %r -> model %r (azure_inference, grok client)", alias, m.strip())
+        for alias, env_name in (
             ("kimi", "KIMI_MODEL_NAME"),
             ("deepseek-r", "DEEPSEEK_R_MODEL_NAME"),
         ):
@@ -165,16 +238,17 @@ def _build_model_registry() -> dict[str, ModelConfig]:
     ao_key = _optional_env("AZURE_OPENAI_KEY")
     if ao_url and not ao_key:
         logger.warning(
-            "AZURE_OPENAI_BASE_URL is set but AZURE_OPENAI_KEY is missing; skipping gpt-nano/gpt-mini registry"
+            "AZURE_OPENAI_BASE_URL is set but AZURE_OPENAI_KEY is missing; skipping Azure OpenAI model registry (gpt-nano, gpt-mini, gpt-5.4)"
         )
     if ao_key and not ao_url:
         logger.warning(
-            "AZURE_OPENAI_KEY is set but AZURE_OPENAI_BASE_URL is missing; skipping gpt-nano/gpt-mini registry"
+            "AZURE_OPENAI_KEY is set but AZURE_OPENAI_BASE_URL is missing; skipping Azure OpenAI model registry (gpt-nano, gpt-mini, gpt-5.4)"
         )
     if ao_url and ao_key:
         for alias, env_name in (
             ("gpt-nano", "GPT_NANO_MODEL_NAME"),
             ("gpt-mini", "GPT_MINI_MODEL_NAME"),
+            ("gpt-5.4", "GPT_MODEL_NAME"),
         ):
             m = os.getenv(env_name)
             if m and m.strip():
@@ -231,6 +305,7 @@ def _make_llm_from_provider() -> ModelConfig:
             model=os.getenv("LLM_MODEL", "gpt-4o-mini"),
             base_url=url,
             api_key_header=header,
+            http_inference_max_retries=_http_inference_max_retries_from_env(),
         )
 
     return ModelConfig(
@@ -287,6 +362,7 @@ def _make_judge_from_provider() -> ModelConfig:
             model=os.getenv("JUDGE_MODEL", "deepseek-ai/DeepSeek-V3-0324"),
             base_url=url,
             api_key_header=header,
+            http_inference_max_retries=_http_inference_max_retries_from_env(),
         )
 
     return ModelConfig(
@@ -310,7 +386,7 @@ class _Config:
 
     @property
     def models(self) -> dict[str, ModelConfig]:
-        """Named models from optional Azure env groupings (aliases like grok-reasoning, gpt-nano)."""
+        """Named models from optional Azure env groupings (aliases like grok-reasoning, gpt-nano, gpt-5.4)."""
         if self._model_registry is None:
             self._model_registry = _build_model_registry()
         return dict(self._model_registry)

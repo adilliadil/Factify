@@ -172,6 +172,49 @@ class TestAnalysisUnit:
         assert 0 <= result["score"] <= 100, \
             f"Score should be clamped to 0-100, got {result['score']}"
 
+    @pytest.mark.asyncio
+    async def test_null_score_does_not_crash(self, mock_llm_client):
+        """Grok/Azure sometimes returns ``\"score\": null``; int(null) would raise before store."""
+        case = self._get_case("clearly_true_claim")
+
+        mock_response = {
+            "score": None,
+            "verdict": "true",
+            "tldr": "Ok.",
+            "explanation": "Test",
+            "confidence": "high",
+            "claim_verdicts": [{"claim": case["claims"][0], "verdict": "supported"}],
+            "source_stances": [],
+        }
+        mock_llm_client.chat.completions.create = AsyncMock(
+            return_value=make_llm_response(mock_response)
+        )
+
+        result = await analyze_evidence(case["claims"], case["sources"])
+
+        assert result["score"] == 50
+
+    @pytest.mark.asyncio
+    async def test_string_score_parsed(self, mock_llm_client):
+        case = self._get_case("clearly_true_claim")
+
+        mock_response = {
+            "score": "88",
+            "verdict": "true",
+            "tldr": "Ok.",
+            "explanation": "Test",
+            "confidence": "high",
+            "claim_verdicts": [{"claim": case["claims"][0], "verdict": "supported"}],
+            "source_stances": [],
+        }
+        mock_llm_client.chat.completions.create = AsyncMock(
+            return_value=make_llm_response(mock_response)
+        )
+
+        result = await analyze_evidence(case["claims"], case["sources"])
+
+        assert result["score"] == 88
+
 
 class TestAnalysisQuality:
     """Quality tests for analysis - real LLM calls, tests verdict and reasoning quality."""

@@ -2,9 +2,44 @@
 
 All notable changes to this project will be documented in this file.
 
+## 0.2.22
+
+- **Rebase:** resolved conflicts when applying **Benching multi-LLM** onto the rebased WIP: merged changelog with **0.2.21**–**0.2.14** from that branch; combined `evals/benchmark_reporting.py` failed-samples / skipped-sample section; took **`evals/reports/benchmark_results.json`** from the incoming commit. Removed **`evals/__init__.py`** (PEP 420 namespace; see **0.2.21**).
+
+## 0.2.21
+
+- **Benchmark conftest:** keep **`evals/`** as a PEP 420 namespace package — do **not** add **`evals/__init__.py`**, or pytest can load **`conftest`** twice and mis-report assertion failures as request failures. Regression test in **`evals/test_conftest_loading.py`**.
+- **Benchmark reporting:** **`pytest.skip`** rows (e.g. Arm B with no search sources) are tracked as **`skipped`** — excluded from accuracy / within-one / calibration; text and comparison Markdown add **skipped (%)** and **skipped (counts)** alongside request-failure stats; standalone reports list skipped sample IDs separately. Tests in **`evals/test_benchmark_reporting.py`** and **`evals/test_run_benchmark.py`**.
+- **`run_benchmark`:** subprocess pytest uses **`--tb line`** (one-line tracebacks on failure) instead of **`--tb no`**.
+
+## 0.2.20
+
+- **Grok on Azure AI Foundry:** registry aliases **`grok-reasoning`** and **`grok-nonreasoning`** now use **`GrokChatClient`** — **`Authorization: Bearer`** (matches Foundry) plus **`max_completion_tokens`** and **`top_p: 1`**. Cap via optional **`GROK_MAX_COMPLETION_TOKENS`** (default **4000**). `ModelConfig` gains **`client_kind`** / **`grok_max_completion_tokens`**; other `azure_inference` aliases unchanged. Tests in `evals/test_llm_clients.py` and `evals/test_provider_config.py`.
+
+## 0.2.19
+
+- **`analyze_evidence`:** tolerate **`score: null`**, string numerics, and other awkward **`score`** shapes from models (e.g. Grok on Azure) instead of raising before benchmark hooks store a row. Tests in `evals/test_analysis.py`.
+- **`HttpChatClient` (`azure_inference`):** send **`stream: false`**; normalise **list-shaped `reasoning_content`** (including plain string list items); log when the response body is not JSON. Tests in `evals/test_llm_clients.py`.
+
+## 0.2.18
+
+- **`HttpChatClient` (`azure_inference`):** **`HTTP_INFERENCE_MAX_RETRIES`** (optional, default **3**) controls how many times transient failures are retried; stored on `ModelConfig.http_inference_max_retries`. Tests in `evals/test_llm_clients.py`.
+
+## 0.2.17
+
+- **`HttpChatClient` (`azure_inference`):** omit **`response_format`** from the chat-completions JSON body (Azure Model Inference often rejects it for Grok and similar models; JSON output remains prompt-enforced). Assistant text is taken from **`message.content`**, with fallbacks for **list-shaped content** and for **`reasoning_content`** when `content` is empty (Grok reasoning on Azure). Tests in `evals/test_llm_clients.py`.
+
+## 0.2.16
+
+- **`HttpChatClient` (`azure_inference`):** up to **3 retries** on transient failures (HTTP **429** and **5xx**, plus **`httpx.RequestError`** such as timeouts), with exponential backoff (0.5s, 1s, 2s). Non-retryable HTTP errors (e.g. 400) fail immediately. Tests in `evals/test_llm_clients.py`.
+
+## 0.2.15
+
+- **`run_benchmark`:** when a requested model is missing from `config.models`, stderr now adds a short **env hint** for known registry aliases (e.g. `gpt-5.4` → `GPT_MODEL_NAME`). README clarifies that each Azure OpenAI alias needs its own `*_MODEL_NAME`. Test in `evals/test_run_benchmark.py`.
+
 ## 0.2.14
 
-- **Merge:** resolved conflicts in `evals/benchmark_reporting.py` and `evals/test_benchmark_reporting.py` (combined `verdict_correct` with `request_failed` / `within_one` handling; `write_reports` standalone path calls `format_report` with all four arms including baseline). Restored `evals/reports/benchmark_results.json` from `main`. Fixed subprocess `write_reports` tests to pass four arm lists.
+- **Model registry:** `gpt-5.4` alias (standard GPT-5.4 on Azure OpenAI Service) alongside `gpt-nano` / `gpt-mini`, driven by `GPT_MODEL_NAME` with the same `AZURE_OPENAI_BASE_URL` / `AZURE_OPENAI_KEY` group. Documented in `.env.example` and README; tests in `evals/test_provider_config.py` and `evals/test_run_benchmark.py`.
 
 ## 0.2.13
 

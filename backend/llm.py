@@ -106,6 +106,27 @@ Confidence guide:
 If the sources don't contain enough information to evaluate, use verdict "unverifiable" with score 50."""
 
 
+def _coerce_analysis_score(raw: object, *, default: int = 50) -> int:
+    """Parse ``score`` from model JSON; Grok/Azure sometimes emits ``null`` or strings."""
+    if raw is None:
+        return default
+    if isinstance(raw, bool):
+        return default
+    if isinstance(raw, int):
+        return max(0, min(100, raw))
+    if isinstance(raw, float):
+        return max(0, min(100, int(round(raw))))
+    if isinstance(raw, str):
+        s = raw.strip()
+        if not s:
+            return default
+        try:
+            return max(0, min(100, int(round(float(s)))))
+        except ValueError:
+            return default
+    return default
+
+
 async def extract_claims(text: str) -> list[str]:
     logger.debug("extract_claims: input length=%d model=%s", len(text), config.llm.model)
     resp = await get_client().chat.completions.create(
@@ -183,7 +204,7 @@ async def analyze_evidence(claims: list[str], sources: list[dict]) -> AnalysisRe
         logger.warning("analyze_evidence: expected JSON object, got %s", type(result).__name__)
         return _fallback_analysis()
 
-    score = max(0, min(100, int(result.get("score", 50))))
+    score = _coerce_analysis_score(result.get("score"))
     verdict = result.get("verdict", "unverifiable")
     valid_verdicts = {"false", "mostly_false", "mixed", "mostly_true", "true", "unverifiable"}
     if verdict not in valid_verdicts:

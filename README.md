@@ -125,11 +125,12 @@ cd evals && PYTHONPATH=.. python -m pytest test_benchmark.py -v
 
 ### Filtering benchmark runs
 
-Benchmark cases live in `evals/test_benchmark.py` (three arms: gold evidence, searched evidence, full pipeline). Parametrised test IDs are `{dataset_name}-{sample_id}` (for example `AVeriTeC-av_001`), defined in that file.
+Benchmark cases live in `evals/test_benchmark.py` (four arms: baseline, gold evidence, searched evidence, full pipeline). Parametrised test IDs are `{dataset_name}-{sample_id}` (for example `AVeriTeC-av_001`), defined in that file.
 
 Run a single arm:
 
 ```bash
+python -m pytest evals/test_benchmark.py -m benchmark -k "TestBaselineAnalysis"
 python -m pytest evals/test_benchmark.py -m benchmark -k "TestGoldEvidenceAnalysis"
 python -m pytest evals/test_benchmark.py -m benchmark -k "TestSearchedEvidenceAnalysis"
 python -m pytest evals/test_benchmark.py -m benchmark -k "TestFullPipeline"
@@ -180,17 +181,20 @@ flowchart TB
             Q1 --> Q2 --> Q3 --> Q4
         end
 
-        subgraph B["3. Benchmark Evals · three-arm"]
+        subgraph B["3. Benchmark Evals · four-arm"]
             direction TB
             B0["Auto-discover benchmark_*.json<br/>PolitiFact + AVeriTeC"]
+            Bb["Arm 0<br/>analyze_evidence() · no sources<br/>(LLM parametric baseline)"]
             B1["Arm A<br/>analyze_evidence() + gold evidence"]
             B2["Arm B<br/>search_claim() + analyze_evidence()"]
             B3["Arm C<br/>full fact_check() pipeline"]
             B4["Auto-generate benchmark report<br/>accuracy · within-one · deltas<br/>per-label · calibration · failures"]
             B5["Outputs<br/>evals/reports/YYYY-MM-DD_HHmmss.txt<br/>evals/reports/benchmark_results.json"]
+            B0 --> Bb
             B0 --> B1
             B0 --> B2
             B0 --> B3
+            Bb --> B4
             B1 --> B4
             B2 --> B4
             B3 --> B4

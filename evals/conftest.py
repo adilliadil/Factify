@@ -61,7 +61,9 @@ def store_benchmark_result(arm: str, key: str, data: dict) -> None:
 
 # ── Pytest hooks ───────────────────────────────────────────────
 
-_benchmark_pass_fail: dict[str, list[dict]] = {"arm_a": [], "arm_b": [], "arm_c": []}
+_benchmark_pass_fail: dict[str, list[dict]] = {
+    "arm_baseline": [], "arm_a": [], "arm_b": [], "arm_c": [],
+}
 
 
 def pytest_collection_modifyitems(items):
@@ -85,7 +87,9 @@ def pytest_runtest_logreport(report):
         return
     param_key = param_match.group(1)
 
-    if "TestGoldEvidenceAnalysis" in node_id:
+    if "TestBaselineAnalysis" in node_id:
+        arm = "arm_baseline"
+    elif "TestGoldEvidenceAnalysis" in node_id:
         arm = "arm_a"
     elif "TestSearchedEvidenceAnalysis" in node_id:
         arm = "arm_b"
@@ -113,10 +117,10 @@ def pytest_sessionfinish(session, exitstatus):
         key = f"{ds_name}-{sample['id']}"
         sample_lookup[key] = {"dataset": ds_name, **sample}
 
-    arm_a, arm_b, arm_c = build_structured_results(
+    arm_baseline, arm_a, arm_b, arm_c = build_structured_results(
         _benchmark_pass_fail, _benchmark_result_data, sample_lookup,
     )
-    write_reports(arm_a, arm_b, arm_c)
+    write_reports(arm_baseline, arm_a, arm_b, arm_c)
 
 
 # ── Fixtures ───────────────────────────────────────────────────

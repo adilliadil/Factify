@@ -140,10 +140,10 @@ def build_structured_results(
     pass_fail: dict[str, list[dict]],
     result_data: dict[str, dict],
     sample_lookup: dict[str, dict],
-) -> tuple[list[dict], list[dict], list[dict]]:
+) -> tuple[list[dict], list[dict], list[dict], list[dict]]:
     """Merge pass/fail status with stored result data and sample metadata."""
     arm_lists = {}
-    for arm_key in ("arm_a", "arm_b", "arm_c"):
+    for arm_key in ("arm_baseline", "arm_a", "arm_b", "arm_c"):
         results = []
         for pf in pass_fail[arm_key]:
             key = pf["key"]
@@ -171,12 +171,13 @@ def build_structured_results(
                 "within_one": pf["passed"] or within_one_level(actual_verdict, expected),
             })
         arm_lists[arm_key] = results
-    return arm_lists["arm_a"], arm_lists["arm_b"], arm_lists["arm_c"]
+    return arm_lists["arm_baseline"], arm_lists["arm_a"], arm_lists["arm_b"], arm_lists["arm_c"]
 
 
 # ── Report formatting ─────────────────────────────────────────
 
 def format_report(
+    arm_baseline: list[dict],
     arm_a: list[dict],
     arm_b: list[dict],
     arm_c: list[dict],
@@ -186,7 +187,7 @@ def format_report(
     model = config.llm.model
 
     datasets_summary: dict[str, int] = {}
-    for r in arm_b:
+    for r in arm_b or arm_baseline:
         datasets_summary[r["dataset"]] = datasets_summary.get(r["dataset"], 0) + 1
     ds_str = ", ".join(f"{name} ({count} samples)" for name, count in sorted(datasets_summary.items()))
     tavily_searches = len(arm_b) + len(arm_c)
@@ -197,54 +198,81 @@ def format_report(
         f"Commit: {commit}",
         f"Datasets: {ds_str}",
         f"Total Tavily searches: {tavily_searches}",
-        "─" * 64,
+        "─" * 80,
         "",
     ]
 
-    # Overall Accuracy
-    lines.append("── Overall Accuracy ──────────────────────────────────────────")
-    lines.append(f"{'':20s} {'Arm A (Gold)':>14s}  {'Arm B (Search)':>14s}  {'Arm C (Full)':>14s}")
+    hdr_0 = "Arm 0 (None)"
+    hdr_a = "Arm A (Gold)"
+    hdr_b = "Arm B (Search)"
+    hdr_c = "Arm C (Full)"
 
-    all_datasets = sorted(set(r["dataset"] for r in arm_b)) if arm_b else []
+    # Overall Accuracy
+    lines.append("── Overall Accuracy ──────────────────────────────────────────────────────────")
+    lines.append(
+        f"{'':20s} {hdr_0:>14s}  {hdr_a:>14s}  {hdr_b:>14s}  {hdr_c:>14s}"
+    )
+
+    ref_arm = arm_b or arm_baseline
+    all_datasets = sorted(set(r["dataset"] for r in ref_arm)) if ref_arm else []
+    arm_bl_by_ds = by_dataset(arm_baseline)
     arm_a_by_ds = by_dataset(arm_a)
     arm_b_by_ds = by_dataset(arm_b)
     arm_c_by_ds = by_dataset(arm_c)
 
     for ds in all_datasets:
+        bl_acc = f"{accuracy(arm_bl_by_ds.get(ds, [])):.1f}%" if ds in arm_bl_by_ds else "—"
         a_acc = f"{accuracy(arm_a_by_ds.get(ds, [])):.1f}%" if ds in arm_a_by_ds else "—"
-        b_acc = f"{accuracy(arm_b_by_ds.get(ds, [])):.1f}%"
-        c_acc = f"{accuracy(arm_c_by_ds.get(ds, [])):.1f}%"
-        lines.append(f"  {ds:18s} {a_acc:>14s}  {b_acc:>14s}  {c_acc:>14s}")
+        b_acc = f"{accuracy(arm_b_by_ds.get(ds, [])):.1f}%" if ds in arm_b_by_ds else "—"
+        c_acc = f"{accuracy(arm_c_by_ds.get(ds, [])):.1f}%" if ds in arm_c_by_ds else "—"
+        lines.append(f"  {ds:18s} {bl_acc:>14s}  {a_acc:>14s}  {b_acc:>14s}  {c_acc:>14s}")
 
+    bl_total = f"{accuracy(arm_baseline):.1f}%" if arm_baseline else "—"
     a_total = f"{accuracy(arm_a):.1f}%" if arm_a else "—"
-    b_total = f"{accuracy(arm_b):.1f}%"
-    c_total = f"{accuracy(arm_c):.1f}%"
-    lines.append(f"  {'Combined':18s} {a_total:>14s}  {b_total:>14s}  {c_total:>14s}")
+    b_total = f"{accuracy(arm_b):.1f}%" if arm_b else "—"
+    c_total = f"{accuracy(arm_c):.1f}%" if arm_c else "—"
+    lines.append(f"  {'Combined':18s} {bl_total:>14s}  {a_total:>14s}  {b_total:>14s}  {c_total:>14s}")
     lines.append("")
 
     # Within-One-Level Accuracy
-    lines.append("── Within-One-Level Accuracy ─────────────────────────────────")
+    lines.append("── Within-One-Level Accuracy ─────────────────────────────────────────────────")
+    bl_w1 = f"{within_one_accuracy(arm_baseline):.1f}%" if arm_baseline else "—"
     a_w1 = f"{within_one_accuracy(arm_a):.1f}%" if arm_a else "—"
-    b_w1 = f"{within_one_accuracy(arm_b):.1f}%"
-    c_w1 = f"{within_one_accuracy(arm_c):.1f}%"
-    lines.append(f"  {'Combined':18s} {a_w1:>14s}  {b_w1:>14s}  {c_w1:>14s}")
+    b_w1 = f"{within_one_accuracy(arm_b):.1f}%" if arm_b else "—"
+    c_w1 = f"{within_one_accuracy(arm_c):.1f}%" if arm_c else "—"
+    lines.append(f"  {'Combined':18s} {bl_w1:>14s}  {a_w1:>14s}  {b_w1:>14s}  {c_w1:>14s}")
     lines.append("")
 
     # Delta Analysis (verdict-only so Arms are compared on equal footing;
     # Arm A also checks score range, which would unfairly penalise it)
-    lines.append("── Delta Analysis (verdict-only) ────────────────────────────")
+    lines.append("── Delta Analysis (verdict-only) ────────────────────────────────────────────")
+
+    if arm_baseline and arm_b:
+        evidence_delta = verdict_accuracy(arm_b) - verdict_accuracy(arm_baseline)
+        direction = "search evidence helps" if evidence_delta > 0 else "no evidence better" if evidence_delta < 0 else "no difference"
+        lines.append(f"  Evidence delta (B - 0): {evidence_delta:+.1f}%  ← {direction}")
+
     if arm_a:
+        if arm_baseline:
+            arm_bl_comparable = [r for r in arm_baseline if r["dataset"] in arm_a_by_ds]
+            gold_delta = verdict_accuracy(arm_a) - verdict_accuracy(arm_bl_comparable)
+            direction = "gold evidence helps" if gold_delta > 0 else "no evidence better" if gold_delta < 0 else "no difference"
+            lines.append(f"  Gold delta    (A - 0): {gold_delta:+.1f}%  ← {direction}")
+
         arm_b_comparable = [r for r in arm_b if r["dataset"] in arm_a_by_ds]
         search_delta = verdict_accuracy(arm_a) - verdict_accuracy(arm_b_comparable)
         direction = "search helps" if search_delta < 0 else "gold evidence better" if search_delta > 0 else "no difference"
         lines.append(f"  Search delta  (A - B): {search_delta:+.1f}%  ← {direction}")
-    extract_delta = verdict_accuracy(arm_b) - verdict_accuracy(arm_c)
-    direction = "extraction helps" if extract_delta < 0 else "extraction hurts" if extract_delta > 0 else "no difference"
-    lines.append(f"  Extract delta (B - C): {extract_delta:+.1f}%  ← {direction}")
+
+    if arm_b and arm_c:
+        extract_delta = verdict_accuracy(arm_b) - verdict_accuracy(arm_c)
+        direction = "extraction helps" if extract_delta < 0 else "extraction hurts" if extract_delta > 0 else "no difference"
+        lines.append(f"  Extract delta (B - C): {extract_delta:+.1f}%  ← {direction}")
+
     lines.append("")
 
     # Per-Label Accuracy (Arm C)
-    lines.append("── Per-Label Accuracy (Arm C — Full Pipeline) ──────────────")
+    lines.append("── Per-Label Accuracy (Arm C — Full Pipeline) ──────────────────────────────")
     for ds in all_datasets:
         ds_results = arm_c_by_ds.get(ds, [])
         bl = by_label(ds_results)
@@ -257,7 +285,7 @@ def format_report(
         lines.append("")
 
     # Confidence Calibration (Arm C)
-    lines.append("── Confidence Calibration (Arm C) ───────────────────────────")
+    lines.append("── Confidence Calibration (Arm C) ───────────────────────────────────────────")
     cal = confidence_calibration(arm_c)
     for conf, stats in cal.items():
         lines.append(
@@ -267,21 +295,22 @@ def format_report(
     lines.append("")
 
     # Score Distribution (Arm C)
-    lines.append("── Score Distribution (Arm C, mean ± std by label) ─────────")
+    lines.append("── Score Distribution (Arm C, mean ± std by label) ─────────────────────────")
     dist = score_distribution(arm_c)
     for label, stats in dist.items():
         lines.append(f"  {label:40s} {stats['mean']:5.1f} ± {stats['std']:4.1f}  (n={stats['count']})")
     lines.append("")
 
-    # Failed Samples (Arm A also asserts score range; B/C assert verdict only — see test_benchmark.py)
+    # Failed Samples
     arm_specs = [
+        ("Arm 0 — Baseline (No Evidence)", arm_baseline, False),
         ("Arm A — Gold Evidence", arm_a, True),
         ("Arm B — Searched Evidence", arm_b, False),
         ("Arm C — Full Pipeline", arm_c, False),
     ]
     failures_exist = any(not r["correct"] for _, results, _ in arm_specs for r in results)
     if failures_exist:
-        lines.append("── Failed Samples ───────────────────────────────────────────")
+        lines.append("── Failed Samples ───────────────────────────────────────────────────────────")
         lines.append("")
         for arm_label, results, check_score_range in arm_specs:
             failed = [r for r in results if not r["correct"]]
@@ -306,19 +335,20 @@ def format_report(
                 )
             lines.append("")
 
-    lines.append("═" * 64)
+    lines.append("═" * 80)
     return "\n".join(lines)
 
 
 # ── File output ────────────────────────────────────────────────
 
 def write_reports(
+    arm_baseline: list[dict],
     arm_a: list[dict],
     arm_b: list[dict],
     arm_c: list[dict],
 ) -> Path:
     """Generate and write both .txt and .json reports. Returns the .txt path."""
-    report_text = format_report(arm_a, arm_b, arm_c)
+    report_text = format_report(arm_baseline, arm_a, arm_b, arm_c)
     print(f"\n\n{report_text}")
 
     REPORTS_DIR.mkdir(parents=True, exist_ok=True)
@@ -333,6 +363,7 @@ def write_reports(
         "timestamp": now.isoformat(),
         "model": config.llm.model,
         "commit": get_git_commit(),
+        "arm_baseline": arm_baseline,
         "arm_a": arm_a,
         "arm_b": arm_b,
         "arm_c": arm_c,

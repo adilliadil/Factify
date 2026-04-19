@@ -90,6 +90,7 @@ def test_score_distribution_single_row():
 
 def test_build_structured_results_merges_pass_fail_and_stored():
     pass_fail = {
+        "arm_baseline": [],
         "arm_a": [{"key": "ds-1", "passed": True}],
         "arm_b": [],
         "arm_c": [],
@@ -107,12 +108,42 @@ def test_build_structured_results_merges_pass_fail_and_stored():
             "expected_score_range": [40, 90],
         },
     }
-    arm_a, _, _ = br.build_structured_results(pass_fail, result_data, sample_lookup)
+    _, arm_a, _, _ = br.build_structured_results(pass_fail, result_data, sample_lookup)
     assert len(arm_a) == 1
     assert arm_a[0]["actual_verdict"] == "true"
     assert arm_a[0]["correct"] is True
     assert arm_a[0]["verdict_correct"] is True
     assert arm_a[0]["expected_score_range"] == [40, 90]
+
+
+def test_build_structured_results_baseline_arm():
+    pass_fail = {
+        "arm_baseline": [
+            {"key": "ds-1", "passed": True},
+            {"key": "ds-2", "passed": False},
+        ],
+        "arm_a": [],
+        "arm_b": [],
+        "arm_c": [],
+    }
+    result_data = {
+        "arm_baseline:ds-1": {"actual_verdict": "true", "score": 70, "confidence": "high"},
+        "arm_baseline:ds-2": {"actual_verdict": "false", "score": 20, "confidence": "low"},
+    }
+    sample_lookup = {
+        "ds-1": {
+            "dataset": "ds", "id": "1", "claim": "c1", "label": "lab",
+            "expected_verdicts": ["true"], "expected_score_range": [40, 90],
+        },
+        "ds-2": {
+            "dataset": "ds", "id": "2", "claim": "c2", "label": "lab",
+            "expected_verdicts": ["true"], "expected_score_range": [40, 90],
+        },
+    }
+    arm_bl, _, _, _ = br.build_structured_results(pass_fail, result_data, sample_lookup)
+    assert len(arm_bl) == 2
+    assert arm_bl[0]["verdict_correct"] is True
+    assert arm_bl[1]["verdict_correct"] is False
 
 
 def test_format_report_contains_model_and_sections(monkeypatch):
@@ -136,10 +167,11 @@ def test_format_report_contains_model_and_sections(monkeypatch):
             "within_one": True,
         },
     ]
-    text = br.format_report([], arm_b, [])
+    text = br.format_report([], [], arm_b, [])
     assert "Benchmark Report" in text
     assert "gpt-4o-mini" in text
     assert "Overall Accuracy" in text
+    assert "Arm 0 (None)" in text
     config.reset()
 
 
@@ -165,7 +197,7 @@ def test_format_report_failed_samples_shows_reasons(monkeypatch):
             "within_one": True,
         },
     ]
-    text = br.format_report(arm_a, [], [])
+    text = br.format_report([], arm_a, [], [])
     assert "Failure reasons" in text
     assert "score: got 85" in text
     assert "[25, 75]" in text
@@ -179,9 +211,10 @@ def test_write_reports_writes_txt_and_json(tmp_path, monkeypatch):
 
     config.reset()
     monkeypatch.setattr(br, "REPORTS_DIR", tmp_path)
-    p = br.write_reports([], [], [])
+    p = br.write_reports([], [], [], [])
     assert p.suffix == ".txt"
     assert (tmp_path / "benchmark_results.json").is_file()
     data = json.loads((tmp_path / "benchmark_results.json").read_text())
     assert data["model"] == "m"
+    assert "arm_baseline" in data
     config.reset()

@@ -1,0 +1,29 @@
+{
+  "timestamp": "2026-04-10T04:57:53.924930+00:00",
+  "model": "gpt-5.4-nano",
+  "commit": "c97165b",
+  "arm_a": [
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_001",
+      "claim": "Indian Railways has been completely privatized, and as a result, scores of people working in the Railways would lose their jobs.",
+      "label": "Conflicting Evidence/Cherrypicking",
+      "expected_verdicts": [
+        "mixed",
+        "mostly_true",
+        "mostly_false"
+      ],
+      "expected_score_range": [
+        25,
+        75
+      ],
+      "actual_verdict": "?",
+      "score": -1,
+      "confidence": "unknown",
+      "correct": false,
+      "within_one": false
+    }
+  ],
+  "arm_b": [],
+  "arm_c": []
+}

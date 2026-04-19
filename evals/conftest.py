@@ -98,9 +98,17 @@ def pytest_runtest_logreport(report):
     else:
         return
 
+    # ``request_failed``: call raised before ``store_benchmark_result`` (not skipped / setup failure).
+    outcome = getattr(report, "outcome", None)
+    request_failed = (
+        outcome == "failed"
+        and f"{arm}:{param_key}" not in _benchmark_result_data
+    )
+
     _benchmark_pass_fail[arm].append({
         "key": param_key,
         "passed": report.passed,
+        "request_failed": request_failed,
     })
 
 

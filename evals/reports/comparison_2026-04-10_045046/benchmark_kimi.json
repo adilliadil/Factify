@@ -1,0 +1,68 @@
+{
+  "timestamp": "2026-04-10T04:52:15.501855+00:00",
+  "model": "Kimi-K2.5",
+  "commit": "c97165b",
+  "arm_a": [
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_001",
+      "claim": "Indian Railways has been completely privatized, and as a result, scores of people working in the Railways would lose their jobs.",
+      "label": "Conflicting Evidence/Cherrypicking",
+      "expected_verdicts": [
+        "mixed",
+        "mostly_true",
+        "mostly_false"
+      ],
+      "expected_score_range": [
+        25,
+        75
+      ],
+      "actual_verdict": "?",
+      "score": -1,
+      "confidence": "unknown",
+      "correct": false,
+      "within_one": false
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_002",
+      "claim": "Donald Trump said: \"Biden also vowed to oppose school choice and close down charter schools, ripping away the ladder of opportunity for Black and Hispanic children.\"",
+      "label": "Conflicting Evidence/Cherrypicking",
+      "expected_verdicts": [
+        "mixed",
+        "mostly_true",
+        "mostly_false"
+      ],
+      "expected_score_range": [
+        25,
+        75
+      ],
+      "actual_verdict": "?",
+      "score": -1,
+      "confidence": "unknown",
+      "correct": true,
+      "within_one": true
+    },
+    {
+      "dataset": "AVeriTeC",
+      "id": "av_003",
+      "claim": "At independence, Nigeria had a population of 45 million",
+      "label": "Supported",
+      "expected_verdicts": [
+        "true",
+        "mostly_true"
+      ],
+      "expected_score_range": [
+        60,
+        100
+      ],
+      "actual_verdict": "?",
+      "score": -1,
+      "confidence": "unknown",
+      "correct": true,
+      "within_one": true
+    }
+  ],
+  "arm_b": [],
+  "arm_c": []
+}

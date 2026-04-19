@@ -149,7 +149,17 @@ Show prints and pipeline logs while debugging:
 python -m pytest evals/test_benchmark.py -m benchmark -k "TestGoldEvidenceAnalysis and av_001" -s --log-cli-level=DEBUG
 ```
 
-A timestamped report is still written under `evals/reports/` when any benchmark tests run in that session (see `evals/conftest.py`).
+For a **standalone** `pytest … -m benchmark` session, a timestamped `.txt` report and `benchmark_results.json` are written under `evals/reports/` (see `evals/conftest.py`). Subprocesses spawned by `python -m evals.run_benchmark` only write JSON to the comparison directory (no extra per-model `.txt` files in `evals/reports/`).
+
+### Multi-LLM benchmark comparison
+
+From the project root, run the same benchmark arm across several pipeline models (registry aliases or raw `LLM_MODEL` values) **in parallel** and emit a single Markdown report (wall-clock time, average time per sample, accuracy tables). Each subprocess runs pytest with **working directory `evals/`** (same import layout as `python -m pytest` from that folder), writes JSON via `BENCHMARK_OUTPUT_FILE`, and caps rows with `BENCHMARK_MAX_SAMPLES` when you pass `--samples`.
+
+```bash
+python -m evals.run_benchmark --models gpt-nano kimi grok-reasoning --samples 10 --class TestGoldEvidenceAnalysis
+```
+
+Reports are written under `evals/reports/comparison_<timestamp>/` (`comparison_<timestamp>.md` plus per-model `benchmark_<alias>.json`). Aliases not present in `config.models` still work if your `.env` resolves `LLM_MODEL` for a generic provider; a warning is printed.
 
 Unit tests (mocked) inject placeholder keys so they run without real credentials. Benchmark and quality (`live_api`) tests skip unless `backend.config` can load the pipeline LLM, Tavily search, and (for quality suites) the judge model from your `.env` — matching whatever providers you configure.
 Unit tests (mocked) run without API keys. Quality and benchmark tests require `OPENAI_API_KEY` and `TAVILY_API_KEY`.
@@ -159,6 +169,14 @@ Unit tests (mocked) run without API keys. Quality and benchmark tests require `O
 ```mermaid
 flowchart TB
     A([Run eval suite]) --> E
+    A --> Mopt
+
+    subgraph Mopt["Optional — multi-LLM benchmark"]
+        direction TB
+        M1["run_benchmark.py · parallel pytest per alias"]
+        M2["Markdown report · timing, accuracy, request-failure rate"]
+        M1 --> M2
+    end
 
     subgraph E["Eval Types"]
         direction TB

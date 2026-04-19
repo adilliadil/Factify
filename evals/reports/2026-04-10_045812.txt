@@ -1,0 +1,30 @@
+Benchmark Report — 2026-04-10 04:58:12 UTC
+Model: gpt-5.4-nano
+Commit: c97165b
+Datasets: 
+Total Tavily searches: 0
+────────────────────────────────────────────────────────────────
+
+── Overall Accuracy ──────────────────────────────────────────
+                       Arm A (Gold)  Arm B (Search)    Arm C (Full)
+  Combined                     0.0%            0.0%            0.0%
+
+── Within-One-Level Accuracy ─────────────────────────────────
+  Combined                     0.0%            0.0%            0.0%
+
+── Delta Analysis ───────────────────────────────────────────
+  Search delta  (A - B): +0.0%  ← no difference
+  Extract delta (B - C): +0.0%  ← no difference
+
+── Per-Label Accuracy (Arm C — Full Pipeline) ──────────────
+── Confidence Calibration (Arm C) ───────────────────────────
+
+── Score Distribution (Arm C, mean ± std by label) ─────────
+
+── Failed Samples ───────────────────────────────────────────
+
+  Arm A — Gold Evidence (1 failed / 1 total):
+    ID              Label                             Verdict (got / expected)                Score (got / exp. range)  Failure reasons
+    av_001          Conflicting Evidence/Cherrypicking? / mixed/mostly_true/mostly_false      -1 / [25, 75]             verdict: got ?, expected one of mixed/mostly_true/mostly_false; score: got -1, expected in [25, 75]
+
+════════════════════════════════════════════════════════════════

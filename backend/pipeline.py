@@ -1,3 +1,4 @@
+import asyncio
 import json
 import logging
 from typing import AsyncGenerator
@@ -38,8 +39,8 @@ async def fact_check_stream(text: str) -> AsyncGenerator[str, None]:
 
     all_sources = []
     seen_urls: set[str] = set()
-    for claim in claims:
-        results = await search_claim(claim)
+    search_results = await asyncio.gather(*[search_claim(claim) for claim in claims])
+    for results in search_results:
         for s in results:
             if s["url"] not in seen_urls:
                 seen_urls.add(s["url"])
@@ -123,8 +124,8 @@ async def fact_check(text: str) -> FactCheckResponse:
     all_sources = []
     seen_urls = set()
 
-    for claim in claims:
-        results = await search_claim(claim)
+    search_results = await asyncio.gather(*[search_claim(claim) for claim in claims])
+    for results in search_results:
         for s in results:
             if s["url"] not in seen_urls:
                 seen_urls.add(s["url"])

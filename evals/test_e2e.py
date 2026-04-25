@@ -1,5 +1,8 @@
 """End-to-end evals for the full fact-checking pipeline."""
 
+import asyncio
+import time
+
 import pytest
 from unittest.mock import AsyncMock
 from conftest import make_llm_response, load_search_fixture, load_dataset
@@ -184,6 +187,45 @@ class TestE2EUnit:
         result = await fact_check(input_text)
 
         assert len(result.claims) == 2, f"Expected 2 claims, got {len(result.claims)}"
+
+    @pytest.mark.asyncio
+    async def test_searches_claims_in_parallel(self, mock_llm_client, mock_tavily_client):
+        """Multiple claim searches should execute concurrently to reduce latency."""
+        input_text = "Claim one. Claim two. Claim three."
+        claims = ["Claim one.", "Claim two.", "Claim three."]
+        sleep_s = 0.05
+
+        mock_llm_client.chat.completions.create = AsyncMock(
+            side_effect=[
+                make_llm_response({"claims": claims}),
+                make_llm_response({
+                    "score": 80,
+                    "verdict": "mostly_true",
+                    "tldr": "Mostly supported.",
+                    "explanation": "Evidence supports most claims.",
+                    "confidence": "medium",
+                    "confidence_reason": "Partial corroboration",
+                    "claim_verdicts": [{"claim": c, "verdict": "supported"} for c in claims],
+                    "source_stances": [],
+                }),
+            ]
+        )
+
+        fixture = load_search_fixture("earth_sun_orbit")
+
+        async def delayed_search(*args, **kwargs):
+            await asyncio.sleep(sleep_s)
+            return fixture
+
+        mock_tavily_client.search = AsyncMock(side_effect=delayed_search)
+
+        start = time.perf_counter()
+        await fact_check(input_text)
+        elapsed = time.perf_counter() - start
+
+        # Sequential would be ~3 * sleep_s; parallel should stay well below that.
+        assert elapsed < sleep_s * 2.2, f"Expected parallel searches; took {elapsed:.3f}s"
+        assert mock_tavily_client.search.call_count == 3
 
 
 class TestE2EQuality:

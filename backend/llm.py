@@ -1,6 +1,9 @@
 import json
 import logging
+import re
 from typing import TypedDict
+
+from openai import NOT_GIVEN
 
 from backend.config import config
 from backend.llm_clients import LLMClient, create_client
@@ -8,6 +11,18 @@ from backend.llm_clients import LLMClient, create_client
 logger = logging.getLogger(__name__)
 
 client: LLMClient | None = None
+
+# Reasoning models reject an explicit temperature parameter entirely.
+_NO_TEMPERATURE_PATTERN = re.compile(
+    r"^(o\d|o\d-|gpt-5\.5|gpt-5\.5-)", re.IGNORECASE
+)
+
+
+def _temperature(model: str):
+    """Return temperature=0 for standard models, NOT_GIVEN for reasoning models."""
+    if _NO_TEMPERATURE_PATTERN.match(model):
+        return NOT_GIVEN
+    return 0
 
 
 def get_client() -> LLMClient:
@@ -115,7 +130,7 @@ async def extract_claims(text: str) -> list[str]:
             {"role": "user", "content": CLAIM_EXTRACTION_PROMPT.format(text=text)},
         ],
         response_format={"type": "json_object"},
-        temperature=0,
+        temperature=_temperature(config.llm.model),
     )
 
     raw = resp.choices[0].message.content
@@ -165,7 +180,7 @@ async def analyze_evidence(claims: list[str], sources: list[dict]) -> AnalysisRe
             {"role": "user", "content": EVIDENCE_ANALYSIS_PROMPT.format(claims=claims_text, sources=sources_text)},
         ],
         response_format={"type": "json_object"},
-        temperature=0,
+        temperature=_temperature(config.llm.model),
     )
 
     raw = resp.choices[0].message.content

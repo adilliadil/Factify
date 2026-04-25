@@ -35,17 +35,31 @@ def collect_eval_config_errors(*, need_judge: bool) -> list[str]:
     return errors
 
 FIXTURES_DIR = Path(__file__).parent / "datasets"
+DEFAULT_BENCHMARK_SAMPLES_PER_DATASET = 30
 
 
 # ── Benchmark data helpers ─────────────────────────────────────
 
+def _benchmark_samples_per_dataset() -> int:
+    """Default benchmark sample cap per dataset, overridable via env var."""
+    raw = os.getenv("BENCHMARK_SAMPLES_PER_DATASET")
+    if raw is None:
+        return DEFAULT_BENCHMARK_SAMPLES_PER_DATASET
+    try:
+        value = int(raw)
+    except ValueError:
+        return DEFAULT_BENCHMARK_SAMPLES_PER_DATASET
+    return value if value > 0 else DEFAULT_BENCHMARK_SAMPLES_PER_DATASET
+
+
 def load_all_benchmark_samples() -> list[tuple[str, dict]]:
-    """Discover all benchmark_*.json files and flatten into (dataset_name, sample) pairs."""
+    """Discover benchmark_*.json files and flatten into (dataset_name, sample) pairs."""
     samples = []
+    sample_cap = _benchmark_samples_per_dataset()
     for path in sorted(FIXTURES_DIR.glob("benchmark_*.json")):
         data = json.loads(path.read_text())
         name = data["metadata"]["name"]
-        for sample in data["samples"]:
+        for sample in data["samples"][:sample_cap]:
             samples.append((name, sample))
     return samples
 

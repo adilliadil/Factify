@@ -105,6 +105,63 @@ Confidence guide:
 
 If the sources don't contain enough information to evaluate, use verdict "unverifiable" with score 50."""
 
+EVIDENCE_ANALYSIS_RESPONSE_FORMAT = {
+    "type": "json_schema",
+    "json_schema": {
+        "name": "fact_check_analysis",
+        "strict": True,
+        "schema": {
+            "type": "object",
+            "additionalProperties": False,
+            "properties": {
+                "score": {"type": "integer", "minimum": 0, "maximum": 100},
+                "verdict": {
+                    "type": "string",
+                    "enum": ["false", "mostly_false", "mixed", "mostly_true", "true", "unverifiable"],
+                },
+                "tldr": {"type": "string"},
+                "explanation": {"type": "string"},
+                "confidence": {"type": "string", "enum": ["high", "medium", "low"]},
+                "confidence_reason": {"type": "string"},
+                "claim_verdicts": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "additionalProperties": False,
+                        "properties": {
+                            "claim": {"type": "string"},
+                            "verdict": {"type": "string", "enum": ["supported", "contradicted", "mixed", "unverifiable"]},
+                        },
+                        "required": ["claim", "verdict"],
+                    },
+                },
+                "source_stances": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "additionalProperties": False,
+                        "properties": {
+                            "url": {"type": "string"},
+                            "stance": {"type": "string", "enum": ["supporting", "contradicting", "neutral"]},
+                        },
+                        "required": ["url", "stance"],
+                    },
+                },
+            },
+            "required": [
+                "score",
+                "verdict",
+                "tldr",
+                "explanation",
+                "confidence",
+                "confidence_reason",
+                "claim_verdicts",
+                "source_stances",
+            ],
+        },
+    },
+}
+
 
 async def extract_claims(text: str) -> list[str]:
     logger.debug("extract_claims: input length=%d model=%s", len(text), config.llm.model)
@@ -164,7 +221,7 @@ async def analyze_evidence(claims: list[str], sources: list[dict]) -> AnalysisRe
             {"role": "system", "content": "You are a fact-checking assistant. Always respond with valid JSON."},
             {"role": "user", "content": EVIDENCE_ANALYSIS_PROMPT.format(claims=claims_text, sources=sources_text)},
         ],
-        response_format={"type": "json_object"},
+        response_format=EVIDENCE_ANALYSIS_RESPONSE_FORMAT,
         temperature=0,
     )
 
@@ -183,7 +240,12 @@ async def analyze_evidence(claims: list[str], sources: list[dict]) -> AnalysisRe
         logger.warning("analyze_evidence: expected JSON object, got %s", type(result).__name__)
         return _fallback_analysis()
 
-    score = max(0, min(100, int(result.get("score", 50))))
+    try:
+        score = max(0, min(100, int(result.get("score", 50))))
+    except (TypeError, ValueError):
+        logger.warning("analyze_evidence: non-numeric score %r, defaulting to 50", result.get("score"))
+        score = 50
+
     verdict = result.get("verdict", "unverifiable")
     valid_verdicts = {"false", "mostly_false", "mixed", "mostly_true", "true", "unverifiable"}
     if verdict not in valid_verdicts:

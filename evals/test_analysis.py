@@ -172,6 +172,56 @@ class TestAnalysisUnit:
         assert 0 <= result["score"] <= 100, \
             f"Score should be clamped to 0-100, got {result['score']}"
 
+    @pytest.mark.asyncio
+    async def test_handles_non_numeric_score(self, mock_llm_client):
+        """Non-numeric score should be replaced with 50, not raise an exception."""
+        case = self._get_case("clearly_true_claim")
+
+        mock_response = {
+            "score": "not_a_number",
+            "verdict": "true",
+            "tldr": "Supported.",
+            "explanation": "Multiple sources confirm.",
+            "confidence": "high",
+            "confidence_reason": "Multiple sources agree",
+            "claim_verdicts": [{"claim": case["claims"][0], "verdict": "supported"}],
+            "source_stances": [],
+        }
+        mock_llm_client.chat.completions.create = AsyncMock(
+            return_value=make_llm_response(mock_response)
+        )
+
+        result = await analyze_evidence(case["claims"], case["sources"])
+
+        assert result["verdict"] == "true"
+        assert result["score"] == 50, \
+            f"Non-numeric score should default to 50, got {result['score']}"
+        assert 0 <= result["score"] <= 100
+
+    @pytest.mark.asyncio
+    async def test_uses_json_schema_response_format(self, mock_llm_client):
+        """analyze_evidence should call the model with json_schema response format."""
+        case = self._get_case("clearly_true_claim")
+        mock_response = {
+            "score": 90,
+            "verdict": "true",
+            "tldr": "Supported by multiple sources.",
+            "explanation": "Multiple sources confirm.",
+            "confidence": "high",
+            "confidence_reason": "Multiple authoritative sources agree",
+            "claim_verdicts": [{"claim": case["claims"][0], "verdict": "supported"}],
+            "source_stances": [],
+        }
+        mock_llm_client.chat.completions.create = AsyncMock(
+            return_value=make_llm_response(mock_response)
+        )
+
+        await analyze_evidence(case["claims"], case["sources"])
+
+        call_kwargs = mock_llm_client.chat.completions.create.call_args.kwargs
+        assert call_kwargs["response_format"]["type"] == "json_schema"
+        assert "json_schema" in call_kwargs["response_format"]
+
 
 class TestAnalysisQuality:
     """Quality tests for analysis - real LLM calls, tests verdict and reasoning quality."""

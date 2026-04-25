@@ -1,7 +1,7 @@
 {
-  "timestamp": "2026-04-19T04:51:00.255272+00:00",
+  "timestamp": "2026-04-25T21:45:05.154809+00:00",
   "model": "gpt-5.4-nano",
-  "commit": "8ab556d",
+  "commit": "a2387e2",
   "arm_baseline": [
     {
       "dataset": "AVeriTeC",
@@ -612,411 +612,6 @@
       "within_one": true
     },
     {
-      "dataset": "AVeriTeC",
-      "id": "av_031",
-      "claim": "The eligibility criteria for applying to take the exam for the Union Public Service Commission (UPSC) of India, differentiates depending on whether you are a Hindu or a Muslim.",
-      "label": "Refuted",
-      "expected_verdicts": [
-        "false",
-        "mostly_false"
-      ],
-      "expected_score_range": [
-        0,
-        40
-      ],
-      "actual_verdict": "unverifiable",
-      "score": 50,
-      "confidence": "low",
-      "correct": false,
-      "verdict_correct": false,
-      "within_one": false
-    },
-    {
-      "dataset": "AVeriTeC",
-      "id": "av_032",
-      "claim": "Hunter Biden was chairman of the Nobel Peace Prize winning World Food Program.",
-      "label": "Supported",
-      "expected_verdicts": [
-        "true",
-        "mostly_true"
-      ],
-      "expected_score_range": [
-        60,
-        100
-      ],
-      "actual_verdict": "unverifiable",
-      "score": 50,
-      "confidence": "low",
-      "correct": false,
-      "verdict_correct": false,
-      "within_one": true
-    },
-    {
-      "dataset": "AVeriTeC",
-      "id": "av_033",
-      "claim": "Officer who wore Trump 2020 mask to polls to face disciplinary action",
-      "label": "Supported",
-      "expected_verdicts": [
-        "true",
-        "mostly_true"
-      ],
-      "expected_score_range": [
-        60,
-        100
-      ],
-      "actual_verdict": "unverifiable",
-      "score": 50,
-      "confidence": "low",
-      "correct": false,
-      "verdict_correct": false,
-      "within_one": true
-    },
-    {
-      "dataset": "AVeriTeC",
-      "id": "av_034",
-      "claim": "Ivermectin is a treatment for coronavirus.",
-      "label": "Not Enough Evidence",
-      "expected_verdicts": [
-        "unverifiable",
-        "mixed"
-      ],
-      "expected_score_range": [
-        30,
-        60
-      ],
-      "actual_verdict": "unverifiable",
-      "score": 50,
-      "confidence": "low",
-      "correct": true,
-      "verdict_correct": true,
-      "within_one": true
-    },
-    {
-      "dataset": "AVeriTeC",
-      "id": "av_035",
-      "claim": "Schools have resumed in New Brunswick, Canada despite the COVID-19 pandemic",
-      "label": "Supported",
-      "expected_verdicts": [
-        "true",
-        "mostly_true"
-      ],
-      "expected_score_range": [
-        60,
-        100
-      ],
-      "actual_verdict": "unverifiable",
-      "score": 50,
-      "confidence": "low",
-      "correct": false,
-      "verdict_correct": false,
-      "within_one": true
-    },
-    {
-      "dataset": "AVeriTeC",
-      "id": "av_036",
-      "claim": "New Zealand spends less on pensions than most wealthy countries, spending 4.4 per cent of GDP",
-      "label": "Conflicting Evidence/Cherrypicking",
-      "expected_verdicts": [
-        "mixed",
-        "mostly_true",
-        "mostly_false"
-      ],
-      "expected_score_range": [
-        25,
-        75
-      ],
-      "actual_verdict": "unverifiable",
-      "score": 50,
-      "confidence": "low",
-      "correct": false,
-      "verdict_correct": false,
-      "within_one": false
-    },
-    {
-      "dataset": "AVeriTeC",
-      "id": "av_037",
-      "claim": "Black Lives Matter wants to destroy the nuclear family.",
-      "label": "Conflicting Evidence/Cherrypicking",
-      "expected_verdicts": [
-        "mixed",
-        "mostly_true",
-        "mostly_false"
-      ],
-      "expected_score_range": [
-        25,
-        75
-      ],
-      "actual_verdict": "unverifiable",
-      "score": 50,
-      "confidence": "low",
-      "correct": false,
-      "verdict_correct": false,
-      "within_one": false
-    },
-    {
-      "dataset": "AVeriTeC",
-      "id": "av_038",
-      "claim": "PTFE Sprayed On Blue Masks Causes Symptoms Similar To COVID-19",
-      "label": "Refuted",
-      "expected_verdicts": [
-        "false",
-        "mostly_false"
-      ],
-      "expected_score_range": [
-        0,
-        40
-      ],
-      "actual_verdict": "unverifiable",
-      "score": 50,
-      "confidence": "low",
-      "correct": false,
-      "verdict_correct": false,
-      "within_one": false
-    },
-    {
-      "dataset": "AVeriTeC",
-      "id": "av_039",
-      "claim": "More cops have died from COVID this year than have been killed on patrol.",
-      "label": "Not Enough Evidence",
-      "expected_verdicts": [
-        "unverifiable",
-        "mixed"
-      ],
-      "expected_score_range": [
-        30,
-        60
-      ],
-      "actual_verdict": "unverifiable",
-      "score": 50,
-      "confidence": "low",
-      "correct": true,
-      "verdict_correct": true,
-      "within_one": true
-    },
-    {
-      "dataset": "AVeriTeC",
-      "id": "av_040",
-      "claim": "President Trump announces  he has tested positive for Covid-19.",
-      "label": "Supported",
-      "expected_verdicts": [
-        "true",
-        "mostly_true"
-      ],
-      "expected_score_range": [
-        60,
-        100
-      ],
-      "actual_verdict": "unverifiable",
-      "score": 50,
-      "confidence": "low",
-      "correct": false,
-      "verdict_correct": false,
-      "within_one": true
-    },
-    {
-      "dataset": "AVeriTeC",
-      "id": "av_041",
-      "claim": "Joe and Jill Biden's income has increased recently.",
-      "label": "Supported",
-      "expected_verdicts": [
-        "true",
-        "mostly_true"
-      ],
-      "expected_score_range": [
-        60,
-        100
-      ],
-      "actual_verdict": "unverifiable",
-      "score": 50,
-      "confidence": "low",
-      "correct": false,
-      "verdict_correct": false,
-      "within_one": true
-    },
-    {
-      "dataset": "AVeriTeC",
-      "id": "av_042",
-      "claim": "No one lost their health care because of the Wellmark and Iowa Farm Bureau Health Plan Bill.",
-      "label": "Not Enough Evidence",
-      "expected_verdicts": [
-        "unverifiable",
-        "mixed"
-      ],
-      "expected_score_range": [
-        30,
-        60
-      ],
-      "actual_verdict": "unverifiable",
-      "score": 50,
-      "confidence": "low",
-      "correct": true,
-      "verdict_correct": true,
-      "within_one": true
-    },
-    {
-      "dataset": "AVeriTeC",
-      "id": "av_043",
-      "claim": "MPs are not following workplace Covid guidance by wearing masks.",
-      "label": "Refuted",
-      "expected_verdicts": [
-        "false",
-        "mostly_false"
-      ],
-      "expected_score_range": [
-        0,
-        40
-      ],
-      "actual_verdict": "unverifiable",
-      "score": 50,
-      "confidence": "low",
-      "correct": false,
-      "verdict_correct": false,
-      "within_one": false
-    },
-    {
-      "dataset": "AVeriTeC",
-      "id": "av_044",
-      "claim": "UK Employees unable to work in tier 3 areas will get a combination of Job Support Scheme and Universal Credit, which will mean they get 80% of their wages.",
-      "label": "Conflicting Evidence/Cherrypicking",
-      "expected_verdicts": [
-        "mixed",
-        "mostly_true",
-        "mostly_false"
-      ],
-      "expected_score_range": [
-        25,
-        75
-      ],
-      "actual_verdict": "unverifiable",
-      "score": 50,
-      "confidence": "low",
-      "correct": false,
-      "verdict_correct": false,
-      "within_one": false
-    },
-    {
-      "dataset": "AVeriTeC",
-      "id": "av_045",
-      "claim": "The alleged concerns of the United States over Cuba's cooperation, in this case about the ‘More Doctors’ program, are neither legitimate nor pertinent to be discussed at PAHO [Pan American Health Organization].",
-      "label": "Not Enough Evidence",
-      "expected_verdicts": [
-        "unverifiable",
-        "mixed"
-      ],
-      "expected_score_range": [
-        30,
-        60
-      ],
-      "actual_verdict": "unverifiable",
-      "score": 50,
-      "confidence": "low",
-      "correct": true,
-      "verdict_correct": true,
-      "within_one": true
-    },
-    {
-      "dataset": "AVeriTeC",
-      "id": "av_046",
-      "claim": "US Miami-Dade County Mayor Carlos Giminez kept his taxpayer-funded Mercedes-Benz after slashing $400 million in government jobs and spending.",
-      "label": "Conflicting Evidence/Cherrypicking",
-      "expected_verdicts": [
-        "mixed",
-        "mostly_true",
-        "mostly_false"
-      ],
-      "expected_score_range": [
-        25,
-        75
-      ],
-      "actual_verdict": "unverifiable",
-      "score": 50,
-      "confidence": "low",
-      "correct": false,
-      "verdict_correct": false,
-      "within_one": false
-    },
-    {
-      "dataset": "AVeriTeC",
-      "id": "av_047",
-      "claim": "Muslim candidates can qualify with lower marks than others in the UPCS (i.e. Union Public Service Commission for recruitment to higher Civil Services of the Government of India) exam",
-      "label": "Refuted",
-      "expected_verdicts": [
-        "false",
-        "mostly_false"
-      ],
-      "expected_score_range": [
-        0,
-        40
-      ],
-      "actual_verdict": "unverifiable",
-      "score": 50,
-      "confidence": "low",
-      "correct": false,
-      "verdict_correct": false,
-      "within_one": false
-    },
-    {
-      "dataset": "AVeriTeC",
-      "id": "av_048",
-      "claim": "The CDC has removed the “Covid-19 Pandemic” and replaced it with “Covid-19 Outbreak” on their website.",
-      "label": "Refuted",
-      "expected_verdicts": [
-        "false",
-        "mostly_false"
-      ],
-      "expected_score_range": [
-        0,
-        40
-      ],
-      "actual_verdict": "unverifiable",
-      "score": 50,
-      "confidence": "low",
-      "correct": false,
-      "verdict_correct": false,
-      "within_one": false
-    },
-    {
-      "dataset": "AVeriTeC",
-      "id": "av_049",
-      "claim": "The wife of  Lal Bahadur Shastri (ex Prime minister of India) repaid his car loan after his death.",
-      "label": "Supported",
-      "expected_verdicts": [
-        "true",
-        "mostly_true"
-      ],
-      "expected_score_range": [
-        60,
-        100
-      ],
-      "actual_verdict": "unverifiable",
-      "score": 50,
-      "confidence": "low",
-      "correct": false,
-      "verdict_correct": false,
-      "within_one": true
-    },
-    {
-      "dataset": "AVeriTeC",
-      "id": "av_050",
-      "claim": "Sunil Gavaskar said that \"Virat Kohli has only trained against Anushka [Sharma]'s balls during the lockdown\"",
-      "label": "Conflicting Evidence/Cherrypicking",
-      "expected_verdicts": [
-        "mixed",
-        "mostly_true",
-        "mostly_false"
-      ],
-      "expected_score_range": [
-        25,
-        75
-      ],
-      "actual_verdict": "unverifiable",
-      "score": 50,
-      "confidence": "low",
-      "correct": false,
-      "verdict_correct": false,
-      "within_one": false
-    },
-    {
       "dataset": "PolitiFact",
       "id": "pf_001",
       "claim": "Says Hillary Clinton has donated every cent shes ever earned from speaking fees to charity.",
@@ -1613,400 +1208,6 @@
       "correct": false,
       "verdict_correct": false,
       "within_one": true
-    },
-    {
-      "dataset": "PolitiFact",
-      "id": "pf_031",
-      "claim": "Says a rather extraordinary amount of non-classroom employees were added by Texas school districts over the last decade.",
-      "label": "mostly-true",
-      "expected_verdicts": [
-        "mostly_true",
-        "true"
-      ],
-      "expected_score_range": [
-        60,
-        100
-      ],
-      "actual_verdict": "unverifiable",
-      "score": 50,
-      "confidence": "low",
-      "correct": false,
-      "verdict_correct": false,
-      "within_one": true
-    },
-    {
-      "dataset": "PolitiFact",
-      "id": "pf_032",
-      "claim": "George Allen voted for budgets that increased the national debt by $16,400 for every second he served in the U.S. Senate.",
-      "label": "true",
-      "expected_verdicts": [
-        "true"
-      ],
-      "expected_score_range": [
-        80,
-        100
-      ],
-      "actual_verdict": "unverifiable",
-      "score": 50,
-      "confidence": "low",
-      "correct": false,
-      "verdict_correct": false,
-      "within_one": true
-    },
-    {
-      "dataset": "PolitiFact",
-      "id": "pf_033",
-      "claim": "President Obama has the lowest public approval ratings of any president in modern times.",
-      "label": "pants-fire",
-      "expected_verdicts": [
-        "false"
-      ],
-      "expected_score_range": [
-        0,
-        20
-      ],
-      "actual_verdict": "unverifiable",
-      "score": 50,
-      "confidence": "low",
-      "correct": false,
-      "verdict_correct": false,
-      "within_one": false
-    },
-    {
-      "dataset": "PolitiFact",
-      "id": "pf_034",
-      "claim": "I can tell you that the enhanced interrogation techniques that have since been banned by this administration specifically waterboarding work.",
-      "label": "false",
-      "expected_verdicts": [
-        "false",
-        "mostly_false"
-      ],
-      "expected_score_range": [
-        0,
-        40
-      ],
-      "actual_verdict": "unverifiable",
-      "score": 50,
-      "confidence": "low",
-      "correct": false,
-      "verdict_correct": false,
-      "within_one": false
-    },
-    {
-      "dataset": "PolitiFact",
-      "id": "pf_035",
-      "claim": "In the Illinois Legislature, Barack Obama \"voted 'present,' instead of yes or no\" on seven votes involving abortion rights.",
-      "label": "true",
-      "expected_verdicts": [
-        "true"
-      ],
-      "expected_score_range": [
-        80,
-        100
-      ],
-      "actual_verdict": "unverifiable",
-      "score": 50,
-      "confidence": "low",
-      "correct": false,
-      "verdict_correct": false,
-      "within_one": true
-    },
-    {
-      "dataset": "PolitiFact",
-      "id": "pf_036",
-      "claim": "\"The White House is won in the swing states, and I am winning the swing states.\"",
-      "label": "barely-true",
-      "expected_verdicts": [
-        "mostly_false",
-        "mixed"
-      ],
-      "expected_score_range": [
-        20,
-        50
-      ],
-      "actual_verdict": "unverifiable",
-      "score": 50,
-      "confidence": "low",
-      "correct": false,
-      "verdict_correct": false,
-      "within_one": false
-    },
-    {
-      "dataset": "PolitiFact",
-      "id": "pf_037",
-      "claim": "The Democrat-backed health care reform plan \"will require (Americans) to subsidize abortion with their hard-earned tax dollars.\"",
-      "label": "false",
-      "expected_verdicts": [
-        "false",
-        "mostly_false"
-      ],
-      "expected_score_range": [
-        0,
-        40
-      ],
-      "actual_verdict": "unverifiable",
-      "score": 50,
-      "confidence": "low",
-      "correct": false,
-      "verdict_correct": false,
-      "within_one": false
-    },
-    {
-      "dataset": "PolitiFact",
-      "id": "pf_038",
-      "claim": "Says kids who start in the ninth grade in the city of Newark this past September, 23 percent of them will graduate in four years.",
-      "label": "pants-fire",
-      "expected_verdicts": [
-        "false"
-      ],
-      "expected_score_range": [
-        0,
-        20
-      ],
-      "actual_verdict": "unverifiable",
-      "score": 50,
-      "confidence": "low",
-      "correct": false,
-      "verdict_correct": false,
-      "within_one": false
-    },
-    {
-      "dataset": "PolitiFact",
-      "id": "pf_039",
-      "claim": "Studies have shown that in the absence of federal reproductive health funds, we are going to see the level of abortion in Georgia increase by about 44 percent.",
-      "label": "half-true",
-      "expected_verdicts": [
-        "mixed",
-        "mostly_true",
-        "mostly_false"
-      ],
-      "expected_score_range": [
-        35,
-        70
-      ],
-      "actual_verdict": "unverifiable",
-      "score": 50,
-      "confidence": "low",
-      "correct": false,
-      "verdict_correct": false,
-      "within_one": false
-    },
-    {
-      "dataset": "PolitiFact",
-      "id": "pf_040",
-      "claim": "Says Rick Perry recently said he wanted another (Texas) business tax.",
-      "label": "pants-fire",
-      "expected_verdicts": [
-        "false"
-      ],
-      "expected_score_range": [
-        0,
-        20
-      ],
-      "actual_verdict": "unverifiable",
-      "score": 50,
-      "confidence": "low",
-      "correct": false,
-      "verdict_correct": false,
-      "within_one": false
-    },
-    {
-      "dataset": "PolitiFact",
-      "id": "pf_041",
-      "claim": "Foreign Chinese prostitution money is allegedly behind the groups funding Congressman Sean Duffys Republican Majority.",
-      "label": "pants-fire",
-      "expected_verdicts": [
-        "false"
-      ],
-      "expected_score_range": [
-        0,
-        20
-      ],
-      "actual_verdict": "unverifiable",
-      "score": 50,
-      "confidence": "low",
-      "correct": false,
-      "verdict_correct": false,
-      "within_one": false
-    },
-    {
-      "dataset": "PolitiFact",
-      "id": "pf_042",
-      "claim": "Of the 20 bills [Rep. David] Cicilline has sponsored in his three years in office, not a single one has advanced past the embryonic committee stage.",
-      "label": "half-true",
-      "expected_verdicts": [
-        "mixed",
-        "mostly_true",
-        "mostly_false"
-      ],
-      "expected_score_range": [
-        35,
-        70
-      ],
-      "actual_verdict": "unverifiable",
-      "score": 50,
-      "confidence": "low",
-      "correct": false,
-      "verdict_correct": false,
-      "within_one": false
-    },
-    {
-      "dataset": "PolitiFact",
-      "id": "pf_043",
-      "claim": "Says Chris Christies plan to kick-start our economy is to propose an income tax cut that disproportionately benefits the wealthy, and...hes still proposing it.",
-      "label": "pants-fire",
-      "expected_verdicts": [
-        "false"
-      ],
-      "expected_score_range": [
-        0,
-        20
-      ],
-      "actual_verdict": "unverifiable",
-      "score": 50,
-      "confidence": "low",
-      "correct": false,
-      "verdict_correct": false,
-      "within_one": false
-    },
-    {
-      "dataset": "PolitiFact",
-      "id": "pf_044",
-      "claim": "Many Nevadans relied on Uber for work, but after accepting $70,000 from taxi companies, Catherine Cortez Masto went after Uber ... (driving) them out of town.",
-      "label": "barely-true",
-      "expected_verdicts": [
-        "mostly_false",
-        "mixed"
-      ],
-      "expected_score_range": [
-        20,
-        50
-      ],
-      "actual_verdict": "unverifiable",
-      "score": 50,
-      "confidence": "low",
-      "correct": false,
-      "verdict_correct": false,
-      "within_one": false
-    },
-    {
-      "dataset": "PolitiFact",
-      "id": "pf_045",
-      "claim": "Says JimRenacci has consistently voted for loopholes that encourage outsourcing of our jobs.",
-      "label": "half-true",
-      "expected_verdicts": [
-        "mixed",
-        "mostly_true",
-        "mostly_false"
-      ],
-      "expected_score_range": [
-        35,
-        70
-      ],
-      "actual_verdict": "unverifiable",
-      "score": 50,
-      "confidence": "low",
-      "correct": false,
-      "verdict_correct": false,
-      "within_one": false
-    },
-    {
-      "dataset": "PolitiFact",
-      "id": "pf_046",
-      "claim": "Says Chris Koster fell silentas attorney general in pursuing a case against a free classified service accused of promoting prostitution after accepting over $12,000 in campaign contributions from people affiliated with the service.",
-      "label": "barely-true",
-      "expected_verdicts": [
-        "mostly_false",
-        "mixed"
-      ],
-      "expected_score_range": [
-        20,
-        50
-      ],
-      "actual_verdict": "unverifiable",
-      "score": 50,
-      "confidence": "low",
-      "correct": false,
-      "verdict_correct": false,
-      "within_one": false
-    },
-    {
-      "dataset": "PolitiFact",
-      "id": "pf_047",
-      "claim": "Wisconsin dropped from second in the country to 41st among states where more than half the students took the ACT exam.",
-      "label": "pants-fire",
-      "expected_verdicts": [
-        "false"
-      ],
-      "expected_score_range": [
-        0,
-        20
-      ],
-      "actual_verdict": "unverifiable",
-      "score": 50,
-      "confidence": "low",
-      "correct": false,
-      "verdict_correct": false,
-      "within_one": false
-    },
-    {
-      "dataset": "PolitiFact",
-      "id": "pf_048",
-      "claim": "Two months ago, Donald Trump said that ISIS was not our fight.",
-      "label": "mostly-true",
-      "expected_verdicts": [
-        "mostly_true",
-        "true"
-      ],
-      "expected_score_range": [
-        60,
-        100
-      ],
-      "actual_verdict": "unverifiable",
-      "score": 50,
-      "confidence": "low",
-      "correct": false,
-      "verdict_correct": false,
-      "within_one": true
-    },
-    {
-      "dataset": "PolitiFact",
-      "id": "pf_049",
-      "claim": "Under this tax cut, middle-class families dont save enough for a weeks worth of groceries, while millionaires save enough to go on an exotic vacation.",
-      "label": "true",
-      "expected_verdicts": [
-        "true"
-      ],
-      "expected_score_range": [
-        80,
-        100
-      ],
-      "actual_verdict": "unverifiable",
-      "score": 50,
-      "confidence": "low",
-      "correct": false,
-      "verdict_correct": false,
-      "within_one": true
-    },
-    {
-      "dataset": "PolitiFact",
-      "id": "pf_050",
-      "claim": "Pre-existing conditions are covered under my (health care) plan.",
-      "label": "barely-true",
-      "expected_verdicts": [
-        "mostly_false",
-        "mixed"
-      ],
-      "expected_score_range": [
-        20,
-        50
-      ],
-      "actual_verdict": "unverifiable",
-      "score": 50,
-      "confidence": "low",
-      "correct": false,
-      "verdict_correct": false,
-      "within_one": false
     }
   ],
   "arm_a": [
@@ -2024,9 +1225,9 @@
         25,
         75
       ],
-      "actual_verdict": "mostly_true",
-      "score": 85,
-      "confidence": "medium",
+      "actual_verdict": "mostly_false",
+      "score": 10,
+      "confidence": "high",
       "correct": false,
       "verdict_correct": true,
       "within_one": true
@@ -2086,12 +1287,12 @@
         25,
         75
       ],
-      "actual_verdict": "mostly_false",
-      "score": 35,
+      "actual_verdict": "unverifiable",
+      "score": 50,
       "confidence": "low",
-      "correct": true,
-      "verdict_correct": true,
-      "within_one": true
+      "correct": false,
+      "verdict_correct": false,
+      "within_one": false
     },
     {
       "dataset": "AVeriTeC",
@@ -2168,7 +1369,7 @@
         40
       ],
       "actual_verdict": "mostly_true",
-      "score": 70,
+      "score": 78,
       "confidence": "medium",
       "correct": false,
       "verdict_correct": false,
@@ -2267,12 +1468,12 @@
         0,
         40
       ],
-      "actual_verdict": "mixed",
-      "score": 55,
+      "actual_verdict": "unverifiable",
+      "score": 50,
       "confidence": "low",
       "correct": false,
       "verdict_correct": false,
-      "within_one": true
+      "within_one": false
     },
     {
       "dataset": "AVeriTeC",
@@ -2307,11 +1508,11 @@
         30,
         60
       ],
-      "actual_verdict": "unverifiable",
-      "score": 50,
-      "confidence": "low",
-      "correct": true,
-      "verdict_correct": true,
+      "actual_verdict": "mostly_false",
+      "score": 25,
+      "confidence": "medium",
+      "correct": false,
+      "verdict_correct": false,
       "within_one": true
     },
     {
@@ -2327,8 +1528,8 @@
         30,
         60
       ],
-      "actual_verdict": "mixed",
-      "score": 55,
+      "actual_verdict": "unverifiable",
+      "score": 50,
       "confidence": "low",
       "correct": true,
       "verdict_correct": true,
@@ -2348,7 +1549,7 @@
         100
       ],
       "actual_verdict": "mostly_true",
-      "score": 85,
+      "score": 75,
       "confidence": "medium",
       "correct": true,
       "verdict_correct": true,
@@ -2367,11 +1568,11 @@
         30,
         60
       ],
-      "actual_verdict": "unverifiable",
-      "score": 50,
-      "confidence": "low",
-      "correct": true,
-      "verdict_correct": true,
+      "actual_verdict": "mostly_false",
+      "score": 35,
+      "confidence": "medium",
+      "correct": false,
+      "verdict_correct": false,
       "within_one": true
     },
     {
@@ -2409,7 +1610,7 @@
         100
       ],
       "actual_verdict": "true",
-      "score": 95,
+      "score": 90,
       "confidence": "high",
       "correct": true,
       "verdict_correct": true,
@@ -2449,7 +1650,7 @@
         40
       ],
       "actual_verdict": "mostly_false",
-      "score": 10,
+      "score": 15,
       "confidence": "medium",
       "correct": true,
       "verdict_correct": true,
@@ -2530,9 +1731,9 @@
         25,
         75
       ],
-      "actual_verdict": "mostly_true",
-      "score": 65,
-      "confidence": "medium",
+      "actual_verdict": "mixed",
+      "score": 55,
+      "confidence": "low",
       "correct": true,
       "verdict_correct": true,
       "within_one": true
@@ -2550,9 +1751,9 @@
         0,
         40
       ],
-      "actual_verdict": "mostly_false",
-      "score": 10,
-      "confidence": "medium",
+      "actual_verdict": "false",
+      "score": 0,
+      "confidence": "high",
       "correct": true,
       "verdict_correct": true,
       "within_one": true
@@ -2591,12 +1792,12 @@
         0,
         40
       ],
-      "actual_verdict": "mostly_false",
-      "score": 35,
-      "confidence": "medium",
-      "correct": true,
-      "verdict_correct": true,
-      "within_one": true
+      "actual_verdict": "unverifiable",
+      "score": 50,
+      "confidence": "low",
+      "correct": false,
+      "verdict_correct": false,
+      "within_one": false
     },
     {
       "dataset": "AVeriTeC",
@@ -2613,414 +1814,9 @@
       ],
       "actual_verdict": "mixed",
       "score": 55,
-      "confidence": "low",
-      "correct": false,
-      "verdict_correct": false,
-      "within_one": true
-    },
-    {
-      "dataset": "AVeriTeC",
-      "id": "av_031",
-      "claim": "The eligibility criteria for applying to take the exam for the Union Public Service Commission (UPSC) of India, differentiates depending on whether you are a Hindu or a Muslim.",
-      "label": "Refuted",
-      "expected_verdicts": [
-        "false",
-        "mostly_false"
-      ],
-      "expected_score_range": [
-        0,
-        40
-      ],
-      "actual_verdict": "mostly_true",
-      "score": 85,
       "confidence": "medium",
       "correct": false,
       "verdict_correct": false,
-      "within_one": false
-    },
-    {
-      "dataset": "AVeriTeC",
-      "id": "av_032",
-      "claim": "Hunter Biden was chairman of the Nobel Peace Prize winning World Food Program.",
-      "label": "Supported",
-      "expected_verdicts": [
-        "true",
-        "mostly_true"
-      ],
-      "expected_score_range": [
-        60,
-        100
-      ],
-      "actual_verdict": "mostly_true",
-      "score": 85,
-      "confidence": "medium",
-      "correct": true,
-      "verdict_correct": true,
-      "within_one": true
-    },
-    {
-      "dataset": "AVeriTeC",
-      "id": "av_033",
-      "claim": "Officer who wore Trump 2020 mask to polls to face disciplinary action",
-      "label": "Supported",
-      "expected_verdicts": [
-        "true",
-        "mostly_true"
-      ],
-      "expected_score_range": [
-        60,
-        100
-      ],
-      "actual_verdict": "mostly_true",
-      "score": 70,
-      "confidence": "medium",
-      "correct": true,
-      "verdict_correct": true,
-      "within_one": true
-    },
-    {
-      "dataset": "AVeriTeC",
-      "id": "av_034",
-      "claim": "Ivermectin is a treatment for coronavirus.",
-      "label": "Not Enough Evidence",
-      "expected_verdicts": [
-        "unverifiable",
-        "mixed"
-      ],
-      "expected_score_range": [
-        30,
-        60
-      ],
-      "actual_verdict": "mixed",
-      "score": 35,
-      "confidence": "medium",
-      "correct": true,
-      "verdict_correct": true,
-      "within_one": true
-    },
-    {
-      "dataset": "AVeriTeC",
-      "id": "av_035",
-      "claim": "Schools have resumed in New Brunswick, Canada despite the COVID-19 pandemic",
-      "label": "Supported",
-      "expected_verdicts": [
-        "true",
-        "mostly_true"
-      ],
-      "expected_score_range": [
-        60,
-        100
-      ],
-      "actual_verdict": "mostly_true",
-      "score": 85,
-      "confidence": "medium",
-      "correct": true,
-      "verdict_correct": true,
-      "within_one": true
-    },
-    {
-      "dataset": "AVeriTeC",
-      "id": "av_036",
-      "claim": "New Zealand spends less on pensions than most wealthy countries, spending 4.4 per cent of GDP",
-      "label": "Conflicting Evidence/Cherrypicking",
-      "expected_verdicts": [
-        "mixed",
-        "mostly_true",
-        "mostly_false"
-      ],
-      "expected_score_range": [
-        25,
-        75
-      ],
-      "actual_verdict": "mostly_false",
-      "score": 35,
-      "confidence": "medium",
-      "correct": true,
-      "verdict_correct": true,
-      "within_one": true
-    },
-    {
-      "dataset": "AVeriTeC",
-      "id": "av_037",
-      "claim": "Black Lives Matter wants to destroy the nuclear family.",
-      "label": "Conflicting Evidence/Cherrypicking",
-      "expected_verdicts": [
-        "mixed",
-        "mostly_true",
-        "mostly_false"
-      ],
-      "expected_score_range": [
-        25,
-        75
-      ],
-      "actual_verdict": "mostly_false",
-      "score": 15,
-      "confidence": "medium",
-      "correct": false,
-      "verdict_correct": true,
-      "within_one": true
-    },
-    {
-      "dataset": "AVeriTeC",
-      "id": "av_038",
-      "claim": "PTFE Sprayed On Blue Masks Causes Symptoms Similar To COVID-19",
-      "label": "Refuted",
-      "expected_verdicts": [
-        "false",
-        "mostly_false"
-      ],
-      "expected_score_range": [
-        0,
-        40
-      ],
-      "actual_verdict": "unverifiable",
-      "score": 50,
-      "confidence": "low",
-      "correct": false,
-      "verdict_correct": false,
-      "within_one": false
-    },
-    {
-      "dataset": "AVeriTeC",
-      "id": "av_039",
-      "claim": "More cops have died from COVID this year than have been killed on patrol.",
-      "label": "Not Enough Evidence",
-      "expected_verdicts": [
-        "unverifiable",
-        "mixed"
-      ],
-      "expected_score_range": [
-        30,
-        60
-      ],
-      "actual_verdict": "unverifiable",
-      "score": 50,
-      "confidence": "low",
-      "correct": true,
-      "verdict_correct": true,
-      "within_one": true
-    },
-    {
-      "dataset": "AVeriTeC",
-      "id": "av_040",
-      "claim": "President Trump announces  he has tested positive for Covid-19.",
-      "label": "Supported",
-      "expected_verdicts": [
-        "true",
-        "mostly_true"
-      ],
-      "expected_score_range": [
-        60,
-        100
-      ],
-      "actual_verdict": "mostly_true",
-      "score": 85,
-      "confidence": "low",
-      "correct": true,
-      "verdict_correct": true,
-      "within_one": true
-    },
-    {
-      "dataset": "AVeriTeC",
-      "id": "av_041",
-      "claim": "Joe and Jill Biden's income has increased recently.",
-      "label": "Supported",
-      "expected_verdicts": [
-        "true",
-        "mostly_true"
-      ],
-      "expected_score_range": [
-        60,
-        100
-      ],
-      "actual_verdict": "unverifiable",
-      "score": 50,
-      "confidence": "low",
-      "correct": false,
-      "verdict_correct": false,
-      "within_one": true
-    },
-    {
-      "dataset": "AVeriTeC",
-      "id": "av_042",
-      "claim": "No one lost their health care because of the Wellmark and Iowa Farm Bureau Health Plan Bill.",
-      "label": "Not Enough Evidence",
-      "expected_verdicts": [
-        "unverifiable",
-        "mixed"
-      ],
-      "expected_score_range": [
-        30,
-        60
-      ],
-      "actual_verdict": "false",
-      "score": 10,
-      "confidence": "low",
-      "correct": false,
-      "verdict_correct": false,
-      "within_one": false
-    },
-    {
-      "dataset": "AVeriTeC",
-      "id": "av_043",
-      "claim": "MPs are not following workplace Covid guidance by wearing masks.",
-      "label": "Refuted",
-      "expected_verdicts": [
-        "false",
-        "mostly_false"
-      ],
-      "expected_score_range": [
-        0,
-        40
-      ],
-      "actual_verdict": "mostly_false",
-      "score": 35,
-      "confidence": "medium",
-      "correct": true,
-      "verdict_correct": true,
-      "within_one": true
-    },
-    {
-      "dataset": "AVeriTeC",
-      "id": "av_044",
-      "claim": "UK Employees unable to work in tier 3 areas will get a combination of Job Support Scheme and Universal Credit, which will mean they get 80% of their wages.",
-      "label": "Conflicting Evidence/Cherrypicking",
-      "expected_verdicts": [
-        "mixed",
-        "mostly_true",
-        "mostly_false"
-      ],
-      "expected_score_range": [
-        25,
-        75
-      ],
-      "actual_verdict": "mostly_false",
-      "score": 35,
-      "confidence": "medium",
-      "correct": true,
-      "verdict_correct": true,
-      "within_one": true
-    },
-    {
-      "dataset": "AVeriTeC",
-      "id": "av_045",
-      "claim": "The alleged concerns of the United States over Cuba's cooperation, in this case about the ‘More Doctors’ program, are neither legitimate nor pertinent to be discussed at PAHO [Pan American Health Organization].",
-      "label": "Not Enough Evidence",
-      "expected_verdicts": [
-        "unverifiable",
-        "mixed"
-      ],
-      "expected_score_range": [
-        30,
-        60
-      ],
-      "actual_verdict": "mixed",
-      "score": 55,
-      "confidence": "low",
-      "correct": true,
-      "verdict_correct": true,
-      "within_one": true
-    },
-    {
-      "dataset": "AVeriTeC",
-      "id": "av_046",
-      "claim": "US Miami-Dade County Mayor Carlos Giminez kept his taxpayer-funded Mercedes-Benz after slashing $400 million in government jobs and spending.",
-      "label": "Conflicting Evidence/Cherrypicking",
-      "expected_verdicts": [
-        "mixed",
-        "mostly_true",
-        "mostly_false"
-      ],
-      "expected_score_range": [
-        25,
-        75
-      ],
-      "actual_verdict": "mixed",
-      "score": 45,
-      "confidence": "low",
-      "correct": true,
-      "verdict_correct": true,
-      "within_one": true
-    },
-    {
-      "dataset": "AVeriTeC",
-      "id": "av_047",
-      "claim": "Muslim candidates can qualify with lower marks than others in the UPCS (i.e. Union Public Service Commission for recruitment to higher Civil Services of the Government of India) exam",
-      "label": "Refuted",
-      "expected_verdicts": [
-        "false",
-        "mostly_false"
-      ],
-      "expected_score_range": [
-        0,
-        40
-      ],
-      "actual_verdict": "mostly_true",
-      "score": 85,
-      "confidence": "medium",
-      "correct": false,
-      "verdict_correct": false,
-      "within_one": false
-    },
-    {
-      "dataset": "AVeriTeC",
-      "id": "av_048",
-      "claim": "The CDC has removed the “Covid-19 Pandemic” and replaced it with “Covid-19 Outbreak” on their website.",
-      "label": "Refuted",
-      "expected_verdicts": [
-        "false",
-        "mostly_false"
-      ],
-      "expected_score_range": [
-        0,
-        40
-      ],
-      "actual_verdict": "mostly_false",
-      "score": 10,
-      "confidence": "medium",
-      "correct": true,
-      "verdict_correct": true,
-      "within_one": true
-    },
-    {
-      "dataset": "AVeriTeC",
-      "id": "av_049",
-      "claim": "The wife of  Lal Bahadur Shastri (ex Prime minister of India) repaid his car loan after his death.",
-      "label": "Supported",
-      "expected_verdicts": [
-        "true",
-        "mostly_true"
-      ],
-      "expected_score_range": [
-        60,
-        100
-      ],
-      "actual_verdict": "mostly_true",
-      "score": 70,
-      "confidence": "medium",
-      "correct": true,
-      "verdict_correct": true,
-      "within_one": true
-    },
-    {
-      "dataset": "AVeriTeC",
-      "id": "av_050",
-      "claim": "Sunil Gavaskar said that \"Virat Kohli has only trained against Anushka [Sharma]'s balls during the lockdown\"",
-      "label": "Conflicting Evidence/Cherrypicking",
-      "expected_verdicts": [
-        "mixed",
-        "mostly_true",
-        "mostly_false"
-      ],
-      "expected_score_range": [
-        25,
-        75
-      ],
-      "actual_verdict": "mostly_true",
-      "score": 78,
-      "confidence": "medium",
-      "correct": false,
-      "verdict_correct": true,
       "within_one": true
     }
   ],
@@ -3040,7 +1836,7 @@
         75
       ],
       "actual_verdict": "mostly_false",
-      "score": 35,
+      "score": 20,
       "confidence": "medium",
       "correct": true,
       "verdict_correct": true,
@@ -3060,11 +1856,11 @@
         25,
         75
       ],
-      "actual_verdict": "false",
-      "score": 10,
+      "actual_verdict": "mostly_false",
+      "score": 15,
       "confidence": "high",
-      "correct": false,
-      "verdict_correct": false,
+      "correct": true,
+      "verdict_correct": true,
       "within_one": true
     },
     {
@@ -3080,12 +1876,12 @@
         60,
         100
       ],
-      "actual_verdict": "unverifiable",
-      "score": 50,
-      "confidence": "low",
+      "actual_verdict": "mostly_false",
+      "score": 35,
+      "confidence": "medium",
       "correct": false,
       "verdict_correct": false,
-      "within_one": true
+      "within_one": false
     },
     {
       "dataset": "AVeriTeC",
@@ -3123,7 +1919,7 @@
         75
       ],
       "actual_verdict": "mostly_true",
-      "score": 65,
+      "score": 70,
       "confidence": "medium",
       "correct": true,
       "verdict_correct": true,
@@ -3142,8 +1938,8 @@
         30,
         60
       ],
-      "actual_verdict": "true",
-      "score": 95,
+      "actual_verdict": "mostly_false",
+      "score": 15,
       "confidence": "high",
       "correct": false,
       "verdict_correct": false,
@@ -3162,11 +1958,11 @@
         30,
         60
       ],
-      "actual_verdict": "mixed",
+      "actual_verdict": "mostly_false",
       "score": 35,
-      "confidence": "low",
-      "correct": true,
-      "verdict_correct": true,
+      "confidence": "medium",
+      "correct": false,
+      "verdict_correct": false,
       "within_one": true
     },
     {
@@ -3202,12 +1998,12 @@
         60,
         100
       ],
-      "actual_verdict": "mostly_false",
-      "score": 20,
-      "confidence": "low",
-      "correct": false,
-      "verdict_correct": false,
-      "within_one": false
+      "actual_verdict": "mostly_true",
+      "score": 70,
+      "confidence": "medium",
+      "correct": true,
+      "verdict_correct": true,
+      "within_one": true
     },
     {
       "dataset": "AVeriTeC",
@@ -3223,7 +2019,7 @@
         40
       ],
       "actual_verdict": "false",
-      "score": 5,
+      "score": 10,
       "confidence": "high",
       "correct": true,
       "verdict_correct": true,
@@ -3283,7 +2079,7 @@
         40
       ],
       "actual_verdict": "mostly_false",
-      "score": 25,
+      "score": 18,
       "confidence": "medium",
       "correct": true,
       "verdict_correct": true,
@@ -3323,7 +2119,7 @@
         60
       ],
       "actual_verdict": "mixed",
-      "score": 45,
+      "score": 55,
       "confidence": "medium",
       "correct": true,
       "verdict_correct": true,
@@ -3362,12 +2158,12 @@
         60,
         100
       ],
-      "actual_verdict": "mostly_true",
-      "score": 78,
+      "actual_verdict": "mostly_false",
+      "score": 35,
       "confidence": "medium",
-      "correct": true,
-      "verdict_correct": true,
-      "within_one": true
+      "correct": false,
+      "verdict_correct": false,
+      "within_one": false
     },
     {
       "dataset": "AVeriTeC",
@@ -3404,7 +2200,7 @@
         75
       ],
       "actual_verdict": "mostly_false",
-      "score": 35,
+      "score": 20,
       "confidence": "medium",
       "correct": true,
       "verdict_correct": true,
@@ -3423,11 +2219,11 @@
         60,
         100
       ],
-      "actual_verdict": "mostly_true",
-      "score": 85,
-      "confidence": "medium",
-      "correct": true,
-      "verdict_correct": true,
+      "actual_verdict": "mixed",
+      "score": 55,
+      "confidence": "low",
+      "correct": false,
+      "verdict_correct": false,
       "within_one": true
     },
     {
@@ -3443,8 +2239,8 @@
         30,
         60
       ],
-      "actual_verdict": "mostly_false",
-      "score": 25,
+      "actual_verdict": "mostly_true",
+      "score": 70,
       "confidence": "medium",
       "correct": false,
       "verdict_correct": false,
@@ -3463,12 +2259,12 @@
         0,
         40
       ],
-      "actual_verdict": "false",
-      "score": 5,
-      "confidence": "high",
-      "correct": true,
-      "verdict_correct": true,
-      "within_one": true
+      "actual_verdict": "unverifiable",
+      "score": 50,
+      "confidence": "low",
+      "correct": false,
+      "verdict_correct": false,
+      "within_one": false
     },
     {
       "dataset": "AVeriTeC",
@@ -3484,8 +2280,8 @@
         25,
         75
       ],
-      "actual_verdict": "mostly_false",
-      "score": 10,
+      "actual_verdict": "mostly_true",
+      "score": 85,
       "confidence": "high",
       "correct": true,
       "verdict_correct": true,
@@ -3504,11 +2300,11 @@
         30,
         60
       ],
-      "actual_verdict": "mostly_false",
-      "score": 35,
-      "confidence": "medium",
-      "correct": false,
-      "verdict_correct": false,
+      "actual_verdict": "unverifiable",
+      "score": 50,
+      "confidence": "low",
+      "correct": true,
+      "verdict_correct": true,
       "within_one": true
     },
     {
@@ -3524,8 +2320,8 @@
         0,
         40
       ],
-      "actual_verdict": "mostly_false",
-      "score": 90,
+      "actual_verdict": "false",
+      "score": 10,
       "confidence": "high",
       "correct": true,
       "verdict_correct": true,
@@ -3545,8 +2341,8 @@
         25,
         75
       ],
-      "actual_verdict": "mostly_false",
-      "score": 35,
+      "actual_verdict": "mixed",
+      "score": 55,
       "confidence": "medium",
       "correct": true,
       "verdict_correct": true,
@@ -3565,12 +2361,12 @@
         0,
         40
       ],
-      "actual_verdict": "false",
-      "score": 5,
+      "actual_verdict": "true",
+      "score": 95,
       "confidence": "high",
-      "correct": true,
-      "verdict_correct": true,
-      "within_one": true
+      "correct": false,
+      "verdict_correct": false,
+      "within_one": false
     },
     {
       "dataset": "AVeriTeC",
@@ -3586,11 +2382,11 @@
         25,
         75
       ],
-      "actual_verdict": "false",
-      "score": 10,
+      "actual_verdict": "mostly_false",
+      "score": 20,
       "confidence": "high",
-      "correct": false,
-      "verdict_correct": false,
+      "correct": true,
+      "verdict_correct": true,
       "within_one": true
     },
     {
@@ -3627,415 +2423,10 @@
         100
       ],
       "actual_verdict": "mostly_true",
-      "score": 70,
-      "confidence": "medium",
-      "correct": true,
-      "verdict_correct": true,
-      "within_one": true
-    },
-    {
-      "dataset": "AVeriTeC",
-      "id": "av_031",
-      "claim": "The eligibility criteria for applying to take the exam for the Union Public Service Commission (UPSC) of India, differentiates depending on whether you are a Hindu or a Muslim.",
-      "label": "Refuted",
-      "expected_verdicts": [
-        "false",
-        "mostly_false"
-      ],
-      "expected_score_range": [
-        0,
-        40
-      ],
-      "actual_verdict": "mostly_true",
-      "score": 85,
-      "confidence": "high",
-      "correct": false,
-      "verdict_correct": false,
-      "within_one": false
-    },
-    {
-      "dataset": "AVeriTeC",
-      "id": "av_032",
-      "claim": "Hunter Biden was chairman of the Nobel Peace Prize winning World Food Program.",
-      "label": "Supported",
-      "expected_verdicts": [
-        "true",
-        "mostly_true"
-      ],
-      "expected_score_range": [
-        60,
-        100
-      ],
-      "actual_verdict": "mostly_true",
       "score": 78,
       "confidence": "medium",
       "correct": true,
       "verdict_correct": true,
-      "within_one": true
-    },
-    {
-      "dataset": "AVeriTeC",
-      "id": "av_033",
-      "claim": "Officer who wore Trump 2020 mask to polls to face disciplinary action",
-      "label": "Supported",
-      "expected_verdicts": [
-        "true",
-        "mostly_true"
-      ],
-      "expected_score_range": [
-        60,
-        100
-      ],
-      "actual_verdict": "true",
-      "score": 92,
-      "confidence": "high",
-      "correct": true,
-      "verdict_correct": true,
-      "within_one": true
-    },
-    {
-      "dataset": "AVeriTeC",
-      "id": "av_034",
-      "claim": "Ivermectin is a treatment for coronavirus.",
-      "label": "Not Enough Evidence",
-      "expected_verdicts": [
-        "unverifiable",
-        "mixed"
-      ],
-      "expected_score_range": [
-        30,
-        60
-      ],
-      "actual_verdict": "mostly_false",
-      "score": 25,
-      "confidence": "medium",
-      "correct": false,
-      "verdict_correct": false,
-      "within_one": true
-    },
-    {
-      "dataset": "AVeriTeC",
-      "id": "av_035",
-      "claim": "Schools have resumed in New Brunswick, Canada despite the COVID-19 pandemic",
-      "label": "Supported",
-      "expected_verdicts": [
-        "true",
-        "mostly_true"
-      ],
-      "expected_score_range": [
-        60,
-        100
-      ],
-      "actual_verdict": "mostly_true",
-      "score": 78,
-      "confidence": "medium",
-      "correct": true,
-      "verdict_correct": true,
-      "within_one": true
-    },
-    {
-      "dataset": "AVeriTeC",
-      "id": "av_036",
-      "claim": "New Zealand spends less on pensions than most wealthy countries, spending 4.4 per cent of GDP",
-      "label": "Conflicting Evidence/Cherrypicking",
-      "expected_verdicts": [
-        "mixed",
-        "mostly_true",
-        "mostly_false"
-      ],
-      "expected_score_range": [
-        25,
-        75
-      ],
-      "actual_verdict": "mostly_true",
-      "score": 78,
-      "confidence": "medium",
-      "correct": true,
-      "verdict_correct": true,
-      "within_one": true
-    },
-    {
-      "dataset": "AVeriTeC",
-      "id": "av_037",
-      "claim": "Black Lives Matter wants to destroy the nuclear family.",
-      "label": "Conflicting Evidence/Cherrypicking",
-      "expected_verdicts": [
-        "mixed",
-        "mostly_true",
-        "mostly_false"
-      ],
-      "expected_score_range": [
-        25,
-        75
-      ],
-      "actual_verdict": "mixed",
-      "score": 45,
-      "confidence": "medium",
-      "correct": true,
-      "verdict_correct": true,
-      "within_one": true
-    },
-    {
-      "dataset": "AVeriTeC",
-      "id": "av_038",
-      "claim": "PTFE Sprayed On Blue Masks Causes Symptoms Similar To COVID-19",
-      "label": "Refuted",
-      "expected_verdicts": [
-        "false",
-        "mostly_false"
-      ],
-      "expected_score_range": [
-        0,
-        40
-      ],
-      "actual_verdict": "mostly_true",
-      "score": 78,
-      "confidence": "medium",
-      "correct": false,
-      "verdict_correct": false,
-      "within_one": false
-    },
-    {
-      "dataset": "AVeriTeC",
-      "id": "av_039",
-      "claim": "More cops have died from COVID this year than have been killed on patrol.",
-      "label": "Not Enough Evidence",
-      "expected_verdicts": [
-        "unverifiable",
-        "mixed"
-      ],
-      "expected_score_range": [
-        30,
-        60
-      ],
-      "actual_verdict": "mostly_true",
-      "score": 78,
-      "confidence": "medium",
-      "correct": false,
-      "verdict_correct": false,
-      "within_one": true
-    },
-    {
-      "dataset": "AVeriTeC",
-      "id": "av_040",
-      "claim": "President Trump announces  he has tested positive for Covid-19.",
-      "label": "Supported",
-      "expected_verdicts": [
-        "true",
-        "mostly_true"
-      ],
-      "expected_score_range": [
-        60,
-        100
-      ],
-      "actual_verdict": "true",
-      "score": 95,
-      "confidence": "high",
-      "correct": true,
-      "verdict_correct": true,
-      "within_one": true
-    },
-    {
-      "dataset": "AVeriTeC",
-      "id": "av_041",
-      "claim": "Joe and Jill Biden's income has increased recently.",
-      "label": "Supported",
-      "expected_verdicts": [
-        "true",
-        "mostly_true"
-      ],
-      "expected_score_range": [
-        60,
-        100
-      ],
-      "actual_verdict": "mostly_true",
-      "score": 78,
-      "confidence": "high",
-      "correct": true,
-      "verdict_correct": true,
-      "within_one": true
-    },
-    {
-      "dataset": "AVeriTeC",
-      "id": "av_042",
-      "claim": "No one lost their health care because of the Wellmark and Iowa Farm Bureau Health Plan Bill.",
-      "label": "Not Enough Evidence",
-      "expected_verdicts": [
-        "unverifiable",
-        "mixed"
-      ],
-      "expected_score_range": [
-        30,
-        60
-      ],
-      "actual_verdict": "unverifiable",
-      "score": 50,
-      "confidence": "low",
-      "correct": true,
-      "verdict_correct": true,
-      "within_one": true
-    },
-    {
-      "dataset": "AVeriTeC",
-      "id": "av_043",
-      "claim": "MPs are not following workplace Covid guidance by wearing masks.",
-      "label": "Refuted",
-      "expected_verdicts": [
-        "false",
-        "mostly_false"
-      ],
-      "expected_score_range": [
-        0,
-        40
-      ],
-      "actual_verdict": "mostly_true",
-      "score": 65,
-      "confidence": "medium",
-      "correct": false,
-      "verdict_correct": false,
-      "within_one": false
-    },
-    {
-      "dataset": "AVeriTeC",
-      "id": "av_044",
-      "claim": "UK Employees unable to work in tier 3 areas will get a combination of Job Support Scheme and Universal Credit, which will mean they get 80% of their wages.",
-      "label": "Conflicting Evidence/Cherrypicking",
-      "expected_verdicts": [
-        "mixed",
-        "mostly_true",
-        "mostly_false"
-      ],
-      "expected_score_range": [
-        25,
-        75
-      ],
-      "actual_verdict": "mostly_false",
-      "score": 35,
-      "confidence": "medium",
-      "correct": true,
-      "verdict_correct": true,
-      "within_one": true
-    },
-    {
-      "dataset": "AVeriTeC",
-      "id": "av_045",
-      "claim": "The alleged concerns of the United States over Cuba's cooperation, in this case about the ‘More Doctors’ program, are neither legitimate nor pertinent to be discussed at PAHO [Pan American Health Organization].",
-      "label": "Not Enough Evidence",
-      "expected_verdicts": [
-        "unverifiable",
-        "mixed"
-      ],
-      "expected_score_range": [
-        30,
-        60
-      ],
-      "actual_verdict": "mixed",
-      "score": 55,
-      "confidence": "medium",
-      "correct": true,
-      "verdict_correct": true,
-      "within_one": true
-    },
-    {
-      "dataset": "AVeriTeC",
-      "id": "av_046",
-      "claim": "US Miami-Dade County Mayor Carlos Giminez kept his taxpayer-funded Mercedes-Benz after slashing $400 million in government jobs and spending.",
-      "label": "Conflicting Evidence/Cherrypicking",
-      "expected_verdicts": [
-        "mixed",
-        "mostly_true",
-        "mostly_false"
-      ],
-      "expected_score_range": [
-        25,
-        75
-      ],
-      "actual_verdict": "mostly_true",
-      "score": 78,
-      "confidence": "medium",
-      "correct": true,
-      "verdict_correct": true,
-      "within_one": true
-    },
-    {
-      "dataset": "AVeriTeC",
-      "id": "av_047",
-      "claim": "Muslim candidates can qualify with lower marks than others in the UPCS (i.e. Union Public Service Commission for recruitment to higher Civil Services of the Government of India) exam",
-      "label": "Refuted",
-      "expected_verdicts": [
-        "false",
-        "mostly_false"
-      ],
-      "expected_score_range": [
-        0,
-        40
-      ],
-      "actual_verdict": "unverifiable",
-      "score": 50,
-      "confidence": "low",
-      "correct": false,
-      "verdict_correct": false,
-      "within_one": false
-    },
-    {
-      "dataset": "AVeriTeC",
-      "id": "av_048",
-      "claim": "The CDC has removed the “Covid-19 Pandemic” and replaced it with “Covid-19 Outbreak” on their website.",
-      "label": "Refuted",
-      "expected_verdicts": [
-        "false",
-        "mostly_false"
-      ],
-      "expected_score_range": [
-        0,
-        40
-      ],
-      "actual_verdict": "mostly_false",
-      "score": 15,
-      "confidence": "medium",
-      "correct": true,
-      "verdict_correct": true,
-      "within_one": true
-    },
-    {
-      "dataset": "AVeriTeC",
-      "id": "av_049",
-      "claim": "The wife of  Lal Bahadur Shastri (ex Prime minister of India) repaid his car loan after his death.",
-      "label": "Supported",
-      "expected_verdicts": [
-        "true",
-        "mostly_true"
-      ],
-      "expected_score_range": [
-        60,
-        100
-      ],
-      "actual_verdict": "true",
-      "score": 95,
-      "confidence": "high",
-      "correct": true,
-      "verdict_correct": true,
-      "within_one": true
-    },
-    {
-      "dataset": "AVeriTeC",
-      "id": "av_050",
-      "claim": "Sunil Gavaskar said that \"Virat Kohli has only trained against Anushka [Sharma]'s balls during the lockdown\"",
-      "label": "Conflicting Evidence/Cherrypicking",
-      "expected_verdicts": [
-        "mixed",
-        "mostly_true",
-        "mostly_false"
-      ],
-      "expected_score_range": [
-        25,
-        75
-      ],
-      "actual_verdict": "true",
-      "score": 92,
-      "confidence": "high",
-      "correct": false,
-      "verdict_correct": false,
       "within_one": true
     },
     {
@@ -4071,12 +2462,12 @@
         0,
         40
       ],
-      "actual_verdict": "mostly_true",
-      "score": 78,
+      "actual_verdict": "mostly_false",
+      "score": 35,
       "confidence": "medium",
-      "correct": false,
-      "verdict_correct": false,
-      "within_one": false
+      "correct": true,
+      "verdict_correct": true,
+      "within_one": true
     },
     {
       "dataset": "PolitiFact",
@@ -4090,11 +2481,11 @@
         80,
         100
       ],
-      "actual_verdict": "true",
-      "score": 92,
+      "actual_verdict": "mostly_true",
+      "score": 82,
       "confidence": "high",
-      "correct": true,
-      "verdict_correct": true,
+      "correct": false,
+      "verdict_correct": false,
       "within_one": true
     },
     {
@@ -4110,12 +2501,12 @@
         20,
         50
       ],
-      "actual_verdict": "false",
-      "score": 15,
-      "confidence": "high",
+      "actual_verdict": "unverifiable",
+      "score": 50,
+      "confidence": "low",
       "correct": false,
       "verdict_correct": false,
-      "within_one": true
+      "within_one": false
     },
     {
       "dataset": "PolitiFact",
@@ -4130,11 +2521,11 @@
         20,
         50
       ],
-      "actual_verdict": "mostly_true",
-      "score": 62,
-      "confidence": "medium",
-      "correct": false,
-      "verdict_correct": false,
+      "actual_verdict": "mixed",
+      "score": 55,
+      "confidence": "low",
+      "correct": true,
+      "verdict_correct": true,
       "within_one": true
     },
     {
@@ -4151,7 +2542,7 @@
         40
       ],
       "actual_verdict": "mostly_false",
-      "score": 25,
+      "score": 35,
       "confidence": "medium",
       "correct": true,
       "verdict_correct": true,
@@ -4191,7 +2582,7 @@
         100
       ],
       "actual_verdict": "mostly_true",
-      "score": 85,
+      "score": 78,
       "confidence": "medium",
       "correct": true,
       "verdict_correct": true,
@@ -4209,9 +2600,9 @@
         80,
         100
       ],
-      "actual_verdict": "?",
-      "score": -1,
-      "confidence": "unknown",
+      "actual_verdict": "mostly_false",
+      "score": 35,
+      "confidence": "medium",
       "correct": false,
       "verdict_correct": false,
       "within_one": false
@@ -4230,7 +2621,7 @@
         100
       ],
       "actual_verdict": "mostly_true",
-      "score": 70,
+      "score": 72,
       "confidence": "medium",
       "correct": true,
       "verdict_correct": true,
@@ -4249,7 +2640,7 @@
         100
       ],
       "actual_verdict": "mostly_true",
-      "score": 85,
+      "score": 78,
       "confidence": "high",
       "correct": false,
       "verdict_correct": false,
@@ -4269,7 +2660,7 @@
         40
       ],
       "actual_verdict": "mostly_false",
-      "score": 10,
+      "score": 15,
       "confidence": "high",
       "correct": true,
       "verdict_correct": true,
@@ -4309,12 +2700,12 @@
         35,
         70
       ],
-      "actual_verdict": "mostly_true",
-      "score": 85,
-      "confidence": "medium",
-      "correct": true,
-      "verdict_correct": true,
-      "within_one": true
+      "actual_verdict": "unverifiable",
+      "score": 50,
+      "confidence": "low",
+      "correct": false,
+      "verdict_correct": false,
+      "within_one": false
     },
     {
       "dataset": "PolitiFact",
@@ -4329,9 +2720,9 @@
         0,
         40
       ],
-      "actual_verdict": "false",
+      "actual_verdict": "mostly_false",
       "score": 15,
-      "confidence": "medium",
+      "confidence": "high",
       "correct": true,
       "verdict_correct": true,
       "within_one": true
@@ -4351,8 +2742,8 @@
         70
       ],
       "actual_verdict": "mostly_true",
-      "score": 70,
-      "confidence": "medium",
+      "score": 78,
+      "confidence": "high",
       "correct": true,
       "verdict_correct": true,
       "within_one": true
@@ -4369,9 +2760,9 @@
         80,
         100
       ],
-      "actual_verdict": "unverifiable",
-      "score": 50,
-      "confidence": "low",
+      "actual_verdict": "mostly_true",
+      "score": 62,
+      "confidence": "medium",
       "correct": false,
       "verdict_correct": false,
       "within_one": true
@@ -4390,12 +2781,12 @@
         35,
         70
       ],
-      "actual_verdict": "mixed",
-      "score": 55,
-      "confidence": "medium",
-      "correct": true,
-      "verdict_correct": true,
-      "within_one": true
+      "actual_verdict": "unverifiable",
+      "score": 50,
+      "confidence": "low",
+      "correct": false,
+      "verdict_correct": false,
+      "within_one": false
     },
     {
       "dataset": "PolitiFact",
@@ -4410,8 +2801,8 @@
         20,
         50
       ],
-      "actual_verdict": "mostly_false",
-      "score": 25,
+      "actual_verdict": "mixed",
+      "score": 55,
       "confidence": "medium",
       "correct": true,
       "verdict_correct": true,
@@ -4429,9 +2820,9 @@
         0,
         20
       ],
-      "actual_verdict": "unverifiable",
-      "score": 50,
-      "confidence": "low",
+      "actual_verdict": "mostly_true",
+      "score": 85,
+      "confidence": "medium",
       "correct": false,
       "verdict_correct": false,
       "within_one": false
@@ -4470,11 +2861,11 @@
         60,
         100
       ],
-      "actual_verdict": "mostly_true",
-      "score": 70,
+      "actual_verdict": "mixed",
+      "score": 55,
       "confidence": "medium",
-      "correct": true,
-      "verdict_correct": true,
+      "correct": false,
+      "verdict_correct": false,
       "within_one": true
     },
     {
@@ -4490,12 +2881,12 @@
         0,
         40
       ],
-      "actual_verdict": "mostly_true",
-      "score": 85,
-      "confidence": "high",
-      "correct": false,
-      "verdict_correct": false,
-      "within_one": false
+      "actual_verdict": "mostly_false",
+      "score": 35,
+      "confidence": "medium",
+      "correct": true,
+      "verdict_correct": true,
+      "within_one": true
     },
     {
       "dataset": "PolitiFact",
@@ -4512,7 +2903,7 @@
         70
       ],
       "actual_verdict": "mostly_true",
-      "score": 65,
+      "score": 85,
       "confidence": "medium",
       "correct": true,
       "verdict_correct": true,
@@ -4531,12 +2922,12 @@
         60,
         100
       ],
-      "actual_verdict": "unverifiable",
-      "score": 50,
-      "confidence": "low",
+      "actual_verdict": "mostly_false",
+      "score": 20,
+      "confidence": "high",
       "correct": false,
       "verdict_correct": false,
-      "within_one": true
+      "within_one": false
     },
     {
       "dataset": "PolitiFact",
@@ -4552,7 +2943,7 @@
         50
       ],
       "actual_verdict": "mostly_false",
-      "score": 35,
+      "score": 25,
       "confidence": "high",
       "correct": true,
       "verdict_correct": true,
@@ -4570,12 +2961,12 @@
         0,
         20
       ],
-      "actual_verdict": "false",
-      "score": 15,
-      "confidence": "high",
-      "correct": true,
-      "verdict_correct": true,
-      "within_one": true
+      "actual_verdict": "mixed",
+      "score": 55,
+      "confidence": "medium",
+      "correct": false,
+      "verdict_correct": false,
+      "within_one": false
     },
     {
       "dataset": "PolitiFact",
@@ -4610,8 +3001,8 @@
         60,
         100
       ],
-      "actual_verdict": "true",
-      "score": 92,
+      "actual_verdict": "mostly_true",
+      "score": 70,
       "confidence": "high",
       "correct": true,
       "verdict_correct": true,
@@ -4628,400 +3019,6 @@
       "expected_score_range": [
         80,
         100
-      ],
-      "actual_verdict": "mostly_true",
-      "score": 65,
-      "confidence": "medium",
-      "correct": false,
-      "verdict_correct": false,
-      "within_one": true
-    },
-    {
-      "dataset": "PolitiFact",
-      "id": "pf_031",
-      "claim": "Says a rather extraordinary amount of non-classroom employees were added by Texas school districts over the last decade.",
-      "label": "mostly-true",
-      "expected_verdicts": [
-        "mostly_true",
-        "true"
-      ],
-      "expected_score_range": [
-        60,
-        100
-      ],
-      "actual_verdict": "mostly_true",
-      "score": 70,
-      "confidence": "medium",
-      "correct": true,
-      "verdict_correct": true,
-      "within_one": true
-    },
-    {
-      "dataset": "PolitiFact",
-      "id": "pf_032",
-      "claim": "George Allen voted for budgets that increased the national debt by $16,400 for every second he served in the U.S. Senate.",
-      "label": "true",
-      "expected_verdicts": [
-        "true"
-      ],
-      "expected_score_range": [
-        80,
-        100
-      ],
-      "actual_verdict": "mostly_true",
-      "score": 85,
-      "confidence": "medium",
-      "correct": false,
-      "verdict_correct": false,
-      "within_one": true
-    },
-    {
-      "dataset": "PolitiFact",
-      "id": "pf_033",
-      "claim": "President Obama has the lowest public approval ratings of any president in modern times.",
-      "label": "pants-fire",
-      "expected_verdicts": [
-        "false"
-      ],
-      "expected_score_range": [
-        0,
-        20
-      ],
-      "actual_verdict": "false",
-      "score": 15,
-      "confidence": "high",
-      "correct": true,
-      "verdict_correct": true,
-      "within_one": true
-    },
-    {
-      "dataset": "PolitiFact",
-      "id": "pf_034",
-      "claim": "I can tell you that the enhanced interrogation techniques that have since been banned by this administration specifically waterboarding work.",
-      "label": "false",
-      "expected_verdicts": [
-        "false",
-        "mostly_false"
-      ],
-      "expected_score_range": [
-        0,
-        40
-      ],
-      "actual_verdict": "mixed",
-      "score": 55,
-      "confidence": "medium",
-      "correct": false,
-      "verdict_correct": false,
-      "within_one": true
-    },
-    {
-      "dataset": "PolitiFact",
-      "id": "pf_035",
-      "claim": "In the Illinois Legislature, Barack Obama \"voted 'present,' instead of yes or no\" on seven votes involving abortion rights.",
-      "label": "true",
-      "expected_verdicts": [
-        "true"
-      ],
-      "expected_score_range": [
-        80,
-        100
-      ],
-      "actual_verdict": "mostly_true",
-      "score": 88,
-      "confidence": "high",
-      "correct": false,
-      "verdict_correct": false,
-      "within_one": true
-    },
-    {
-      "dataset": "PolitiFact",
-      "id": "pf_036",
-      "claim": "\"The White House is won in the swing states, and I am winning the swing states.\"",
-      "label": "barely-true",
-      "expected_verdicts": [
-        "mostly_false",
-        "mixed"
-      ],
-      "expected_score_range": [
-        20,
-        50
-      ],
-      "actual_verdict": "mostly_false",
-      "score": 35,
-      "confidence": "medium",
-      "correct": true,
-      "verdict_correct": true,
-      "within_one": true
-    },
-    {
-      "dataset": "PolitiFact",
-      "id": "pf_037",
-      "claim": "The Democrat-backed health care reform plan \"will require (Americans) to subsidize abortion with their hard-earned tax dollars.\"",
-      "label": "false",
-      "expected_verdicts": [
-        "false",
-        "mostly_false"
-      ],
-      "expected_score_range": [
-        0,
-        40
-      ],
-      "actual_verdict": "mostly_false",
-      "score": 35,
-      "confidence": "medium",
-      "correct": true,
-      "verdict_correct": true,
-      "within_one": true
-    },
-    {
-      "dataset": "PolitiFact",
-      "id": "pf_038",
-      "claim": "Says kids who start in the ninth grade in the city of Newark this past September, 23 percent of them will graduate in four years.",
-      "label": "pants-fire",
-      "expected_verdicts": [
-        "false"
-      ],
-      "expected_score_range": [
-        0,
-        20
-      ],
-      "actual_verdict": "mostly_false",
-      "score": 20,
-      "confidence": "high",
-      "correct": false,
-      "verdict_correct": false,
-      "within_one": true
-    },
-    {
-      "dataset": "PolitiFact",
-      "id": "pf_039",
-      "claim": "Studies have shown that in the absence of federal reproductive health funds, we are going to see the level of abortion in Georgia increase by about 44 percent.",
-      "label": "half-true",
-      "expected_verdicts": [
-        "mixed",
-        "mostly_true",
-        "mostly_false"
-      ],
-      "expected_score_range": [
-        35,
-        70
-      ],
-      "actual_verdict": "false",
-      "score": 20,
-      "confidence": "high",
-      "correct": false,
-      "verdict_correct": false,
-      "within_one": true
-    },
-    {
-      "dataset": "PolitiFact",
-      "id": "pf_040",
-      "claim": "Says Rick Perry recently said he wanted another (Texas) business tax.",
-      "label": "pants-fire",
-      "expected_verdicts": [
-        "false"
-      ],
-      "expected_score_range": [
-        0,
-        20
-      ],
-      "actual_verdict": "mostly_true",
-      "score": 70,
-      "confidence": "medium",
-      "correct": false,
-      "verdict_correct": false,
-      "within_one": false
-    },
-    {
-      "dataset": "PolitiFact",
-      "id": "pf_041",
-      "claim": "Foreign Chinese prostitution money is allegedly behind the groups funding Congressman Sean Duffys Republican Majority.",
-      "label": "pants-fire",
-      "expected_verdicts": [
-        "false"
-      ],
-      "expected_score_range": [
-        0,
-        20
-      ],
-      "actual_verdict": "mostly_false",
-      "score": 15,
-      "confidence": "high",
-      "correct": false,
-      "verdict_correct": false,
-      "within_one": true
-    },
-    {
-      "dataset": "PolitiFact",
-      "id": "pf_042",
-      "claim": "Of the 20 bills [Rep. David] Cicilline has sponsored in his three years in office, not a single one has advanced past the embryonic committee stage.",
-      "label": "half-true",
-      "expected_verdicts": [
-        "mixed",
-        "mostly_true",
-        "mostly_false"
-      ],
-      "expected_score_range": [
-        35,
-        70
-      ],
-      "actual_verdict": "mixed",
-      "score": 45,
-      "confidence": "medium",
-      "correct": true,
-      "verdict_correct": true,
-      "within_one": true
-    },
-    {
-      "dataset": "PolitiFact",
-      "id": "pf_043",
-      "claim": "Says Chris Christies plan to kick-start our economy is to propose an income tax cut that disproportionately benefits the wealthy, and...hes still proposing it.",
-      "label": "pants-fire",
-      "expected_verdicts": [
-        "false"
-      ],
-      "expected_score_range": [
-        0,
-        20
-      ],
-      "actual_verdict": "mostly_true",
-      "score": 70,
-      "confidence": "medium",
-      "correct": false,
-      "verdict_correct": false,
-      "within_one": false
-    },
-    {
-      "dataset": "PolitiFact",
-      "id": "pf_044",
-      "claim": "Many Nevadans relied on Uber for work, but after accepting $70,000 from taxi companies, Catherine Cortez Masto went after Uber ... (driving) them out of town.",
-      "label": "barely-true",
-      "expected_verdicts": [
-        "mostly_false",
-        "mixed"
-      ],
-      "expected_score_range": [
-        20,
-        50
-      ],
-      "actual_verdict": "mostly_false",
-      "score": 35,
-      "confidence": "medium",
-      "correct": true,
-      "verdict_correct": true,
-      "within_one": true
-    },
-    {
-      "dataset": "PolitiFact",
-      "id": "pf_045",
-      "claim": "Says JimRenacci has consistently voted for loopholes that encourage outsourcing of our jobs.",
-      "label": "half-true",
-      "expected_verdicts": [
-        "mixed",
-        "mostly_true",
-        "mostly_false"
-      ],
-      "expected_score_range": [
-        35,
-        70
-      ],
-      "actual_verdict": "mostly_false",
-      "score": 35,
-      "confidence": "medium",
-      "correct": true,
-      "verdict_correct": true,
-      "within_one": true
-    },
-    {
-      "dataset": "PolitiFact",
-      "id": "pf_046",
-      "claim": "Says Chris Koster fell silentas attorney general in pursuing a case against a free classified service accused of promoting prostitution after accepting over $12,000 in campaign contributions from people affiliated with the service.",
-      "label": "barely-true",
-      "expected_verdicts": [
-        "mostly_false",
-        "mixed"
-      ],
-      "expected_score_range": [
-        20,
-        50
-      ],
-      "actual_verdict": "mostly_false",
-      "score": 35,
-      "confidence": "medium",
-      "correct": true,
-      "verdict_correct": true,
-      "within_one": true
-    },
-    {
-      "dataset": "PolitiFact",
-      "id": "pf_047",
-      "claim": "Wisconsin dropped from second in the country to 41st among states where more than half the students took the ACT exam.",
-      "label": "pants-fire",
-      "expected_verdicts": [
-        "false"
-      ],
-      "expected_score_range": [
-        0,
-        20
-      ],
-      "actual_verdict": "mostly_false",
-      "score": 25,
-      "confidence": "high",
-      "correct": false,
-      "verdict_correct": false,
-      "within_one": true
-    },
-    {
-      "dataset": "PolitiFact",
-      "id": "pf_048",
-      "claim": "Two months ago, Donald Trump said that ISIS was not our fight.",
-      "label": "mostly-true",
-      "expected_verdicts": [
-        "mostly_true",
-        "true"
-      ],
-      "expected_score_range": [
-        60,
-        100
-      ],
-      "actual_verdict": "?",
-      "score": -1,
-      "confidence": "unknown",
-      "correct": false,
-      "verdict_correct": false,
-      "within_one": false
-    },
-    {
-      "dataset": "PolitiFact",
-      "id": "pf_049",
-      "claim": "Under this tax cut, middle-class families dont save enough for a weeks worth of groceries, while millionaires save enough to go on an exotic vacation.",
-      "label": "true",
-      "expected_verdicts": [
-        "true"
-      ],
-      "expected_score_range": [
-        80,
-        100
-      ],
-      "actual_verdict": "mostly_false",
-      "score": 35,
-      "confidence": "medium",
-      "correct": false,
-      "verdict_correct": false,
-      "within_one": false
-    },
-    {
-      "dataset": "PolitiFact",
-      "id": "pf_050",
-      "claim": "Pre-existing conditions are covered under my (health care) plan.",
-      "label": "barely-true",
-      "expected_verdicts": [
-        "mostly_false",
-        "mixed"
-      ],
-      "expected_score_range": [
-        20,
-        50
       ],
       "actual_verdict": "mostly_true",
       "score": 78,
@@ -5068,7 +3065,7 @@
         75
       ],
       "actual_verdict": "mostly_false",
-      "score": 15,
+      "score": 18,
       "confidence": "high",
       "correct": true,
       "verdict_correct": true,
@@ -5088,8 +3085,8 @@
         100
       ],
       "actual_verdict": "mostly_true",
-      "score": 70,
-      "confidence": "medium",
+      "score": 85,
+      "confidence": "high",
       "correct": true,
       "verdict_correct": true,
       "within_one": true
@@ -5108,11 +3105,11 @@
         25,
         75
       ],
-      "actual_verdict": "true",
-      "score": 92,
+      "actual_verdict": "mostly_false",
+      "score": 35,
       "confidence": "medium",
-      "correct": false,
-      "verdict_correct": false,
+      "correct": true,
+      "verdict_correct": true,
       "within_one": true
     },
     {
@@ -5130,8 +3127,8 @@
         75
       ],
       "actual_verdict": "mostly_true",
-      "score": 85,
-      "confidence": "high",
+      "score": 70,
+      "confidence": "medium",
       "correct": true,
       "verdict_correct": true,
       "within_one": true
@@ -5149,8 +3146,8 @@
         30,
         60
       ],
-      "actual_verdict": "mostly_true",
-      "score": 92,
+      "actual_verdict": "mostly_false",
+      "score": 18,
       "confidence": "high",
       "correct": false,
       "verdict_correct": false,
@@ -5169,11 +3166,11 @@
         30,
         60
       ],
-      "actual_verdict": "mixed",
-      "score": 35,
-      "confidence": "low",
-      "correct": true,
-      "verdict_correct": true,
+      "actual_verdict": "mostly_false",
+      "score": 25,
+      "confidence": "medium",
+      "correct": false,
+      "verdict_correct": false,
       "within_one": true
     },
     {
@@ -5209,9 +3206,9 @@
         60,
         100
       ],
-      "actual_verdict": "mostly_true",
-      "score": 85,
-      "confidence": "medium",
+      "actual_verdict": "true",
+      "score": 100,
+      "confidence": "high",
       "correct": true,
       "verdict_correct": true,
       "within_one": true
@@ -5249,11 +3246,11 @@
         60,
         100
       ],
-      "actual_verdict": "mostly_true",
-      "score": 70,
-      "confidence": "medium",
-      "correct": true,
-      "verdict_correct": true,
+      "actual_verdict": "unverifiable",
+      "score": 50,
+      "confidence": "low",
+      "correct": false,
+      "verdict_correct": false,
       "within_one": true
     },
     {
@@ -5289,11 +3286,11 @@
         0,
         40
       ],
-      "actual_verdict": "mostly_false",
-      "score": 25,
+      "actual_verdict": "mixed",
+      "score": 55,
       "confidence": "low",
-      "correct": true,
-      "verdict_correct": true,
+      "correct": false,
+      "verdict_correct": false,
       "within_one": true
     },
     {
@@ -5331,7 +3328,7 @@
       ],
       "actual_verdict": "mixed",
       "score": 55,
-      "confidence": "low",
+      "confidence": "medium",
       "correct": true,
       "verdict_correct": true,
       "within_one": true
@@ -5350,7 +3347,7 @@
         60
       ],
       "actual_verdict": "mostly_false",
-      "score": 28,
+      "score": 25,
       "confidence": "medium",
       "correct": false,
       "verdict_correct": false,
@@ -5370,7 +3367,7 @@
         100
       ],
       "actual_verdict": "mostly_true",
-      "score": 70,
+      "score": 78,
       "confidence": "medium",
       "correct": true,
       "verdict_correct": true,
@@ -5389,11 +3386,11 @@
         30,
         60
       ],
-      "actual_verdict": "mixed",
-      "score": 55,
+      "actual_verdict": "mostly_false",
+      "score": 35,
       "confidence": "medium",
-      "correct": true,
-      "verdict_correct": true,
+      "correct": false,
+      "verdict_correct": false,
       "within_one": true
     },
     {
@@ -5410,11 +3407,11 @@
         25,
         75
       ],
-      "actual_verdict": "false",
-      "score": 15,
-      "confidence": "high",
-      "correct": false,
-      "verdict_correct": false,
+      "actual_verdict": "mostly_false",
+      "score": 35,
+      "confidence": "medium",
+      "correct": true,
+      "verdict_correct": true,
       "within_one": true
     },
     {
@@ -5430,11 +3427,11 @@
         60,
         100
       ],
-      "actual_verdict": "mostly_true",
-      "score": 85,
-      "confidence": "medium",
-      "correct": true,
-      "verdict_correct": true,
+      "actual_verdict": "mixed",
+      "score": 55,
+      "confidence": "low",
+      "correct": false,
+      "verdict_correct": false,
       "within_one": true
     },
     {
@@ -5470,12 +3467,12 @@
         0,
         40
       ],
-      "actual_verdict": "false",
-      "score": 5,
-      "confidence": "high",
-      "correct": true,
-      "verdict_correct": true,
-      "within_one": true
+      "actual_verdict": "unverifiable",
+      "score": 50,
+      "confidence": "low",
+      "correct": false,
+      "verdict_correct": false,
+      "within_one": false
     },
     {
       "dataset": "AVeriTeC",
@@ -5491,9 +3488,9 @@
         25,
         75
       ],
-      "actual_verdict": "mostly_true",
-      "score": 70,
-      "confidence": "medium",
+      "actual_verdict": "mostly_false",
+      "score": 25,
+      "confidence": "high",
       "correct": true,
       "verdict_correct": true,
       "within_one": true
@@ -5531,9 +3528,9 @@
         0,
         40
       ],
-      "actual_verdict": "mostly_false",
-      "score": 85,
-      "confidence": "high",
+      "actual_verdict": "false",
+      "score": 20,
+      "confidence": "medium",
       "correct": true,
       "verdict_correct": true,
       "within_one": true
@@ -5552,8 +3549,8 @@
         25,
         75
       ],
-      "actual_verdict": "mostly_false",
-      "score": 35,
+      "actual_verdict": "mostly_true",
+      "score": 70,
       "confidence": "medium",
       "correct": true,
       "verdict_correct": true,
@@ -5572,12 +3569,12 @@
         0,
         40
       ],
-      "actual_verdict": "false",
-      "score": 5,
+      "actual_verdict": "true",
+      "score": 95,
       "confidence": "high",
-      "correct": true,
-      "verdict_correct": true,
-      "within_one": true
+      "correct": false,
+      "verdict_correct": false,
+      "within_one": false
     },
     {
       "dataset": "AVeriTeC",
@@ -5593,11 +3590,11 @@
         25,
         75
       ],
-      "actual_verdict": "false",
+      "actual_verdict": "mostly_false",
       "score": 15,
       "confidence": "high",
-      "correct": false,
-      "verdict_correct": false,
+      "correct": true,
+      "verdict_correct": true,
       "within_one": true
     },
     {
@@ -5613,11 +3610,11 @@
         0,
         40
       ],
-      "actual_verdict": "mostly_false",
-      "score": 18,
-      "confidence": "high",
-      "correct": true,
-      "verdict_correct": true,
+      "actual_verdict": "mixed",
+      "score": 55,
+      "confidence": "medium",
+      "correct": false,
+      "verdict_correct": false,
       "within_one": true
     },
     {
@@ -5633,416 +3630,11 @@
         60,
         100
       ],
-      "actual_verdict": "mixed",
-      "score": 55,
-      "confidence": "low",
-      "correct": false,
-      "verdict_correct": false,
-      "within_one": true
-    },
-    {
-      "dataset": "AVeriTeC",
-      "id": "av_031",
-      "claim": "The eligibility criteria for applying to take the exam for the Union Public Service Commission (UPSC) of India, differentiates depending on whether you are a Hindu or a Muslim.",
-      "label": "Refuted",
-      "expected_verdicts": [
-        "false",
-        "mostly_false"
-      ],
-      "expected_score_range": [
-        0,
-        40
-      ],
-      "actual_verdict": "mostly_true",
-      "score": 85,
-      "confidence": "high",
-      "correct": false,
-      "verdict_correct": false,
-      "within_one": false
-    },
-    {
-      "dataset": "AVeriTeC",
-      "id": "av_032",
-      "claim": "Hunter Biden was chairman of the Nobel Peace Prize winning World Food Program.",
-      "label": "Supported",
-      "expected_verdicts": [
-        "true",
-        "mostly_true"
-      ],
-      "expected_score_range": [
-        60,
-        100
-      ],
-      "actual_verdict": "mostly_true",
-      "score": 70,
-      "confidence": "medium",
-      "correct": true,
-      "verdict_correct": true,
-      "within_one": true
-    },
-    {
-      "dataset": "AVeriTeC",
-      "id": "av_033",
-      "claim": "Officer who wore Trump 2020 mask to polls to face disciplinary action",
-      "label": "Supported",
-      "expected_verdicts": [
-        "true",
-        "mostly_true"
-      ],
-      "expected_score_range": [
-        60,
-        100
-      ],
-      "actual_verdict": "true",
-      "score": 92,
-      "confidence": "high",
-      "correct": true,
-      "verdict_correct": true,
-      "within_one": true
-    },
-    {
-      "dataset": "AVeriTeC",
-      "id": "av_034",
-      "claim": "Ivermectin is a treatment for coronavirus.",
-      "label": "Not Enough Evidence",
-      "expected_verdicts": [
-        "unverifiable",
-        "mixed"
-      ],
-      "expected_score_range": [
-        30,
-        60
-      ],
-      "actual_verdict": "mostly_false",
-      "score": 35,
-      "confidence": "high",
-      "correct": false,
-      "verdict_correct": false,
-      "within_one": true
-    },
-    {
-      "dataset": "AVeriTeC",
-      "id": "av_035",
-      "claim": "Schools have resumed in New Brunswick, Canada despite the COVID-19 pandemic",
-      "label": "Supported",
-      "expected_verdicts": [
-        "true",
-        "mostly_true"
-      ],
-      "expected_score_range": [
-        60,
-        100
-      ],
       "actual_verdict": "mostly_true",
       "score": 78,
       "confidence": "medium",
       "correct": true,
       "verdict_correct": true,
-      "within_one": true
-    },
-    {
-      "dataset": "AVeriTeC",
-      "id": "av_036",
-      "claim": "New Zealand spends less on pensions than most wealthy countries, spending 4.4 per cent of GDP",
-      "label": "Conflicting Evidence/Cherrypicking",
-      "expected_verdicts": [
-        "mixed",
-        "mostly_true",
-        "mostly_false"
-      ],
-      "expected_score_range": [
-        25,
-        75
-      ],
-      "actual_verdict": "mostly_true",
-      "score": 78,
-      "confidence": "medium",
-      "correct": true,
-      "verdict_correct": true,
-      "within_one": true
-    },
-    {
-      "dataset": "AVeriTeC",
-      "id": "av_037",
-      "claim": "Black Lives Matter wants to destroy the nuclear family.",
-      "label": "Conflicting Evidence/Cherrypicking",
-      "expected_verdicts": [
-        "mixed",
-        "mostly_true",
-        "mostly_false"
-      ],
-      "expected_score_range": [
-        25,
-        75
-      ],
-      "actual_verdict": "mixed",
-      "score": 45,
-      "confidence": "medium",
-      "correct": true,
-      "verdict_correct": true,
-      "within_one": true
-    },
-    {
-      "dataset": "AVeriTeC",
-      "id": "av_038",
-      "claim": "PTFE Sprayed On Blue Masks Causes Symptoms Similar To COVID-19",
-      "label": "Refuted",
-      "expected_verdicts": [
-        "false",
-        "mostly_false"
-      ],
-      "expected_score_range": [
-        0,
-        40
-      ],
-      "actual_verdict": "mostly_false",
-      "score": 35,
-      "confidence": "medium",
-      "correct": true,
-      "verdict_correct": true,
-      "within_one": true
-    },
-    {
-      "dataset": "AVeriTeC",
-      "id": "av_039",
-      "claim": "More cops have died from COVID this year than have been killed on patrol.",
-      "label": "Not Enough Evidence",
-      "expected_verdicts": [
-        "unverifiable",
-        "mixed"
-      ],
-      "expected_score_range": [
-        30,
-        60
-      ],
-      "actual_verdict": "?",
-      "score": -1,
-      "confidence": "unknown",
-      "correct": false,
-      "verdict_correct": false,
-      "within_one": false
-    },
-    {
-      "dataset": "AVeriTeC",
-      "id": "av_040",
-      "claim": "President Trump announces  he has tested positive for Covid-19.",
-      "label": "Supported",
-      "expected_verdicts": [
-        "true",
-        "mostly_true"
-      ],
-      "expected_score_range": [
-        60,
-        100
-      ],
-      "actual_verdict": "true",
-      "score": 95,
-      "confidence": "high",
-      "correct": true,
-      "verdict_correct": true,
-      "within_one": true
-    },
-    {
-      "dataset": "AVeriTeC",
-      "id": "av_041",
-      "claim": "Joe and Jill Biden's income has increased recently.",
-      "label": "Supported",
-      "expected_verdicts": [
-        "true",
-        "mostly_true"
-      ],
-      "expected_score_range": [
-        60,
-        100
-      ],
-      "actual_verdict": "mostly_true",
-      "score": 78,
-      "confidence": "high",
-      "correct": true,
-      "verdict_correct": true,
-      "within_one": true
-    },
-    {
-      "dataset": "AVeriTeC",
-      "id": "av_042",
-      "claim": "No one lost their health care because of the Wellmark and Iowa Farm Bureau Health Plan Bill.",
-      "label": "Not Enough Evidence",
-      "expected_verdicts": [
-        "unverifiable",
-        "mixed"
-      ],
-      "expected_score_range": [
-        30,
-        60
-      ],
-      "actual_verdict": "unverifiable",
-      "score": 50,
-      "confidence": "low",
-      "correct": true,
-      "verdict_correct": true,
-      "within_one": true
-    },
-    {
-      "dataset": "AVeriTeC",
-      "id": "av_043",
-      "claim": "MPs are not following workplace Covid guidance by wearing masks.",
-      "label": "Refuted",
-      "expected_verdicts": [
-        "false",
-        "mostly_false"
-      ],
-      "expected_score_range": [
-        0,
-        40
-      ],
-      "actual_verdict": "mostly_true",
-      "score": 70,
-      "confidence": "medium",
-      "correct": false,
-      "verdict_correct": false,
-      "within_one": false
-    },
-    {
-      "dataset": "AVeriTeC",
-      "id": "av_044",
-      "claim": "UK Employees unable to work in tier 3 areas will get a combination of Job Support Scheme and Universal Credit, which will mean they get 80% of their wages.",
-      "label": "Conflicting Evidence/Cherrypicking",
-      "expected_verdicts": [
-        "mixed",
-        "mostly_true",
-        "mostly_false"
-      ],
-      "expected_score_range": [
-        25,
-        75
-      ],
-      "actual_verdict": "unverifiable",
-      "score": 50,
-      "confidence": "low",
-      "correct": false,
-      "verdict_correct": false,
-      "within_one": false
-    },
-    {
-      "dataset": "AVeriTeC",
-      "id": "av_045",
-      "claim": "The alleged concerns of the United States over Cuba's cooperation, in this case about the ‘More Doctors’ program, are neither legitimate nor pertinent to be discussed at PAHO [Pan American Health Organization].",
-      "label": "Not Enough Evidence",
-      "expected_verdicts": [
-        "unverifiable",
-        "mixed"
-      ],
-      "expected_score_range": [
-        30,
-        60
-      ],
-      "actual_verdict": "unverifiable",
-      "score": 0,
-      "confidence": "low",
-      "correct": true,
-      "verdict_correct": true,
-      "within_one": true
-    },
-    {
-      "dataset": "AVeriTeC",
-      "id": "av_046",
-      "claim": "US Miami-Dade County Mayor Carlos Giminez kept his taxpayer-funded Mercedes-Benz after slashing $400 million in government jobs and spending.",
-      "label": "Conflicting Evidence/Cherrypicking",
-      "expected_verdicts": [
-        "mixed",
-        "mostly_true",
-        "mostly_false"
-      ],
-      "expected_score_range": [
-        25,
-        75
-      ],
-      "actual_verdict": "mixed",
-      "score": 55,
-      "confidence": "medium",
-      "correct": true,
-      "verdict_correct": true,
-      "within_one": true
-    },
-    {
-      "dataset": "AVeriTeC",
-      "id": "av_047",
-      "claim": "Muslim candidates can qualify with lower marks than others in the UPCS (i.e. Union Public Service Commission for recruitment to higher Civil Services of the Government of India) exam",
-      "label": "Refuted",
-      "expected_verdicts": [
-        "false",
-        "mostly_false"
-      ],
-      "expected_score_range": [
-        0,
-        40
-      ],
-      "actual_verdict": "false",
-      "score": 20,
-      "confidence": "high",
-      "correct": true,
-      "verdict_correct": true,
-      "within_one": true
-    },
-    {
-      "dataset": "AVeriTeC",
-      "id": "av_048",
-      "claim": "The CDC has removed the “Covid-19 Pandemic” and replaced it with “Covid-19 Outbreak” on their website.",
-      "label": "Refuted",
-      "expected_verdicts": [
-        "false",
-        "mostly_false"
-      ],
-      "expected_score_range": [
-        0,
-        40
-      ],
-      "actual_verdict": "mostly_false",
-      "score": 15,
-      "confidence": "medium",
-      "correct": true,
-      "verdict_correct": true,
-      "within_one": true
-    },
-    {
-      "dataset": "AVeriTeC",
-      "id": "av_049",
-      "claim": "The wife of  Lal Bahadur Shastri (ex Prime minister of India) repaid his car loan after his death.",
-      "label": "Supported",
-      "expected_verdicts": [
-        "true",
-        "mostly_true"
-      ],
-      "expected_score_range": [
-        60,
-        100
-      ],
-      "actual_verdict": "mostly_true",
-      "score": 92,
-      "confidence": "high",
-      "correct": true,
-      "verdict_correct": true,
-      "within_one": true
-    },
-    {
-      "dataset": "AVeriTeC",
-      "id": "av_050",
-      "claim": "Sunil Gavaskar said that \"Virat Kohli has only trained against Anushka [Sharma]'s balls during the lockdown\"",
-      "label": "Conflicting Evidence/Cherrypicking",
-      "expected_verdicts": [
-        "mixed",
-        "mostly_true",
-        "mostly_false"
-      ],
-      "expected_score_range": [
-        25,
-        75
-      ],
-      "actual_verdict": "true",
-      "score": 95,
-      "confidence": "high",
-      "correct": false,
-      "verdict_correct": false,
       "within_one": true
     },
     {
@@ -6058,8 +3650,8 @@
         0,
         40
       ],
-      "actual_verdict": "false",
-      "score": 15,
+      "actual_verdict": "mostly_false",
+      "score": 18,
       "confidence": "high",
       "correct": true,
       "verdict_correct": true,
@@ -6078,11 +3670,11 @@
         0,
         40
       ],
-      "actual_verdict": "mixed",
+      "actual_verdict": "mostly_false",
       "score": 35,
       "confidence": "medium",
-      "correct": false,
-      "verdict_correct": false,
+      "correct": true,
+      "verdict_correct": true,
       "within_one": true
     },
     {
@@ -6097,11 +3689,11 @@
         80,
         100
       ],
-      "actual_verdict": "true",
-      "score": 95,
+      "actual_verdict": "mostly_true",
+      "score": 86,
       "confidence": "high",
-      "correct": true,
-      "verdict_correct": true,
+      "correct": false,
+      "verdict_correct": false,
       "within_one": true
     },
     {
@@ -6117,12 +3709,12 @@
         20,
         50
       ],
-      "actual_verdict": "false",
-      "score": 15,
-      "confidence": "high",
+      "actual_verdict": "unverifiable",
+      "score": 50,
+      "confidence": "low",
       "correct": false,
       "verdict_correct": false,
-      "within_one": true
+      "within_one": false
     },
     {
       "dataset": "PolitiFact",
@@ -6177,7 +3769,7 @@
         0,
         40
       ],
-      "actual_verdict": "mostly_false",
+      "actual_verdict": "false",
       "score": 20,
       "confidence": "medium",
       "correct": true,
@@ -6197,9 +3789,9 @@
         60,
         100
       ],
-      "actual_verdict": "true",
-      "score": 100,
-      "confidence": "high",
+      "actual_verdict": "mostly_true",
+      "score": 85,
+      "confidence": "medium",
       "correct": true,
       "verdict_correct": true,
       "within_one": true
@@ -6216,12 +3808,12 @@
         80,
         100
       ],
-      "actual_verdict": "?",
-      "score": -1,
-      "confidence": "unknown",
+      "actual_verdict": "mostly_true",
+      "score": 88,
+      "confidence": "medium",
       "correct": false,
       "verdict_correct": false,
-      "within_one": false
+      "within_one": true
     },
     {
       "dataset": "PolitiFact",
@@ -6237,7 +3829,7 @@
         100
       ],
       "actual_verdict": "mostly_true",
-      "score": 78,
+      "score": 68,
       "confidence": "medium",
       "correct": true,
       "verdict_correct": true,
@@ -6256,7 +3848,7 @@
         100
       ],
       "actual_verdict": "mostly_true",
-      "score": 70,
+      "score": 78,
       "confidence": "medium",
       "correct": false,
       "verdict_correct": false,
@@ -6275,12 +3867,12 @@
         0,
         40
       ],
-      "actual_verdict": "mostly_true",
-      "score": 62,
+      "actual_verdict": "mostly_false",
+      "score": 18,
       "confidence": "medium",
-      "correct": false,
-      "verdict_correct": false,
-      "within_one": false
+      "correct": true,
+      "verdict_correct": true,
+      "within_one": true
     },
     {
       "dataset": "PolitiFact",
@@ -6296,7 +3888,7 @@
         100
       ],
       "actual_verdict": "mostly_true",
-      "score": 85,
+      "score": 78,
       "confidence": "medium",
       "correct": true,
       "verdict_correct": true,
@@ -6317,7 +3909,7 @@
         70
       ],
       "actual_verdict": "mostly_true",
-      "score": 85,
+      "score": 78,
       "confidence": "medium",
       "correct": true,
       "verdict_correct": true,
@@ -6337,8 +3929,8 @@
         40
       ],
       "actual_verdict": "mostly_false",
-      "score": 35,
-      "confidence": "medium",
+      "score": 20,
+      "confidence": "high",
       "correct": true,
       "verdict_correct": true,
       "within_one": true
@@ -6376,12 +3968,12 @@
         80,
         100
       ],
-      "actual_verdict": "mostly_false",
-      "score": 20,
+      "actual_verdict": "mostly_true",
+      "score": 78,
       "confidence": "medium",
       "correct": false,
       "verdict_correct": false,
-      "within_one": false
+      "within_one": true
     },
     {
       "dataset": "PolitiFact",
@@ -6397,12 +3989,12 @@
         35,
         70
       ],
-      "actual_verdict": "mixed",
-      "score": 55,
-      "confidence": "medium",
-      "correct": true,
-      "verdict_correct": true,
-      "within_one": true
+      "actual_verdict": "unverifiable",
+      "score": 50,
+      "confidence": "low",
+      "correct": false,
+      "verdict_correct": false,
+      "within_one": false
     },
     {
       "dataset": "PolitiFact",
@@ -6436,9 +4028,9 @@
         0,
         20
       ],
-      "actual_verdict": "true",
-      "score": 95,
-      "confidence": "high",
+      "actual_verdict": "mostly_true",
+      "score": 70,
+      "confidence": "medium",
       "correct": false,
       "verdict_correct": false,
       "within_one": false
@@ -6458,8 +4050,8 @@
         70
       ],
       "actual_verdict": "mostly_false",
-      "score": 35,
-      "confidence": "high",
+      "score": 25,
+      "confidence": "medium",
       "correct": true,
       "verdict_correct": true,
       "within_one": true
@@ -6477,12 +4069,12 @@
         60,
         100
       ],
-      "actual_verdict": "mixed",
+      "actual_verdict": "mostly_false",
       "score": 35,
-      "confidence": "low",
+      "confidence": "medium",
       "correct": false,
       "verdict_correct": false,
-      "within_one": true
+      "within_one": false
     },
     {
       "dataset": "PolitiFact",
@@ -6498,8 +4090,8 @@
         40
       ],
       "actual_verdict": "mostly_false",
-      "score": 20,
-      "confidence": "high",
+      "score": 35,
+      "confidence": "medium",
       "correct": true,
       "verdict_correct": true,
       "within_one": true
@@ -6538,12 +4130,12 @@
         60,
         100
       ],
-      "actual_verdict": "unverifiable",
-      "score": 50,
-      "confidence": "low",
+      "actual_verdict": "mostly_false",
+      "score": 20,
+      "confidence": "medium",
       "correct": false,
       "verdict_correct": false,
-      "within_one": true
+      "within_one": false
     },
     {
       "dataset": "PolitiFact",
@@ -6559,7 +4151,7 @@
         50
       ],
       "actual_verdict": "mixed",
-      "score": 35,
+      "score": 45,
       "confidence": "medium",
       "correct": true,
       "verdict_correct": true,
@@ -6578,7 +4170,7 @@
         20
       ],
       "actual_verdict": "false",
-      "score": 5,
+      "score": 10,
       "confidence": "high",
       "correct": true,
       "verdict_correct": true,
@@ -6618,7 +4210,7 @@
         100
       ],
       "actual_verdict": "mostly_true",
-      "score": 86,
+      "score": 78,
       "confidence": "medium",
       "correct": true,
       "verdict_correct": true,
@@ -6635,400 +4227,6 @@
       "expected_score_range": [
         80,
         100
-      ],
-      "actual_verdict": "mixed",
-      "score": 55,
-      "confidence": "medium",
-      "correct": false,
-      "verdict_correct": false,
-      "within_one": false
-    },
-    {
-      "dataset": "PolitiFact",
-      "id": "pf_031",
-      "claim": "Says a rather extraordinary amount of non-classroom employees were added by Texas school districts over the last decade.",
-      "label": "mostly-true",
-      "expected_verdicts": [
-        "mostly_true",
-        "true"
-      ],
-      "expected_score_range": [
-        60,
-        100
-      ],
-      "actual_verdict": "mixed",
-      "score": 55,
-      "confidence": "low",
-      "correct": false,
-      "verdict_correct": false,
-      "within_one": true
-    },
-    {
-      "dataset": "PolitiFact",
-      "id": "pf_032",
-      "claim": "George Allen voted for budgets that increased the national debt by $16,400 for every second he served in the U.S. Senate.",
-      "label": "true",
-      "expected_verdicts": [
-        "true"
-      ],
-      "expected_score_range": [
-        80,
-        100
-      ],
-      "actual_verdict": "mostly_true",
-      "score": 85,
-      "confidence": "medium",
-      "correct": false,
-      "verdict_correct": false,
-      "within_one": true
-    },
-    {
-      "dataset": "PolitiFact",
-      "id": "pf_033",
-      "claim": "President Obama has the lowest public approval ratings of any president in modern times.",
-      "label": "pants-fire",
-      "expected_verdicts": [
-        "false"
-      ],
-      "expected_score_range": [
-        0,
-        20
-      ],
-      "actual_verdict": "mostly_false",
-      "score": 20,
-      "confidence": "high",
-      "correct": false,
-      "verdict_correct": false,
-      "within_one": true
-    },
-    {
-      "dataset": "PolitiFact",
-      "id": "pf_034",
-      "claim": "I can tell you that the enhanced interrogation techniques that have since been banned by this administration specifically waterboarding work.",
-      "label": "false",
-      "expected_verdicts": [
-        "false",
-        "mostly_false"
-      ],
-      "expected_score_range": [
-        0,
-        40
-      ],
-      "actual_verdict": "mostly_false",
-      "score": 35,
-      "confidence": "medium",
-      "correct": true,
-      "verdict_correct": true,
-      "within_one": true
-    },
-    {
-      "dataset": "PolitiFact",
-      "id": "pf_035",
-      "claim": "In the Illinois Legislature, Barack Obama \"voted 'present,' instead of yes or no\" on seven votes involving abortion rights.",
-      "label": "true",
-      "expected_verdicts": [
-        "true"
-      ],
-      "expected_score_range": [
-        80,
-        100
-      ],
-      "actual_verdict": "mostly_true",
-      "score": 86,
-      "confidence": "high",
-      "correct": false,
-      "verdict_correct": false,
-      "within_one": true
-    },
-    {
-      "dataset": "PolitiFact",
-      "id": "pf_036",
-      "claim": "\"The White House is won in the swing states, and I am winning the swing states.\"",
-      "label": "barely-true",
-      "expected_verdicts": [
-        "mostly_false",
-        "mixed"
-      ],
-      "expected_score_range": [
-        20,
-        50
-      ],
-      "actual_verdict": "mixed",
-      "score": 35,
-      "confidence": "medium",
-      "correct": true,
-      "verdict_correct": true,
-      "within_one": true
-    },
-    {
-      "dataset": "PolitiFact",
-      "id": "pf_037",
-      "claim": "The Democrat-backed health care reform plan \"will require (Americans) to subsidize abortion with their hard-earned tax dollars.\"",
-      "label": "false",
-      "expected_verdicts": [
-        "false",
-        "mostly_false"
-      ],
-      "expected_score_range": [
-        0,
-        40
-      ],
-      "actual_verdict": "mostly_false",
-      "score": 35,
-      "confidence": "medium",
-      "correct": true,
-      "verdict_correct": true,
-      "within_one": true
-    },
-    {
-      "dataset": "PolitiFact",
-      "id": "pf_038",
-      "claim": "Says kids who start in the ninth grade in the city of Newark this past September, 23 percent of them will graduate in four years.",
-      "label": "pants-fire",
-      "expected_verdicts": [
-        "false"
-      ],
-      "expected_score_range": [
-        0,
-        20
-      ],
-      "actual_verdict": "mostly_false",
-      "score": 15,
-      "confidence": "high",
-      "correct": false,
-      "verdict_correct": false,
-      "within_one": true
-    },
-    {
-      "dataset": "PolitiFact",
-      "id": "pf_039",
-      "claim": "Studies have shown that in the absence of federal reproductive health funds, we are going to see the level of abortion in Georgia increase by about 44 percent.",
-      "label": "half-true",
-      "expected_verdicts": [
-        "mixed",
-        "mostly_true",
-        "mostly_false"
-      ],
-      "expected_score_range": [
-        35,
-        70
-      ],
-      "actual_verdict": "unverifiable",
-      "score": 50,
-      "confidence": "low",
-      "correct": false,
-      "verdict_correct": false,
-      "within_one": false
-    },
-    {
-      "dataset": "PolitiFact",
-      "id": "pf_040",
-      "claim": "Says Rick Perry recently said he wanted another (Texas) business tax.",
-      "label": "pants-fire",
-      "expected_verdicts": [
-        "false"
-      ],
-      "expected_score_range": [
-        0,
-        20
-      ],
-      "actual_verdict": "mostly_true",
-      "score": 70,
-      "confidence": "medium",
-      "correct": false,
-      "verdict_correct": false,
-      "within_one": false
-    },
-    {
-      "dataset": "PolitiFact",
-      "id": "pf_041",
-      "claim": "Foreign Chinese prostitution money is allegedly behind the groups funding Congressman Sean Duffys Republican Majority.",
-      "label": "pants-fire",
-      "expected_verdicts": [
-        "false"
-      ],
-      "expected_score_range": [
-        0,
-        20
-      ],
-      "actual_verdict": "false",
-      "score": 20,
-      "confidence": "medium",
-      "correct": true,
-      "verdict_correct": true,
-      "within_one": true
-    },
-    {
-      "dataset": "PolitiFact",
-      "id": "pf_042",
-      "claim": "Of the 20 bills [Rep. David] Cicilline has sponsored in his three years in office, not a single one has advanced past the embryonic committee stage.",
-      "label": "half-true",
-      "expected_verdicts": [
-        "mixed",
-        "mostly_true",
-        "mostly_false"
-      ],
-      "expected_score_range": [
-        35,
-        70
-      ],
-      "actual_verdict": "mixed",
-      "score": 45,
-      "confidence": "medium",
-      "correct": true,
-      "verdict_correct": true,
-      "within_one": true
-    },
-    {
-      "dataset": "PolitiFact",
-      "id": "pf_043",
-      "claim": "Says Chris Christies plan to kick-start our economy is to propose an income tax cut that disproportionately benefits the wealthy, and...hes still proposing it.",
-      "label": "pants-fire",
-      "expected_verdicts": [
-        "false"
-      ],
-      "expected_score_range": [
-        0,
-        20
-      ],
-      "actual_verdict": "mostly_true",
-      "score": 70,
-      "confidence": "medium",
-      "correct": false,
-      "verdict_correct": false,
-      "within_one": false
-    },
-    {
-      "dataset": "PolitiFact",
-      "id": "pf_044",
-      "claim": "Many Nevadans relied on Uber for work, but after accepting $70,000 from taxi companies, Catherine Cortez Masto went after Uber ... (driving) them out of town.",
-      "label": "barely-true",
-      "expected_verdicts": [
-        "mostly_false",
-        "mixed"
-      ],
-      "expected_score_range": [
-        20,
-        50
-      ],
-      "actual_verdict": "?",
-      "score": -1,
-      "confidence": "unknown",
-      "correct": false,
-      "verdict_correct": false,
-      "within_one": false
-    },
-    {
-      "dataset": "PolitiFact",
-      "id": "pf_045",
-      "claim": "Says JimRenacci has consistently voted for loopholes that encourage outsourcing of our jobs.",
-      "label": "half-true",
-      "expected_verdicts": [
-        "mixed",
-        "mostly_true",
-        "mostly_false"
-      ],
-      "expected_score_range": [
-        35,
-        70
-      ],
-      "actual_verdict": "mixed",
-      "score": 45,
-      "confidence": "medium",
-      "correct": true,
-      "verdict_correct": true,
-      "within_one": true
-    },
-    {
-      "dataset": "PolitiFact",
-      "id": "pf_046",
-      "claim": "Says Chris Koster fell silentas attorney general in pursuing a case against a free classified service accused of promoting prostitution after accepting over $12,000 in campaign contributions from people affiliated with the service.",
-      "label": "barely-true",
-      "expected_verdicts": [
-        "mostly_false",
-        "mixed"
-      ],
-      "expected_score_range": [
-        20,
-        50
-      ],
-      "actual_verdict": "mixed",
-      "score": 35,
-      "confidence": "low",
-      "correct": true,
-      "verdict_correct": true,
-      "within_one": true
-    },
-    {
-      "dataset": "PolitiFact",
-      "id": "pf_047",
-      "claim": "Wisconsin dropped from second in the country to 41st among states where more than half the students took the ACT exam.",
-      "label": "pants-fire",
-      "expected_verdicts": [
-        "false"
-      ],
-      "expected_score_range": [
-        0,
-        20
-      ],
-      "actual_verdict": "mostly_false",
-      "score": 25,
-      "confidence": "medium",
-      "correct": false,
-      "verdict_correct": false,
-      "within_one": true
-    },
-    {
-      "dataset": "PolitiFact",
-      "id": "pf_048",
-      "claim": "Two months ago, Donald Trump said that ISIS was not our fight.",
-      "label": "mostly-true",
-      "expected_verdicts": [
-        "mostly_true",
-        "true"
-      ],
-      "expected_score_range": [
-        60,
-        100
-      ],
-      "actual_verdict": "?",
-      "score": -1,
-      "confidence": "unknown",
-      "correct": false,
-      "verdict_correct": false,
-      "within_one": false
-    },
-    {
-      "dataset": "PolitiFact",
-      "id": "pf_049",
-      "claim": "Under this tax cut, middle-class families dont save enough for a weeks worth of groceries, while millionaires save enough to go on an exotic vacation.",
-      "label": "true",
-      "expected_verdicts": [
-        "true"
-      ],
-      "expected_score_range": [
-        80,
-        100
-      ],
-      "actual_verdict": "unverifiable",
-      "score": 50,
-      "confidence": "low",
-      "correct": false,
-      "verdict_correct": false,
-      "within_one": true
-    },
-    {
-      "dataset": "PolitiFact",
-      "id": "pf_050",
-      "claim": "Pre-existing conditions are covered under my (health care) plan.",
-      "label": "barely-true",
-      "expected_verdicts": [
-        "mostly_false",
-        "mixed"
-      ],
-      "expected_score_range": [
-        20,
-        50
       ],
       "actual_verdict": "mostly_true",
       "score": 78,

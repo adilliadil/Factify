@@ -15,6 +15,7 @@ from __future__ import annotations
 import hashlib
 import json
 import logging
+import re
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -26,9 +27,19 @@ CACHE_TTL_DAYS: int = 60
 _CACHE_FILE = Path(__file__).parent / "datasets" / "tavily_search_cache.json"
 
 
+def _normalize_claim(claim: str) -> str:
+    """Normalize claim text for stable cache lookup across minor wording variants."""
+    text = claim.strip().lower()
+    # Normalize common punctuation/quote variants, then remove punctuation.
+    text = text.replace("’", "'").replace("`", "'").replace("“", '"').replace("”", '"')
+    text = re.sub(r"[^a-z0-9\s]", " ", text)
+    text = re.sub(r"\s+", " ", text).strip()
+    return text
+
+
 def _claim_key(claim: str) -> str:
-    """Stable cache key: sha256 of the lowercased, stripped claim."""
-    return hashlib.sha256(claim.strip().lower().encode()).hexdigest()
+    """Stable cache key: sha256 of normalized claim text."""
+    return hashlib.sha256(_normalize_claim(claim).encode()).hexdigest()
 
 
 def _load_cache() -> dict:
@@ -66,6 +77,7 @@ async def cached_search_claim(
     returned as normal.
     """
     key = _claim_key(claim)
+    normalized_claim = _normalize_claim(claim)
     cache = _load_cache()
 
     entry = cache.get(key)
@@ -79,6 +91,7 @@ async def cached_search_claim(
     cache[key] = {
         "cached_at": datetime.now(timezone.utc).isoformat(),
         "claim": claim,
+        "normalized_claim": normalized_claim,
         "results": results,
     }
     _save_cache(cache)

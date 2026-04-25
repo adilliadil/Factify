@@ -10,10 +10,11 @@ Reports are auto-generated at session end (see conftest.py hooks).
 """
 
 import pytest
+from unittest.mock import patch
 from conftest import load_all_benchmark_samples, store_benchmark_result
 from backend.llm import analyze_evidence
-from backend.search import search_claim
 from backend.pipeline import fact_check
+from tavily_cache import cached_search_claim
 
 ALL_SAMPLES = load_all_benchmark_samples()
 GOLD_SAMPLES = [(ds, s) for ds, s in ALL_SAMPLES if s.get("gold_evidence")]
@@ -88,7 +89,7 @@ class TestSearchedEvidenceAnalysis:
         ids=[f"{ds}-{s['id']}" for ds, s in ALL_SAMPLES],
     )
     async def test_searched_evidence(self, dataset_name, sample):
-        sources = await search_claim(sample["claim"])
+        sources = await cached_search_claim(sample["claim"])
 
         if not sources:
             pytest.skip(f"No search results for: {sample['claim'][:80]}")
@@ -118,7 +119,8 @@ class TestFullPipeline:
         ids=[f"{ds}-{s['id']}" for ds, s in ALL_SAMPLES],
     )
     async def test_full_pipeline(self, dataset_name, sample):
-        result = await fact_check(sample["claim"])
+        with patch("backend.pipeline.search_claim", side_effect=cached_search_claim):
+            result = await fact_check(sample["claim"])
 
         store_benchmark_result("arm_c", f"{dataset_name}-{sample['id']}", {
             "actual_verdict": result.verdict,

@@ -96,7 +96,16 @@ def test_build_structured_results_merges_pass_fail_and_stored():
         "arm_c": [],
     }
     result_data = {
-        "arm_a:ds-1": {"actual_verdict": "true", "score": 80, "confidence": "high"},
+        "arm_a:ds-1": {
+            "actual_verdict": "true",
+            "score": 80,
+            "confidence": "high",
+            "tldr": "Short summary.",
+            "explanation": "Detailed explanation.",
+            "confidence_reason": "Strong evidence",
+            "claim_verdicts": [{"claim": "c", "verdict": "supported"}],
+            "source_stances": {"https://example.com": "supporting"},
+        },
     }
     sample_lookup = {
         "ds-1": {
@@ -114,6 +123,9 @@ def test_build_structured_results_merges_pass_fail_and_stored():
     assert arm_a[0]["correct"] is True
     assert arm_a[0]["verdict_correct"] is True
     assert arm_a[0]["expected_score_range"] == [40, 90]
+    assert arm_a[0]["tldr"] == "Short summary."
+    assert arm_a[0]["claim_verdicts"] == [{"claim": "c", "verdict": "supported"}]
+    assert arm_a[0]["source_stances"] == {"https://example.com": "supporting"}
 
 
 def test_build_structured_results_baseline_arm():

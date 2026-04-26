@@ -156,7 +156,7 @@ def build_structured_results(
             expected = meta.get("expected_verdicts", [])
 
             verdict_correct = actual_verdict in expected if expected else False
-            results.append({
+            row = {
                 "dataset": meta.get("dataset", "Unknown"),
                 "id": meta.get("id", key),
                 "claim": meta.get("claim", ""),
@@ -169,7 +169,19 @@ def build_structured_results(
                 "correct": pf["passed"],
                 "verdict_correct": verdict_correct,
                 "within_one": pf["passed"] or within_one_level(actual_verdict, expected),
-            })
+            }
+            for field in (
+                "confidence_reason",
+                "tldr",
+                "explanation",
+                "claim_verdicts",
+                "source_stances",
+                "claims",
+                "sources",
+            ):
+                if field in stored:
+                    row[field] = stored[field]
+            results.append(row)
         arm_lists[arm_key] = results
     return arm_lists["arm_baseline"], arm_lists["arm_a"], arm_lists["arm_b"], arm_lists["arm_c"]
 

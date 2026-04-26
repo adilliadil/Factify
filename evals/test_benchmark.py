@@ -38,6 +38,11 @@ class TestBaselineAnalysis:
             "actual_verdict": result["verdict"],
             "score": result["score"],
             "confidence": result.get("confidence", "unknown"),
+            "confidence_reason": result.get("confidence_reason", ""),
+            "tldr": result.get("tldr", ""),
+            "explanation": result.get("explanation", ""),
+            "claim_verdicts": result.get("claim_verdicts", []),
+            "source_stances": result.get("source_stances", {}),
         })
 
         assert result["verdict"] in sample["expected_verdicts"], (
@@ -64,6 +69,12 @@ class TestGoldEvidenceAnalysis:
             "actual_verdict": result["verdict"],
             "score": result["score"],
             "confidence": result.get("confidence", "unknown"),
+            "confidence_reason": result.get("confidence_reason", ""),
+            "tldr": result.get("tldr", ""),
+            "explanation": result.get("explanation", ""),
+            "claim_verdicts": result.get("claim_verdicts", []),
+            "source_stances": result.get("source_stances", {}),
+            "sources": sample["gold_evidence"],
         })
 
         assert result["verdict"] in sample["expected_verdicts"], (
@@ -100,6 +111,12 @@ class TestSearchedEvidenceAnalysis:
             "actual_verdict": result["verdict"],
             "score": result["score"],
             "confidence": result.get("confidence", "unknown"),
+            "confidence_reason": result.get("confidence_reason", ""),
+            "tldr": result.get("tldr", ""),
+            "explanation": result.get("explanation", ""),
+            "claim_verdicts": result.get("claim_verdicts", []),
+            "source_stances": result.get("source_stances", {}),
+            "sources": sources,
         })
 
         assert result["verdict"] in sample["expected_verdicts"], (
@@ -126,6 +143,19 @@ class TestFullPipeline:
             "actual_verdict": result.verdict,
             "score": result.score,
             "confidence": result.confidence,
+            "confidence_reason": result.confidence_reason,
+            "tldr": result.tldr,
+            "explanation": result.explanation,
+            "claim_verdicts": [
+                {"claim": claim.text, "verdict": claim.verdict}
+                for claim in result.claims
+            ],
+            "source_stances": {
+                source.url: source.stance
+                for source in result.sources
+            },
+            "claims": [claim.model_dump() for claim in result.claims],
+            "sources": [source.model_dump() for source in result.sources],
         })
 
         assert result.verdict in sample["expected_verdicts"], (

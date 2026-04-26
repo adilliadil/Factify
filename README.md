@@ -151,6 +151,14 @@ python -m pytest evals/test_benchmark.py -m benchmark -k "TestGoldEvidenceAnalys
 
 A timestamped report is still written under `evals/reports/` when any benchmark tests run in that session (see `evals/conftest.py`).
 
+Generate a human-readable failure audit from the latest benchmark JSON:
+
+```bash
+python evals/scripts/benchmark_failure_audit.py
+```
+
+This writes `evals/reports/benchmark_failure_audit.md` with failed samples expanded into inputs, outputs, and evidence sources for review.
+
 Unit tests (mocked) inject placeholder keys so they run without real credentials. Benchmark and quality (`live_api`) tests skip unless `backend.config` can load the pipeline LLM, Tavily search, and (for quality suites) the judge model from your `.env` — matching whatever providers you configure.
 Unit tests (mocked) run without API keys. Quality and benchmark tests require `OPENAI_API_KEY` and `TAVILY_API_KEY`.
 
@@ -189,7 +197,7 @@ flowchart TB
             B2["Arm B<br/>search_claim() + analyze_evidence()"]
             B3["Arm C<br/>full fact_check() pipeline"]
             B4["Auto-generate benchmark report<br/>accuracy · within-one · deltas<br/>per-label · calibration · failures"]
-            B5["Outputs<br/>evals/reports/YYYY-MM-DD_HHmmss.txt<br/>evals/reports/benchmark_results.json"]
+            B5["Outputs<br/>evals/reports/YYYY-MM-DD_HHmmss.txt<br/>evals/reports/benchmark_results.json<br/>optional failure audit markdown"]
             B0 --> Bb
             B0 --> B1
             B0 --> B2

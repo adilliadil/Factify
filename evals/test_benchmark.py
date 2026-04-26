@@ -1,7 +1,7 @@
 """Dataset-agnostic benchmark evals with four-arm design.
 
 Auto-discovers all benchmark_*.json files in evals/datasets/ and runs:
-  Arm 0 — analyze_evidence() with NO evidence (LLM baseline / parametric knowledge)
+  Arm 0 — eval-only analyze_claim_baseline() with claim only
   Arm A — analyze_evidence() with gold evidence (skipped if no gold_evidence)
   Arm B — search_claim() + analyze_evidence() with retrieved evidence
   Arm C — full fact_check() pipeline
@@ -11,7 +11,7 @@ Reports are auto-generated at session end (see conftest.py hooks).
 
 import pytest
 from unittest.mock import patch
-from conftest import load_all_benchmark_samples, store_benchmark_result
+from conftest import analyze_claim_baseline, load_all_benchmark_samples, store_benchmark_result
 from backend.llm import analyze_evidence
 from backend.pipeline import fact_check
 from tavily_cache import cached_search_claim
@@ -22,8 +22,7 @@ GOLD_SAMPLES = [(ds, s) for ds, s in ALL_SAMPLES if s.get("gold_evidence")]
 
 @pytest.mark.benchmark
 class TestBaselineAnalysis:
-    """Arm 0 — analyze_evidence() with NO evidence (parametric knowledge only).
-    Measures LLM baseline without any external sources."""
+    """Arm 0 — bare LLM claim-only baseline (parametric knowledge only)."""
 
     @pytest.mark.asyncio
     @pytest.mark.parametrize(
@@ -32,7 +31,7 @@ class TestBaselineAnalysis:
         ids=[f"{ds}-{s['id']}" for ds, s in ALL_SAMPLES],
     )
     async def test_baseline(self, dataset_name, sample):
-        result = await analyze_evidence([sample["claim"]], [])
+        result = await analyze_claim_baseline(sample["claim"])
 
         store_benchmark_result("arm_baseline", f"{dataset_name}-{sample['id']}", {
             "actual_verdict": result["verdict"],

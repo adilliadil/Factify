@@ -2,11 +2,12 @@
 
 import json
 from pathlib import Path
-from unittest.mock import patch
+from unittest.mock import AsyncMock, patch
 
 import pytest
 
 import benchmark_reporting as br
+from conftest import analyze_claim_baseline, make_llm_response
 
 
 def test_verdict_index_and_within_one():
@@ -183,8 +184,38 @@ def test_format_report_contains_model_and_sections(monkeypatch):
     assert "Benchmark Report" in text
     assert "gpt-4o-mini" in text
     assert "Overall Accuracy" in text
-    assert "Arm 0 (None)" in text
+    assert "Arm 0 (Bare)" in text
     config.reset()
+
+
+@pytest.mark.asyncio
+async def test_baseline_uses_claim_only_prompt(mock_llm_client):
+    """Arm 0 baseline should be a direct claim-only fact-check prompt."""
+    claim = "At independence, Nigeria had a population of 45 million"
+    mock_response = {
+        "score": 90,
+        "verdict": "true",
+        "tldr": "Nigeria's independence-era population was about 45 million.",
+        "explanation": "General historical references commonly place Nigeria's 1960 population around 45 million.",
+        "confidence": "medium",
+        "confidence_reason": "Widely reported historical demographic figure",
+    }
+    mock_llm_client.chat.completions.create = AsyncMock(
+        return_value=make_llm_response(mock_response)
+    )
+
+    result = await analyze_claim_baseline(claim)
+
+    call_kwargs = mock_llm_client.chat.completions.create.call_args.kwargs
+    prompt = call_kwargs["messages"][1]["content"]
+    assert "Sources:" not in prompt
+    assert "Fact-check the claim below as directly as possible" in prompt
+    assert "native model capabilities" in prompt
+    assert claim in prompt
+    assert call_kwargs["response_format"]["type"] == "json_schema"
+    assert result["verdict"] == "true"
+    assert result["claim_verdicts"] == [{"claim": claim, "verdict": "supported"}]
+    assert result["source_stances"] == {}
 
 
 def test_format_report_failed_samples_shows_reasons(monkeypatch):

@@ -125,7 +125,7 @@ cd evals && PYTHONPATH=.. python -m pytest test_benchmark.py -v
 
 ### Filtering benchmark runs
 
-Benchmark cases live in `evals/test_benchmark.py` (four arms: baseline, gold evidence, searched evidence, full pipeline). Parametrised test IDs are `{dataset_name}-{sample_id}` (for example `AVeriTeC-av_001`), defined in that file.
+Benchmark cases live in `evals/test_benchmark.py` (four arms: bare LLM baseline, gold evidence, searched evidence, full pipeline). Parametrised test IDs are `{dataset_name}-{sample_id}` (for example `AVeriTeC-av_001`), defined in that file.
 
 Run a single arm:
 
@@ -192,7 +192,7 @@ flowchart TB
         subgraph B["3. Benchmark Evals · four-arm"]
             direction TB
             B0["Auto-discover benchmark_*.json<br/>PolitiFact + AVeriTeC"]
-            Bb["Arm 0<br/>analyze_evidence() · no sources<br/>(LLM parametric baseline)"]
+            Bb["Arm 0<br/>eval-only claim prompt<br/>(bare LLM baseline)"]
             B1["Arm A<br/>analyze_evidence() + gold evidence"]
             B2["Arm B<br/>search_claim() + analyze_evidence()"]
             B3["Arm C<br/>full fact_check() pipeline"]

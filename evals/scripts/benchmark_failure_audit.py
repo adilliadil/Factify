@@ -25,7 +25,7 @@ ARM_LABELS = {
     "arm_a": "Arm A - Gold Evidence",
     "arm_b": "Arm B - Searched Evidence",
     "arm_c": "Arm C - Full Pipeline",
-    "arm_baseline": "Arm 0 - No Evidence",
+    "arm_baseline": "Arm 0 - Bare LLM",
 }
 MISSING = object()
 
@@ -85,6 +85,8 @@ def _failure_reasons(row: dict, *, check_score_range: bool) -> list[str]:
 
 
 def _source_label(arm: str) -> str:
+    if arm == "arm_baseline":
+        return "Baseline Prompt"
     if arm == "arm_a":
         return "Gold Evidence Input"
     if arm == "arm_b":
@@ -198,7 +200,10 @@ def _format_failure(
     ]
 
     if not sources:
-        lines.append("_No evidence sources captured or found in cache._")
+        if arm == "arm_baseline":
+            lines.append("_No evidence sources are used for the bare LLM baseline._")
+        else:
+            lines.append("_No evidence sources captured or found in cache._")
     else:
         for idx, source in enumerate(sources, start=1):
             lines.extend(_format_source(source, idx))

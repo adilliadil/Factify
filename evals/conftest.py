@@ -1,6 +1,7 @@
 """Pytest fixtures, hooks, and shared test helpers for evals."""
 
 import json
+import logging
 import os
 import re
 import time
@@ -9,7 +10,11 @@ from pathlib import Path
 from unittest.mock import patch, MagicMock
 
 from backend.config import ConfigError, config
+import backend.llm as llm
 from benchmark_reporting import build_structured_results, write_reports
+
+
+logger = logging.getLogger(__name__)
 
 
 def collect_eval_config_errors(*, need_judge: bool) -> list[str]:
@@ -71,6 +76,144 @@ _benchmark_session_active = False
 def store_benchmark_result(arm: str, key: str, data: dict) -> None:
     """Called by tests to store full result data (verdict, score, confidence) before asserting."""
     _benchmark_result_data[f"{arm}:{key}"] = data
+
+
+BASELINE_FACT_CHECK_PROMPT = """You are a fact-checking assistant.
+
+Fact-check the claim below as directly as possible. Use whatever knowledge or
+native model capabilities are available. Do not assume any evidence has been
+provided separately. If you cannot assess the claim, use verdict "unverifiable"
+with score 50.
+
+Claim:
+{claim}
+
+Return a JSON object with exactly these fields:
+{{
+  "score": <integer 0-100>,
+  "verdict": "<one of: false, mostly_false, mixed, mostly_true, true, unverifiable>",
+  "tldr": "<single punchy sentence, max 15 words, stating the core conclusion>",
+  "explanation": "<2-3 sentence explanation based on general knowledge>",
+  "confidence": "<one of: high, medium, low>",
+  "confidence_reason": "<short phrase explaining why, max 12 words>"
+}}"""
+
+BASELINE_FACT_CHECK_RESPONSE_FORMAT = {
+    "type": "json_schema",
+    "json_schema": {
+        "name": "bare_llm_fact_check",
+        "strict": True,
+        "schema": {
+            "type": "object",
+            "additionalProperties": False,
+            "properties": {
+                "score": {"type": "integer", "minimum": 0, "maximum": 100},
+                "verdict": {
+                    "type": "string",
+                    "enum": ["false", "mostly_false", "mixed", "mostly_true", "true", "unverifiable"],
+                },
+                "tldr": {"type": "string"},
+                "explanation": {"type": "string"},
+                "confidence": {"type": "string", "enum": ["high", "medium", "low"]},
+                "confidence_reason": {"type": "string"},
+            },
+            "required": [
+                "score",
+                "verdict",
+                "tldr",
+                "explanation",
+                "confidence",
+                "confidence_reason",
+            ],
+        },
+    },
+}
+
+
+def _claim_verdict_from_overall(verdict: str) -> str:
+    if verdict in {"true", "mostly_true"}:
+        return "supported"
+    if verdict in {"false", "mostly_false"}:
+        return "contradicted"
+    if verdict == "mixed":
+        return "mixed"
+    return "unverifiable"
+
+
+def _fallback_baseline_analysis() -> llm.AnalysisResult:
+    return {
+        "score": 50,
+        "verdict": "unverifiable",
+        "tldr": "",
+        "explanation": "Unable to determine.",
+        "confidence": "low",
+        "confidence_reason": "Model returned invalid or empty JSON",
+        "claim_verdicts": [],
+        "source_stances": {},
+    }
+
+
+async def analyze_claim_baseline(claim: str) -> llm.AnalysisResult:
+    """Eval-only bare LLM baseline for benchmark Arm 0."""
+    logger.debug("analyze_claim_baseline: input length=%d model=%s", len(claim), config.llm.model)
+    resp = await llm.get_client().chat.completions.create(
+        model=config.llm.model,
+        messages=[
+            {"role": "system", "content": "You are a fact-checking assistant. Always respond with valid JSON."},
+            {"role": "user", "content": BASELINE_FACT_CHECK_PROMPT.format(claim=claim)},
+        ],
+        response_format=BASELINE_FACT_CHECK_RESPONSE_FORMAT,
+        temperature=0,
+    )
+
+    raw = resp.choices[0].message.content
+    if raw is None:
+        logger.warning("analyze_claim_baseline: empty message content from LLM")
+        return _fallback_baseline_analysis()
+
+    try:
+        result = json.loads(raw)
+    except json.JSONDecodeError:
+        logger.warning("analyze_claim_baseline: invalid JSON (first 200 chars): %r", raw[:200])
+        return _fallback_baseline_analysis()
+
+    if not isinstance(result, dict):
+        logger.warning("analyze_claim_baseline: expected JSON object, got %s", type(result).__name__)
+        return _fallback_baseline_analysis()
+
+    try:
+        score = max(0, min(100, int(result.get("score", 50))))
+    except (TypeError, ValueError):
+        logger.warning("analyze_claim_baseline: non-numeric score %r, defaulting to 50", result.get("score"))
+        score = 50
+
+    verdict = result.get("verdict", "unverifiable")
+    valid_verdicts = {"false", "mostly_false", "mixed", "mostly_true", "true", "unverifiable"}
+    if verdict not in valid_verdicts:
+        logger.warning("analyze_claim_baseline: invalid verdict %r, defaulting to unverifiable", verdict)
+        verdict = "unverifiable"
+
+    confidence = result.get("confidence", "low")
+    if confidence not in {"high", "medium", "low"}:
+        confidence = "low"
+
+    logger.info(
+        "analyze_claim_baseline: verdict=%s score=%d confidence=%s",
+        verdict,
+        score,
+        confidence,
+    )
+
+    return {
+        "score": score,
+        "verdict": verdict,
+        "tldr": result.get("tldr", ""),
+        "explanation": result.get("explanation", "Unable to determine."),
+        "confidence": confidence,
+        "confidence_reason": result.get("confidence_reason", ""),
+        "claim_verdicts": [{"claim": claim, "verdict": _claim_verdict_from_overall(verdict)}],
+        "source_stances": {},
+    }
 
 
 # ── Pytest hooks ───────────────────────────────────────────────

@@ -214,7 +214,7 @@ def format_report(
         "",
     ]
 
-    hdr_0 = "Arm 0 (None)"
+    hdr_0 = "Arm 0 (Bare)"
     hdr_a = "Arm A (Gold)"
     hdr_b = "Arm B (Search)"
     hdr_c = "Arm C (Full)"
@@ -261,14 +261,14 @@ def format_report(
 
     if arm_baseline and arm_b:
         evidence_delta = verdict_accuracy(arm_b) - verdict_accuracy(arm_baseline)
-        direction = "search evidence helps" if evidence_delta > 0 else "no evidence better" if evidence_delta < 0 else "no difference"
+        direction = "search evidence helps" if evidence_delta > 0 else "bare LLM better" if evidence_delta < 0 else "no difference"
         lines.append(f"  Evidence delta (B - 0): {evidence_delta:+.1f}%  ← {direction}")
 
     if arm_a:
         if arm_baseline:
             arm_bl_comparable = [r for r in arm_baseline if r["dataset"] in arm_a_by_ds]
             gold_delta = verdict_accuracy(arm_a) - verdict_accuracy(arm_bl_comparable)
-            direction = "gold evidence helps" if gold_delta > 0 else "no evidence better" if gold_delta < 0 else "no difference"
+            direction = "gold evidence helps" if gold_delta > 0 else "bare LLM better" if gold_delta < 0 else "no difference"
             lines.append(f"  Gold delta    (A - 0): {gold_delta:+.1f}%  ← {direction}")
 
         arm_b_comparable = [r for r in arm_b if r["dataset"] in arm_a_by_ds]
@@ -315,7 +315,7 @@ def format_report(
 
     # Failed Samples
     arm_specs = [
-        ("Arm 0 — Baseline (No Evidence)", arm_baseline, False),
+        ("Arm 0 — Bare LLM Baseline", arm_baseline, False),
         ("Arm A — Gold Evidence", arm_a, True),
         ("Arm B — Searched Evidence", arm_b, False),
         ("Arm C — Full Pipeline", arm_c, False),

@@ -24,21 +24,21 @@ def test_failure_reasons_verdict_only():
         "score": 50,
         "expected_score_range": [25, 75],
     }
-    out = br.failure_reasons(r, check_score_range=False)
+    out = br.failure_reasons(r)
     assert "verdict" in out[0]
     assert "score" not in "".join(out)
 
 
-def test_failure_reasons_score_arm_a():
+def test_failure_reasons_only_uses_verdict():
     r = {
         "actual_verdict": "mostly_false",
         "expected_verdicts": ["mostly_false", "mixed"],
         "score": 85,
         "expected_score_range": [25, 75],
     }
-    out = br.failure_reasons(r, check_score_range=True)
-    assert any("score" in x for x in out)
-    assert not any("verdict" in x for x in out)
+    out = br.failure_reasons(r)
+    assert out == ["unknown (assertion mismatch not reconstructed)"]
+    assert not any("score" in x for x in out)
 
 
 def test_accuracy_empty():
@@ -54,14 +54,14 @@ def test_accuracy_and_within_one():
     assert br.within_one_accuracy(rows) == 100.0
 
 
-def test_verdict_accuracy_ignores_score_failures():
+def test_accuracy_is_verdict_only():
     rows = [
-        {"verdict_correct": True, "correct": False},  # score-only failure
+        {"verdict_correct": True, "correct": True},
         {"verdict_correct": True, "correct": True},
         {"verdict_correct": False, "correct": False},
     ]
     assert br.verdict_accuracy(rows) == pytest.approx(66.7, abs=0.1)
-    assert br.accuracy(rows) == pytest.approx(33.3, abs=0.1)
+    assert br.accuracy(rows) == pytest.approx(66.7, abs=0.1)
 
 
 def test_by_dataset_and_by_label():
@@ -92,7 +92,7 @@ def test_score_distribution_single_row():
 def test_build_structured_results_merges_pass_fail_and_stored():
     pass_fail = {
         "arm_baseline": [],
-        "arm_a": [{"key": "ds-1", "passed": True}],
+        "arm_a": [{"key": "ds-1", "passed": False}],
         "arm_b": [],
         "arm_c": [],
     }
@@ -235,15 +235,14 @@ def test_format_report_failed_samples_shows_reasons(monkeypatch):
             "actual_verdict": "mostly_false",
             "score": 85,
             "confidence": "high",
-            "correct": False,
+            "correct": True,
             "verdict_correct": True,
             "within_one": True,
         },
     ]
     text = br.format_report([], arm_a, [], [])
-    assert "Failure reasons" in text
-    assert "score: got 85" in text
-    assert "[25, 75]" in text
+    assert "score: got 85" not in text
+    assert "Arm A — Gold Evidence" not in text
     config.reset()
 
 

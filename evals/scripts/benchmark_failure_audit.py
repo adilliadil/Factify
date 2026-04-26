@@ -67,19 +67,12 @@ def _load_cache() -> dict[str, list[dict]]:
     return by_claim
 
 
-def _failure_reasons(row: dict, *, check_score_range: bool) -> list[str]:
+def _failure_reasons(row: dict) -> list[str]:
     reasons: list[str] = []
     expected = row.get("expected_verdicts") or []
     actual = row.get("actual_verdict", "?")
     if actual not in expected:
         reasons.append(f"verdict got `{actual}`, expected one of `{', '.join(expected)}`")
-
-    score_range = row.get("expected_score_range")
-    if check_score_range and score_range and len(score_range) == 2:
-        lo, hi = int(score_range[0]), int(score_range[1])
-        score = row.get("score", -1)
-        if not lo <= score <= hi:
-            reasons.append(f"score got `{score}`, expected `{lo}-{hi}`")
 
     return reasons or ["benchmark assertion failed"]
 
@@ -171,7 +164,6 @@ def _format_failure(
     cache_lookup: dict[str, list[dict]],
     index: int,
 ) -> list[str]:
-    check_score_range = arm == "arm_a"
     sources = _sources_for_row(arm, row, sample_lookup, cache_lookup)
 
     lines = [
@@ -189,7 +181,7 @@ def _format_failure(
         f"- **Confidence:** `{row.get('confidence', 'unknown')}`",
         f"- **Correct:** `{row.get('correct')}`",
         f"- **Within one level:** `{row.get('within_one')}`",
-        f"- **Failure reason:** {'; '.join(_failure_reasons(row, check_score_range=check_score_range))}",
+        f"- **Failure reason:** {'; '.join(_failure_reasons(row))}",
         *_format_optional_block("TLDR", _row_value(row, "tldr")),
         *_format_optional_block("Explanation", _row_value(row, "explanation")),
         *_format_optional_block("Confidence reason", _row_value(row, "confidence_reason")),

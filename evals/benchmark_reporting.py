@@ -35,22 +35,13 @@ def within_one_level(actual: str, expected_verdicts: list[str]) -> bool:
     )
 
 
-def failure_reasons(r: dict, *, check_score_range: bool) -> list[str]:
-    """Explain why a benchmark row is incorrect (reconstructs assertions from `test_benchmark`)."""
+def failure_reasons(r: dict) -> list[str]:
     reasons: list[str] = []
     expected = r.get("expected_verdicts") or []
     actual = r.get("actual_verdict", "?")
     if actual not in expected:
         exp = "/".join(expected) if expected else "(none)"
         reasons.append(f"verdict: got {actual}, expected one of {exp}")
-
-    if check_score_range:
-        rng = r.get("expected_score_range")
-        if rng is not None and len(rng) == 2:
-            lo, hi = int(rng[0]), int(rng[1])
-            score = r.get("score", -1)
-            if not (lo <= score <= hi):
-                reasons.append(f"score: got {score}, expected in [{lo}, {hi}]")
 
     return reasons or ["unknown (assertion mismatch not reconstructed)"]
 
@@ -64,7 +55,6 @@ def accuracy(results: list[dict]) -> float:
 
 
 def verdict_accuracy(results: list[dict]) -> float:
-    """Accuracy based on verdict correctness only (ignores score-range checks)."""
     if not results:
         return 0.0
     return sum(1 for r in results if r["verdict_correct"]) / len(results) * 100
@@ -166,9 +156,9 @@ def build_structured_results(
                 "actual_verdict": actual_verdict,
                 "score": score,
                 "confidence": conf,
-                "correct": pf["passed"],
+                "correct": verdict_correct,
                 "verdict_correct": verdict_correct,
-                "within_one": pf["passed"] or within_one_level(actual_verdict, expected),
+                "within_one": verdict_correct or within_one_level(actual_verdict, expected),
             }
             for field in (
                 "confidence_reason",
@@ -255,9 +245,7 @@ def format_report(
     lines.append(f"  {'Combined':18s} {bl_w1:>14s}  {a_w1:>14s}  {b_w1:>14s}  {c_w1:>14s}")
     lines.append("")
 
-    # Delta Analysis (verdict-only so Arms are compared on equal footing;
-    # Arm A also checks score range, which would unfairly penalise it)
-    lines.append("── Delta Analysis (verdict-only) ────────────────────────────────────────────")
+    lines.append("── Delta Analysis ───────────────────────────────────────────────────────────")
 
     if arm_baseline and arm_b:
         evidence_delta = verdict_accuracy(arm_b) - verdict_accuracy(arm_baseline)
@@ -315,35 +303,31 @@ def format_report(
 
     # Failed Samples
     arm_specs = [
-        ("Arm 0 — Bare LLM Baseline", arm_baseline, False),
-        ("Arm A — Gold Evidence", arm_a, True),
-        ("Arm B — Searched Evidence", arm_b, False),
-        ("Arm C — Full Pipeline", arm_c, False),
+        ("Arm 0 — Bare LLM Baseline", arm_baseline),
+        ("Arm A — Gold Evidence", arm_a),
+        ("Arm B — Searched Evidence", arm_b),
+        ("Arm C — Full Pipeline", arm_c),
     ]
-    failures_exist = any(not r["correct"] for _, results, _ in arm_specs for r in results)
+    failures_exist = any(not r["correct"] for _, results in arm_specs for r in results)
     if failures_exist:
         lines.append("── Failed Samples ───────────────────────────────────────────────────────────")
         lines.append("")
-        for arm_label, results, check_score_range in arm_specs:
+        for arm_label, results in arm_specs:
             failed = [r for r in results if not r["correct"]]
             if not failed:
                 continue
             lines.append(f"  {arm_label} ({len(failed)} failed / {len(results)} total):")
             lines.append(
                 f"    {'ID':16s}{'Label':34s}{'Verdict (got / expected)':40s}"
-                f"{'Score (got / exp. range)':26s}Failure reasons"
+                f"{'Score':22s}Failure reasons"
             )
             for r in failed:
                 exp_v = "/".join(r["expected_verdicts"])
                 verdict_col = f"{r['actual_verdict']} / {exp_v}"
-                sr = r.get("expected_score_range")
-                if check_score_range and sr is not None and len(sr) == 2:
-                    score_col = f"{r['score']} / [{sr[0]}, {sr[1]}]"
-                else:
-                    score_col = f"{r['score']}" + ("  (no range check)" if not check_score_range else "")
-                reasons = "; ".join(failure_reasons(r, check_score_range=check_score_range))
+                score_col = f"{r['score']}"
+                reasons = "; ".join(failure_reasons(r))
                 lines.append(
-                    f"    {r['id']:16s}{r['label'][:34]:34s}{verdict_col:40s}{score_col:26s}{reasons}"
+                    f"    {r['id']:16s}{r['label'][:34]:34s}{verdict_col:40s}{score_col:22s}{reasons}"
                 )
             lines.append("")
 

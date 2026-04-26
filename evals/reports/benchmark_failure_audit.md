@@ -1,16 +1,16 @@
 # Benchmark Failure Audit
 
-- Generated: 2026-04-26T22:39:33.735167+00:00
-- Results timestamp: 2026-04-26T22:39:25.482395+00:00
+- Generated: 2026-04-26T23:27:16.333491+00:00
+- Results timestamp: 2026-04-26T23:27:05.019163+00:00
 - Model: gpt-5.4-nano
-- Commit: 12b717e
+- Commit: 4de6b4e
 
 This report expands failed benchmark rows into a reviewable format with inputs, outputs, and evidence.
 Fields are marked as not captured only when the benchmark JSON does not contain them.
 
 ## Arm 0 - Bare LLM
 
-Failures shown: 34
+Failures shown: 36
 
 ### 1. AVeriTeC / av_001 - Conflicting Evidence/Cherrypicking
 
@@ -28,8 +28,8 @@ Failures shown: 34
 - **Within one level:** `True`
 - **Failure reason:** verdict got `false`, expected one of `mixed, mostly_true, mostly_false`
 - **TLDR:** Indian Railways is not fully privatized, so job losses from privatization are not inherent.
-- **Explanation:** Indian Railways is a government-owned entity under the Ministry of Railways, not completely privatized. While some private participation exists in specific areas (e.g., certain operations, services, and infrastructure projects), it has not replaced the workforce with full privatization, so the claim that many workers would lose jobs as a direct result is not supported by general facts.
-- **Confidence reason:** Indian Railways remains government-owned; privatization is partial at most.
+- **Explanation:** Indian Railways is a government-owned entity under the Ministry of Railways, and it has not been completely privatized. While some private participation exists in specific areas (e.g., certain operations, services, or infrastructure projects), that does not equate to full privatization of the rail system or an automatic loss of jobs for railway employees.
+- **Confidence reason:** Indian Railways remains government-owned; full privatization is incorrect.
 - **Claim verdicts:**
 ```json
 [
@@ -51,7 +51,46 @@ _No evidence sources are used for the bare LLM baseline._
 - Likely failure type: analyzer reasoning / evidence insufficient / label mapping / retrieval / extraction / other
 - Notes:
 
-### 2. AVeriTeC / av_003 - Supported
+### 2. AVeriTeC / av_002 - Conflicting Evidence/Cherrypicking
+
+#### Input
+- **Claim:** Donald Trump said: "Biden also vowed to oppose school choice and close down charter schools, ripping away the ladder of opportunity for Black and Hispanic children."
+- **Expected label:** Conflicting Evidence/Cherrypicking
+- **Expected verdicts:** `mixed, mostly_true, mostly_false`
+- **Expected score range:** `[25, 75]`
+
+#### Output
+- **Actual verdict:** `unverifiable`
+- **Score:** `50`
+- **Confidence:** `low`
+- **Correct:** `False`
+- **Within one level:** `False`
+- **Failure reason:** verdict got `unverifiable`, expected one of `mixed, mostly_true, mostly_false`
+- **TLDR:** Cannot verify whether Trump made this exact statement about Biden and charter schools.
+- **Explanation:** The claim quotes a specific Trump statement, but no source, date, or transcript is provided to verify the wording. While Trump has criticized Biden and Democrats on school choice and charter schools in general, confirming this exact quote requires checking a reliable transcript or contemporaneous reporting.
+- **Confidence reason:** Missing source; exact quote not verifiable from context.
+- **Claim verdicts:**
+```json
+[
+  {
+    "claim": "Donald Trump said: \"Biden also vowed to oppose school choice and close down charter schools, ripping away the ladder of opportunity for Black and Hispanic children.\"",
+    "verdict": "unverifiable"
+  }
+]
+```
+- **Source stances:**
+```json
+{}
+```
+
+#### Baseline Prompt
+_No evidence sources are used for the bare LLM baseline._
+#### Human Review Notes
+- Evidence sufficient? yes / no / unclear
+- Likely failure type: analyzer reasoning / evidence insufficient / label mapping / retrieval / extraction / other
+- Notes:
+
+### 3. AVeriTeC / av_003 - Supported
 
 #### Input
 - **Claim:** At independence, Nigeria had a population of 45 million
@@ -67,8 +106,8 @@ _No evidence sources are used for the bare LLM baseline._
 - **Within one level:** `False`
 - **Failure reason:** verdict got `mostly_false`, expected one of `true, mostly_true`
 - **TLDR:** Nigeria’s population at independence was far below 45 million.
-- **Explanation:** Nigeria gained independence in 1960. Common historical estimates place Nigeria’s population around the mid-30 millions (roughly 30–35 million) at that time, not 45 million. While exact figures vary by source and method, 45 million is generally considered too high for 1960.
-- **Confidence reason:** Historical estimates vary, but 45M is typically too high.
+- **Explanation:** Nigeria gained independence in 1960. Most historical estimates place Nigeria’s population around the mid- to high-30 millions at that time (roughly 35–40 million), not 45 million. While exact figures vary by source and method, 45 million appears too high for 1960.
+- **Confidence reason:** Historical estimates vary, but 45M seems high for 1960.
 - **Claim verdicts:**
 ```json
 [
@@ -90,7 +129,7 @@ _No evidence sources are used for the bare LLM baseline._
 - Likely failure type: analyzer reasoning / evidence insufficient / label mapping / retrieval / extraction / other
 - Notes:
 
-### 3. AVeriTeC / av_006 - Not Enough Evidence
+### 4. AVeriTeC / av_006 - Not Enough Evidence
 
 #### Input
 - **Claim:** Nigeria was the third most terrorised in the world in 2020, after Afghanistan and Iraq.
@@ -106,8 +145,8 @@ _No evidence sources are used for the bare LLM baseline._
 - **Within one level:** `True`
 - **Failure reason:** verdict got `mostly_false`, expected one of `unverifiable, mixed`
 - **TLDR:** Nigeria was not the world’s third most terrorised country in 2020 after Afghanistan and Iraq.
-- **Explanation:** There is no single universally accepted ranking of “most terrorised” countries for 2020, and commonly cited global terrorism impact rankings (e.g., by Global Terrorism Index) do not place Nigeria consistently as third behind Afghanistan and Iraq. In many such datasets, Nigeria is among the most affected countries, but its exact rank varies by year and methodology, and it is not reliably the third most terrorised in 2020.
-- **Confidence reason:** Rank depends on dataset; common sources don’t match claim.
+- **Explanation:** There is no single universally accepted ranking of “most terrorised” countries for 2020, and commonly cited global terrorism datasets (e.g., Global Terrorism Index) do not place Nigeria consistently as third behind Afghanistan and Iraq. In many rankings, Nigeria is among the most affected but its exact position varies by metric (incidents, deaths, impact) and year, and it is not reliably the third most terrorised overall in 2020.
+- **Confidence reason:** Rankings vary by dataset and metric; exact third-place claim unlikely.
 - **Claim verdicts:**
 ```json
 [
@@ -129,7 +168,7 @@ _No evidence sources are used for the bare LLM baseline._
 - Likely failure type: analyzer reasoning / evidence insufficient / label mapping / retrieval / extraction / other
 - Notes:
 
-### 4. AVeriTeC / av_008 - Refuted
+### 5. AVeriTeC / av_008 - Refuted
 
 #### Input
 - **Claim:** Since 2002, South Africa’s police force has grown by 50%.
@@ -139,14 +178,14 @@ _No evidence sources are used for the bare LLM baseline._
 
 #### Output
 - **Actual verdict:** `unverifiable`
-- **Score:** `35`
+- **Score:** `50`
 - **Confidence:** `low`
 - **Correct:** `False`
 - **Within one level:** `False`
 - **Failure reason:** verdict got `unverifiable`, expected one of `false, mostly_false`
 - **TLDR:** It’s unclear whether South Africa police staffing increased by 50% since 2002.
-- **Explanation:** The claim depends on a specific baseline (police force size in 2002) and a specific endpoint (size in the most recent year), plus what counts as “police force” (e.g., sworn officers vs. total personnel). Without those figures or a cited source, the 50% growth cannot be verified from general knowledge alone.
-- **Confidence reason:** No source data for 2002 and current police numbers.
+- **Explanation:** The claim depends on a specific baseline (police force size in 2002) and a specific endpoint (size in the most recent year), plus whether “police force” refers to sworn officers, total employees, or another measure. Without those figures or a cited source, the 50% growth cannot be verified from general knowledge alone.
+- **Confidence reason:** Missing 2002 and latest police staffing data and definitions
 - **Claim verdicts:**
 ```json
 [
@@ -168,7 +207,7 @@ _No evidence sources are used for the bare LLM baseline._
 - Likely failure type: analyzer reasoning / evidence insufficient / label mapping / retrieval / extraction / other
 - Notes:
 
-### 5. AVeriTeC / av_009 - Supported
+### 6. AVeriTeC / av_009 - Supported
 
 #### Input
 - **Claim:** Today, Nigeria grapple has a population exceeding 200 million.
@@ -177,15 +216,15 @@ _No evidence sources are used for the bare LLM baseline._
 - **Expected score range:** `[60, 100]`
 
 #### Output
-- **Actual verdict:** `mostly_false`
-- **Score:** `35`
-- **Confidence:** `medium`
+- **Actual verdict:** `false`
+- **Score:** `18`
+- **Confidence:** `low`
 - **Correct:** `False`
 - **Within one level:** `False`
-- **Failure reason:** verdict got `mostly_false`, expected one of `true, mostly_true`
-- **TLDR:** Nigeria’s population is not clearly above 200 million today.
-- **Explanation:** Nigeria’s population is widely estimated to be around 200 million in recent years, but “exceeding 200 million today” depends on the specific year and source. Many current estimates place it near or slightly above 200 million, while others are still at or below that threshold, so the claim is not reliably true as stated.
-- **Confidence reason:** Estimates vary by source and year near 200M.
+- **Failure reason:** verdict got `false`, expected one of `true, mostly_true`
+- **TLDR:** Nigeria’s population is far below 200 million.
+- **Explanation:** Nigeria’s population is widely estimated to be around 200 million in recent years, but the claim says it is “exceeding 200 million” today. Depending on the source and year, Nigeria may be at or slightly above 200 million, but “exceeding” is not consistently supported without a specific reference date and dataset.
+- **Confidence reason:** Population estimates vary by source and year.
 - **Claim verdicts:**
 ```json
 [
@@ -207,7 +246,7 @@ _No evidence sources are used for the bare LLM baseline._
 - Likely failure type: analyzer reasoning / evidence insufficient / label mapping / retrieval / extraction / other
 - Notes:
 
-### 6. AVeriTeC / av_012 - Not Enough Evidence
+### 7. AVeriTeC / av_012 - Not Enough Evidence
 
 #### Input
 - **Claim:** Hunter Biden (son of US president Joe Biden)  had 25,000 pics of him torturing and raping children under 10 in China on his laptop.
@@ -216,67 +255,17 @@ _No evidence sources are used for the bare LLM baseline._
 - **Expected score range:** `[30, 60]`
 
 #### Output
-- **Actual verdict:** `mostly_false`
-- **Score:** `8`
-- **Confidence:** `high`
-- **Correct:** `False`
-- **Within one level:** `True`
-- **Failure reason:** verdict got `mostly_false`, expected one of `unverifiable, mixed`
-- **TLDR:** The claim is unsupported and appears to be a fabricated allegation.
-- **Explanation:** There is no credible, publicly verified evidence that Hunter Biden had 25,000 child-torture/rape images on a laptop, nor that such files were found in China. The allegation resembles viral misinformation that has circulated without reliable documentation or corroboration from authoritative sources.
-- **Confidence reason:** No credible evidence; widely debunked misinformation pattern
-- **Claim verdicts:**
-```json
-[
-  {
-    "claim": "Hunter Biden (son of US president Joe Biden)  had 25,000 pics of him torturing and raping children under 10 in China on his laptop.",
-    "verdict": "contradicted"
-  }
-]
-```
-- **Source stances:**
-```json
-{}
-```
-
-#### Baseline Prompt
-_No evidence sources are used for the bare LLM baseline._
-#### Human Review Notes
-- Evidence sufficient? yes / no / unclear
-- Likely failure type: analyzer reasoning / evidence insufficient / label mapping / retrieval / extraction / other
-- Notes:
-
-### 7. AVeriTeC / av_013 - Refuted
-
-#### Input
-- **Claim:** Dr. Ebeneezer, a medical doctor and a herbal practitioner at the Amuzu Hospital has instructed men to have sex at least 21 times a month to avoid prostate cancer.
-- **Expected label:** Refuted
-- **Expected verdicts:** `false, mostly_false`
-- **Expected score range:** `[0, 40]`
-
-#### Output
-- **Actual verdict:** `unverifiable`
-- **Score:** `50`
-- **Confidence:** `low`
+- **Actual verdict:** `?`
+- **Score:** `-1`
+- **Confidence:** `unknown`
 - **Correct:** `False`
 - **Within one level:** `False`
-- **Failure reason:** verdict got `unverifiable`, expected one of `false, mostly_false`
-- **TLDR:** A doctor allegedly advised men to have sex 21 times monthly to prevent prostate cancer.
-- **Explanation:** There is no widely accepted medical guideline that recommends a specific number of sexual encounters per month to prevent prostate cancer. While some studies have explored associations between sexual activity and prostate cancer risk, they do not support a clear, actionable threshold like “21 times a month,” and the specific attribution to “Dr. Ebeneezer” at “Amuzu Hospital” cannot be verified from general knowledge alone.
-- **Confidence reason:** No verifiable sources or identifiable details provided.
-- **Claim verdicts:**
-```json
-[
-  {
-    "claim": "Dr. Ebeneezer, a medical doctor and a herbal practitioner at the Amuzu Hospital has instructed men to have sex at least 21 times a month to avoid prostate cancer.",
-    "verdict": "unverifiable"
-  }
-]
-```
-- **Source stances:**
-```json
-{}
-```
+- **Failure reason:** verdict got `?`, expected one of `unverifiable, mixed`
+- **TLDR:** _not captured in this benchmark result_
+- **Explanation:** _not captured in this benchmark result_
+- **Confidence reason:** _not captured in this benchmark result_
+- **Claim verdicts:** _not captured in this benchmark result_
+- **Source stances:** _not captured in this benchmark result_
 
 #### Baseline Prompt
 _No evidence sources are used for the bare LLM baseline._
@@ -295,14 +284,14 @@ _No evidence sources are used for the bare LLM baseline._
 
 #### Output
 - **Actual verdict:** `mostly_false`
-- **Score:** `28`
+- **Score:** `22`
 - **Confidence:** `low`
 - **Correct:** `False`
 - **Within one level:** `True`
 - **Failure reason:** verdict got `mostly_false`, expected one of `unverifiable, mixed`
-- **TLDR:** The claim misstates GDP level and historical comparisons; 33.1% is not supported.
-- **Explanation:** The statement appears to conflate a “33.1” figure with GDP and with a “33.1 percent” claim, but GDP is typically reported in dollars and growth rates/percent shares are different measures. Without specifying the country, year, currency, and whether the figure is nominal GDP, real GDP, or GDP growth, the “biggest in history by almost triple” and “go back to the 1950s and then it’s less than half” comparisons are not credible as stated. In general, GDP can be larger than in the 1950s, but “almost triple” and “33.1 percent” cannot be validated from the information given and are likely incorrect or misleading.
-- **Confidence reason:** Missing country and metric details; likely conflation of figures.
+- **TLDR:** The claim about 33.1% GDP and it being the highest is not supported.
+- **Explanation:** The statement appears to conflate a “33.1” figure with GDP and then makes sweeping historical comparisons (“biggest in history,” “almost triple,” “go back to the 1950s”). In general, GDP levels and shares depend on whether the figure is nominal vs real, per capita vs total, and what “33.1 percent” refers to; without those definitions, the historical comparison is not credible. Also, GDP is typically reported in dollars or growth rates, not as a single “33.1 GDP” number, making the claim likely misleading or incorrect.
+- **Confidence reason:** Ambiguous metrics and no country/timeframe provided.
 - **Claim verdicts:**
 ```json
 [
@@ -339,9 +328,9 @@ _No evidence sources are used for the bare LLM baseline._
 - **Correct:** `False`
 - **Within one level:** `False`
 - **Failure reason:** verdict got `mostly_false`, expected one of `true, mostly_true`
-- **TLDR:** The claim overstates and oversimplifies job losses; trade war effects were not 300,000.
-- **Explanation:** Manufacturing employment in the U.S. has fluctuated due to many factors, including automation, productivity gains, business cycles, and long-term shifts in demand and supply chains. While tariffs and trade disruptions can affect specific industries and regions, attributing a precise loss of 300,000 manufacturing jobs specifically to a “so-called trade war with China” is not supported by a single widely accepted causal estimate.
-- **Confidence reason:** Causal attribution and exact number are not well supported.
+- **TLDR:** The claim overstates and misattributes job losses to the China trade war.
+- **Explanation:** US manufacturing employment has declined over the long term due to automation, productivity gains, offshoring, and broader economic cycles. While tariffs and trade disruptions may have affected some industries and regions, attributing a specific figure like 300,000 manufacturing jobs directly to the “trade war with China” is not supported as a clear, widely accepted causal total. Estimates of trade-war impacts vary and are generally smaller and more nuanced than the claim suggests.
+- **Confidence reason:** Causal attribution and job-loss totals are disputed and not well-supported.
 - **Claim verdicts:**
 ```json
 [
@@ -379,8 +368,8 @@ _No evidence sources are used for the bare LLM baseline._
 - **Within one level:** `False`
 - **Failure reason:** verdict got `unverifiable`, expected one of `mixed, mostly_true, mostly_false`
 - **TLDR:** Cannot verify whether Twitter is adding warnings to unedited Biden fracking clips.
-- **Explanation:** I can’t confirm from general knowledge whether Twitter currently adds specific warnings to tweets that contain unedited clips of Biden about ending fracking. Twitter’s labeling policies and enforcement can change over time and may depend on the specific content, context, and whether it’s flagged as misleading or synthetic.
-- **Confidence reason:** No access to current Twitter labeling evidence
+- **Explanation:** I can’t confirm from general knowledge whether Twitter currently adds specific warnings to tweets that are unedited clips of Biden about ending fracking. Twitter’s labeling policies and enforcement vary over time and depend on the exact content and context, and no specific example or timestamp is provided.
+- **Confidence reason:** No verifiable details or sources provided
 - **Claim verdicts:**
 ```json
 [
@@ -417,8 +406,8 @@ _No evidence sources are used for the bare LLM baseline._
 - **Correct:** `False`
 - **Within one level:** `True`
 - **Failure reason:** verdict got `unverifiable`, expected one of `true, mostly_true`
-- **TLDR:** Edo State’s unemployment rate is claimed as 19%, but this can’t be verified here.
-- **Explanation:** Unemployment rates for Nigerian states vary by source, definition (e.g., unemployment vs. underemployment), and year. Without a specific dataset, year, or source for the “19%” figure, it’s not possible to confirm whether Edo State’s unemployment rate is actually 19%.
+- **TLDR:** Edo State’s unemployment rate is claimed to be 19%, but this can’t be verified here.
+- **Explanation:** Unemployment rates for Nigerian states vary by source, definition (ILO vs. national labor force surveys), and year. Without a specific dataset, year, or reference, it’s not possible to confirm whether Edo State’s unemployment rate was 19% at the time implied by the claim.
 - **Confidence reason:** No source or year provided for the 19% figure
 - **Claim verdicts:**
 ```json
@@ -441,7 +430,46 @@ _No evidence sources are used for the bare LLM baseline._
 - Likely failure type: analyzer reasoning / evidence insufficient / label mapping / retrieval / extraction / other
 - Notes:
 
-### 12. AVeriTeC / av_028 - Conflicting Evidence/Cherrypicking
+### 12. AVeriTeC / av_027 - Refuted
+
+#### Input
+- **Claim:** The PLAAF has shot down an Indian Sukhoi Su-30 fighter jet in Tibet.
+- **Expected label:** Refuted
+- **Expected verdicts:** `false, mostly_false`
+- **Expected score range:** `[0, 40]`
+
+#### Output
+- **Actual verdict:** `unverifiable`
+- **Score:** `35`
+- **Confidence:** `low`
+- **Correct:** `False`
+- **Within one level:** `False`
+- **Failure reason:** verdict got `unverifiable`, expected one of `false, mostly_false`
+- **TLDR:** No reliable evidence confirms PLAAF shot down an Indian Su-30 in Tibet.
+- **Explanation:** There is no widely corroborated, official, or independently verified public record that the PLAAF shot down an Indian Su-30 in Tibet. Claims of air-to-air shootdowns in contested regions are often disputed and require strong evidence (e.g., verified wreckage, credible radar/ATC data, or confirmed loss by both sides). Without such substantiation, the claim cannot be confirmed or reliably denied.
+- **Confidence reason:** Lack of verifiable, independent sourcing for the specific incident
+- **Claim verdicts:**
+```json
+[
+  {
+    "claim": "The PLAAF has shot down an Indian Sukhoi Su-30 fighter jet in Tibet.",
+    "verdict": "unverifiable"
+  }
+]
+```
+- **Source stances:**
+```json
+{}
+```
+
+#### Baseline Prompt
+_No evidence sources are used for the bare LLM baseline._
+#### Human Review Notes
+- Evidence sufficient? yes / no / unclear
+- Likely failure type: analyzer reasoning / evidence insufficient / label mapping / retrieval / extraction / other
+- Notes:
+
+### 13. AVeriTeC / av_028 - Conflicting Evidence/Cherrypicking
 
 #### Input
 - **Claim:** U.S. President Donald Trump has suspended all travel from China.
@@ -457,8 +485,8 @@ _No evidence sources are used for the bare LLM baseline._
 - **Within one level:** `True`
 - **Failure reason:** verdict got `false`, expected one of `mixed, mostly_true, mostly_false`
 - **TLDR:** Trump did not suspend all travel from China.
-- **Explanation:** The U.S. implemented travel restrictions related to COVID-19, but they were not a blanket suspension of all travel from China. Restrictions varied over time and included measures like entry limits for certain categories and later adjustments, rather than an absolute ban on all travel.
-- **Confidence reason:** Historical travel rules were partial and time-varying.
+- **Explanation:** The U.S. implemented travel restrictions related to COVID-19, including bans on certain travelers and entry rules that changed over time. However, the claim that Trump suspended all travel from China is not accurate—restrictions were not absolute and were subject to exceptions and phased adjustments.
+- **Confidence reason:** Known travel rules were partial and time-varying
 - **Claim verdicts:**
 ```json
 [
@@ -480,7 +508,7 @@ _No evidence sources are used for the bare LLM baseline._
 - Likely failure type: analyzer reasoning / evidence insufficient / label mapping / retrieval / extraction / other
 - Notes:
 
-### 13. AVeriTeC / av_030 - Supported
+### 14. AVeriTeC / av_030 - Supported
 
 #### Input
 - **Claim:** A Pakistani website was hacked by an Indian cyber group to wish Pawan Kalyan a Happy Birthday.
@@ -490,14 +518,14 @@ _No evidence sources are used for the bare LLM baseline._
 
 #### Output
 - **Actual verdict:** `unverifiable`
-- **Score:** `35`
+- **Score:** `50`
 - **Confidence:** `low`
 - **Correct:** `False`
 - **Within one level:** `True`
 - **Failure reason:** verdict got `unverifiable`, expected one of `true, mostly_true`
-- **TLDR:** No reliable evidence confirms a Pakistani site was hacked to send Pawan Kalyan a birthday wish.
-- **Explanation:** This claim is very specific (which Pakistani site, which Indian group, and the motive), but no sources or corroborating details are provided. In general, hacking incidents and attribution to specific groups are often disputed and require credible reporting or technical evidence to verify.
-- **Confidence reason:** Missing sources and unverifiable attribution details
+- **TLDR:** No reliable evidence confirms a Pakistani site was hacked by an Indian group for Pawan Kalyan’s birthday.
+- **Explanation:** The claim is very specific (a particular Pakistani website, a specific Indian cyber group, and a motive tied to Pawan Kalyan’s birthday), but no sources, screenshots, or credible reporting are provided. Without independent verification from reputable cybersecurity reporting or official statements, it’s not possible to confirm whether such a hack occurred or who was responsible.
+- **Confidence reason:** Missing evidence and no verifiable sourcing provided
 - **Claim verdicts:**
 ```json
 [
@@ -519,7 +547,7 @@ _No evidence sources are used for the bare LLM baseline._
 - Likely failure type: analyzer reasoning / evidence insufficient / label mapping / retrieval / extraction / other
 - Notes:
 
-### 14. PolitiFact / pf_002 - false
+### 15. PolitiFact / pf_002 - false
 
 #### Input
 - **Claim:** Says the secret John Doe criminal investigation of his campaign has been resolved and two judges have said it is over.
@@ -534,9 +562,9 @@ _No evidence sources are used for the bare LLM baseline._
 - **Correct:** `False`
 - **Within one level:** `False`
 - **Failure reason:** verdict got `unverifiable`, expected one of `false, mostly_false`
-- **TLDR:** It’s unclear whether a secret investigation was resolved and judges declared it over.
-- **Explanation:** The claim provides no verifiable details (jurisdiction, case name, judges, dates, or sources) and uses a placeholder name (“John Doe”). Without specific, checkable information, it’s not possible to confirm whether any criminal investigation tied to a campaign was resolved or that two judges said it was over.
-- **Confidence reason:** No identifying details or sources to verify.
+- **TLDR:** A claim says a secret investigation is resolved and two judges declared it over.
+- **Explanation:** The claim provides no verifiable details (jurisdiction, case name, dates, or the judges’ identities) and uses a placeholder name (“John Doe”). Without specific, checkable information, it’s not possible to confirm whether any criminal investigation related to a campaign was resolved or whether two judges said it was over.
+- **Confidence reason:** No identifying details to verify against public records
 - **Claim verdicts:**
 ```json
 [
@@ -558,7 +586,7 @@ _No evidence sources are used for the bare LLM baseline._
 - Likely failure type: analyzer reasoning / evidence insufficient / label mapping / retrieval / extraction / other
 - Notes:
 
-### 15. PolitiFact / pf_003 - true
+### 16. PolitiFact / pf_003 - true
 
 #### Input
 - **Claim:** Orrin Hatch co-sponsored a 1993 health care bill that had an individual mandate.
@@ -567,15 +595,15 @@ _No evidence sources are used for the bare LLM baseline._
 - **Expected score range:** `[80, 100]`
 
 #### Output
-- **Actual verdict:** `mostly_false`
+- **Actual verdict:** `false`
 - **Score:** `35`
 - **Confidence:** `low`
 - **Correct:** `False`
 - **Within one level:** `False`
-- **Failure reason:** verdict got `mostly_false`, expected one of `true`
+- **Failure reason:** verdict got `false`, expected one of `true`
 - **TLDR:** Orrin Hatch did not co-sponsor a 1993 health care bill with an individual mandate.
-- **Explanation:** The individual mandate is most closely associated with later proposals, especially those in the 2000s and the Affordable Care Act era. In 1993, major health care reform efforts (e.g., the Clinton administration’s proposals) did not center on a widely recognized individual mandate co-sponsored by Orrin Hatch. Without a specific bill number and documentation, the claim is unlikely to be accurate.
-- **Confidence reason:** No bill specified; mandate attribution to 1993 is doubtful
+- **Explanation:** The best-known early “individual mandate” proposals in the U.S. are associated with later health reform efforts (notably Massachusetts in the 2000s) and with federal proposals that emerged after 1993. In 1993, major federal health care legislation (e.g., the Clinton-era proposals) did not center on an individual mandate in the way later reforms did, and Hatch’s role is not typically documented as co-sponsoring such a bill.
+- **Confidence reason:** Mandate details and co-sponsorship specifics are unclear without sources.
 - **Claim verdicts:**
 ```json
 [
@@ -597,7 +625,7 @@ _No evidence sources are used for the bare LLM baseline._
 - Likely failure type: analyzer reasoning / evidence insufficient / label mapping / retrieval / extraction / other
 - Notes:
 
-### 16. PolitiFact / pf_004 - barely-true
+### 17. PolitiFact / pf_004 - barely-true
 
 #### Input
 - **Claim:** Mark Herring voted to allow sex offenders, including rapists, to serve shorter sentences.
@@ -612,9 +640,9 @@ _No evidence sources are used for the bare LLM baseline._
 - **Correct:** `False`
 - **Within one level:** `False`
 - **Failure reason:** verdict got `unverifiable`, expected one of `mostly_false, mixed`
-- **TLDR:** It’s unclear whether Mark Herring voted to allow sex offenders, including rapists, shorter sentences.
-- **Explanation:** The claim is specific about a particular vote and its scope (sex offenders including rapists) but no bill, date, or voting record is provided. Without the exact legislation or documented vote, it’s not possible to verify whether Mark Herring supported shorter sentences for that group.
-- **Confidence reason:** No bill or voting record details provided
+- **TLDR:** It’s unclear whether Mark Herring voted to shorten sentences for sex offenders.
+- **Explanation:** The claim is specific about a particular vote and its scope (sex offenders, including rapists, receiving shorter sentences). Without details such as the bill name, year, jurisdiction, or the exact vote record, it’s not possible to verify whether Mark Herring supported such a change. General knowledge about his career is insufficient to confirm this exact allegation.
+- **Confidence reason:** No bill/vote details provided to verify.
 - **Claim verdicts:**
 ```json
 [
@@ -636,7 +664,7 @@ _No evidence sources are used for the bare LLM baseline._
 - Likely failure type: analyzer reasoning / evidence insufficient / label mapping / retrieval / extraction / other
 - Notes:
 
-### 17. PolitiFact / pf_007 - false
+### 18. PolitiFact / pf_007 - false
 
 #### Input
 - **Claim:** Unfortunately, since Mr. Fosters been mayor ... there are less people employed in the city of St. Petersburg than there were prior to his taking office.
@@ -651,9 +679,9 @@ _No evidence sources are used for the bare LLM baseline._
 - **Correct:** `False`
 - **Within one level:** `False`
 - **Failure reason:** verdict got `unverifiable`, expected one of `false, mostly_false`
-- **TLDR:** Claim about St. Petersburg employment dropping under Mayor Mr. Foster is unverified.
-- **Explanation:** The statement asserts a specific causal relationship between a named mayor’s tenure and a change in city employment levels. Without dates, the mayor’s full identity, and employment data before and after taking office, it’s not possible to verify the direction or magnitude of employment changes. General knowledge alone doesn’t provide the needed local labor statistics for this specific claim.
-- **Confidence reason:** Missing identifiers and employment data for verification
+- **TLDR:** The claim about St. Petersburg employment falling under Mayor Mr. Foster can’t be verified.
+- **Explanation:** The statement provides no dates, full name, or employment figures, and “Mr. Foster” is ambiguous. Without knowing which St. Petersburg (city/state/country) and the relevant time period, it’s not possible to confirm whether employment decreased after he took office.
+- **Confidence reason:** Missing identifiers and data to verify employment trends
 - **Claim verdicts:**
 ```json
 [
@@ -675,7 +703,7 @@ _No evidence sources are used for the bare LLM baseline._
 - Likely failure type: analyzer reasoning / evidence insufficient / label mapping / retrieval / extraction / other
 - Notes:
 
-### 18. PolitiFact / pf_008 - mostly-true
+### 19. PolitiFact / pf_008 - mostly-true
 
 #### Input
 - **Claim:** "There's only four senators senior to me ... there's still 44 older than me."
@@ -690,9 +718,9 @@ _No evidence sources are used for the bare LLM baseline._
 - **Correct:** `False`
 - **Within one level:** `True`
 - **Failure reason:** verdict got `unverifiable`, expected one of `mostly_true, true`
-- **TLDR:** The statement about senators’ ages cannot be verified without the speaker and date.
-- **Explanation:** The claim depends on which specific senator is speaking (“me”) and the exact time, because the number of senators older than that person changes as senators retire, resign, or new ones take office. Without identifying the speaker and the relevant date, there’s no reliable way to confirm whether only four are senior and 44 are older.
-- **Confidence reason:** Missing speaker identity and time frame.
+- **TLDR:** The statement about senators older than the speaker cannot be verified.
+- **Explanation:** The claim is a specific, time-dependent statement about the ages and seniority of U.S. senators relative to the speaker. Without knowing who the speaker is, when it was said, and the relevant senators’ ages at that time, it cannot be checked against public records. Therefore, the accuracy of the “44 older than me” portion is not assessable from the claim alone.
+- **Confidence reason:** Missing speaker identity and date; age data not provided.
 - **Claim verdicts:**
 ```json
 [
@@ -714,7 +742,7 @@ _No evidence sources are used for the bare LLM baseline._
 - Likely failure type: analyzer reasoning / evidence insufficient / label mapping / retrieval / extraction / other
 - Notes:
 
-### 19. PolitiFact / pf_009 - true
+### 20. PolitiFact / pf_009 - true
 
 #### Input
 - **Claim:** The words subhuman mongrel, which Ted Nugent called President Barack Obama, were used by the Nazis to justify the genocide of the Jewish community.
@@ -729,9 +757,9 @@ _No evidence sources are used for the bare LLM baseline._
 - **Correct:** `False`
 - **Within one level:** `False`
 - **Failure reason:** verdict got `mixed`, expected one of `true`
-- **TLDR:** Nazi propaganda used dehumanizing slurs, but this specific Nugent-to-Nazi genocide link is unverified.
-- **Explanation:** Nazi ideology and propaganda frequently used dehumanizing language and slurs about Jews to help justify persecution and genocide. However, the specific claim that the exact phrases “subhuman” and “mongrel” (as used by Ted Nugent for Obama) were used by Nazis for the genocide is not something that can be confirmed from general knowledge alone, and the connection is likely overstated or requires specific sourcing.
-- **Confidence reason:** Exact phrase usage by Nazis is not verifiable here.
+- **TLDR:** Nazi propaganda used dehumanizing slurs, but this specific linkage to those exact words is unverified.
+- **Explanation:** Nazi ideology and propaganda frequently used dehumanizing language about Jews to help justify persecution and genocide. However, the claim that the specific slurs “subhuman” and “mongrel” (as quoted from Ted Nugent about Obama) were used by Nazis for that purpose is not something that can be confirmed from general knowledge alone, and the exact wording may not match historical sources.
+- **Confidence reason:** Exact Nazi wording and linkage are not verifiable here.
 - **Claim verdicts:**
 ```json
 [
@@ -753,7 +781,46 @@ _No evidence sources are used for the bare LLM baseline._
 - Likely failure type: analyzer reasoning / evidence insufficient / label mapping / retrieval / extraction / other
 - Notes:
 
-### 20. PolitiFact / pf_011 - true
+### 21. PolitiFact / pf_010 - mostly-true
+
+#### Input
+- **Claim:** Marijuana is less toxic than alcohol.
+- **Expected label:** mostly-true
+- **Expected verdicts:** `mostly_true, true`
+- **Expected score range:** `[60, 100]`
+
+#### Output
+- **Actual verdict:** `mixed`
+- **Score:** `62`
+- **Confidence:** `medium`
+- **Correct:** `False`
+- **Within one level:** `True`
+- **Failure reason:** verdict got `mixed`, expected one of `mostly_true, true`
+- **TLDR:** Marijuana is generally less acutely toxic than alcohol, but not risk-free.
+- **Explanation:** Alcohol is strongly associated with acute toxicity and high rates of fatal overdoses and poisoning. Cannabis is typically less likely to cause death from overdose, but it can still impair driving, worsen some mental health conditions, and carry risks from heavy or high-potency use. Overall, “less toxic” depends on what kind of toxicity (fatal overdose vs. health harms) is being compared.
+- **Confidence reason:** General medical consensus, but “toxicity” is context-dependent.
+- **Claim verdicts:**
+```json
+[
+  {
+    "claim": "Marijuana is less toxic than alcohol.",
+    "verdict": "mixed"
+  }
+]
+```
+- **Source stances:**
+```json
+{}
+```
+
+#### Baseline Prompt
+_No evidence sources are used for the bare LLM baseline._
+#### Human Review Notes
+- Evidence sufficient? yes / no / unclear
+- Likely failure type: analyzer reasoning / evidence insufficient / label mapping / retrieval / extraction / other
+- Notes:
+
+### 22. PolitiFact / pf_011 - true
 
 #### Input
 - **Claim:** Says Donald Trump has changed his mind on abortion.
@@ -769,8 +836,8 @@ _No evidence sources are used for the bare LLM baseline._
 - **Within one level:** `True`
 - **Failure reason:** verdict got `unverifiable`, expected one of `true`
 - **TLDR:** It’s unclear whether Trump has changed his mind on abortion.
-- **Explanation:** The claim is vague and provides no specific statement, date, or comparison of prior versus current positions. While Trump’s public messaging on abortion has varied over time, determining whether he “changed his mind” requires identifying the exact earlier stance and the later reversal.
-- **Confidence reason:** No details to verify a specific reversal
+- **Explanation:** Whether Donald Trump has “changed his mind” on abortion depends on comparing his past and current statements and policy positions. Without specific dates, quotes, or the exact claim of what changed, it’s not possible to verify the assertion directly.
+- **Confidence reason:** No specifics or evidence provided to compare positions.
 - **Claim verdicts:**
 ```json
 [
@@ -792,7 +859,7 @@ _No evidence sources are used for the bare LLM baseline._
 - Likely failure type: analyzer reasoning / evidence insufficient / label mapping / retrieval / extraction / other
 - Notes:
 
-### 21. PolitiFact / pf_012 - false
+### 23. PolitiFact / pf_012 - false
 
 #### Input
 - **Claim:** A new ruling by the EPA would force dairy farmers to comply with the Spill Prevention, Control and Countermeasure Program when dealing with spilt milk -- the same regulations oil and natural gas producers must follow.
@@ -807,9 +874,9 @@ _No evidence sources are used for the bare LLM baseline._
 - **Correct:** `False`
 - **Within one level:** `False`
 - **Failure reason:** verdict got `unverifiable`, expected one of `false, mostly_false`
-- **TLDR:** Unclear whether an EPA ruling would require dairy farms to follow SPCC rules for spilled milk.
-- **Explanation:** The EPA’s Spill Prevention, Control, and Countermeasure (SPCC) requirements generally apply to facilities that store certain quantities of oil and to discharges of oil into navigable waters. Whether a specific “new ruling” would extend SPCC obligations to dairy farmers for spilled milk depends on the details of the rulemaking, including definitions of “oil,” applicability thresholds, and whether milk is treated as an oil-like substance under the regulation. Without the text or specifics of the alleged EPA ruling, the claim cannot be verified.
-- **Confidence reason:** No details of the EPA ruling or its applicability.
+- **TLDR:** EPA ruling would extend SPCC spill rules to dairy farms like oil and gas.
+- **Explanation:** The claim hinges on a specific “new ruling” by the EPA and its scope, but no details (date, rule name, or regulatory citation) are provided. In general, the EPA’s Spill Prevention, Control, and Countermeasure (SPCC) requirements apply to certain facilities handling oil, and whether dairy operations fall under SPCC depends on factors like oil storage/handling and regulatory thresholds, not on a blanket category of “dairy.” Without the actual ruling text or citation, it’s not possible to confirm that dairy farmers are being newly required to comply in the way described.
+- **Confidence reason:** No ruling details or citation to verify scope.
 - **Claim verdicts:**
 ```json
 [
@@ -831,7 +898,7 @@ _No evidence sources are used for the bare LLM baseline._
 - Likely failure type: analyzer reasoning / evidence insufficient / label mapping / retrieval / extraction / other
 - Notes:
 
-### 22. PolitiFact / pf_013 - mostly-true
+### 24. PolitiFact / pf_013 - mostly-true
 
 #### Input
 - **Claim:** Missouri is #1 in the nation for holding down tuition increases at public universities.
@@ -847,8 +914,8 @@ _No evidence sources are used for the bare LLM baseline._
 - **Within one level:** `True`
 - **Failure reason:** verdict got `mixed`, expected one of `mostly_true, true`
 - **TLDR:** Missouri is not clearly #1 nationally for limiting public-university tuition increases.
-- **Explanation:** There is no single, widely accepted national ranking that consistently places Missouri first for holding down tuition increases at public universities. Tuition changes vary by year, institution type, and whether comparisons use nominal or inflation-adjusted figures, making “#1 in the nation” hard to substantiate without a specific dataset and methodology.
-- **Confidence reason:** No clear universal ranking; claim depends on methodology and year.
+- **Explanation:** There is no single, universally accepted national ranking that consistently places Missouri #1 for holding down tuition increases at public universities. Tuition growth varies by year, measure (percent vs dollar change), and whether rankings use in-state vs out-of-state, net vs sticker tuition, or specific time windows. Without a specific dataset and methodology, the “#1 in the nation” claim is not reliably supported.
+- **Confidence reason:** No clear universal ranking; claim lacks methodology and timeframe
 - **Claim verdicts:**
 ```json
 [
@@ -870,7 +937,7 @@ _No evidence sources are used for the bare LLM baseline._
 - Likely failure type: analyzer reasoning / evidence insufficient / label mapping / retrieval / extraction / other
 - Notes:
 
-### 23. PolitiFact / pf_014 - half-true
+### 25. PolitiFact / pf_014 - half-true
 
 #### Input
 - **Claim:** Says 95 percent of people caught crossing the U.S.-Mexico border said in a survey we are coming because weve been promised amnesty.
@@ -885,9 +952,9 @@ _No evidence sources are used for the bare LLM baseline._
 - **Correct:** `False`
 - **Within one level:** `False`
 - **Failure reason:** verdict got `unverifiable`, expected one of `mixed, mostly_true, mostly_false`
-- **TLDR:** The claim cites a specific survey result without providing verifiable sourcing.
-- **Explanation:** There is no widely established, verifiable statistic that 95% of people caught crossing the U.S.-Mexico border said they came because they were promised amnesty. Claims like this depend entirely on the existence, methodology, and wording of a particular survey, which are not provided here, making it impossible to confirm or refute directly.
-- **Confidence reason:** No survey source or methodology provided to verify the 95% figure.
+- **TLDR:** The claim about a 95% survey finding is not verifiable from general knowledge.
+- **Explanation:** I’m not aware of a widely documented, credible survey showing that 95% of people caught crossing the U.S.-Mexico border said they came because they were promised amnesty. Without the survey source, methodology, date, and question wording, the figure cannot be checked for accuracy or context.
+- **Confidence reason:** No survey details or source provided to verify.
 - **Claim verdicts:**
 ```json
 [
@@ -909,7 +976,7 @@ _No evidence sources are used for the bare LLM baseline._
 - Likely failure type: analyzer reasoning / evidence insufficient / label mapping / retrieval / extraction / other
 - Notes:
 
-### 24. PolitiFact / pf_015 - false
+### 26. PolitiFact / pf_015 - false
 
 #### Input
 - **Claim:** When undocumented children are picked up at the border and told to appear later in court ... 90 percent do not then show up.
@@ -918,21 +985,21 @@ _No evidence sources are used for the bare LLM baseline._
 - **Expected score range:** `[0, 40]`
 
 #### Output
-- **Actual verdict:** `mixed`
-- **Score:** `45`
+- **Actual verdict:** `unverifiable`
+- **Score:** `50`
 - **Confidence:** `low`
 - **Correct:** `False`
-- **Within one level:** `True`
-- **Failure reason:** verdict got `mixed`, expected one of `false, mostly_false`
-- **TLDR:** The “90% don’t show up” figure is not reliably supported and varies by context.
-- **Explanation:** Court appearance rates for children in U.S. immigration proceedings are often reported as high, but the exact percentage who fail to appear depends on definitions (e.g., “undocumented children,” whether they were formally released, and the time window) and data sources. While some studies and reports find non-appearance is substantial, the specific “90 percent do not then show up” claim is not a well-established, consistently documented statistic.
-- **Confidence reason:** Specific 90% figure lacks clear, consistent sourcing.
+- **Within one level:** `False`
+- **Failure reason:** verdict got `unverifiable`, expected one of `false, mostly_false`
+- **TLDR:** The claim’s “90% don’t show up” figure can’t be verified from general knowledge alone.
+- **Explanation:** General reporting on immigration court attendance often cites that many people fail to appear, but the exact percentage for “undocumented children” picked up at the border and later told to appear varies by study, time period, and data source. Without a specific citation or methodology for the “90 percent” figure, it’s not possible to confirm whether it is accurate.
+- **Confidence reason:** No source or methodology for the 90% figure
 - **Claim verdicts:**
 ```json
 [
   {
     "claim": "When undocumented children are picked up at the border and told to appear later in court ... 90 percent do not then show up.",
-    "verdict": "mixed"
+    "verdict": "unverifiable"
   }
 ]
 ```
@@ -948,7 +1015,7 @@ _No evidence sources are used for the bare LLM baseline._
 - Likely failure type: analyzer reasoning / evidence insufficient / label mapping / retrieval / extraction / other
 - Notes:
 
-### 25. PolitiFact / pf_017 - true
+### 27. PolitiFact / pf_017 - true
 
 #### Input
 - **Claim:** In the last 10 years, Georgias middle class income has dropped $6,500.
@@ -963,9 +1030,9 @@ _No evidence sources are used for the bare LLM baseline._
 - **Correct:** `False`
 - **Within one level:** `True`
 - **Failure reason:** verdict got `unverifiable`, expected one of `true`
-- **TLDR:** No reliable basis to confirm Georgia’s middle-class income fell $6,500 in 10 years.
-- **Explanation:** The claim is specific (Georgia, middle-class income, and a $6,500 change over the last decade), but it does not specify which Georgia (U.S. state vs. country), which income definition (median, real vs. nominal, household vs. individual), or which data source. Without those details, different datasets and methodologies could yield different results, so the magnitude and direction cannot be verified from general knowledge alone.
-- **Confidence reason:** Missing key definitions and data source details
+- **TLDR:** The claim can’t be verified without a specific data source and definition.
+- **Explanation:** “Middle class income” and “dropped $6,500” depend on how middle class is defined (income percentile ranges, household vs. individual, inflation-adjusted or nominal) and which countrywide dataset is used. Without the underlying study or dataset for Georgia (state vs. country) and the time window, the $6,500 figure cannot be checked against known income statistics.
+- **Confidence reason:** Missing definitions, geography, and source data.
 - **Claim verdicts:**
 ```json
 [
@@ -987,7 +1054,7 @@ _No evidence sources are used for the bare LLM baseline._
 - Likely failure type: analyzer reasoning / evidence insufficient / label mapping / retrieval / extraction / other
 - Notes:
 
-### 26. PolitiFact / pf_018 - half-true
+### 28. PolitiFact / pf_018 - half-true
 
 #### Input
 - **Claim:** Oil production is down 14 percent this year on federal land.
@@ -1003,8 +1070,8 @@ _No evidence sources are used for the bare LLM baseline._
 - **Within one level:** `False`
 - **Failure reason:** verdict got `unverifiable`, expected one of `mixed, mostly_true, mostly_false`
 - **TLDR:** Cannot verify whether federal-land oil production is down 14% this year.
-- **Explanation:** The claim depends on a specific time period (“this year”), a specific geography (“federal land”), and a particular data source or metric (e.g., production volumes, wells, or estimates). Without access to the underlying dataset or a cited report, it’s not possible to confirm the 14% figure or even determine whether the direction and magnitude are correct.
-- **Confidence reason:** No source, timeframe, or dataset provided
+- **Explanation:** The claim depends on a specific dataset (e.g., U.S. federal onshore oil production), a defined time window (“this year”), and the source used to compute the 14% figure. Without those details or a cited report, it’s not possible to confirm the magnitude or even the direction of change.
+- **Confidence reason:** Missing source, timeframe, and definition of “federal land”
 - **Claim verdicts:**
 ```json
 [
@@ -1026,7 +1093,7 @@ _No evidence sources are used for the bare LLM baseline._
 - Likely failure type: analyzer reasoning / evidence insufficient / label mapping / retrieval / extraction / other
 - Notes:
 
-### 27. PolitiFact / pf_019 - barely-true
+### 29. PolitiFact / pf_019 - barely-true
 
 #### Input
 - **Claim:** Onion Creeks highest flow rate on a recent night of flooding was 120,000 cubic feet per second, which is nearly double the average flow rate of Niagara Falls.
@@ -1041,9 +1108,9 @@ _No evidence sources are used for the bare LLM baseline._
 - **Correct:** `False`
 - **Within one level:** `False`
 - **Failure reason:** verdict got `unverifiable`, expected one of `mostly_false, mixed`
-- **TLDR:** The claim’s specific numbers for Onion Creek and Niagara Falls can’t be verified here.
-- **Explanation:** “Onion Creek” is a name used for waterways in multiple places, and the claim references a “recent night of flooding” without a location or source. Niagara Falls’ average flow rate is commonly cited around 85,000–100,000 cubic feet per second, but the comparison depends on the exact definition and measurement method. Without verifiable data for Onion Creek’s peak flood discharge and the stated Niagara “average,” the claim can’t be confirmed or refuted.
-- **Confidence reason:** Missing location and sources for both flow-rate figures
+- **TLDR:** The claim’s specific numbers can’t be verified from general knowledge alone.
+- **Explanation:** “Onion Creeks” and its reported peak flood flow of 120,000 cubic feet per second is not a widely standardized, globally known figure, and the claim provides no date, location, or source. While Niagara Falls’ average flow is often cited around 85,000–90,000 cfs, whether 120,000 cfs is “nearly double” depends on the exact baseline and the Onion Creek measurement method.
+- **Confidence reason:** No sources or identifiers for Onion Creek or the flood event.
 - **Claim verdicts:**
 ```json
 [
@@ -1065,7 +1132,7 @@ _No evidence sources are used for the bare LLM baseline._
 - Likely failure type: analyzer reasoning / evidence insufficient / label mapping / retrieval / extraction / other
 - Notes:
 
-### 28. PolitiFact / pf_020 - pants-fire
+### 30. PolitiFact / pf_020 - pants-fire
 
 #### Input
 - **Claim:** U.S. Rep. Jim Langevin didn't want a border fence to block illegal immigration "because he is afraid that someone will get hurt trying to go around the fence."
@@ -1080,9 +1147,9 @@ _No evidence sources are used for the bare LLM baseline._
 - **Correct:** `False`
 - **Within one level:** `False`
 - **Failure reason:** verdict got `unverifiable`, expected one of `false`
-- **TLDR:** The claim about Langevin’s stated reason for opposing a border fence can’t be verified here.
-- **Explanation:** This is a specific attribution of motive and a quoted rationale to Rep. Jim Langevin. Without the underlying source (e.g., a transcript, interview, or article) or the exact context, it’s not possible to confirm whether he said he opposed a border fence for safety reasons. General knowledge about his positions doesn’t establish this particular quote or intent.
-- **Confidence reason:** No source or quote provided to verify attribution.
+- **TLDR:** The claim about Langevin opposing a border fence for safety fears can’t be verified here.
+- **Explanation:** I can’t verify whether Rep. Jim Langevin made this specific statement or held that exact rationale without the underlying source (e.g., a quote, interview, or transcript). In general, politicians’ positions on border fencing vary, but attributing a precise motive like “afraid someone will get hurt trying to go around the fence” requires direct evidence.
+- **Confidence reason:** No source or quote provided to confirm motive.
 - **Claim verdicts:**
 ```json
 [
@@ -1104,7 +1171,7 @@ _No evidence sources are used for the bare LLM baseline._
 - Likely failure type: analyzer reasoning / evidence insufficient / label mapping / retrieval / extraction / other
 - Notes:
 
-### 29. PolitiFact / pf_021 - half-true
+### 31. PolitiFact / pf_021 - half-true
 
 #### Input
 - **Claim:** Says he brought 1,200 jobs to Texas by moving his factories here from China.
@@ -1120,8 +1187,8 @@ _No evidence sources are used for the bare LLM baseline._
 - **Within one level:** `False`
 - **Failure reason:** verdict got `unverifiable`, expected one of `mixed, mostly_true, mostly_false`
 - **TLDR:** The claim that 1,200 jobs were brought to Texas from China is not verifiable here.
-- **Explanation:** The statement provides no sourcing, timeframe, company names, or documentation of job counts, so it cannot be checked against public records. In general, job-creation claims tied to relocating factories are often disputed or depend on definitions (direct vs. indirect jobs) and whether the jobs actually materialized in Texas.
-- **Confidence reason:** No evidence, sources, or specifics to verify job numbers.
+- **Explanation:** Whether a specific person “brought 1,200 jobs to Texas” by moving factories from China depends on verifiable, sourced employment and investment records. Without the person’s identity, company details, dates, and documentation (e.g., official announcements, labor statistics, or filings), the number and causation cannot be confirmed or refuted from general knowledge alone.
+- **Confidence reason:** Missing identity and sourcing for the job figure
 - **Claim verdicts:**
 ```json
 [
@@ -1143,7 +1210,7 @@ _No evidence sources are used for the bare LLM baseline._
 - Likely failure type: analyzer reasoning / evidence insufficient / label mapping / retrieval / extraction / other
 - Notes:
 
-### 30. PolitiFact / pf_022 - mostly-true
+### 32. PolitiFact / pf_022 - mostly-true
 
 #### Input
 - **Claim:** Says a company that got tax breaks from the state later laid off 100 Ohioans, even as its CEO cut a half-million-dollar check to Kasichs super PAC.
@@ -1158,9 +1225,9 @@ _No evidence sources are used for the bare LLM baseline._
 - **Correct:** `False`
 - **Within one level:** `True`
 - **Failure reason:** verdict got `unverifiable`, expected one of `mostly_true, true`
-- **TLDR:** The claim links Ohio tax breaks, layoffs, and a CEO donation, but lacks verifiable details.
-- **Explanation:** This statement names no company, provides no dates, and cites no specific tax-break program or donation record. Without identifying the company and checking public records (layoff notices, state tax-credit approvals, and campaign finance filings), the accuracy of the combined allegations cannot be confirmed.
-- **Confidence reason:** Missing key identifiers and supporting sources.
+- **TLDR:** Cannot verify the alleged layoffs and Kasich super PAC donation tied to state tax breaks.
+- **Explanation:** The claim references specific events (a company receiving state tax breaks, later laying off 100 Ohioans, and its CEO donating about $500,000 to Kasich’s super PAC) but provides no company name, dates, or sources. Without those details, it’s not possible to confirm whether the layoffs occurred, whether the company received tax breaks, or whether the CEO made the stated donation.
+- **Confidence reason:** Missing identifying details and evidence to verify.
 - **Claim verdicts:**
 ```json
 [
@@ -1182,7 +1249,7 @@ _No evidence sources are used for the bare LLM baseline._
 - Likely failure type: analyzer reasoning / evidence insufficient / label mapping / retrieval / extraction / other
 - Notes:
 
-### 31. PolitiFact / pf_025 - mostly-true
+### 33. PolitiFact / pf_025 - mostly-true
 
 #### Input
 - **Claim:** Federal spending on entitlements is projected to consume all revenue by 2045.
@@ -1197,9 +1264,9 @@ _No evidence sources are used for the bare LLM baseline._
 - **Correct:** `False`
 - **Within one level:** `True`
 - **Failure reason:** verdict got `mixed`, expected one of `mostly_true, true`
-- **TLDR:** Entitlement spending is projected to rise sharply, but not necessarily consume all revenue by 2045.
-- **Explanation:** Long-run budget projections from sources like the CBO show federal spending on major health and retirement entitlements rising substantially as a share of GDP, and that total spending will exceed revenues in coming decades. However, the specific phrasing that entitlements alone will “consume all revenue by 2045” depends on the exact definition (which programs count as “entitlements,” whether it means total revenues or only certain categories, and the baseline year). Many projections indicate persistent deficits rather than a precise point where entitlement spending equals all revenue by 2045.
-- **Confidence reason:** Depends on definitions and specific projection source.
+- **TLDR:** Entitlement spending is projected to consume most revenue by 2045, but not necessarily all.
+- **Explanation:** Long-run budget projections from sources like the CBO and Social Security Trustees commonly show that by the mid-2040s, spending on major entitlements (especially Social Security and Medicare) would rise to levels that are roughly comparable to, or exceed, dedicated revenue streams and a large share of total federal revenues. However, the exact phrasing “consume all revenue by 2045” depends on the specific baseline, definition of “entitlements,” and whether it refers to total revenues or only certain categories. In many projections, total spending exceeds revenues well before or around that period, but “all revenue” is not a universal, unambiguous outcome across all assumptions.
+- **Confidence reason:** Varies by projection source and definitions of revenue/entitlements.
 - **Claim verdicts:**
 ```json
 [
@@ -1221,7 +1288,7 @@ _No evidence sources are used for the bare LLM baseline._
 - Likely failure type: analyzer reasoning / evidence insufficient / label mapping / retrieval / extraction / other
 - Notes:
 
-### 32. PolitiFact / pf_028 - barely-true
+### 34. PolitiFact / pf_028 - barely-true
 
 #### Input
 - **Claim:** Says Tom Cottons vote in Congress to change Medicare will increase out-of-pocket expenses for every senior in Arkansas.
@@ -1231,14 +1298,14 @@ _No evidence sources are used for the bare LLM baseline._
 
 #### Output
 - **Actual verdict:** `unverifiable`
-- **Score:** `52`
+- **Score:** `50`
 - **Confidence:** `low`
 - **Correct:** `False`
 - **Within one level:** `False`
 - **Failure reason:** verdict got `unverifiable`, expected one of `mostly_false, mixed`
-- **TLDR:** It’s not possible to verify that Cotton’s Medicare vote raises every Arkansas senior’s out-of-pocket costs.
-- **Explanation:** Whether a specific congressional vote by Tom Cotton would increase out-of-pocket expenses depends on the exact bill, its provisions, and how costs change for different Medicare beneficiaries. “Every senior in Arkansas” is a very strong, testable universal claim that would require detailed, beneficiary-level cost estimates tied to that legislation.
-- **Confidence reason:** Universal cost claim depends on specific bill details.
+- **TLDR:** Cotton’s Medicare vote would raise every Arkansas senior’s out-of-pocket costs.
+- **Explanation:** The claim is very specific (“every senior in Arkansas”) and depends on the exact Medicare legislation, its provisions, and how out-of-pocket costs would change for different beneficiaries. Without details of the bill and cost estimates, it’s not possible to verify that all Arkansas seniors would necessarily face higher out-of-pocket expenses.
+- **Confidence reason:** Missing bill details and beneficiary cost estimates
 - **Claim verdicts:**
 ```json
 [
@@ -1260,7 +1327,7 @@ _No evidence sources are used for the bare LLM baseline._
 - Likely failure type: analyzer reasoning / evidence insufficient / label mapping / retrieval / extraction / other
 - Notes:
 
-### 33. PolitiFact / pf_029 - mostly-true
+### 35. PolitiFact / pf_029 - mostly-true
 
 #### Input
 - **Claim:** Says Hillary Clinton called the Trans-Pacific Partnership the gold standard. You called it the gold standard of trade deals. You said its the finest deal youve ever seen.
@@ -1275,9 +1342,9 @@ _No evidence sources are used for the bare LLM baseline._
 - **Correct:** `False`
 - **Within one level:** `True`
 - **Failure reason:** verdict got `unverifiable`, expected one of `mostly_true, true`
-- **TLDR:** The claim about Clinton and the speaker praising TPP as the “gold standard” can’t be verified here.
-- **Explanation:** This is a specific attribution of quotes to Hillary Clinton and to “you,” but no source, date, or transcript is provided. While the TPP was often described positively by supporters, confirming exact wording like “gold standard” and “finest deal you’ve ever seen” requires direct evidence from speeches, interviews, or transcripts.
-- **Confidence reason:** No primary sources or exact quotes provided.
+- **TLDR:** The claim about Clinton calling TPP the “gold standard” can’t be verified here.
+- **Explanation:** This is a specific attribution of quotes to Hillary Clinton and to “you,” but no sources, dates, or direct excerpts are provided. Without the original statements or a verifiable transcript/link, it’s not possible to confirm whether Clinton used that exact phrasing or whether the “you” quote is accurate.
+- **Confidence reason:** No primary sources or transcripts provided
 - **Claim verdicts:**
 ```json
 [
@@ -1299,7 +1366,7 @@ _No evidence sources are used for the bare LLM baseline._
 - Likely failure type: analyzer reasoning / evidence insufficient / label mapping / retrieval / extraction / other
 - Notes:
 
-### 34. PolitiFact / pf_030 - true
+### 36. PolitiFact / pf_030 - true
 
 #### Input
 - **Claim:** Today California is kicking our butt, creating more jobs and more economic growth than Texas.
@@ -1309,14 +1376,14 @@ _No evidence sources are used for the bare LLM baseline._
 
 #### Output
 - **Actual verdict:** `mostly_false`
-- **Score:** `28`
+- **Score:** `35`
 - **Confidence:** `medium`
 - **Correct:** `False`
 - **Within one level:** `False`
 - **Failure reason:** verdict got `mostly_false`, expected one of `true`
-- **TLDR:** California isn’t clearly outperforming Texas today in jobs and growth.
-- **Explanation:** California’s economy is large, but recent years have seen Texas grow faster in population and job creation, often outpacing California in net job growth. Without specific time period and data, the claim that California is “kicking our butt” and creating more jobs and growth than Texas is not supported by general recent trends.
-- **Confidence reason:** Trends favor Texas; claim lacks timeframe and metrics.
+- **TLDR:** California is not clearly outperforming Texas today in jobs and growth.
+- **Explanation:** California’s economy is large, but recent years have not shown a consistent, clear lead over Texas in job creation and growth. Texas has generally been among the fastest-growing U.S. states for population and job growth, while California has faced higher costs and slower job growth in some periods. Without specific time frame and metrics, the claim is too broad and likely inaccurate.
+- **Confidence reason:** Broad, time-unclear claim; general trends suggest Texas leads.
 - **Claim verdicts:**
 ```json
 [
@@ -1340,58 +1407,9 @@ _No evidence sources are used for the bare LLM baseline._
 
 ## Arm A - Gold Evidence
 
-Failures shown: 12
+Failures shown: 9
 
-### 1. AVeriTeC / av_001 - Conflicting Evidence/Cherrypicking
-
-#### Input
-- **Claim:** Indian Railways has been completely privatized, and as a result, scores of people working in the Railways would lose their jobs.
-- **Expected label:** Conflicting Evidence/Cherrypicking
-- **Expected verdicts:** `mixed, mostly_true, mostly_false`
-- **Expected score range:** `[25, 75]`
-
-#### Output
-- **Actual verdict:** `mostly_false`
-- **Score:** `10`
-- **Confidence:** `high`
-- **Correct:** `False`
-- **Within one level:** `True`
-- **Failure reason:** score got `10`, expected `25-75`
-- **TLDR:** Sources say there will be no job losses and privatization is not complete.
-- **Explanation:** Source 1 indicates privatization is not complete: it mentions public-private partnership in certain areas while control remains with @RailMinIndia, and explicitly says “No jobs are being lost.” Source 2 also states “No job cuts, but profiles may change,” contradicting the claim that complete privatization would cause many job losses.
-- **Confidence reason:** Both sources directly deny job losses and full privatization.
-- **Claim verdicts:**
-```json
-[
-  {
-    "claim": "Indian Railways has been completely privatized, and as a result, scores of people working in the Railways would lose their jobs.",
-    "verdict": "contradicted"
-  }
-]
-```
-- **Source stances:**
-```json
-{
-  "https://web.archive.org/web/20200909075240im_/https://pbs.twimg.com/profile_banners/1207634475254865921/1598874762/1500x500": "contradicting",
-  "https://web.archive.org/web/20211206134459/https://www.livemint.com/news/india/no-job-cuts-but-profiles-may-change-says-indian-railways-11593790324156.html": "contradicting"
-}
-```
-
-#### Gold Evidence Input
-1. **Has the government-owned Indian Railways been fully privatised?**
-   URL: https://web.archive.org/web/20200909075240im_/https://pbs.twimg.com/profile_banners/1207634475254865921/1598874762/1500x500
-   Content: There are certain areas where public-private partnership is being worked upon but the control will still vest with @RailMinIndia. No jobs are being lost.
-
-2. **Will there be Job losses due to the partial privatization?**
-   URL: https://web.archive.org/web/20211206134459/https://www.livemint.com/news/india/no-job-cuts-but-profiles-may-change-says-indian-railways-11593790324156.html
-   Content: No job cuts, but profiles may change says Indian Railways.
-
-#### Human Review Notes
-- Evidence sufficient? yes / no / unclear
-- Likely failure type: analyzer reasoning / evidence insufficient / label mapping / retrieval / extraction / other
-- Notes:
-
-### 2. AVeriTeC / av_002 - Conflicting Evidence/Cherrypicking
+### 1. AVeriTeC / av_002 - Conflicting Evidence/Cherrypicking
 
 #### Input
 - **Claim:** Donald Trump said: "Biden also vowed to oppose school choice and close down charter schools, ripping away the ladder of opportunity for Black and Hispanic children."
@@ -1406,9 +1424,9 @@ Failures shown: 12
 - **Correct:** `False`
 - **Within one level:** `False`
 - **Failure reason:** verdict got `unverifiable`, expected one of `mixed, mostly_true, mostly_false`
-- **TLDR:** The sources don’t show Trump’s quoted statement or Biden’s alleged actions toward school choice and charter schools.
-- **Explanation:** None of the sources provide evidence that Donald Trump said the quoted line. Source 3 says Biden supports “good charter schools” and allowing students to pick among public schools (school choice options), which contradicts the claim that Biden vowed to oppose school choice and close charter schools, but Source 4 only mentions increased oversight rather than closing charter schools.
-- **Confidence reason:** No source contains the specific Trump quote; Biden details are partial.
+- **TLDR:** Sources don’t provide evidence that Biden vowed to oppose school choice or close charter schools.
+- **Explanation:** None of the sources directly quote or document the specific claim that Biden vowed to oppose school choice and close down charter schools. Source 3 says Biden supports “good charter schools” and allowing students to pick among public schools (school choice options), which conflicts with the “close down charter schools” and “oppose school choice” parts, but it does not address the exact “vowed” quote. Source 4 only mentions the Biden administration pushing for more oversight of charter school funding, not closing charter schools.
+- **Confidence reason:** No direct evidence of the quoted vow; partial, indirect coverage only.
 - **Claim verdicts:**
 ```json
 [
@@ -1450,51 +1468,7 @@ Failures shown: 12
 - Likely failure type: analyzer reasoning / evidence insufficient / label mapping / retrieval / extraction / other
 - Notes:
 
-### 3. AVeriTeC / av_004 - Conflicting Evidence/Cherrypicking
-
-#### Input
-- **Claim:** The U.S. surgeon general and the Centers for Disease Control both previously said that ‘masks are not effective in preventing [the] general public from catching coronavirus.’
-- **Expected label:** Conflicting Evidence/Cherrypicking
-- **Expected verdicts:** `mixed, mostly_true, mostly_false`
-- **Expected score range:** `[25, 75]`
-
-#### Output
-- **Actual verdict:** `unverifiable`
-- **Score:** `50`
-- **Confidence:** `low`
-- **Correct:** `False`
-- **Within one level:** `False`
-- **Failure reason:** verdict got `unverifiable`, expected one of `mixed, mostly_true, mostly_false`
-- **TLDR:** The source discusses mask effectiveness generally, not what the surgeon general or CDC previously said.
-- **Explanation:** Source 1 (BMJ Global Health) states that mask effectiveness depends on how they are used, and that masks can be effective in some situations but not in others. However, it does not mention the U.S. surgeon general or the CDC, nor does it directly support or refute the specific claim about their prior statements that masks are not effective for the general public.
-- **Confidence reason:** Only one general study source; no surgeon general/CDC statements provided.
-- **Claim verdicts:**
-```json
-[
-  {
-    "claim": "The U.S. surgeon general and the Centers for Disease Control both previously said that ‘masks are not effective in preventing [the] general public from catching coronavirus.’",
-    "verdict": "unverifiable"
-  }
-]
-```
-- **Source stances:**
-```json
-{
-  "https://dx.doi.org/10.1136/bmjgh-2020-002794": "neutral"
-}
-```
-
-#### Gold Evidence Input
-1. **Are masks effective in preventing people from catching coronavirus?**
-   URL: https://dx.doi.org/10.1136/bmjgh-2020-002794
-   Content: The effectiveness of face masks is dependent on how they are used. Face mask use was 79% effective in reducing transmission in certain situations. But not effective in certain other situations.
-
-#### Human Review Notes
-- Evidence sufficient? yes / no / unclear
-- Likely failure type: analyzer reasoning / evidence insufficient / label mapping / retrieval / extraction / other
-- Notes:
-
-### 4. AVeriTeC / av_008 - Refuted
+### 2. AVeriTeC / av_008 - Refuted
 
 #### Input
 - **Claim:** Since 2002, South Africa’s police force has grown by 50%.
@@ -1508,10 +1482,10 @@ Failures shown: 12
 - **Confidence:** `medium`
 - **Correct:** `False`
 - **Within one level:** `False`
-- **Failure reason:** verdict got `mostly_true`, expected one of `false, mostly_false`; score got `78`, expected `0-40`
-- **TLDR:** Police employment rose from 132,310 (2002/03) to 192,277 (2018/19), roughly consistent with 50%.
-- **Explanation:** Source 1 reports 132,310 people employed in the SA police force in 2002/03, while Source 2 reports 192,277 employed in 2018/19. That increase is about 45% (192,277/132,310 ≈ 1.45), which is close to the claimed 50% growth. Source 3 provides a 45.3% growth figure, aligning with the implied calculation from Sources 1 and 2.
-- **Confidence reason:** Only two employment datapoints; growth period differs slightly.
+- **Failure reason:** verdict got `mostly_true`, expected one of `false, mostly_false`
+- **TLDR:** Employment rose from 132,310 (2002/03) to 192,277 (2018/19), not 50% since 2002.
+- **Explanation:** Source 1 reports 132,310 people employed in the SA police force in 2002/03, while Source 2 reports 192,277 employed in 2018/19. That increase is about 45% (192,277/132,310 ≈ 1.45), which is close to but not exactly the claimed 50% growth. Source 3’s 45.3% figure aligns with this calculation, but it does not directly establish “since 2002” as a precise 50% figure.
+- **Confidence reason:** Only two employment datapoints; growth period and exact 50% not directly shown.
 - **Claim verdicts:**
 ```json
 [
@@ -1548,7 +1522,7 @@ Failures shown: 12
 - Likely failure type: analyzer reasoning / evidence insufficient / label mapping / retrieval / extraction / other
 - Notes:
 
-### 5. AVeriTeC / av_010 - Refuted
+### 3. AVeriTeC / av_010 - Refuted
 
 #### Input
 - **Claim:** UNESCO declared Nadar community as the most ancient race in the world.
@@ -1562,10 +1536,10 @@ Failures shown: 12
 - **Confidence:** `low`
 - **Correct:** `False`
 - **Within one level:** `False`
-- **Failure reason:** verdict got `unverifiable`, expected one of `false, mostly_false`; score got `50`, expected `0-40`
-- **TLDR:** The sources do not mention UNESCO or any declaration about Nadars.
+- **Failure reason:** verdict got `unverifiable`, expected one of `false, mostly_false`
+- **TLDR:** The sources do not mention UNESCO or any declaration about Nadars being the oldest race.
 - **Explanation:** Source 1 describes the Nadar community as a caste in Tamil Nadu and Kerala, but it does not mention UNESCO or any claim about being the most ancient race. Source 2 discusses a DNA study suggesting the San people may be the oldest human population, with no reference to UNESCO or Nadars.
-- **Confidence reason:** Neither source addresses UNESCO or the specific declaration.
+- **Confidence reason:** No source addresses UNESCO or the specific claim.
 - **Claim verdicts:**
 ```json
 [
@@ -1597,56 +1571,7 @@ Failures shown: 12
 - Likely failure type: analyzer reasoning / evidence insufficient / label mapping / retrieval / extraction / other
 - Notes:
 
-### 6. AVeriTeC / av_012 - Not Enough Evidence
-
-#### Input
-- **Claim:** Hunter Biden (son of US president Joe Biden)  had 25,000 pics of him torturing and raping children under 10 in China on his laptop.
-- **Expected label:** Not Enough Evidence
-- **Expected verdicts:** `unverifiable, mixed`
-- **Expected score range:** `[30, 60]`
-
-#### Output
-- **Actual verdict:** `false`
-- **Score:** `10`
-- **Confidence:** `high`
-- **Correct:** `False`
-- **Within one level:** `False`
-- **Failure reason:** verdict got `false`, expected one of `unverifiable, mixed`; score got `10`, expected `30-60`
-- **TLDR:** The sources do not substantiate the alleged child abuse content on Hunter Biden’s laptop.
-- **Explanation:** Source 1 only says Hunter Biden's laptop was subpoenaed by an FBI agent who worked on child pornography, but it provides no evidence of 25,000 pictures or of torturing/raping children under 10 in China. Source 2 discusses a whistleblower claim about a laptop and that the FBI would not confirm or deny details; it does not verify the specific allegations about torture/rape or the number/age/location of victims.
-- **Confidence reason:** Both sources lack evidence for the specific graphic claims.
-- **Claim verdicts:**
-```json
-[
-  {
-    "claim": "Hunter Biden (son of US president Joe Biden)  had 25,000 pics of him torturing and raping children under 10 in China on his laptop.",
-    "verdict": "unverifiable"
-  }
-]
-```
-- **Source stances:**
-```json
-{
-  "https://twitter.com/atrupar/status/1317849887438966784?s=21": "neutral",
-  "https://www.foxnews.com/politics/sen-johnson-presses-wray-on-validity-of-hunter-biden-laptop-claim": "neutral"
-}
-```
-
-#### Gold Evidence Input
-1. **What is this claim based on?**
-   URL: https://twitter.com/atrupar/status/1317849887438966784?s=21
-   Content: Hunter Biden's laptop was subpoena'd by an FBI agent who workd on child pornography.
-
-2. **Was there child pornography on the laptop?**
-   URL: https://www.foxnews.com/politics/sen-johnson-presses-wray-on-validity-of-hunter-biden-laptop-claim
-   Content: Sen. Ron Johnson is calling on FBI Director Christopher Wray to confirm or deny details regarding a laptop said to have belonged to Democratic presidential nominee Joe Biden's son Hunter Biden. Johnson, R-Wis., said in a letter to Wray obtained by Fox News that a whistleblower contacted his committee on September 24, claiming to possess a laptop that Hunter Biden left at his business, and that he had turned it over to the FBI. Johnson noted that staff immediately asked the FBI to confirm certain details in order to validate the claim, but the bureau said they would not confirm or deny any of the information included in their request.
-
-#### Human Review Notes
-- Evidence sufficient? yes / no / unclear
-- Likely failure type: analyzer reasoning / evidence insufficient / label mapping / retrieval / extraction / other
-- Notes:
-
-### 7. AVeriTeC / av_013 - Refuted
+### 4. AVeriTeC / av_013 - Refuted
 
 #### Input
 - **Claim:** Dr. Ebeneezer, a medical doctor and a herbal practitioner at the Amuzu Hospital has instructed men to have sex at least 21 times a month to avoid prostate cancer.
@@ -1660,10 +1585,10 @@ Failures shown: 12
 - **Confidence:** `low`
 - **Correct:** `False`
 - **Within one level:** `False`
-- **Failure reason:** verdict got `unverifiable`, expected one of `false, mostly_false`; score got `50`, expected `0-40`
-- **TLDR:** Sources don’t verify the 21-times claim; they only mention a sex-frequency assertion and general linkage.
-- **Explanation:** Source 1 states an article claims Ebeneezer is a medical doctor and herbal practitioner at Amuzu Hospital and that men must have sex at least 21 times a month to avoid prostate cancer, but it does not provide evidence confirming the instruction. Source 2 only indicates that sex/ejaculation amount is linked to prostate cancer, which does not substantiate the specific “21 times a month” guidance or that Ebeneezer instructed it.
-- **Confidence reason:** Only one source mentions the specific 21-times instruction.
+- **Failure reason:** verdict got `unverifiable`, expected one of `false, mostly_false`
+- **TLDR:** Sources don’t verify the 21-times instruction; they only mention a related claim and general linkage.
+- **Explanation:** Source 1 states that an article claims Ebeneezer is a medical doctor and herbal practitioner at Amuzu Hospital and that men must have sex at least 21 times a month to avoid prostate cancer, but it does not independently confirm the instruction. Source 2 only addresses whether sex/ejaculation amount is linked to prostate cancer, without validating the specific “21 times a month” guidance or attributing it to Dr. Ebeneezer.
+- **Confidence reason:** Specific attribution and 21-times figure not confirmed.
 - **Claim verdicts:**
 ```json
 [
@@ -1676,7 +1601,7 @@ Failures shown: 12
 - **Source stances:**
 ```json
 {
-  "https://web.archive.org/web/20210119165100/https://www.westafricareporters.com/men-must-have-sex-at-least-21-times-a-month-to-avoid-prostate-cancer-expert/": "supporting",
+  "https://web.archive.org/web/20210119165100/https://www.westafricareporters.com/men-must-have-sex-at-least-21-times-a-month-to-avoid-prostate-cancer-expert/": "neutral",
   "https://web.archive.org/web/20201228105910/https://www.sciencedirect.com/science/article/abs/pii/S0302283816003778?via%3Dihub": "neutral"
 }
 ```
@@ -1695,7 +1620,7 @@ Failures shown: 12
 - Likely failure type: analyzer reasoning / evidence insufficient / label mapping / retrieval / extraction / other
 - Notes:
 
-### 8. AVeriTeC / av_015 - Not Enough Evidence
+### 5. AVeriTeC / av_015 - Not Enough Evidence
 
 #### Input
 - **Claim:** In the US lockdowns are partly responsible for excess deaths not directly attributed to COVID-19 which were observed in 2020.
@@ -1710,9 +1635,9 @@ Failures shown: 12
 - **Correct:** `False`
 - **Within one level:** `True`
 - **Failure reason:** verdict got `mostly_false`, expected one of `unverifiable, mixed`
-- **TLDR:** Sources do not support lockdowns causing excess non-COVID deaths in 2020.
-- **Explanation:** Source 1 estimates excess deaths in 2020 and notes that excess deaths may include deaths directly or indirectly associated with COVID-19, but it does not attribute the non-COVID portion to lockdowns. Sources 2 and 3 explicitly state that the studies they refer to do not mention lockdown factors in the excessive deaths, contradicting the claim.
-- **Confidence reason:** Lockdown attribution is not mentioned; only non-lockdown evidence provided.
+- **TLDR:** The sources don’t support lockdowns causing excess deaths; they only discuss excess deaths and missing lockdown mentions.
+- **Explanation:** Source 1 (CDC MMWR) estimates excess deaths in 2020 and notes that excess deaths may include deaths directly or indirectly attributable to COVID-19, but it does not attribute the excess to lockdowns. Sources 2 and 3 explicitly state that the studies they refer to “do not mention lockdown factors in the excessive deaths,” which contradicts the claim that lockdowns are partly responsible.
+- **Confidence reason:** CDC discusses excess deaths but not lockdown causation; other sources deny lockdown mention.
 - **Claim verdicts:**
 ```json
 [
@@ -1749,7 +1674,7 @@ Failures shown: 12
 - Likely failure type: analyzer reasoning / evidence insufficient / label mapping / retrieval / extraction / other
 - Notes:
 
-### 9. AVeriTeC / av_018 - Not Enough Evidence
+### 6. AVeriTeC / av_018 - Not Enough Evidence
 
 #### Input
 - **Claim:** There was a 40% drop in the price of oil, Nigeria's main export.
@@ -1764,9 +1689,9 @@ Failures shown: 12
 - **Correct:** `False`
 - **Within one level:** `True`
 - **Failure reason:** verdict got `mostly_false`, expected one of `unverifiable, mixed`
-- **TLDR:** The sources don’t support a 40% oil-price drop; one cites a 73% decrease (Jan–Apr 2020).
-- **Explanation:** Source 1 reports that Nigeria’s monthly average oil prices decreased 73% from January to April 2020, not 40%. Source 2 only discusses that oil prices fluctuate, without giving any specific drop percentage or tying it to a 40% decline.
-- **Confidence reason:** Only one source gives a specific percentage, and it differs.
+- **TLDR:** The sources do not support a 40% oil-price drop; one cites a 73% fall.
+- **Explanation:** Source 1 reports that Nigeria’s monthly average oil prices decreased 73% from January to April 2020, not 40%. Source 2 only discusses that oil prices fluctuate, without giving any specific percentage drop or linking it to a 40% decline.
+- **Confidence reason:** Only one source gives a specific drop figure, and it differs.
 - **Claim verdicts:**
 ```json
 [
@@ -1798,7 +1723,7 @@ Failures shown: 12
 - Likely failure type: analyzer reasoning / evidence insufficient / label mapping / retrieval / extraction / other
 - Notes:
 
-### 10. AVeriTeC / av_019 - Conflicting Evidence/Cherrypicking
+### 7. AVeriTeC / av_019 - Conflicting Evidence/Cherrypicking
 
 #### Input
 - **Claim:** Twitter now putting warnings on tweets that are just unedited clips of Biden saying he would end fracking
@@ -1813,9 +1738,9 @@ Failures shown: 12
 - **Correct:** `False`
 - **Within one level:** `False`
 - **Failure reason:** verdict got `unverifiable`, expected one of `mixed, mostly_true, mostly_false`
-- **TLDR:** Sources don’t show Twitter warned about Biden fracking clips specifically.
-- **Explanation:** Source 1 describes general election-related changes, including prompting users to Quote Tweet with commentary and warning about not opening/reading content before retweeting. Source 2 only answers “Yes” to a question about warnings on un-edited tweets about Biden ending fracking, but it provides no supporting details. Because the sources don’t directly document that Twitter applied those warnings to Biden fracking clips, the claim can’t be confirmed from the provided text.
-- **Confidence reason:** Only one source directly asserts “Yes” without evidence.
+- **TLDR:** The sources don’t provide evidence about Biden/fracking-specific warnings.
+- **Explanation:** Source 1 discusses general Twitter election-related changes, including encouraging Quote Tweets and warning users to read content before retweeting. Source 2 is a generic “Yes” to a question about warnings on unedited Biden fracking tweets, but it does not provide underlying evidence or details beyond that single word. Because the sources don’t specifically document warnings on Biden fracking clips, the claim can’t be confirmed or refuted from the provided material.
+- **Confidence reason:** Only one vague “Yes”; no specific documentation for Biden fracking warnings.
 - **Claim verdicts:**
 ```json
 [
@@ -1829,7 +1754,7 @@ Failures shown: 12
 ```json
 {
   "https://web.archive.org/web/20201101032342/https://blog.twitter.com/en_us/topics/company/2020/2020-election-changes.html": "neutral",
-  "https://web.archive.org/web/20201101024709/https://blog.twitter.com/en_us/topics/company/2020/2020-election-changes.html": "supporting"
+  "https://web.archive.org/web/20201101024709/https://blog.twitter.com/en_us/topics/company/2020/2020-election-changes.html": "neutral"
 }
 ```
 
@@ -1847,7 +1772,7 @@ Failures shown: 12
 - Likely failure type: analyzer reasoning / evidence insufficient / label mapping / retrieval / extraction / other
 - Notes:
 
-### 11. AVeriTeC / av_023 - Conflicting Evidence/Cherrypicking
+### 8. AVeriTeC / av_023 - Conflicting Evidence/Cherrypicking
 
 #### Input
 - **Claim:** Even if your mail-in ballot is postmarked prior to the Election day but arrives after the Election day it will be thrown out.
@@ -1863,8 +1788,8 @@ Failures shown: 12
 - **Within one level:** `False`
 - **Failure reason:** verdict got `unverifiable`, expected one of `mixed, mostly_true, mostly_false`
 - **TLDR:** The sources don’t say what happens when a ballot is postmarked before Election Day but arrives after.
-- **Explanation:** Source 2 only states that Wisconsin (and about 30 states) require absentee ballots to be received by Election Day to be counted, which implies late-arriving ballots may be rejected, but it does not explicitly address the postmark-before-arrival scenario. Source 1 and Source 3 do not provide relevant information about postmark vs. receipt rules for ballots arriving after Election Day.
-- **Confidence reason:** Sources don’t directly address postmark-before/arrive-after rule.
+- **Explanation:** Source 2 only states that Wisconsin (and about 30 states) require absentee ballots to be received by Election Day to be counted, which does not specifically address the postmark-before/arrival-after scenario. Source 1 is about state deadline rules generally, and Source 3 contains no relevant information (“No”). None of the sources explicitly confirm that such ballots are always thrown out.
+- **Confidence reason:** No source directly addresses postmark-before/arrive-after rule.
 - **Claim verdicts:**
 ```json
 [
@@ -1901,7 +1826,7 @@ Failures shown: 12
 - Likely failure type: analyzer reasoning / evidence insufficient / label mapping / retrieval / extraction / other
 - Notes:
 
-### 12. AVeriTeC / av_029 - Refuted
+### 9. AVeriTeC / av_029 - Refuted
 
 #### Input
 - **Claim:** Before the first case of the coronavirus spread within the United States, the president Donald Trump took unprecedented action and suspended all travel from China.
@@ -1915,10 +1840,10 @@ Failures shown: 12
 - **Confidence:** `low`
 - **Correct:** `False`
 - **Within one level:** `False`
-- **Failure reason:** verdict got `unverifiable`, expected one of `false, mostly_false`; score got `50`, expected `0-40`
+- **Failure reason:** verdict got `unverifiable`, expected one of `false, mostly_false`
 - **TLDR:** Sources don’t confirm Trump suspended all China travel before the first U.S. case.
-- **Explanation:** Source 1 only states the first U.S. COVID-19 case was discovered on 21 January 2020, but it does not describe any presidential action or travel suspension. Source 2 discusses travel restrictions after Trump’s restrictions, but it does not establish that they were unprecedented or that they suspended all travel from China before the first U.S. case.
-- **Confidence reason:** Sources omit key details about timing and scope of the travel suspension.
+- **Explanation:** Source 1 only provides the date the first U.S. COVID-19 case was discovered (21 January 2020) and does not describe any presidential travel action. Source 2 discusses travel restrictions after the ban, but it does not state that Trump suspended all travel from China before the first U.S. case or characterize the action as “unprecedented.”
+- **Confidence reason:** Sources lack direct evidence for timing and scope of the travel suspension.
 - **Claim verdicts:**
 ```json
 [
@@ -1952,7 +1877,7 @@ Failures shown: 12
 
 ## Arm B - Searched Evidence
 
-Failures shown: 26
+Failures shown: 24
 
 ### 1. AVeriTeC / av_006 - Not Enough Evidence
 
@@ -1963,15 +1888,15 @@ Failures shown: 26
 - **Expected score range:** `[30, 60]`
 
 #### Output
-- **Actual verdict:** `mostly_false`
+- **Actual verdict:** `false`
 - **Score:** `15`
 - **Confidence:** `high`
 - **Correct:** `False`
-- **Within one level:** `True`
-- **Failure reason:** verdict got `mostly_false`, expected one of `unverifiable, mixed`
-- **TLDR:** The 2020 ranking claim is misleading because it used 2019 data, not 2020.
-- **Explanation:** HumAngle (Source 1) and AFP Fact Check (Source 3) both state that the viral “2020” ranking was not actually the 2020 Global Terrorism Index release; it used last year’s figures (2019). FactCheckHub (Source 2) similarly says the infographic was misleading because the 2020 GTI ranking had not been released when the TV segment aired, and it was actually the 2019 ranking.
-- **Confidence reason:** Multiple fact-checkers independently report it used 2019 data.
+- **Within one level:** `False`
+- **Failure reason:** verdict got `false`, expected one of `unverifiable, mixed`
+- **TLDR:** Sources say the 2020 ranking image used 2019 data, not a 2020 GTI release.
+- **Explanation:** Source 3 (AFP) states the publisher (IEP) confirmed there was no 2020 terrorism index yet and that the viral screenshot showed 2019 data; it also notes Nigeria genuinely ranked third in 2019. Source 1 (HumAngle) similarly concludes it is false to claim Nigeria was ranked third most terrorised in 2020 because no such report had been released, and Source 2 (FactCheckHub) calls the infographic misleading because the 2020 GTI ranking had not been released and the graphic used older data.
+- **Confidence reason:** Multiple fact-checks directly address and refute the 2020 ranking claim.
 - **Claim verdicts:**
 ```json
 [
@@ -2028,14 +1953,14 @@ Failures shown: 26
 
 #### Output
 - **Actual verdict:** `mostly_false`
-- **Score:** `25`
+- **Score:** `35`
 - **Confidence:** `medium`
 - **Correct:** `False`
 - **Within one level:** `True`
 - **Failure reason:** verdict got `mostly_false`, expected one of `unverifiable, mixed`
-- **TLDR:** Sources mostly say increased enforcement/barriers can increase smuggling, not decrease it.
-- **Explanation:** Source 1 explicitly argues that expanded border enforcement increases human smuggling and that enforcement can fuel reliance on smugglers. Source 4 similarly finds that increased enforcement can lead border crossers to resort to smugglers more, implying smuggling may rise rather than fall. While Sources 3 and 5 discuss declines in unauthorized entries, they do not provide evidence about illegal drug activity or human smuggling decreasing specifically where barriers are deployed.
-- **Confidence reason:** Direct evidence on smuggling effects is mostly contrary; barrier-specific drug data absent.
+- **TLDR:** Sources mostly say increased enforcement and barriers can increase smuggling, not decrease it.
+- **Explanation:** Source 1 explicitly argues that expanded border enforcement is more likely to increase human smuggling, citing increased smuggler usage rates and that enforcement fueled reliance on smugglers. Source 4 similarly finds enforcement can lead to marginally higher violent crime in a sector as border crossers resort to smugglers, linking enforcement dynamics to smuggling behavior. While Sources 3 and 2 discuss reduced unauthorized entries and barrier effectiveness, they do not provide evidence that illegal drug smuggling and human smuggling decreased specifically in areas where barriers were deployed.
+- **Confidence reason:** Direct evidence against the claim appears in Source 1 and 4; other sources are indirect or incomplete.
 - **Claim verdicts:**
 ```json
 [
@@ -2049,8 +1974,8 @@ Failures shown: 26
 ```json
 {
   "https://nfap.com/wp-content/uploads/2022/05/Human-Smuggling.NFAP-Policy-Brief.May-2022-1.pdf": "contradicting",
-  "https://www.dhs.gov/archive/news/2020/10/29/border-wall-system-deployed-effective-and-disrupting-criminals-and-smugglers": "neutral",
-  "https://cmsny.org/publications/jmhs-is-border-enforcement-effective/": "neutral",
+  "https://www.dhs.gov/archive/news/2020/10/29/border-wall-system-deployed-effective-and-disrupting-criminals-and-smugglers": "supporting",
+  "https://cmsny.org/publications/jmhs-is-border-enforcement-effective/": "supporting",
   "https://ccis.ucsd.edu/_files/wp131.pdf": "contradicting",
   "https://www.dhs.gov/news/2025/12/04/border-crossings-once-again-record-low-november-2025": "neutral"
 }
@@ -2097,9 +2022,9 @@ Failures shown: 26
 - **Correct:** `False`
 - **Within one level:** `False`
 - **Failure reason:** verdict got `unverifiable`, expected one of `false, mostly_false`
-- **TLDR:** The sources don’t provide police-force growth figures from 2002 to support this claim.
-- **Explanation:** None of the provided sources include data showing how many South Africa’s police force members there were in 2002 and how many there were later to calculate a 50% increase. Source 2 discusses police shortages and comparisons per 100,000 people, but it does not state a 2002-to-present growth percentage. The SAPS annual report excerpts shown (Sources 1 and 4) list legislation and do not provide the needed historical staffing-growth figures.
-- **Confidence reason:** No source contains the required 2002-to-growth percentage data.
+- **TLDR:** The sources don’t provide police-force growth data since 2002, so the 50% claim can’t be checked.
+- **Explanation:** None of the provided sources include figures for South Africa’s police force size in 2002 and a later year, nor do they state a 50% growth figure. Source 2 discusses police shortages and cross-country comparisons, but it does not quantify growth since 2002. Sources 1 and 4 are annual reports, yet the provided excerpts only list legislation and do not contain staffing-growth statistics.
+- **Confidence reason:** No source excerpt contains the needed 2002-to-present police growth numbers.
 - **Claim verdicts:**
 ```json
 [
@@ -2146,71 +2071,7 @@ Failures shown: 26
 - Likely failure type: analyzer reasoning / evidence insufficient / label mapping / retrieval / extraction / other
 - Notes:
 
-### 4. AVeriTeC / av_009 - Supported
-
-#### Input
-- **Claim:** Today, Nigeria grapple has a population exceeding 200 million.
-- **Expected label:** Supported
-- **Expected verdicts:** `true, mostly_true`
-- **Expected score range:** `[60, 100]`
-
-#### Output
-- **Actual verdict:** `mixed`
-- **Score:** `55`
-- **Confidence:** `medium`
-- **Correct:** `False`
-- **Within one level:** `True`
-- **Failure reason:** verdict got `mixed`, expected one of `true, mostly_true`
-- **TLDR:** Some sources place Nigeria above 200M, but others dispute higher figures.
-- **Explanation:** Source 1 says Nigeria’s population is about 223.8M in 2023 and cites estimates around 226.2M (Dec 2023) and 227.4M (Mar 2024), which supports the “exceeding 200 million” part. However, Source 2 rates a different (higher) claim as false and gives a UN dashboard estimate of 237.5M, while Source 3 and Source 4 provide projections/estimates that also exceed 200M (e.g., 2025/2026 values), and Source 5 claims ~240M in 2026—none directly contradict the “>200M” threshold. Overall, the sources generally support exceeding 200M, but they conflict on exact totals and some are projections rather than census counts.
-- **Confidence reason:** Estimates/projections vary, but all provided figures exceed 200M.
-- **Claim verdicts:**
-```json
-[
-  {
-    "claim": "Today, Nigeria grapple has a population exceeding 200 million.",
-    "verdict": "supported"
-  }
-]
-```
-- **Source stances:**
-```json
-{
-  "https://factcheckhub.com/tinubu-makes-false-claim-about-nigerias-total-population/": "supporting",
-  "https://factspace.org/fact-check-king-promises-claim-that-nigerias-population-is-about-300-million-is-false/": "supporting",
-  "https://worldpopulationreview.com/countries/nigeria": "supporting",
-  "https://www.worldometers.info/world-population/nigeria-population/": "supporting",
-  "https://truthnigeria.com/2026/02/nigerias-population-boom-may-include-a-religious-shift/": "supporting"
-}
-```
-
-#### Search Evidence Input
-1. **Tinubu makes false claim about Nigeria's total population**
-   URL: https://factcheckhub.com/tinubu-makes-false-claim-about-nigerias-total-population/
-   Content: Findings by The FactCheckHub show that the claim is FALSE. Nigeria stood as the most populous country in Africa with an estimated total population of 226.2 million as of December 2023 with over 250 ethnic groups, each with its language and culture. The country’s population is projected to continue growing rapidly, and it is expected to overtake the population of the United States and become the third world’s most populous country by 2050. Nigeria’s last conducted population census was in 2006 when the country’s population figure was put at 140 million. Statutorily, another population census was due in 2016, ten years after the last exercise but the Commission failed to conduct the head [...]
-
-2. **FACT-CHECK: King Promise's claim that Nigeria's population is about 300 million is False - FactSpace West Africa**
-   URL: https://factspace.org/fact-check-king-promises-claim-that-nigerias-population-is-about-300-million-is-false/
-   Content: FACT-CHECK: King Promise's claim that Nigeria's population is about 300 million is False ## Summary | | | | --- | Population size | Ghana | Nigeria | | UN World Population dashboard | 35.1 million | 237.5 million | | Ghana Statistical Service (2021) vs. Nigeria Bureau of Statistics (2022) | 30.8 million | 216.7 million | | GSS (projected population 2024) vs. Lagos State (2025) | 33 million | 22 million plus | The data presented above are to demonstrate the following. ## Verdict Therefore, the claim is rated False! ### Related Posts Nigeria records new COVID-19 case in Cross River State ### Nigeria records new COVID-19 case in Cross River State FACT-CHECK: ABC’s claims about Liberia’s [...]
-
-3. **Nigeria Population 2026**
-   URL: https://worldpopulationreview.com/countries/nigeria
-   Content: Last collected in 2012 by the Nigeria National Bureau of Statistics, the total population of citizens in Nigeria was around 166.2 million people. In 2016, it is estimated to have over 178.5 million people although United Nations projections have placed the population as high as 186 million. Back in 1960, when the country declared its independence from the United Kingdom, the country recorded an estimated 45.2 million people. That constitutes a change of about 268% between the year 1960 and the year 2012. The entire population of Nigeria accounts for about 2.35% of the entire earth’s population. This means that about 1 out of every 43 people in the world call Nigeria their home. [...] [...]
-
-4. **Nigeria Population (2026) - Worldometer**
-   URL: https://www.worldometers.info/world-population/nigeria-population/
-   Content: | Rank | Urban Area | Population Estimate (2025) | --- | 1 | Lagos | 12,791,699 | | 2 | Onitsha | 5,627,706 | | 3 | Kano | 4,840,280 | | 4 | Owerri | 3,833,343 | | 5 | Ibadan | 3,720,721 | | 6 | Port Harcourt | 2,341,445 | | 7 | Kaduna | 1,890,448 | | 8 | Benin City | 1,845,432 | | 9 | Warri | 1,607,702 | | 10 | Uyo | 1,567,115 | | 11 | Aba | 1,428,069 | | 12 | Aboh | 1,374,320 | | 13 | Abuja | 1,373,722 | | 14 | Ilorin | 1,282,219 | | 15 | Maiduguri | 1,225,505 | | 16 | Enugu | 1,115,303 | | 17 | Otite | 1,020,218 | | 18 | Jos | 923,652 | | 19 | Ikorodu | 916,166 | | 20 | Sokoto | 903,238 | | 21 | Umuahia | 843,245 | | 22 | Nsukka | 830,196 | | 23 | Abeokuta | 801,826 | | 24 | Oyo | [...]
-
-5. **Christians Face a Shrinking Future as Nigeria’s Population Booms - Truth Nigeria**
-   URL: https://truthnigeria.com/2026/02/nigerias-population-boom-may-include-a-religious-shift/
-   Content: By comparison, the United States had about 281 million people in 2000, rising to 339 million in 2020 and around 348 million in 2026. Its population is projected to reach roughly 355 million by 2030, 370 million by 2040, and about 380 million by 2050. ## Mega-Cities on Steroids Nigeria’s population explosion will be most visible in the cities. The rural-to-urban migration is moving at a breakneck pace, transforming urban centers into mega-cities. The port city of Lagos already ranks among the world’s fastest-growing megacities, with 17.8 million people today. By 2050, Lagos’ population is expected to double in size, which will make it the third largest city in the world. [...] Truth [...]
-
-#### Human Review Notes
-- Evidence sufficient? yes / no / unclear
-- Likely failure type: analyzer reasoning / evidence insufficient / label mapping / retrieval / extraction / other
-- Notes:
-
-### 5. AVeriTeC / av_012 - Not Enough Evidence
+### 4. AVeriTeC / av_012 - Not Enough Evidence
 
 #### Input
 - **Claim:** Hunter Biden (son of US president Joe Biden)  had 25,000 pics of him torturing and raping children under 10 in China on his laptop.
@@ -2225,8 +2086,8 @@ Failures shown: 26
 - **Correct:** `False`
 - **Within one level:** `False`
 - **Failure reason:** verdict got `false`, expected one of `unverifiable, mixed`
-- **TLDR:** Sources say there’s no evidence for the alleged 25,000 child-abuse photos on Hunter Biden’s laptop.
-- **Explanation:** PolitiFact states there is no evidence that a laptop previously belonging to Hunter Biden contains child pornography, and that the specific allegation about “25,000 pics” originated on an anonymous internet forum (Source 1) and was rated False (Source 2). FactCheck.org similarly says the meme provides no evidence despite claiming a specific number of photos (Source 3).
+- **TLDR:** Sources say there’s no evidence for the “25,000 pics” child-torture/rape claim.
+- **Explanation:** PolitiFact states there is no evidence that a laptop previously belonging to Hunter Biden contains child pornography, and that the specific allegation originated on an anonymous internet forum (Source 1). FactCheck.org similarly says the Facebook meme claiming “25,000 pics” provides no evidence (Source 3).
 - **Confidence reason:** Multiple fact-checkers directly address and reject the exact allegation.
 - **Claim verdicts:**
 ```json
@@ -2274,7 +2135,7 @@ Failures shown: 26
 - Likely failure type: analyzer reasoning / evidence insufficient / label mapping / retrieval / extraction / other
 - Notes:
 
-### 6. AVeriTeC / av_016 - Not Enough Evidence
+### 5. AVeriTeC / av_016 - Not Enough Evidence
 
 #### Input
 - **Claim:** You see the number today? 33.1 GDP. The biggest in the history of our country by almost triple, right? Almost triple. Now it’s very much bigger than any GDP we’ve ever had. You have to go back to the 1950s, and then it’s less than half. This is the greatest number, 33.1 percent.
@@ -2289,9 +2150,9 @@ Failures shown: 26
 - **Correct:** `False`
 - **Within one level:** `True`
 - **Failure reason:** verdict got `mostly_false`, expected one of `unverifiable, mixed`
-- **TLDR:** Sources support the 33.1% figure but contradict the “greatest ever” and “almost triple” comparisons.
-- **Explanation:** CNBC and NBC News both state the U.S. GDP grew at a 33.1% annualized rate in Q3 2020, matching the “33.1 percent” part of the claim (Source 1, Source 3). However, the LA Times argues the 33.1% headline is misleading and that actual Q3 growth was 7.4%, undermining the speaker’s implied magnitude/comparison (Source 2). The provided GDP tables (Multpl, Macrotrends) list GDP levels by year but do not support the specific assertions that the 33.1% growth is “the biggest in history…by almost triple” or that it is “less than half” when going back to the 1950s (Source 4, Source 5).
-- **Confidence reason:** Some sources confirm 33.1% but others directly dispute the interpretation; comparisons aren’t evidenced.
+- **TLDR:** Sources support the 33.1% figure but contradict the “almost triple” and “greatest ever” comparisons.
+- **Explanation:** CNBC (Source 1) and the other news sources confirm a 33.1% annualized GDP growth rate in Q3 2020. However, the claim that this is “the biggest in the history of our country by almost triple” and that it is “very much bigger than any GDP we’ve ever had” is not supported by the provided sources; the LA Times (Source 2) explicitly says the 33.1% headline is misleading and that actual Q3 growth was 7.4%, and it does not substantiate the “almost triple”/“greatest ever” comparison. The “33.1 percent” part is supported, but the historical magnitude comparisons are contradicted or unsupported by the sources.
+- **Confidence reason:** Multiple sources confirm 33.1% annualized growth; historical comparison claims are unsupported/contradicted.
 - **Claim verdicts:**
 ```json
 [
@@ -2322,7 +2183,7 @@ Failures shown: 26
 {
   "https://www.cnbc.com/2020/10/29/us-gdp-report-third-quarter-2020.html": "supporting",
   "https://enewspaper.latimes.com/infinity/article_share.aspx?guid=b4a6e8b2-c9dd-4f7f-9c93-08cf03222a7e": "contradicting",
-  "https://www.nbcnews.com/business/economy/gdp-rose-33-1-percent-last-quarter-blowout-figure-not-n1245068": "supporting",
+  "https://www.nbcnews.com/business/economy/gdp-rose-33-1-percent-last-quarter-blowout-figure-not-n1245068": "contradicting",
   "https://www.multpl.com/us-gdp-inflation-adjusted/table/by-year": "neutral",
   "https://www.macrotrends.net/3004/us-gdp": "neutral"
 }
@@ -2354,7 +2215,7 @@ Failures shown: 26
 - Likely failure type: analyzer reasoning / evidence insufficient / label mapping / retrieval / extraction / other
 - Notes:
 
-### 7. AVeriTeC / av_017 - Supported
+### 6. AVeriTeC / av_017 - Supported
 
 #### Input
 - **Claim:** Because of a so-called trade war with China, America lost 300,000 manufacturing jobs.
@@ -2369,9 +2230,9 @@ Failures shown: 26
 - **Correct:** `False`
 - **Within one level:** `False`
 - **Failure reason:** verdict got `mostly_false`, expected one of `true, mostly_true`
-- **TLDR:** Sources do not support the specific claim of 300,000 manufacturing jobs lost due to the China trade war.
-- **Explanation:** Source 1 mentions Moody’s estimating the trade conflict with China reduced U.S. employment by 300,000 jobs, but it does not specify that these were manufacturing jobs. Source 3 instead reports net negative effects on manufacturing employment (e.g., Federal Reserve findings of reduced manufacturing employment) and an Oxford Economics estimate of 245,000 economy-wide jobs lost, not 300,000 manufacturing jobs. Source 2 also finds no evidence of net U.S. job losses overall from the “China shock,” further undermining the claim’s framing and magnitude.
-- **Confidence reason:** Job-loss magnitude and sector attribution conflict across sources.
+- **TLDR:** Sources do not support the specific claim of 300,000 lost manufacturing jobs from the trade war.
+- **Explanation:** Source 1 cites Moody’s estimating the trade conflict with China reduced U.S. employment by 300,000 jobs, but it does not specify that these were manufacturing jobs. Source 3 instead reports net negative effects on manufacturing jobs from the tariffs, with an Oxford Economics estimate of 245,000 total jobs lost, not 300,000 manufacturing jobs. Source 2 finds no evidence of net U.S. job losses overall from the “China shock,” further undermining the claim’s framing.
+- **Confidence reason:** Job-loss magnitude is discussed, but manufacturing-specific and 300,000 figure are not consistently supported.
 - **Claim verdicts:**
 ```json
 [
@@ -2418,7 +2279,7 @@ Failures shown: 26
 - Likely failure type: analyzer reasoning / evidence insufficient / label mapping / retrieval / extraction / other
 - Notes:
 
-### 8. AVeriTeC / av_018 - Not Enough Evidence
+### 7. AVeriTeC / av_018 - Not Enough Evidence
 
 #### Input
 - **Claim:** There was a 40% drop in the price of oil, Nigeria's main export.
@@ -2433,15 +2294,15 @@ Failures shown: 26
 - **Correct:** `False`
 - **Within one level:** `True`
 - **Failure reason:** verdict got `mostly_false`, expected one of `unverifiable, mixed`
-- **TLDR:** Sources support a 40% drop in Nigeria’s exports, not a 40% oil price drop.
-- **Explanation:** Source 1 states Nigeria’s exports fell about 40.3% year-on-year, and that this was linked to plunging crude prices, but it does not say oil prices themselves dropped 40%. Sources 2 and 3 discuss oil prices falling below $40 and specific percentage moves, which are not described as a 40% drop. Therefore, the “40% drop in the price of oil” part is not supported by the provided sources, though the “Nigeria’s main export” (crude oil) is supported indirectly by Source 1.
-- **Confidence reason:** Oil-price magnitude not stated as 40% in sources.
+- **TLDR:** Sources support a 40% export drop, not a 40% oil price drop.
+- **Explanation:** Source 1 states Nigeria’s exports fell about 40.3% (2015 vs 2014) as crude prices plunged, but it does not say oil prices themselves dropped by 40%. Sources 2 and 3 discuss Brent falling below $40 (around $39/$37), which is not a clearly stated 40% drop. Therefore, the claim conflates a ~40% export decline with a ~40% oil price decline.
+- **Confidence reason:** Only one source mentions ~40% and it refers to exports.
 - **Claim verdicts:**
 ```json
 [
   {
     "claim": "There was a 40% drop in the price of oil, Nigeria's main export.",
-    "verdict": "mixed"
+    "verdict": "contradicted"
   }
 ]
 ```
@@ -2482,71 +2343,7 @@ Failures shown: 26
 - Likely failure type: analyzer reasoning / evidence insufficient / label mapping / retrieval / extraction / other
 - Notes:
 
-### 9. AVeriTeC / av_019 - Conflicting Evidence/Cherrypicking
-
-#### Input
-- **Claim:** Twitter now putting warnings on tweets that are just unedited clips of Biden saying he would end fracking
-- **Expected label:** Conflicting Evidence/Cherrypicking
-- **Expected verdicts:** `mixed, mostly_true, mostly_false`
-- **Expected score range:** `[25, 75]`
-
-#### Output
-- **Actual verdict:** `unverifiable`
-- **Score:** `50`
-- **Confidence:** `low`
-- **Correct:** `False`
-- **Within one level:** `False`
-- **Failure reason:** verdict got `unverifiable`, expected one of `mixed, mostly_true, mostly_false`
-- **TLDR:** Sources show Twitter labels edited Biden clips, but not warnings tied to fracking clips.
-- **Explanation:** Source 1, Source 3, and Source 4 describe Twitter labeling an edited/clipped Biden video as “manipulated media,” but they do not mention fracking or warnings specifically for “unedited clips” about ending fracking. Source 2 says Twitter warnings were not limited to Biden retweets, but it also does not establish that the warnings were for fracking-related unedited clips.
-- **Confidence reason:** Fracking-specific, unedited-clip warning claim not addressed.
-- **Claim verdicts:**
-```json
-[
-  {
-    "claim": "Twitter now putting warnings on tweets that are just unedited clips of Biden saying he would end fracking",
-    "verdict": "unverifiable"
-  }
-]
-```
-- **Source stances:**
-```json
-{
-  "https://www.wdsu.com/article/fact-check-viral-biden-video-is-deceptively-edited/31295847": "neutral",
-  "https://leadstories.com/hoax-alert/2020/10/fact-check-warning-not-just-for-biden-tweets-new-policy-applies-to-all-users.html": "neutral",
-  "https://www.bbc.com/news/world-us-canada-51799366": "neutral",
-  "https://www.nbcnews.com/tech/social-media/facebook-twitter-put-warning-label-edited-video-biden-n1153506": "neutral",
-  "https://www.factcheck.org/2020/10/trumps-misleading-attacks-on-biden-over-fracking/": "neutral"
-}
-```
-
-#### Search Evidence Input
-1. **Fact Check: Viral Biden video is deceptively edited**
-   URL: https://www.wdsu.com/article/fact-check-viral-biden-video-is-deceptively-edited/31295847
-   Content: It has also been widely shared on Twitter, where the president retweeted two versions of the clipped video — one from the director of social media at the White House, Dan Scavino, and one from the founder of the conservative organization Turning Point USA, Charlie Kirk. Twitter labeled the edited video as “manipulated media” under its new policy to address fake or misleading videos, audio and pictures. This is the first time that Twitter has used the label since implementing the policy on March 5, according to the company. As of March 9, though, a technical glitch was keeping the label from showing up on some views of the tweet, according to Twitter. When the label is working [...]
-
-2. **Fact Check: Twitter Warning NOT Just For Biden Retweets; New Policy Applies To All Retweeted Material | Lead Stories**
-   URL: https://leadstories.com/hoax-alert/2020/10/fact-check-warning-not-just-for-biden-tweets-new-policy-applies-to-all-users.html
-   Content: The claim about the warning solely on retweets about Biden was made by Zach Parkinson, who identified himself on Twitter as "Deputy Director of Communications - Research for @realDonaldTrump 2020. Former @WhiteHouse & @RNCResearch Alum. Proud Marylander." The claim appeared in a tweet (archived here) on the @ZachParkinson Twitter feed on October 23, 2020. It opened: This is what the post looked like on Twitter at the time of writing: Twitter screenshot Twitter screenshot (Source: Twitter screenshot taken on Sat Oct 24 15:25:00 2020 UTC) Parkinson is wrong. Twitter did not flag only retweets about Democratic presidential candidate Biden and fracking. As of October 9, 2020, all election- [...]
-
-3. **Twitter labels edited Biden video 'manipulated tweet'**
-   URL: https://www.bbc.com/news/world-us-canada-51799366
-   Content: Mr Biden, a leading candidate for the Democratic presidential nomination, actually said: "We can only re-elect Donald Trump if in fact we get engaged in this circular firing squad here. It's got to be a positive campaign." Mr Scavino shared the video in a tweet on Saturday. The president then re-tweeted it, telling his followers: "I agree with Joe!" #### Allow X content? Presentational white space The video was also shared on Facebook. A spokesperson for Facebook told the BBC: "Fact-checkers rated this video as partly false, so we are reducing its distribution and showing warning labels with more context for people who see it, try to share it, or already have. [...] # Twitter labels [...]
-
-4. **How new rules at Facebook and Twitter led to a warning beneath a Trump retweet**
-   URL: https://www.nbcnews.com/tech/social-media/facebook-twitter-put-warning-label-edited-video-biden-n1153506
-   Content: The site integrity team quickly decided that the video, which flipped the meaning of Biden's statement by cutting it off prematurely, broke Twitter's manipulated content rules, which went into place on Thursday. The clip originated from @thebradfordfile, a user known to boost pro-Trump conspiracy theories and conservative talking points. After it was shared by the White House, it was viewed on Twitter at least 6.4 million times and on Facebook more than 1 million times, according to the social media tracking tool Crowdtangle. It was further disseminated to millions more across social media by well-known Trump supporters, including Charlie Kirk, leader of the conservative group Turning [...]
-
-5. **Trump's Misleading Attacks on Biden Over Fracking - FactCheck.org**
-   URL: https://www.factcheck.org/2020/10/trumps-misleading-attacks-on-biden-over-fracking/
-   Content: But Trump wasn’t lying; Biden had made statements about his climate policies that critics interpreted as voicing support for a fracking prohibition. Some of those remarks are included in a campaign video that Trump has shown at recent rallies in West Salem, Wisconsin; Circleville, Ohio; and Martinsburg and Lititz, Pennsylvania. And some of the edited clips in that video leave out important context. To start, in the section of the video titled “Biden Will Ban Fracking,” it shows CNN’s Dana Bash asking Biden at a July 2019 Democratic candidates debate, “Would there be any place for fossil fuels, including coal and fracking, in a Biden administration?” In the Trump video, Biden answers: [...]
-
-#### Human Review Notes
-- Evidence sufficient? yes / no / unclear
-- Likely failure type: analyzer reasoning / evidence insufficient / label mapping / retrieval / extraction / other
-- Notes:
-
-### 10. AVeriTeC / av_020 - Supported
+### 8. AVeriTeC / av_020 - Supported
 
 #### Input
 - **Claim:** Edo State in Nigeria has a 19% unemployment rate.
@@ -2555,21 +2352,21 @@ Failures shown: 26
 - **Expected score range:** `[60, 100]`
 
 #### Output
-- **Actual verdict:** `unverifiable`
-- **Score:** `50`
+- **Actual verdict:** `mixed`
+- **Score:** `55`
 - **Confidence:** `low`
 - **Correct:** `False`
 - **Within one level:** `True`
-- **Failure reason:** verdict got `unverifiable`, expected one of `true, mostly_true`
-- **TLDR:** Sources don’t provide a definitive, citable NBS figure for Edo’s 19% unemployment rate.
-- **Explanation:** Source 1 reports Obaseki’s claim that Edo’s unemployment fell from 25% to 19% and says this was “verifiable with” an NBS report, but it does not reproduce the NBS state-specific 19% figure itself. The other sources provided do not give Edo’s unemployment rate as 19% (Source 2 discusses unemployment generally and mentions 2024 national unemployment, Source 3 focuses on national unemployment, Source 4 provides general Nigeria unemployment figures, and Source 5 is an NBS listing for Q3 2018 without the 19% value).
-- **Confidence reason:** Only one source mentions 19% for Edo, without direct NBS confirmation.
+- **Failure reason:** verdict got `mixed`, expected one of `true, mostly_true`
+- **TLDR:** One source reports 19% unemployment in Edo, but the provided evidence is indirect and not independently verified.
+- **Explanation:** Source 1 (Dubawa) says Obaseki claimed Edo’s unemployment fell from 25% to about 19% and that this was “verifiable with” an NBS report, citing a The Nation report that referenced NBS data. However, none of the provided sources include the actual NBS state-level figure for Edo showing 19%, and Source 2 and Source 4 discuss different unemployment figures/timeframes without confirming 19% for Edo. Therefore, the claim is only partially supported by the excerpted reporting rather than directly evidenced.
+- **Confidence reason:** Only one indirect source mentions the 19% figure; no direct NBS Edo value provided.
 - **Claim verdicts:**
 ```json
 [
   {
     "claim": "Edo State in Nigeria has a 19% unemployment rate.",
-    "verdict": "unverifiable"
+    "verdict": "mixed"
   }
 ]
 ```
@@ -2610,7 +2407,7 @@ Failures shown: 26
 - Likely failure type: analyzer reasoning / evidence insufficient / label mapping / retrieval / extraction / other
 - Notes:
 
-### 11. AVeriTeC / av_021 - Not Enough Evidence
+### 9. AVeriTeC / av_021 - Not Enough Evidence
 
 #### Input
 - **Claim:** Fuel in Nigeria in 2020 was not cheaper than that in Saudi Arabia.
@@ -2625,9 +2422,9 @@ Failures shown: 26
 - **Correct:** `False`
 - **Within one level:** `True`
 - **Failure reason:** verdict got `mostly_false`, expected one of `unverifiable, mixed`
-- **TLDR:** A fact-check says Saudi petrol was more expensive than Nigeria, contradicting the 40% claim.
-- **Explanation:** Source 1 directly evaluates the “40% cheaper in Nigeria than in Saudi Arabia” claim and concludes it is an exaggeration, stating Saudi petrol was 17.78% (octane 95) and 11.16% (octane 91) more expensive than Nigeria after currency conversion. Sources 3 and 4 discuss comparisons or general low prices in Saudi Arabia but do not provide 2020 Nigeria-vs-Saudi fuel price evidence matching the specific “not cheaper” framing.
-- **Confidence reason:** Only one source directly tests the specific 40% comparison.
+- **TLDR:** The sources indicate Nigeria’s petrol was cheaper than Saudi Arabia in 2020, contradicting the claim.
+- **Explanation:** Source 1 reports that Saudi Arabia’s petrol was more expensive than Nigeria’s after converting prices, stating Saudi petrol was 17.78% (octane 95) and 11.16% (octane 91) more expensive than Nigeria. This directly contradicts the claim that Nigeria’s 2020 fuel was not cheaper than Saudi Arabia. Sources 3 and 4 discuss comparisons and Saudi low prices generally, but Source 1 is the only one that directly addresses the relative price direction with calculations.
+- **Confidence reason:** Only one source directly compares Nigeria vs Saudi prices with calculations.
 - **Claim verdicts:**
 ```json
 [
@@ -2674,7 +2471,7 @@ Failures shown: 26
 - Likely failure type: analyzer reasoning / evidence insufficient / label mapping / retrieval / extraction / other
 - Notes:
 
-### 12. AVeriTeC / av_022 - Refuted
+### 10. AVeriTeC / av_022 - Refuted
 
 #### Input
 - **Claim:** The Nigerian government is donating $600 million to Democratic presidential nominee Joe Biden’s campaign.
@@ -2689,9 +2486,9 @@ Failures shown: 26
 - **Correct:** `False`
 - **Within one level:** `False`
 - **Failure reason:** verdict got `unverifiable`, expected one of `false, mostly_false`
-- **TLDR:** No provided source shows Nigeria donating $600 million to Biden’s campaign.
-- **Explanation:** None of the sources explicitly state that the Nigerian government is donating $600 million to Joe Biden’s campaign. Source 1 discusses $600 million in unemployment funds allegedly siphoned by scammers, and mentions Biden donors, but it does not describe a Nigerian government donation to Biden’s campaign. The other sources focus on other topics (foreign donations to Trump, U.S. assistance against Boko Haram, and a Facebook post about foreign gifts), none of which substantiate the specific $600 million Nigerian-government-to-Biden-campaign claim.
-- **Confidence reason:** Claim is not directly addressed by any source.
+- **TLDR:** None of the sources show Nigeria donating $600M to Biden’s campaign.
+- **Explanation:** Source 1 discusses $600 million in unemployment funds lost to Nigerian scammers in Washington state, and mentions Biden donors, but it does not say the Nigerian government donated $600 million to Joe Biden’s campaign. Sources 2, 3, 4, and 5 discuss other foreign-donation or U.S.-Nigeria assistance topics and do not provide evidence of a $600 million Nigerian government donation to Biden’s campaign.
+- **Confidence reason:** No source directly addresses the specific donation claim.
 - **Claim verdicts:**
 ```json
 [
@@ -2738,71 +2535,7 @@ Failures shown: 26
 - Likely failure type: analyzer reasoning / evidence insufficient / label mapping / retrieval / extraction / other
 - Notes:
 
-### 13. AVeriTeC / av_027 - Refuted
-
-#### Input
-- **Claim:** The PLAAF has shot down an Indian Sukhoi Su-30 fighter jet in Tibet.
-- **Expected label:** Refuted
-- **Expected verdicts:** `false, mostly_false`
-- **Expected score range:** `[0, 40]`
-
-#### Output
-- **Actual verdict:** `true`
-- **Score:** `95`
-- **Confidence:** `high`
-- **Correct:** `False`
-- **Within one level:** `False`
-- **Failure reason:** verdict got `true`, expected one of `false, mostly_false`
-- **TLDR:** The claim is fake; multiple fact-checks say no such shootdown occurred.
-- **Explanation:** All provided sources state the viral claim that the PLA shot down an Indian Su-30 in Tibet is false. Newschecker explicitly says the claim is fake and that no such incident has taken place, and it notes the Press Information Bureau (PIB) debunked it. Latestly repeats PIB’s debunking, Vishvas News reports IAF denial, and PIB Fact Check’s X post directly labels the claim as fake.
-- **Confidence reason:** Multiple fact-checks and PIB/IAF denials directly address the claim.
-- **Claim verdicts:**
-```json
-[
-  {
-    "claim": "The PLAAF has shot down an Indian Sukhoi Su-30 fighter jet in Tibet.",
-    "verdict": "contradicted"
-  }
-]
-```
-- **Source stances:**
-```json
-{
-  "https://newschecker.in/fact-check/pla-did-not-shoot-down-indian-fighter-jet-sukhoi-su-30-in-tibet": "contradicting",
-  "https://www.latestly.com/social-viral/fact-check/iaf-sukhoi-su-30-fighter-jet-was-not-shot-down-by-chinas-pla-in-tibet-pib-debunks-fake-news-2066857.html": "contradicting",
-  "https://www.instagram.com/p/CF6t5R3DEn8/": "contradicting",
-  "https://x.com/PIBFactCheck/status/1312692937898119169": "contradicting",
-  "https://www.vishvasnews.com/english/politics/fact-check-iafs-sukhoi-30-jet-was-not-shot-down-in-tibet-viral-claim-is-fake/": "contradicting"
-}
-```
-
-#### Search Evidence Input
-1. **PLA Did Not Shoot Down Indian Fighter Jet Sukhoi Su–30 In Tibet - Newschecker**
-   URL: https://newschecker.in/fact-check/pla-did-not-shoot-down-indian-fighter-jet-sukhoi-su-30-in-tibet
-   Content: Claim: A tweet claims that an IAF Sukhoi Su-30 fighter jet has been shot down by PLA Air Force in #Tibet.#PIBFactCheck: The claim is #FAKE. No such incident has taken place. pic.twitter.com/SFHUTYiOsD The Press Information Bureau in Jharkhand debunked this claim as well. Claim: A tweet claims that an IAF Sukhoi Su-30 fighter jet has been shot down by PLA Air Force in #Tibet.#PIBFactCheck: The claim is #FAKE. No such incident has taken place. pic.twitter.com/Aw1ZapUAEK This claim is shared at a time when territorial disputes between India and China in Ladakh continue. ### Previous Claims Made By The User The user in context, Zhong Xin (@ZhongXN), claims to be a columnist based in China [...]
-
-2. **IAF Sukhoi Su-30 Fighter Jet Was Not Shot Down by China's PLA in Tibet; PIB Debunks Fake News | 🔎 LatestLY**
-   URL: https://www.latestly.com/social-viral/fact-check/iaf-sukhoi-su-30-fighter-jet-was-not-shot-down-by-chinas-pla-in-tibet-pib-debunks-fake-news-2066857.html
-   Content: See Zhong Xin's Tweet Breaking News: Our Air force has shutdown Indian fighter jet Sukhoi su–30 in Tibet. — Zhong Xin 🇨🇳 (@ZhongXN) October 3, 2020 Fact-Check: Press Information Bureau (PIB), the Indian government's official meida arm, debunked the fake news. The fact-check handle of PIB on Twitter informed netizens that the tweet posted Zhong Xin and shared by several microbloggers is absolutely untrue. PIB Fact Check Debunks Fake News Claim: A tweet claims that an IAF Sukhoi Su-30 fighter jet has been shot down by PLA Air Force in #Tibet.#PIBFactCheck: The claim is #FAKE. No such incident has taken place. pic.twitter.com/SFHUTYiOsD — PIB Fact Check (@PIBFactCheck) October 4, 2020 [...]
-
-3. **Instagram**
-   URL: https://www.instagram.com/p/CF6t5R3DEn8/
-   Content: Claim: A tweet claims that an IAF Sukhoi Su-30 fighter jet has been shot down by PLA Air Force in #Tibet. #PIBFactCheck: The claim is #FAKE. No
-
-4. **A tweet claims that an IAF Sukhoi Su-30 fighter jet has been shot ...**
-   URL: https://x.com/PIBFactCheck/status/1312692937898119169
-   Content: Claim: A tweet claims that an IAF Sukhoi Su-30 fighter jet has been shot down by PLA Air Force in #Tibet. #PIBFactCheck: The claim is #FAKE.
-
-5. **Fact Check: IAF’s Sukhoi-30 jet shot down in Tibet? No, viral claim is fake**
-   URL: https://www.vishvasnews.com/english/politics/fact-check-iafs-sukhoi-30-jet-was-not-shot-down-in-tibet-viral-claim-is-fake/
-   Content: ## subscribe Subscribe to our newsletter and get exclusive fact checking news everyweek ## subscribed Thank you You are now subscribed to our newsletter # Fact Check: IAF’s Sukhoi-30 jet was not shot down in Tibet, viral claim is fake The viral post that China has shot down IAF fighter jet’s Sukhoi – 30 in Tibet is fake. IAF has denied the viral claim. New Delhi (Vishvas News):A viral post on social media claims that China has shot down Indian Air force (IAF) fighter jet’s Sukhoi SU-30. We found this was shared as breaking news first on Twitter and then on Facebook. Vishvas News investigation revealed the claim is fake. IAF has denied such claims. Claim [...] #WATCH: Indian Air Force [...]
-
-#### Human Review Notes
-- Evidence sufficient? yes / no / unclear
-- Likely failure type: analyzer reasoning / evidence insufficient / label mapping / retrieval / extraction / other
-- Notes:
-
-### 14. PolitiFact / pf_002 - false
+### 11. PolitiFact / pf_002 - false
 
 #### Input
 - **Claim:** Says the secret John Doe criminal investigation of his campaign has been resolved and two judges have said it is over.
@@ -2817,9 +2550,9 @@ Failures shown: 26
 - **Correct:** `False`
 - **Within one level:** `False`
 - **Failure reason:** verdict got `mostly_true`, expected one of `false, mostly_false`
-- **TLDR:** Sources say the Wisconsin Supreme Court ended the John Doe investigation, citing it as over.
-- **Explanation:** WPR reports that the Wisconsin Supreme Court’s 4-2 decision “ends the John Doe investigation” and ordered return of seized property and destruction of evidence (Source 2). EXPOSEDbyCMD similarly describes the court shutting down the John Doe investigation and ordering documents destroyed/returned (Source 1), and another EXPOSEDbyCMD post says justices proceeded to halt the investigation and order evidence returned/destroyed (Source 5). However, none of the sources explicitly say “two judges have said it is over” or that it was a “secret John Doe criminal investigation of his campaign” in those exact terms.
-- **Confidence reason:** Multiple sources confirm the investigation was ended; “two judges” phrasing not explicit.
+- **TLDR:** Sources say the Wisconsin Supreme Court ended the John Doe investigation, but not “two judges said it’s over.”
+- **Explanation:** WPR reports that the Wisconsin Supreme Court ended the long-running John Doe investigation and explicitly wrote that “this conclusion ends the John Doe investigation,” ordering return of seized property and destruction of evidence. EXPOSEDbyCMD sources also describe the court shutting down the John Doe investigation and ordering evidence destroyed/returned. However, none of the provided sources clearly identify “two judges” as saying it was over; they reference a 4-2 decision and specific justices, but not two judges making that statement in the way the claim specifies.
+- **Confidence reason:** Court termination is clear; “two judges said” is not directly supported.
 - **Claim verdicts:**
 ```json
 [
@@ -2866,7 +2599,7 @@ Failures shown: 26
 - Likely failure type: analyzer reasoning / evidence insufficient / label mapping / retrieval / extraction / other
 - Notes:
 
-### 15. PolitiFact / pf_003 - true
+### 12. PolitiFact / pf_003 - true
 
 #### Input
 - **Claim:** Orrin Hatch co-sponsored a 1993 health care bill that had an individual mandate.
@@ -2876,14 +2609,14 @@ Failures shown: 26
 
 #### Output
 - **Actual verdict:** `mostly_true`
-- **Score:** `85`
-- **Confidence:** `high`
+- **Score:** `78`
+- **Confidence:** `medium`
 - **Correct:** `False`
 - **Within one level:** `True`
 - **Failure reason:** verdict got `mostly_true`, expected one of `true`
-- **TLDR:** Sources indicate Hatch co-sponsored a 1993 health bill containing an individual mandate.
-- **Explanation:** PolitiFact directly states that Hatch was the co-sponsor of a 1993 Republican-backed bill that included an individual mandate (Source 1). Fox News and The New Yorker also say the individual mandate appeared in 1993 bills supported/co-sponsored by Orrin Hatch (Sources 2 and 3), aligning with the claim.
-- **Confidence reason:** Multiple sources directly link Hatch to 1993 mandate bills.
+- **TLDR:** Sources indicate Hatch co-sponsored a 1993 GOP health bill with an individual mandate.
+- **Explanation:** PolitiFact directly states that Hatch was a co-sponsor of a 1993 Republican-backed bill that included an individual mandate (Source 1). Fox News and The New Yorker also say the individual mandate appeared in 1993 bills supported by Orrin Hatch (Sources 2 and 3). None of the provided sources contradict the claim; Source 5 is unrelated to the 1993 mandate question.
+- **Confidence reason:** Multiple sources support, but details of the exact bill are not fully corroborated.
 - **Claim verdicts:**
 ```json
 [
@@ -2930,7 +2663,7 @@ Failures shown: 26
 - Likely failure type: analyzer reasoning / evidence insufficient / label mapping / retrieval / extraction / other
 - Notes:
 
-### 16. PolitiFact / pf_004 - barely-true
+### 13. PolitiFact / pf_004 - barely-true
 
 #### Input
 - **Claim:** Mark Herring voted to allow sex offenders, including rapists, to serve shorter sentences.
@@ -2945,9 +2678,9 @@ Failures shown: 26
 - **Correct:** `False`
 - **Within one level:** `False`
 - **Failure reason:** verdict got `unverifiable`, expected one of `mostly_false, mixed`
-- **TLDR:** None of the provided sources mention Mark Herring or any vote on sex-offender sentencing.
-- **Explanation:** The sources provided discuss sex-offender recidivism research (Source 1), general sex-offender management and victimization statistics (Source 2), Canadian bail/sentencing reforms unrelated to Mark Herring (Source 3), and an Ohio dissenting report referencing “Herring” in a different legal context (Source 4). Source 5 discusses Washington State SSOSA-related sentencing alternatives and voting results, but it does not identify Mark Herring or any vote about shorter sentences for sex offenders, including rapists.
-- **Confidence reason:** No source addresses the specific person, vote, or sentencing change.
+- **TLDR:** The sources don’t show Mark Herring voting on shorter sentences for sex offenders.
+- **Explanation:** None of the provided sources mention Mark Herring or any vote by him on sentencing for sex offenders. Source 1 discusses sex-offender recidivism generally, Source 2 provides background on sexual offending prevalence, Source 3 is about Canada’s Bill C-14 bail/sentencing reforms without any Mark Herring vote details, and Source 4 is a dissenting report referencing the Supreme Court case Herring v. United States rather than a sentencing vote by Mark Herring.
+- **Confidence reason:** No source addresses Mark Herring or the alleged vote.
 - **Claim verdicts:**
 ```json
 [
@@ -2994,7 +2727,7 @@ Failures shown: 26
 - Likely failure type: analyzer reasoning / evidence insufficient / label mapping / retrieval / extraction / other
 - Notes:
 
-### 17. PolitiFact / pf_009 - true
+### 14. PolitiFact / pf_009 - true
 
 #### Input
 - **Claim:** The words subhuman mongrel, which Ted Nugent called President Barack Obama, were used by the Nazis to justify the genocide of the Jewish community.
@@ -3009,9 +2742,9 @@ Failures shown: 26
 - **Correct:** `False`
 - **Within one level:** `False`
 - **Failure reason:** verdict got `mostly_false`, expected one of `true`
-- **TLDR:** Sources show Nugent used the slur, but none link it to Nazi genocide justification.
-- **Explanation:** Source 1 confirms Ted Nugent called Obama a “subhuman mongrel,” but it does not connect that phrase to Nazi rhetoric or to justifications for the Holocaust. Source 3 describes Nazi dehumanization and genocide in general (via the Nuremberg Laws and the “Final Solution”) but does not mention the specific words “subhuman mongrel” or claim they were used by Nazis. Source 2 mentions “subhuman mongrel” as racist rhetoric used by an NRA board member, not as Nazi language justifying genocide.
-- **Confidence reason:** Nugent slur is supported; Nazi linkage is absent.
+- **TLDR:** Sources show the slur was used, but none link it to Nazi genocide justification.
+- **Explanation:** Source 1 confirms Ted Nugent used the phrase “subhuman mongrel” for President Obama, but it does not connect that phrase to Nazi rhetoric or genocide justification. Source 3 discusses Nazi dehumanization and genocide in general via the Nuremberg Laws, and Source 2 mentions the slur in modern political context, but none of the sources state that Nazis used “subhuman mongrel” or that this specific wording was used to justify the Holocaust.
+- **Confidence reason:** Slur usage is documented; Nazi linkage is absent.
 - **Claim verdicts:**
 ```json
 [
@@ -3058,7 +2791,7 @@ Failures shown: 26
 - Likely failure type: analyzer reasoning / evidence insufficient / label mapping / retrieval / extraction / other
 - Notes:
 
-### 18. PolitiFact / pf_011 - true
+### 15. PolitiFact / pf_011 - true
 
 #### Input
 - **Claim:** Says Donald Trump has changed his mind on abortion.
@@ -3074,8 +2807,8 @@ Failures shown: 26
 - **Within one level:** `True`
 - **Failure reason:** verdict got `mostly_true`, expected one of `true`
 - **TLDR:** Sources say Trump shifted from supporting a federal abortion ban to leaving it to states.
-- **Explanation:** FactCheck.org reports that during the 2024 campaign Trump said he would not sign a national abortion ban, contrasting with his 2016 support for a federal abortion ban after 20 weeks (Source 1) and noting he later said “no” to signing a national ban (Source 3). Al Jazeera similarly describes Trump’s position as changing to “let states decide” (Source 4).
-- **Confidence reason:** Multiple sources describe a shift, but not every nuance of “changed his mind.”
+- **Explanation:** FactCheck.org reports Trump said during the 2024 campaign he would not sign a national abortion ban, describing it as a change from his 2016 support for a federal abortion ban after 20 weeks (Source 1) and noting he released a video saying he would leave abortion to the states (Source 3). Al Jazeera similarly describes Trump’s “let states decide” position as a change (Source 4).
+- **Confidence reason:** Multiple sources describe a shift, but not all details are consistent across outlets.
 - **Claim verdicts:**
 ```json
 [
@@ -3089,7 +2822,7 @@ Failures shown: 26
 ```json
 {
   "https://www.factcheck.org/2024/11/trumps-like-it-or-not-comment-and-harris-response/": "supporting",
-  "https://www.factcheck.org/2023/09/trump-walked-back-abortion-statement-misleadingly-used-in-biden-harris-ad/": "neutral",
+  "https://www.factcheck.org/2023/09/trump-walked-back-abortion-statement-misleadingly-used-in-biden-harris-ad/": "supporting",
   "https://www.factcheck.org/2024/05/biden-twists-trumps-comments-on-tracking-pregnancies-and-punishing-women-who-get-abortions/": "supporting",
   "https://www.aljazeera.com/news/2024/4/9/let-states-decide-how-donald-trumps-position-on-abortion-has-changed": "supporting",
   "https://www.aclu.org/trump-on-abortion": "neutral"
@@ -3122,7 +2855,7 @@ Failures shown: 26
 - Likely failure type: analyzer reasoning / evidence insufficient / label mapping / retrieval / extraction / other
 - Notes:
 
-### 19. PolitiFact / pf_014 - half-true
+### 16. PolitiFact / pf_014 - half-true
 
 #### Input
 - **Claim:** Says 95 percent of people caught crossing the U.S.-Mexico border said in a survey we are coming because weve been promised amnesty.
@@ -3137,9 +2870,9 @@ Failures shown: 26
 - **Correct:** `False`
 - **Within one level:** `False`
 - **Failure reason:** verdict got `unverifiable`, expected one of `mixed, mostly_true, mostly_false`
-- **TLDR:** The sources don’t provide the survey statistic or the stated reason for crossing.
-- **Explanation:** None of the provided sources report a survey finding that “95 percent of people caught crossing” said they were coming because they’d been promised amnesty. Source 2 discusses claims about asylum and mentions “word has gotten out” about a “free pass,” but it does not provide the specific 95% figure or the survey wording. The other sources focus on border encounter changes, asylum process basics, or general arguments about amnesty effects, without the needed survey data.
-- **Confidence reason:** No source contains the specific 95% survey claim.
+- **TLDR:** Sources don’t provide the claimed 95% survey result or the amnesty motivation.
+- **Explanation:** None of the provided sources contain a survey stating that 95% of people caught crossing the U.S.-Mexico border said they were coming because they were promised amnesty. Source 1 discusses border apprehension declines and mentions an “amnesty plan,” but it does not provide the specific survey statistic or the quoted motivation. Source 2 and Source 3 discuss broader immigration/asylum context without the claimed 95% survey finding, and Source 5 is a congressional statement about expected effects of amnesty rather than a survey result.
+- **Confidence reason:** No source reports the specific 95% survey claim.
 - **Claim verdicts:**
 ```json
 [
@@ -3186,7 +2919,7 @@ Failures shown: 26
 - Likely failure type: analyzer reasoning / evidence insufficient / label mapping / retrieval / extraction / other
 - Notes:
 
-### 20. PolitiFact / pf_017 - true
+### 17. PolitiFact / pf_017 - true
 
 #### Input
 - **Claim:** In the last 10 years, Georgias middle class income has dropped $6,500.
@@ -3196,14 +2929,14 @@ Failures shown: 26
 
 #### Output
 - **Actual verdict:** `mostly_true`
-- **Score:** `62`
+- **Score:** `78`
 - **Confidence:** `medium`
 - **Correct:** `False`
 - **Within one level:** `True`
 - **Failure reason:** verdict got `mostly_true`, expected one of `true`
-- **TLDR:** Sources support a roughly $6,500 middle-class income drop over about 10 years.
-- **Explanation:** PolitiFact reports that Carter’s ad cited a $6,500 drop in Georgia middle-class income over 10 years, and that this was “on target” with U.S. Census Bureau data (median household income fell about $6,682 from 2002 to 2012, inflation-adjusted). GBPI also states that Georgia’s median household income fell by nearly $8,000 from 2007 to 2011 and that middle-class Georgians bring home about 7% less income as of 2016 than in 2000, consistent with a substantial decline over the broader period. The other sources provide general income figures but do not directly confirm the specific “last 10 years” and “$6,500” middle-class figure.
-- **Confidence reason:** Direct $6,500 figure supported by one fact-check; other sources only indirectly align.
+- **TLDR:** PolitiFact and GBPI both indicate Georgia middle-class income fell by about $6,500 in 10 years.
+- **Explanation:** Source 2 (PolitiFact) states that Carter’s ad—claiming middle-class income dropped $6,500 in 10 years—was “on target” with Census Bureau data, citing an inflation-adjusted decline of $6,682 from 2002 to 2012. Source 1 (GBPI) also reports that Georgia’s median household income fell by nearly $8,000 from 2007 to 2011 and that as of 2016 middle-class Georgians bring home about 7% less income than in 2000, consistent with a substantial decline over roughly the last decade.
+- **Confidence reason:** Two sources support the magnitude, but definitions/years differ slightly.
 - **Claim verdicts:**
 ```json
 [
@@ -3250,7 +2983,7 @@ Failures shown: 26
 - Likely failure type: analyzer reasoning / evidence insufficient / label mapping / retrieval / extraction / other
 - Notes:
 
-### 21. PolitiFact / pf_018 - half-true
+### 18. PolitiFact / pf_018 - half-true
 
 #### Input
 - **Claim:** Oil production is down 14 percent this year on federal land.
@@ -3265,9 +2998,9 @@ Failures shown: 26
 - **Correct:** `False`
 - **Within one level:** `False`
 - **Failure reason:** verdict got `unverifiable`, expected one of `mixed, mostly_true, mostly_false`
-- **TLDR:** Sources don’t provide the specific “down 14% on federal land” figure.
-- **Explanation:** Source 5 (EIA) forecasts U.S. crude oil production averaging 13.5 million b/d in 2026, about 100,000 b/d less than 2025, and notes Alaska and the Federal Gulf of America increases offset declines elsewhere. Source 1 provides federal Gulf of America production levels for 2025 and forecasts for 2026/2027, but none of the sources state a 14% year-over-year decline on “federal land.” Therefore, the specific 14% claim cannot be verified from the provided materials.
-- **Confidence reason:** No source states a 14% federal-land decline.
+- **TLDR:** Sources don’t provide federal-land oil output data needed to verify a 14% drop.
+- **Explanation:** None of the provided sources state that oil production on federal land is down 14% this year. Source 5 (EIA) forecasts total U.S. crude production averaging 13.5 million b/d in 2026, about 100,000 b/d less than 2025, but it does not quantify a 14% federal-land decline. Source 1 discusses EIA STEO projections including Federal Gulf of America output, but it does not give a “down 14% this year on federal land” figure.
+- **Confidence reason:** Federal-land 14% figure is not present in any source.
 - **Claim verdicts:**
 ```json
 [
@@ -3314,7 +3047,71 @@ Failures shown: 26
 - Likely failure type: analyzer reasoning / evidence insufficient / label mapping / retrieval / extraction / other
 - Notes:
 
-### 22. PolitiFact / pf_020 - pants-fire
+### 19. PolitiFact / pf_019 - barely-true
+
+#### Input
+- **Claim:** Onion Creeks highest flow rate on a recent night of flooding was 120,000 cubic feet per second, which is nearly double the average flow rate of Niagara Falls.
+- **Expected label:** barely-true
+- **Expected verdicts:** `mostly_false, mixed`
+- **Expected score range:** `[20, 50]`
+
+#### Output
+- **Actual verdict:** `mostly_true`
+- **Score:** `62`
+- **Confidence:** `medium`
+- **Correct:** `False`
+- **Within one level:** `True`
+- **Failure reason:** verdict got `mostly_true`, expected one of `mostly_false, mixed`
+- **TLDR:** 120,000 cfs is supported, but the Niagara Falls comparison is disputed and based on questionable references.
+- **Explanation:** Sources 1 and 2 both state that Onion Creek’s highest flow rate on Oct. 31 was 120,000 cubic feet per second and that this was “nearly double” the average flow rate of Niagara Falls. However, Source 2 and Source 3 explain that the Niagara Falls “average” figure came from Wikipedia and that the city’s 120,000 cfs figure relied on older “provisional” USGS data (with later USGS readings higher than 120,000 cfs).
+- **Confidence reason:** Flow-rate value is supported, but Niagara comparison methodology is contested.
+- **Claim verdicts:**
+```json
+[
+  {
+    "claim": "Onion Creeks highest flow rate on a recent night of flooding was 120,000 cubic feet per second, which is nearly double the average flow rate of Niagara Falls.",
+    "verdict": "mixed"
+  }
+]
+```
+- **Source stances:**
+```json
+{
+  "https://data.austintexas.gov/stories/s/2013-Halloween-Flood/fr92-dkxr/": "supporting",
+  "https://www.politifact.com/factchecks/2013/nov/14/city-austin/during-flood-austins-onion-creek-flowed-34-percent/": "supporting",
+  "https://www.statesman.com/story/news/2013/11/16/politifact-onion-creek-was-raging-but-niagara-falls-comparison-is-flawed/9987785007/": "contradicting",
+  "https://www.austinchronicle.com/news/double-the-flow-rate-of-niagara-falls-12090015/": "supporting",
+  "https://water.noaa.gov/gauges/atit2": "neutral"
+}
+```
+
+#### Search Evidence Input
+1. **2013 Halloween Flood | Open Data | City of Austin, Texas**
+   URL: https://data.austintexas.gov/stories/s/2013-Halloween-Flood/fr92-dkxr/
+   Content: The Onion Creek's highest flow rate on October 31 was 120,000 cubic feet per second, which is nearly double the average flow rate of Niagara Falls. Link:
+
+2. **PolitiFact | UPDATED: During flood, Austin's Onion Creek flowed up to 34 percent faster than Niagara Falls on average**
+   URL: https://www.politifact.com/factchecks/2013/nov/14/city-austin/during-flood-austins-onion-creek-flowed-34-percent/
+   Content: The city’s press release continued: "The Onion Creek’s highest flow rate during Oct. 31 was 120,000 cubic feet per second, which is nearly double the average flow rate of Niagara Falls." Flow rate is the volume of fluid which passes through a given surface per unit of time, the release said. Do both ends of this flow-rate claim hold water? By telephone and email, officials later told us they based the reference to the Onion Creek flow rate on USGS information on the creek’s flow at U.S. 183 on Austin’s southeastern edge. They said the cited average flow rate of Niagara Falls, the international tourist site in New York state and Canada, came from Wikipedia, the collaboratively edited, [...]
+
+3. **PolitiFact: Onion Creek was raging, but Niagara Falls comparison is flawed**
+   URL: https://www.statesman.com/story/news/2013/11/16/politifact-onion-creek-was-raging-but-niagara-falls-comparison-is-flawed/9987785007/
+   Content: # PolitiFact: Onion Creek was raging, but Niagara Falls comparison is flawed On a recent day of fatal flash floods, a Southeast Austin creek ran so quickly that it outpaced Niagara Falls in a way, the city of Austin said. A Nov. 6 city press release said that according to the U.S. Geological Survey, water levels at Onion Creek at U.S. 183 reached a record height of 41 feet. “The Onion Creek’s highest flow rate during Oct. 31 was 120,000 cubic feet per second, which is nearly double the average flow rate of Niagara Falls,” the press release said. Does this flow-rate claim hold water? Advertisement Article continues below this ad [...] Advertisement Article continues below this ad “It’s [...]
+
+4. **Double The Flow Rate of Niagara Falls**
+   URL: https://www.austinchronicle.com/news/double-the-flow-rate-of-niagara-falls-12090015/
+   Content: The HSEM also released numbers from the U.S. Geological Survey on the extent of the flooding. Onion Creek had a staggering flow rate, doubling the average flow rate of Niagra Falls. At US 183, Onion Creek water levels reached a record height of 41 feet. In a 15 minute period, the water gauge rose 11 feet. According to available records, this was the first time water levels rose to to over 40 feet in that area. Only on three other years did the water level exceed 35 feet – in 1869, 1921, and 1869. [...] Tommorow, the Austin Police Department‘s Region 4 District representatives, the Austin Police Activities League, and Cops for Charities will be hosting soccer games and trick-or-treating [...]
+
+5. **Onion Creek at US 183**
+   URL: https://water.noaa.gov/gauges/atit2
+   Content: Notice: The 2026 National Hydrologic Assessment has been released. Click here for more information. Flood Inundation Mapping services are now available for 60% of the U.S. population here. Additional NWPS resources are available here. Thank you for visiting a National Oceanic and Atmospheric Administration (NOAA) website. The link you have selected will take you to a non-U.S. Government website for additional information. NOAA is not responsible for the content of any linked website not operated by NOAA. This link is provided solely for your information and convenience, and does not imply any endorsement by NOAA or the U.S. Department of Commerce of the linked website or any [...]
+
+#### Human Review Notes
+- Evidence sufficient? yes / no / unclear
+- Likely failure type: analyzer reasoning / evidence insufficient / label mapping / retrieval / extraction / other
+- Notes:
+
+### 20. PolitiFact / pf_020 - pants-fire
 
 #### Input
 - **Claim:** U.S. Rep. Jim Langevin didn't want a border fence to block illegal immigration "because he is afraid that someone will get hurt trying to go around the fence."
@@ -3323,15 +3120,15 @@ Failures shown: 26
 - **Expected score range:** `[0, 20]`
 
 #### Output
-- **Actual verdict:** `true`
-- **Score:** `95`
-- **Confidence:** `high`
+- **Actual verdict:** `mostly_true`
+- **Score:** `70`
+- **Confidence:** `medium`
 - **Correct:** `False`
 - **Within one level:** `False`
-- **Failure reason:** verdict got `true`, expected one of `false`
+- **Failure reason:** verdict got `mostly_true`, expected one of `false`
 - **TLDR:** PolitiFact reports Langevin opposed the fence out of fear someone would get hurt.
-- **Explanation:** Source 1 (PolitiFact) directly states the claim: Langevin opposed the U.S.-Mexican border fence because he was afraid someone would get hurt trying to go around it. The other provided sources do not address Langevin’s position on a border fence or the stated reason.
-- **Confidence reason:** One source directly matches the claim; others are irrelevant.
+- **Explanation:** Source 1 (PolitiFact) directly states the attributed reason: Langevin opposed the U.S.-Mexican border fence because he was afraid someone would get hurt trying to go around it. The other provided sources do not address this specific claim about Langevin’s stated motivation.
+- **Confidence reason:** Only one source directly addresses the claim.
 - **Claim verdicts:**
 ```json
 [
@@ -3378,7 +3175,7 @@ Failures shown: 26
 - Likely failure type: analyzer reasoning / evidence insufficient / label mapping / retrieval / extraction / other
 - Notes:
 
-### 23. PolitiFact / pf_022 - mostly-true
+### 21. PolitiFact / pf_022 - mostly-true
 
 #### Input
 - **Claim:** Says a company that got tax breaks from the state later laid off 100 Ohioans, even as its CEO cut a half-million-dollar check to Kasichs super PAC.
@@ -3388,14 +3185,14 @@ Failures shown: 26
 
 #### Output
 - **Actual verdict:** `mixed`
-- **Score:** `35`
+- **Score:** `55`
 - **Confidence:** `low`
 - **Correct:** `False`
 - **Within one level:** `True`
 - **Failure reason:** verdict got `mixed`, expected one of `mostly_true, true`
-- **TLDR:** Sources confirm the layoffs and tax breaks, but not the CEO’s half-million check to Kasich’s super PAC.
-- **Explanation:** PolitiFact (Source 1) directly addresses the ad’s allegations: it says Worthington received state tax breaks and that the company laid off 100 Ohioans. However, the provided excerpt from Source 1 does not substantiate the specific claim that the CEO cut a half-million-dollar check to Kasich’s super PAC; it only begins to discuss the tax-incentive process and mentions an Associated Press investigation about tax incentives. The other sources discuss JobsOhio and tax policy generally but do not provide evidence for the CEO-to-super-PAC donation claim.
-- **Confidence reason:** Only one source directly mentions the donation, without details in excerpt.
+- **TLDR:** PolitiFact supports the layoffs and tax-break context, but the CEO-to-Kasich super PAC link is not independently verified here.
+- **Explanation:** Source 1 (PolitiFact) directly states that the company received state tax breaks and later laid off 100 Ohioans, and it also repeats the allegation that the CEO cut a half-million-dollar check to Kasich’s super PAC. However, the other provided sources do not corroborate the specific “half-million-dollar check to Kasich’s super PAC” detail, and they focus on broader JobsOhio/tax issues rather than that CEO donation. Therefore, the layoffs/tax-break portion is supported by the provided material, while the CEO donation portion is unverifiable from the remaining sources.
+- **Confidence reason:** Only one source addresses the key donation and layoffs details.
 - **Claim verdicts:**
 ```json
 [
@@ -3442,7 +3239,7 @@ Failures shown: 26
 - Likely failure type: analyzer reasoning / evidence insufficient / label mapping / retrieval / extraction / other
 - Notes:
 
-### 24. PolitiFact / pf_025 - mostly-true
+### 22. PolitiFact / pf_025 - mostly-true
 
 #### Input
 - **Claim:** Federal spending on entitlements is projected to consume all revenue by 2045.
@@ -3452,14 +3249,14 @@ Failures shown: 26
 
 #### Output
 - **Actual verdict:** `mostly_false`
-- **Score:** `25`
-- **Confidence:** `medium`
+- **Score:** `20`
+- **Confidence:** `high`
 - **Correct:** `False`
 - **Within one level:** `False`
 - **Failure reason:** verdict got `mostly_false`, expected one of `mostly_true, true`
-- **TLDR:** One source says entitlements would not consume all federal revenue by 2045.
-- **Explanation:** PolitiFact directly evaluates the “consume all federal revenue by 2045” claim and concludes that, using CBO’s current-law projections, tax revenue would provide more money—so entitlements would not consume every revenue dollar (Source 1). The other sources discuss rising entitlement spending and crowding out, but they do not state that entitlements consume all revenue by 2045; they instead describe large increases and near-full crowd-out of other spending if other spending stayed constant (Sources 2 and 3).
-- **Confidence reason:** Only one source directly addresses the exact 2045/all-revenue wording.
+- **TLDR:** PolitiFact says CBO projections do not support entitlements consuming all federal revenue by 2045.
+- **Explanation:** Source 1 directly evaluates the specific claim and concludes that using CBO current-law projections, entitlements would not consume every revenue dollar by 2045 (tax revenue would provide more money). Source 2 discusses rising entitlement spending and crowding out other spending, but it does not state that entitlements consume all revenue by 2045. Therefore, the provided sources mostly contradict the claim.
+- **Confidence reason:** Source 1 directly tests the 2045 “all revenue” assertion using CBO projections.
 - **Claim verdicts:**
 ```json
 [
@@ -3506,7 +3303,7 @@ Failures shown: 26
 - Likely failure type: analyzer reasoning / evidence insufficient / label mapping / retrieval / extraction / other
 - Notes:
 
-### 25. PolitiFact / pf_027 - pants-fire
+### 23. PolitiFact / pf_027 - pants-fire
 
 #### Input
 - **Claim:** Fox News is banned in Canada because it violatesa law thatprevents news channels from lying to their viewers.
@@ -3521,15 +3318,15 @@ Failures shown: 26
 - **Correct:** `False`
 - **Within one level:** `True`
 - **Failure reason:** verdict got `mostly_false`, expected one of `false`
-- **TLDR:** Sources say Canada restricts false/misleading broadcasts, but Fox News wasn’t banned for lying.
-- **Explanation:** PolitiFact and Snopes both describe Canadian rules prohibiting “false or misleading news,” but they also state the meme’s “Fox News is banned” claim is not verified and that Fox News would not move into Canada for regulatory reasons, not because it was banned for lying. Neither source supports the specific claim that Fox News is banned in Canada for violating a law that prevents news channels from lying to viewers.
-- **Confidence reason:** Two fact-checkers address the exact meme; other sources unrelated.
+- **TLDR:** Sources say Canada restricts “false or misleading news,” but Fox wasn’t banned for that reason.
+- **Explanation:** PolitiFact says the meme’s “banned for lying” rationale is not verifiable and that the claim “doesn’t” connect to Fox News being banned (Source 1). Snopes notes Canadian rules prohibit broadcasting “false or misleading news” and that these provisions helped keep Fox News out, but it does not support the specific claim that Fox News is banned because it violates a law preventing news channels from lying to viewers (Source 2). The provided legal/other sources do not substantiate the specific “banned in Canada” mechanism for Fox News (Sources 3-5).
+- **Confidence reason:** Two fact-checks address it, but mechanism details conflict.
 - **Claim verdicts:**
 ```json
 [
   {
     "claim": "Fox News is banned in Canada because it violatesa law thatprevents news channels from lying to their viewers.",
-    "verdict": "contradicted"
+    "verdict": "mixed"
   }
 ]
 ```
@@ -3537,7 +3334,7 @@ Failures shown: 26
 ```json
 {
   "https://www.politifact.com/factchecks/2014/jul/14/facebook-posts/fox-news-banned-canada/": "contradicting",
-  "https://www.snopes.com/fact-check/canadian-fox/": "contradicting",
+  "https://www.snopes.com/fact-check/canadian-fox/": "supporting",
   "https://www.justice.gc.ca/eng/csj-sjc/pl/charter-charte/c63.html": "neutral",
   "https://www.internetsociety.org/resources/internet-fragmentation/canadas-online-news-act/": "neutral",
   "https://www.international.gc.ca/world-monde/issues_development-enjeux_developpement/peace_security-paix_securite/combatt-disinformation-desinformation.aspx?lang=eng": "neutral"
@@ -3570,7 +3367,7 @@ Failures shown: 26
 - Likely failure type: analyzer reasoning / evidence insufficient / label mapping / retrieval / extraction / other
 - Notes:
 
-### 26. PolitiFact / pf_030 - true
+### 24. PolitiFact / pf_030 - true
 
 #### Input
 - **Claim:** Today California is kicking our butt, creating more jobs and more economic growth than Texas.
@@ -3580,14 +3377,14 @@ Failures shown: 26
 
 #### Output
 - **Actual verdict:** `mostly_true`
-- **Score:** `78`
+- **Score:** `72`
 - **Confidence:** `medium`
 - **Correct:** `False`
 - **Within one level:** `True`
 - **Failure reason:** verdict got `mostly_true`, expected one of `true`
-- **TLDR:** PolitiFact and Stanford data back California outpacing Texas on jobs and growth in the cited period.
-- **Explanation:** PolitiFact’s fact checks on the exact “Today, California is kicking our butt…” claim rated it True, citing higher job growth rates and other economic indicators for California versus Texas (Sources 1 and 3). Stanford’s SIEPR policy brief also reports California’s per-capita income and GDP-related performance outpacing Texas in recent years (Source 4). However, the PolitiFact update notes California’s job growth had slowed to closer to Texas by late 2016, so the “today” framing is time-dependent (Source 1).
-- **Confidence reason:** Multiple sources support, but “today” is period-specific.
+- **TLDR:** PolitiFact and Stanford evidence California’s job and income growth outpaced Texas in recent years.
+- **Explanation:** PolitiFact’s fact checks on the exact “kicking our butt” claim rated it True, citing higher job growth rates for California than Texas (e.g., 2015 job growth 3% vs 1.5% and 2.8% vs 1.5% over May 2015–April 2016). Stanford’s SIEPR policy brief also reports California’s per-capita income growth outperformed Texas from 2000–2020 and that the gap widened from 2015 to 2020. None of the provided sources directly contradict California outperforming Texas on these measures; other sources (e.g., StatsPanda) are not needed to support the core claim and may be less authoritative.
+- **Confidence reason:** Two PolitiFact checks directly address the claim; Stanford supports related growth metrics.
 - **Claim verdicts:**
 ```json
 [
@@ -3601,7 +3398,7 @@ Failures shown: 26
 ```json
 {
   "https://www.politifact.com/factchecks/2016/dec/19/jerry-brown/are-jobs-california-growing-hell-lot-faster-texas/": "supporting",
-  "https://www.texasstandard.org/stories/__trashed-4/": "neutral",
+  "https://www.texasstandard.org/stories/__trashed-4/": "supporting",
   "https://www.politifact.com/factchecks/2016/aug/17/julian-castro/julian-castro-says-california-besting-texas-creati/": "supporting",
   "https://siepr.stanford.edu/publications/policy-brief/tale-two-states-contrasting-economic-policy-california-and-texas": "supporting",
   "https://statspanda.com/blog/texas-vs-california-comparison": "neutral"
@@ -3648,13 +3445,13 @@ Failures shown: 26
 
 #### Output
 - **Actual verdict:** `mostly_false`
-- **Score:** `15`
+- **Score:** `18`
 - **Confidence:** `high`
 - **Correct:** `False`
 - **Within one level:** `True`
 - **Failure reason:** verdict got `mostly_false`, expected one of `unverifiable, mixed`
-- **TLDR:** The 2020 ranking claim is misleading because it used 2019 data, not 2020.
-- **Explanation:** Source 3 (AFP) says the “third most terrorised in the world in 2020” story was misleading because the publisher confirmed the figures were from 2019, and the latest 2020 statistics were not released yet. Source 1 (HumAngle) similarly concludes it is false to claim Nigeria was ranked third most terrorised in 2020, stating no such 2020 report had been released by the time of the claim. Source 2 (FactCheckHub) also says the infographic was misleading and that it used the 2019 ranking order rather than the released 2020 ranking.
+- **TLDR:** Sources say the 2020 ranking image used 2019 data, not a released 2020 GTI ranking.
+- **Explanation:** HumAngle and AFP report that the viral claim about Nigeria being third most terrorised in 2020 was misleading because the Global Terrorism Index 2020 ranking had not been released and the figures shown were from 2019. FactCheckHub similarly says the infographic was misleading and that the 2020 GTI ranking order differed from what was shared, with the TVC graphic using older data.
 - **Confidence reason:** Multiple fact-checks directly address and refute the 2020 ranking claim.
 - **Claim verdicts:**
 ```json
@@ -3717,9 +3514,9 @@ Failures shown: 26
 - **Correct:** `False`
 - **Within one level:** `True`
 - **Failure reason:** verdict got `mostly_false`, expected one of `unverifiable, mixed`
-- **TLDR:** The sources mostly say increased enforcement and barriers can increase smuggling, not decrease it.
-- **Explanation:** Source 1 explicitly argues that expanded border enforcement increases human smuggling and that enforcement can fuel reliance on smugglers. Source 4 similarly discusses enforcement effects that can lead crossers to resort to smugglers, linking enforcement to smuggling dynamics rather than reductions. While Sources 3 and 5 discuss declines in illegal entries, they do not provide evidence that illegal drug smuggling and human smuggling specifically decreased in barrier-deployed U.S. areas.
-- **Confidence reason:** Direct barrier-to-smuggling reduction evidence is largely absent; enforcement may increase smuggling.
+- **TLDR:** Sources mostly argue enforcement and barriers increase smuggling, not decrease it.
+- **Explanation:** Source 1 explicitly states that expanding border enforcement is more likely to increase human smuggling rather than decrease it, citing increased smuggler usage rates after enforcement. Source 4 similarly finds that increased enforcement can lead to more reliance on professional smugglers (and marginally higher violent crime in sectors), consistent with smuggling not decreasing. While Source 3 and DHS pages discuss reduced unauthorized entries, they do not provide evidence that illegal drug smuggling and human smuggling decreased specifically in areas where barriers were deployed; the drug/smuggling linkage is not established in the provided excerpts.
+- **Confidence reason:** Direct evidence on smuggling effects is mostly negative; barrier-specific drug data absent.
 - **Claim verdicts:**
 ```json
 [
@@ -3781,9 +3578,9 @@ Failures shown: 26
 - **Correct:** `False`
 - **Within one level:** `False`
 - **Failure reason:** verdict got `unverifiable`, expected one of `false, mostly_false`
-- **TLDR:** The sources don’t provide police-force growth figures from 2002 to support this claim.
-- **Explanation:** None of the provided sources include data showing how many South Africa’s police force members there were in 2002 and how many there were later to calculate a 50% increase. Source 2 discusses police shortages and comparisons per 100,000 people, but it does not state a 2002-to-present growth percentage. The SAPS annual report excerpts shown (Sources 1 and 4) list legislation and general content, without any explicit “grown by 50% since 2002” figure.
-- **Confidence reason:** No source contains the needed 2002-to-growth percentage data.
+- **TLDR:** The sources don’t provide police-force growth data from 2002 to support the 50% claim.
+- **Explanation:** None of the provided sources include figures for South Africa’s police force size in 2002 and a later year to calculate a 50% increase. Source 2 discusses police shortages and cross-country comparisons, but it does not state a 2002-to-present growth percentage. Sources 1 and 4 are annual reports, but the provided excerpts only list legislation and do not contain the needed staffing-growth statistics.
+- **Confidence reason:** No source excerpt contains the required 2002-to-growth percentage data.
 - **Claim verdicts:**
 ```json
 [
@@ -3845,9 +3642,9 @@ Failures shown: 26
 - **Correct:** `False`
 - **Within one level:** `False`
 - **Failure reason:** verdict got `unverifiable`, expected one of `false, mostly_false`
-- **TLDR:** None of the provided sources show UNESCO declaring Nadars the world’s most ancient race.
-- **Explanation:** Source 1 discusses Nadar community history and mentions a community belief about being kings of Tamil Nadu, but it does not mention UNESCO or any UNESCO declaration about “most ancient race.” Source 2 and Source 5 discuss UNESCO’s stance against racial doctrines and racism, not UNESCO declaring any specific community as the most ancient race. Source 3 and Source 4 present community narratives about descent/status, but again provide no UNESCO declaration.
-- **Confidence reason:** UNESCO-specific claim is absent from all sources.
+- **TLDR:** No provided source shows UNESCO declaring Nadars the world’s most ancient race.
+- **Explanation:** None of the sources mention UNESCO making any declaration about the Nadar community being the most ancient race in the world. Source 2 discusses UNESCO’s stance against racial doctrines, but it does not connect UNESCO to any specific community or claim about “most ancient race.” Sources 1, 3, and 4 discuss Nadar history/beliefs and social status, but they do not attribute any such declaration to UNESCO.
+- **Confidence reason:** Claim about UNESCO is not addressed in any source.
 - **Claim verdicts:**
 ```json
 [
@@ -3909,9 +3706,9 @@ Failures shown: 26
 - **Correct:** `False`
 - **Within one level:** `True`
 - **Failure reason:** verdict got `unverifiable`, expected one of `true, mostly_true`
-- **TLDR:** Sources don’t directly address whether WHO approved home remedies for COVID-19.
-- **Explanation:** None of the provided sources explicitly state that WHO has or has not approved “home remedies” for COVID-19. Source 1 and Source 2 focus on debunking specific purported cures/preventatives, while Source 5 discusses WHO-approved therapeutics generally, not approval status of home remedies.
-- **Confidence reason:** No source directly evaluates WHO approval of home remedies.
+- **TLDR:** Sources don’t state WHO’s approval status for home remedies.
+- **Explanation:** None of the provided sources explicitly say that WHO has not approved home remedies for COVID-19. Source 5 discusses WHO-approved therapeutics generally, but it does not address “home remedies” or WHO’s approval status for them. Sources 1–4 focus on debunking specific purported remedies and discussing FDA-approved treatments, not WHO approval of home remedies.
+- **Confidence reason:** No source directly addresses WHO approval of home remedies.
 - **Claim verdicts:**
 ```json
 [
@@ -3967,15 +3764,15 @@ Failures shown: 26
 - **Expected score range:** `[30, 60]`
 
 #### Output
-- **Actual verdict:** `mostly_false`
+- **Actual verdict:** `false`
 - **Score:** `10`
 - **Confidence:** `high`
 - **Correct:** `False`
-- **Within one level:** `True`
-- **Failure reason:** verdict got `mostly_false`, expected one of `unverifiable, mixed`
-- **TLDR:** The sources say there’s no evidence for the alleged 25,000 child-abuse photos.
-- **Explanation:** PolitiFact (via dpaq.de) and FactCheck.org both state the “25,000 pics” claim is baseless and provides no evidence. CBS News reports the laptop data included many items (including pictures) but does not provide any direct evidence of child torture/rape content, and PolitiFact notes no evidence supports the allegation.
-- **Confidence reason:** Multiple fact-checkers explicitly deny evidence for the claim.
+- **Within one level:** `False`
+- **Failure reason:** verdict got `false`, expected one of `unverifiable, mixed`
+- **TLDR:** The sources say there’s no evidence for those specific child-abuse pictures on Hunter Biden’s laptop.
+- **Explanation:** PolitiFact (via dpaq.de) and FactCheck.org both state that the “25,000 pics” claim is baseless and provides no evidence. CBS News and the Wikipedia summary discuss the laptop containing many types of data and being genuine, but they do not provide any support for the specific allegation about torturing/raping children under 10 in China.
+- **Confidence reason:** Multiple fact-checks explicitly deny evidence for the claim.
 - **Claim verdicts:**
 ```json
 [
@@ -4033,19 +3830,19 @@ Failures shown: 26
 #### Output
 - **Actual verdict:** `mixed`
 - **Score:** `55`
-- **Confidence:** `medium`
+- **Confidence:** `low`
 - **Correct:** `False`
 - **Within one level:** `True`
 - **Failure reason:** verdict got `mixed`, expected one of `false, mostly_false`
-- **TLDR:** The 21-times claim is supported by some medical sources but not by fact-checkers.
-- **Explanation:** Source 1 directly states that Dr. Ebeneezer is a medical doctor and herbal practitioner at Amuzu Hospital and that she advised men to have sex at least 21 times a month to avoid prostate cancer. However, Source 6 and Source 1’s own analysis say the “21 times to avoid prostate cancer” framing is not proven/accurate, while Sources 7, 10, 12, and 13 report that higher ejaculation frequency (including 21+ times/month) is associated with lower prostate cancer risk. The sources therefore support the existence of the advice and the general association, but not the stronger causal “helps men avoid prostate cancer” instruction as a definitive prevention rule.
-- **Confidence reason:** Some sources support association; others dispute the “avoid” instruction.
+- **TLDR:** The 21-times claim is supported by some medical sources, but the “Dr. Ebeneezer” details are unverified.
+- **Explanation:** Source 1 and Source 6 both state that the viral claim attributes to Dr. Ebeneezer advice to have sex at least 21 times a month to avoid prostate cancer, but Source 1 is itself a fact-check saying the underlying study does not conclude a strict “21 times” rule. Medical sources (Sources 7, 10, 12, 13) report that higher ejaculation frequency (including 21+ times/month) is associated with lower prostate cancer risk, though they also note it’s not definitive causation. However, none of the provided sources independently verify that “Dr. Ebeneezer is a medical doctor and a herbal practitioner at Amuzu Hospital,” so that part remains unverified.
+- **Confidence reason:** Key identity/employment details aren’t independently corroborated.
 - **Claim verdicts:**
 ```json
 [
   {
     "claim": "Dr. Ebeneezer is a medical doctor and a herbal practitioner at Amuzu Hospital.",
-    "verdict": "supported"
+    "verdict": "unverifiable"
   },
   {
     "claim": "Dr. Ebeneezer instructed men to have sex at least 21 times a month.",
@@ -4124,9 +3921,9 @@ Failures shown: 26
 - **Correct:** `False`
 - **Within one level:** `True`
 - **Failure reason:** verdict got `mostly_false`, expected one of `unverifiable, mixed`
-- **TLDR:** The sources only support the 33.1% GDP growth rate, not the other GDP/percent claims.
-- **Explanation:** Sources 1, 2, 6, and 7 clearly refer to a 33.1% annualized GDP *growth rate* in Q3 2020, not “33.1 GDP” as a level. They also state the 33.1% figure is the fastest quarterly increase/record gain, but not that it is the biggest GDP level in the country’s history (Sources 6, 7, 8). The claims about “almost triple,” “very much bigger than any GDP,” and needing to go back to the 1950s for less than half are not supported by the provided sources.
-- **Confidence reason:** Most claims misuse the 33.1% growth figure; other comparisons lack evidence.
+- **TLDR:** The sources only support the 33.1% growth rate, not the GDP-level and “greatest” comparisons.
+- **Explanation:** Sources 1 and 2 discuss a 33.1% GDP growth rate (annualized) for a quarter, but they do not support claims that “the number today is 33.1 GDP” as a GDP level. Multiple sources (CNN Business, FactCheck/PolitiFact) explicitly dispute “biggest/best/greatest” GDP-in-history style assertions, noting record growth followed record declines and that the economy remained below pre-pandemic levels. The remaining claims about “almost triple,” “bigger than any GDP ever,” and “half the current one goes back to the 1950s” are not substantiated by the provided sources.
+- **Confidence reason:** Most claims are not directly addressed; only 33.1% growth is clearly supported.
 - **Claim verdicts:**
 ```json
 [
@@ -4135,20 +3932,20 @@ Failures shown: 26
     "verdict": "contradicted"
   },
   {
-    "claim": "33.1 GDP is the biggest in the history of the country by almost triple.",
+    "claim": "The GDP is the biggest in the history of the country by almost triple.",
     "verdict": "contradicted"
   },
   {
-    "claim": "33.1 GDP is very much bigger than any GDP the country has ever had.",
+    "claim": "The current GDP is very much bigger than any GDP the country has ever had.",
     "verdict": "contradicted"
   },
   {
-    "claim": "To find a GDP less than half of 33.1, you have to go back to the 1950s.",
+    "claim": "To find a GDP less than half of the current one, you have to go back to the 1950s.",
     "verdict": "unverifiable"
   },
   {
-    "claim": "33.1 is the greatest number, 33.1 percent.",
-    "verdict": "mixed"
+    "claim": "The greatest number is 33.1 percent.",
+    "verdict": "supported"
   }
 ]
 ```
@@ -4161,8 +3958,8 @@ Failures shown: 26
   "https://www.factcheck.org/2026/04/trumps-numbers-april-2026-update/": "neutral",
   "https://www.bea.gov/news/2026/gdp-third-estimate-industries-corporate-profits-state-gdp-and-state-personal-income-4th": "neutral",
   "https://www.cnn.com/2020/10/29/economy/gdp-report-trump-biggest-best-factcheck": "contradicting",
-  "https://www.bbc.com/news/world-45827430": "contradicting",
-  "https://www.politifact.com/factchecks/2020/oct/01/donald-trump/donald-trumps-dubious-statement-about-presiding-ov/": "contradicting"
+  "https://www.politifact.com/factchecks/2021/oct/08/facebook-posts/no-donald-trump-didnt-lead-greatest-economy-histor/": "contradicting",
+  "https://www.visualcapitalist.com/ranked-the-worlds-top-economies-in-1980-vs-2025/": "neutral"
 }
 ```
 
@@ -4191,76 +3988,12 @@ Failures shown: 26
    URL: https://www.cnn.com/2020/10/29/economy/gdp-report-trump-biggest-best-factcheck
    Stance: `contradicting`
 
-7. **US 2020 election: The economy under Trump in six charts**
-   URL: https://www.bbc.com/news/world-45827430
+7. **PolitiFact | No, Donald Trump didn’t lead ‘greatest economy in the history of the world’**
+   URL: https://www.politifact.com/factchecks/2021/oct/08/facebook-posts/no-donald-trump-didnt-lead-greatest-economy-histor/
    Stance: `contradicting`
 
-8. **PolitiFact | Donald Trump’s dubious statement about presiding over ‘the greatest economy’ in history**
-   URL: https://www.politifact.com/factchecks/2020/oct/01/donald-trump/donald-trumps-dubious-statement-about-presiding-ov/
-   Stance: `contradicting`
-
-#### Human Review Notes
-- Evidence sufficient? yes / no / unclear
-- Likely failure type: analyzer reasoning / evidence insufficient / label mapping / retrieval / extraction / other
-- Notes:
-
-### 9. AVeriTeC / av_017 - Supported
-
-#### Input
-- **Claim:** Because of a so-called trade war with China, America lost 300,000 manufacturing jobs.
-- **Expected label:** Supported
-- **Expected verdicts:** `true, mostly_true`
-- **Expected score range:** `[60, 100]`
-
-#### Output
-- **Actual verdict:** `mostly_false`
-- **Score:** `35`
-- **Confidence:** `medium`
-- **Correct:** `False`
-- **Within one level:** `False`
-- **Failure reason:** verdict got `mostly_false`, expected one of `true, mostly_true`
-- **TLDR:** Sources do not support the specific claim of 300,000 manufacturing jobs lost due to the China trade war.
-- **Explanation:** Source 1 mentions Moody’s estimating the trade conflict reduced U.S. employment by 300,000 jobs, but it does not specify that these were manufacturing jobs. Source 3 instead reports net negative effects on manufacturing employment (e.g., Federal Reserve findings of reduced manufacturing employment) and an Oxford Economics estimate of 245,000 total jobs lost, not 300,000 manufacturing jobs. Source 2 finds no evidence of net U.S. job losses from the “China shock” at the national level, further undermining the claim’s framing.
-- **Confidence reason:** Specific number/type (300,000 manufacturing jobs) not consistently supported.
-- **Claim verdicts:**
-```json
-[
-  {
-    "claim": "Because of a so-called trade war with China, America lost 300,000 manufacturing jobs.",
-    "verdict": "contradicted"
-  }
-]
-```
-- **Source stances:**
-```json
-{
-  "https://www.statesman.com/story/news/politics/elections/2020/07/01/fact-check-did-trump-lose-trade-war-that-he-started-per-biden-ad/113740186/": "supporting",
-  "https://sccei.fsi.stanford.edu/china-briefs/did-china-shock-cause-widespread-job-losses-us": "contradicting",
-  "https://econofact.org/factbrief/did-the-trump-tariffs-increase-us-manufacturing-jobs": "contradicting",
-  "https://www.cato.org/blog/manufacturing-employment-data-confirms-concentrated-benefits-dispersed-costs-trumps-tariffs": "neutral",
-  "https://www.progressivepolicy.org/u-s-manufacturing-employment-is-down-108000-in-2025/": "neutral"
-}
-```
-
-#### Pipeline Sources Output
-1. **Fact-check: Did Trump lose a trade war that he started, per Biden ad?**
-   URL: https://www.statesman.com/story/news/politics/elections/2020/07/01/fact-check-did-trump-lose-trade-war-that-he-started-per-biden-ad/113740186/
-   Stance: `supporting`
-
-2. **Did the “China Shock” Cause Widespread Job Losses in the U.S.? | FSI**
-   URL: https://sccei.fsi.stanford.edu/china-briefs/did-china-shock-cause-widespread-job-losses-us
-   Stance: `contradicting`
-
-3. **Fact Check: Did the Trump tariffs increase US manufacturing jobs? | Econofact**
-   URL: https://econofact.org/factbrief/did-the-trump-tariffs-increase-us-manufacturing-jobs
-   Stance: `contradicting`
-
-4. **Manufacturing Employment Data Confirm the Concentrated Benefits—and Dispersed Costs—of Trump’s Tariffs | Cato at Liberty Blog**
-   URL: https://www.cato.org/blog/manufacturing-employment-data-confirms-concentrated-benefits-dispersed-costs-trumps-tariffs
-   Stance: `neutral`
-
-5. **U.S. manufacturing employment is down 108,000 in 2025**
-   URL: https://www.progressivepolicy.org/u-s-manufacturing-employment-is-down-108000-in-2025/
+8. **Ranked: The World's Top Economies in 1980 vs. 2025**
+   URL: https://www.visualcapitalist.com/ranked-the-worlds-top-economies-in-1980-vs-2025/
    Stance: `neutral`
 
 #### Human Review Notes
@@ -4268,7 +4001,7 @@ Failures shown: 26
 - Likely failure type: analyzer reasoning / evidence insufficient / label mapping / retrieval / extraction / other
 - Notes:
 
-### 10. AVeriTeC / av_020 - Supported
+### 9. AVeriTeC / av_020 - Supported
 
 #### Input
 - **Claim:** Edo State in Nigeria has a 19% unemployment rate.
@@ -4277,21 +4010,21 @@ Failures shown: 26
 - **Expected score range:** `[60, 100]`
 
 #### Output
-- **Actual verdict:** `unverifiable`
-- **Score:** `50`
+- **Actual verdict:** `mixed`
+- **Score:** `55`
 - **Confidence:** `low`
 - **Correct:** `False`
 - **Within one level:** `True`
-- **Failure reason:** verdict got `unverifiable`, expected one of `true, mostly_true`
-- **TLDR:** Sources don’t provide enough direct evidence that Edo’s unemployment rate is 19%.
-- **Explanation:** Source 1 reports Obaseki’s claim that Edo’s unemployment fell from 25% to about 19%, citing an NBS report and a The Nation article, but it does not reproduce the underlying NBS state figure itself. The other sources provided do not give a clear, state-specific unemployment rate of 19% for Edo, so the claim cannot be confirmed or contradicted from the supplied material.
-- **Confidence reason:** Only one source mentions 19% and it’s based on a quoted claim.
+- **Failure reason:** verdict got `mixed`, expected one of `true, mostly_true`
+- **TLDR:** Dubawa reports Obaseki citing NBS for 19%, but other sources don’t verify Edo’s rate.
+- **Explanation:** Source 1 (Dubawa) says Obaseki claimed Edo’s unemployment fell from 25% to about 19% and that this was “verifiable with” an NBS report, but the source excerpt does not provide the NBS figure itself. The other provided sources do not give Edo’s unemployment rate as 19%, so they neither confirm nor clearly contradict it.
+- **Confidence reason:** Only one source mentions the 19% figure; NBS data not shown.
 - **Claim verdicts:**
 ```json
 [
   {
     "claim": "Edo State in Nigeria has a 19% unemployment rate.",
-    "verdict": "unverifiable"
+    "verdict": "mixed"
   }
 ]
 ```
@@ -4332,7 +4065,7 @@ Failures shown: 26
 - Likely failure type: analyzer reasoning / evidence insufficient / label mapping / retrieval / extraction / other
 - Notes:
 
-### 11. AVeriTeC / av_021 - Not Enough Evidence
+### 10. AVeriTeC / av_021 - Not Enough Evidence
 
 #### Input
 - **Claim:** Fuel in Nigeria in 2020 was not cheaper than that in Saudi Arabia.
@@ -4347,9 +4080,9 @@ Failures shown: 26
 - **Correct:** `False`
 - **Within one level:** `True`
 - **Failure reason:** verdict got `mostly_false`, expected one of `unverifiable, mixed`
-- **TLDR:** A fact-check says Saudi petrol was more expensive than Nigeria, contradicting the 40% claim.
-- **Explanation:** Source 1 directly evaluates the “40% cheaper in Nigeria than in Saudi Arabia” claim and concludes it is an exaggeration, stating Saudi petrol was 17.78% (octane 95) and 11.16% (octane 91) more expensive than Nigeria after currency conversion. Sources 2 and 3 discuss fuel-price comparisons but do not provide a 2020 Nigeria-vs-Saudi “not cheaper” calculation that would overturn Source 1’s direct contradiction.
-- **Confidence reason:** Only one source directly computes Nigeria vs Saudi prices; others are indirect or non-comparable.
+- **TLDR:** TheCable’s calculations show Saudi petrol was more expensive than Nigeria’s, contradicting the claim.
+- **Explanation:** Source 1 directly evaluates the “40% cheaper in Nigeria than in Saudi Arabia” claim and concludes it is an exaggeration, stating Saudi petrol was 17.78% (octane 95) and 11.16% (octane 91) more expensive than Nigeria after currency conversion. The other sources do not provide a 2020 Nigeria-vs-Saudi price comparison that would support the “not cheaper” framing; Source 3 only quotes a Buhari comparison without providing the underlying 2020 data.
+- **Confidence reason:** Only one source directly addresses the Nigeria–Saudi price comparison with calculations.
 - **Claim verdicts:**
 ```json
 [
@@ -4362,7 +4095,7 @@ Failures shown: 26
 - **Source stances:**
 ```json
 {
-  "https://factcheck.thecable.ng/fact-check-is-petrol-40-cheaper-in-nigeria-than-in-saudi-arabia-as-claimed-by-dangote/": "contradicting",
+  "https://factcheck.thecable.ng/fact-check-is-petrol-40-cheaper-in-nigeria-than-in-saudi-arabia-as-claimed-by-dangote/": "supporting",
   "https://www.facebook.com/groups/599563341561133/posts/1445300556987403/": "neutral",
   "https://multiplatforms.net/fg-justifies-fuel-price-comparison-with-saudi-arabia-others/": "neutral",
   "https://thedocs.worldbank.org/en/doc/73c7b24d6ec4770fbe71ab358d0e42bf-0280032025/original/Siham-Matallah-Paper-for-the-fourth-RRN-Conference.pdf": "neutral",
@@ -4373,7 +4106,7 @@ Failures shown: 26
 #### Pipeline Sources Output
 1. **FACT CHECK: Is petrol 40% cheaper in Nigeria than in Saudi Arabia as claimed by Dangote? - TheCable Fact Check**
    URL: https://factcheck.thecable.ng/fact-check-is-petrol-40-cheaper-in-nigeria-than-in-saudi-arabia-as-claimed-by-dangote/
-   Stance: `contradicting`
+   Stance: `supporting`
 
 2. **Fuel price comparison between Saudi Arabia and Nigeria - Facebook**
    URL: https://www.facebook.com/groups/599563341561133/posts/1445300556987403/
@@ -4396,7 +4129,7 @@ Failures shown: 26
 - Likely failure type: analyzer reasoning / evidence insufficient / label mapping / retrieval / extraction / other
 - Notes:
 
-### 12. AVeriTeC / av_022 - Refuted
+### 11. AVeriTeC / av_022 - Refuted
 
 #### Input
 - **Claim:** The Nigerian government is donating $600 million to Democratic presidential nominee Joe Biden’s campaign.
@@ -4411,9 +4144,9 @@ Failures shown: 26
 - **Correct:** `False`
 - **Within one level:** `False`
 - **Failure reason:** verdict got `unverifiable`, expected one of `false, mostly_false`
-- **TLDR:** No provided source shows Nigeria donating $600M to Biden’s campaign.
-- **Explanation:** None of the sources state that the Nigerian government is donating $600 million to Joe Biden’s campaign. Source 1 discusses $600 million in unemployment funds allegedly siphoned by Nigerian scammers, and mentions donations to Biden by a Democratic donor, but it does not claim a Nigerian government donation to Biden’s campaign. Sources 2, 3, 4, and 5 discuss other foreign-donation or U.S.-Nigeria assistance topics without supporting the specific claim.
-- **Confidence reason:** Only tangential $600M mention; no source matches the donation claim.
+- **TLDR:** None of the sources provide evidence of a $600M Nigerian donation to Biden.
+- **Explanation:** The Washington Examiner article discusses a $600 million unemployment-funds fraud involving Nigerian scammers, but it does not state that the Nigerian government donated $600 million to Joe Biden’s campaign. The other sources discuss other Nigeria-related political donations or U.S. assistance to Nigeria against Boko Haram, none of which mention a $600 million Nigerian government donation to Biden’s campaign.
+- **Confidence reason:** No source directly addresses the specific donation claim.
 - **Claim verdicts:**
 ```json
 [
@@ -4460,29 +4193,29 @@ Failures shown: 26
 - Likely failure type: analyzer reasoning / evidence insufficient / label mapping / retrieval / extraction / other
 - Notes:
 
-### 13. AVeriTeC / av_027 - Refuted
+### 12. AVeriTeC / av_028 - Conflicting Evidence/Cherrypicking
 
 #### Input
-- **Claim:** The PLAAF has shot down an Indian Sukhoi Su-30 fighter jet in Tibet.
-- **Expected label:** Refuted
-- **Expected verdicts:** `false, mostly_false`
-- **Expected score range:** `[0, 40]`
+- **Claim:** U.S. President Donald Trump has suspended all travel from China.
+- **Expected label:** Conflicting Evidence/Cherrypicking
+- **Expected verdicts:** `mixed, mostly_true, mostly_false`
+- **Expected score range:** `[25, 75]`
 
 #### Output
-- **Actual verdict:** `true`
-- **Score:** `95`
+- **Actual verdict:** `false`
+- **Score:** `10`
 - **Confidence:** `high`
 - **Correct:** `False`
-- **Within one level:** `False`
-- **Failure reason:** verdict got `true`, expected one of `false, mostly_false`
-- **TLDR:** Multiple fact-checks say the alleged PLAAF shootdown in Tibet is fake.
-- **Explanation:** All provided sources directly address the claim and state it is false. Newschecker (Source 1) says the tweet is fake and that no such incident has taken place, citing a Press Information Bureau (PIB) debunk. LatestLY (Source 2) similarly reports PIB debunking the claim as untrue, and Vishvas News (Source 5) adds that IAF denied the viral claim.
-- **Confidence reason:** Multiple sources cite PIB and deny the incident.
+- **Within one level:** `True`
+- **Failure reason:** verdict got `false`, expected one of `mixed, mostly_true, mostly_false`
+- **TLDR:** Sources say Trump did not suspend all travel from China.
+- **Explanation:** FactCheck.org and AP both state Trump’s restrictions were not a total ban: there were exceptions (e.g., Americans and their family members) and the restrictions were “porous.” FactCheck.org also notes the policy was incremental and not “closed up” all travel, contradicting the claim of suspending all travel from China.
+- **Confidence reason:** Multiple sources directly contradict the “all travel” claim
 - **Claim verdicts:**
 ```json
 [
   {
-    "claim": "The PLAAF has shot down an Indian Sukhoi Su-30 fighter jet in Tibet.",
+    "claim": "U.S. President Donald Trump has suspended all travel from China.",
     "verdict": "contradicted"
   }
 ]
@@ -4490,33 +4223,33 @@ Failures shown: 26
 - **Source stances:**
 ```json
 {
-  "https://newschecker.in/fact-check/pla-did-not-shoot-down-indian-fighter-jet-sukhoi-su-30-in-tibet": "contradicting",
-  "https://www.latestly.com/social-viral/fact-check/iaf-sukhoi-su-30-fighter-jet-was-not-shot-down-by-chinas-pla-in-tibet-pib-debunks-fake-news-2066857.html": "contradicting",
-  "https://www.instagram.com/p/CF6t5R3DEn8/": "contradicting",
-  "https://x.com/PIBFactCheck/status/1312692937898119169": "contradicting",
-  "https://www.vishvasnews.com/english/politics/fact-check-iafs-sukhoi-30-jet-was-not-shot-down-in-tibet-viral-claim-is-fake/": "contradicting"
+  "https://www.factcheck.org/2020/03/the-facts-on-trumps-travel-restrictions/": "contradicting",
+  "https://www.factcheck.org/2020/04/trump-biden-spin-china-travel-restrictions/": "contradicting",
+  "https://www.voanews.com/a/usa_ap-fact-check-trumps-perfect-china-ban-death-toll-myths/6189080.html": "contradicting",
+  "https://www.factcheck.org/2020/04/trumps-snowballing-china-travel-claim/": "neutral",
+  "https://apnews.com/article/asia-pacific-anthony-fauci-pandemics-politics-ap-fact-check-d227b34b168e576bf5068b92a03c003d": "contradicting"
 }
 ```
 
 #### Pipeline Sources Output
-1. **PLA Did Not Shoot Down Indian Fighter Jet Sukhoi Su–30 In Tibet - Newschecker**
-   URL: https://newschecker.in/fact-check/pla-did-not-shoot-down-indian-fighter-jet-sukhoi-su-30-in-tibet
+1. **The Facts on Trump's Travel Restrictions - FactCheck.org**
+   URL: https://www.factcheck.org/2020/03/the-facts-on-trumps-travel-restrictions/
    Stance: `contradicting`
 
-2. **IAF Sukhoi Su-30 Fighter Jet Was Not Shot Down by China's PLA in Tibet; PIB Debunks Fake News | 🔎 LatestLY**
-   URL: https://www.latestly.com/social-viral/fact-check/iaf-sukhoi-su-30-fighter-jet-was-not-shot-down-by-chinas-pla-in-tibet-pib-debunks-fake-news-2066857.html
+2. **Trump, Biden Spin China Travel Restrictions - FactCheck.org**
+   URL: https://www.factcheck.org/2020/04/trump-biden-spin-china-travel-restrictions/
    Stance: `contradicting`
 
-3. **Instagram**
-   URL: https://www.instagram.com/p/CF6t5R3DEn8/
+3. **AP Fact Check: Trump's Perfect China 'Ban,' Death Toll Myths**
+   URL: https://www.voanews.com/a/usa_ap-fact-check-trumps-perfect-china-ban-death-toll-myths/6189080.html
    Stance: `contradicting`
 
-4. **A tweet claims that an IAF Sukhoi Su-30 fighter jet has been shot ...**
-   URL: https://x.com/PIBFactCheck/status/1312692937898119169
-   Stance: `contradicting`
+4. **Trump's Snowballing China Travel Claim - FactCheck.org**
+   URL: https://www.factcheck.org/2020/04/trumps-snowballing-china-travel-claim/
+   Stance: `neutral`
 
-5. **Fact Check: IAF’s Sukhoi-30 jet shot down in Tibet? No, viral claim is fake**
-   URL: https://www.vishvasnews.com/english/politics/fact-check-iafs-sukhoi-30-jet-was-not-shot-down-in-tibet-viral-claim-is-fake/
+5. **AP FACT CHECK: Trump and the virus-era China ban that isn't | AP News**
+   URL: https://apnews.com/article/asia-pacific-anthony-fauci-pandemics-politics-ap-fact-check-d227b34b168e576bf5068b92a03c003d
    Stance: `contradicting`
 
 #### Human Review Notes
@@ -4524,7 +4257,7 @@ Failures shown: 26
 - Likely failure type: analyzer reasoning / evidence insufficient / label mapping / retrieval / extraction / other
 - Notes:
 
-### 14. AVeriTeC / av_029 - Refuted
+### 13. AVeriTeC / av_029 - Refuted
 
 #### Input
 - **Claim:** Before the first case of the coronavirus spread within the United States, the president Donald Trump took unprecedented action and suspended all travel from China.
@@ -4539,9 +4272,9 @@ Failures shown: 26
 - **Correct:** `False`
 - **Within one level:** `True`
 - **Failure reason:** verdict got `mixed`, expected one of `false, mostly_false`
-- **TLDR:** Trump suspended entry from China early, but “all travel” and “unprecedented” are not supported.
-- **Explanation:** Source 5 (the Jan. 31, 2020 proclamation) states the U.S. confirmed person-to-person spread in the U.S. and describes the proclamation’s basis, but it does not clearly establish that “all travel” was suspended. Source 3 (Snopes) says the “ban” was announced Jan. 31 and enforced Feb. 2 and was limited to non-U.S. citizens who had been in mainland China in the prior 14 days, which contradicts the “suspended all travel” wording. For “unprecedented,” Source 6 says many other countries imposed restrictions before or on the same day as the U.S., contradicting the claim of unprecedented action.
-- **Confidence reason:** Sources address timing and scope, but not “unprecedented” conclusively beyond other countries’ actions.
+- **TLDR:** Trump did suspend entry from China early, but sources don’t support “unprecedented” or “all travel.”
+- **Explanation:** Source 5 (the Jan. 31, 2020 proclamation) states the U.S. confirmed person-to-person spread in the U.S. and describes the proclamation issued on Jan. 31, 2020, which aligns with a suspension of entry for certain travelers from China effective Feb. 2 (as described by Source 3). However, Source 6 (FactCheck.org) says Trump’s decision was not “way ahead of anybody else” and that many other countries imposed restrictions before or on the same day, undermining the “unprecedented” framing. None of the provided sources clearly support that Trump suspended “all travel” from China; Source 6 explicitly notes there were exceptions and that Trump mischaracterized it as a complete travel ban.
+- **Confidence reason:** Multiple sources address timing and scope, but not “all travel” fully.
 - **Claim verdicts:**
 ```json
 [
@@ -4551,7 +4284,7 @@ Failures shown: 26
   },
   {
     "claim": "President Donald Trump took unprecedented action by suspending all travel from China.",
-    "verdict": "contradicted"
+    "verdict": "mixed"
   }
 ]
 ```
@@ -4560,9 +4293,9 @@ Failures shown: 26
 {
   "https://www.factcheck.org/2020/03/the-facts-on-trumps-travel-restrictions/": "neutral",
   "https://www.factcheck.org/2020/04/trumps-snowballing-china-travel-claim/": "neutral",
-  "https://www.snopes.com/fact-check/trump-ban-travel-china-pandemic/": "contradicting",
+  "https://www.snopes.com/fact-check/trump-ban-travel-china-pandemic/": "supporting",
   "https://www.statesman.com/story/news/politics/elections/2020/04/13/fact-check-was-trump-slow-to-halt-travel-from-china/1361149007/": "neutral",
-  "https://trumpwhitehouse.archives.gov/presidential-actions/proclamation-suspension-entry-immigrants-nonimmigrants-persons-pose-risk-transmitting-2019-novel-coronavirus/": "neutral",
+  "https://trumpwhitehouse.archives.gov/presidential-actions/proclamation-suspension-entry-immigrants-nonimmigrants-persons-pose-risk-transmitting-2019-novel-coronavirus/": "supporting",
   "https://www.factcheck.org/2020/04/trump-biden-spin-china-travel-restrictions/": "contradicting"
 }
 ```
@@ -4578,7 +4311,7 @@ Failures shown: 26
 
 3. **Did Trump Ban All Travel From China at the Start of the Pandemic? | Snopes.com**
    URL: https://www.snopes.com/fact-check/trump-ban-travel-china-pandemic/
-   Stance: `contradicting`
+   Stance: `supporting`
 
 4. **Fact-check: Was Trump slow to halt travel from China?**
    URL: https://www.statesman.com/story/news/politics/elections/2020/04/13/fact-check-was-trump-slow-to-halt-travel-from-china/1361149007/
@@ -4586,7 +4319,7 @@ Failures shown: 26
 
 5. **Proclamation on Suspension of Entry as Immigrants and ...**
    URL: https://trumpwhitehouse.archives.gov/presidential-actions/proclamation-suspension-entry-immigrants-nonimmigrants-persons-pose-risk-transmitting-2019-novel-coronavirus/
-   Stance: `neutral`
+   Stance: `supporting`
 
 6. **Trump, Biden Spin China Travel Restrictions - FactCheck.org**
    URL: https://www.factcheck.org/2020/04/trump-biden-spin-china-travel-restrictions/
@@ -4597,7 +4330,7 @@ Failures shown: 26
 - Likely failure type: analyzer reasoning / evidence insufficient / label mapping / retrieval / extraction / other
 - Notes:
 
-### 15. PolitiFact / pf_003 - true
+### 14. PolitiFact / pf_003 - true
 
 #### Input
 - **Claim:** Orrin Hatch co-sponsored a 1993 health care bill that had an individual mandate.
@@ -4607,13 +4340,13 @@ Failures shown: 26
 
 #### Output
 - **Actual verdict:** `mostly_true`
-- **Score:** `85`
+- **Score:** `78`
 - **Confidence:** `high`
 - **Correct:** `False`
 - **Within one level:** `True`
 - **Failure reason:** verdict got `mostly_true`, expected one of `true`
-- **TLDR:** Sources indicate Hatch co-sponsored a 1993 health bill containing an individual mandate.
-- **Explanation:** PolitiFact directly states that Hatch was the co-sponsor of a 1993 Republican-backed bill that included an individual mandate (Source 1). Fox News and The New Yorker also say the individual mandate appeared in 1993 bills supported/co-sponsored by Orrin Hatch (Sources 2 and 3), aligning with the claim.
+- **TLDR:** Sources indicate Hatch co-sponsored a 1993 Republican health bill with an individual mandate.
+- **Explanation:** PolitiFact directly states that Hatch was the co-sponsor of a 1993 Republican-backed bill that included an individual mandate (Source 1). Fox News and The New Yorker also say the individual mandate appeared in 1993 bills supported/co-sponsored by Orrin Hatch (Sources 2 and 3). None of the provided sources contradict the claim; they only discuss related context about later opposition.
 - **Confidence reason:** Multiple sources directly link Hatch to 1993 mandate bills.
 - **Claim verdicts:**
 ```json
@@ -4661,7 +4394,7 @@ Failures shown: 26
 - Likely failure type: analyzer reasoning / evidence insufficient / label mapping / retrieval / extraction / other
 - Notes:
 
-### 16. PolitiFact / pf_004 - barely-true
+### 15. PolitiFact / pf_004 - barely-true
 
 #### Input
 - **Claim:** Mark Herring voted to allow sex offenders, including rapists, to serve shorter sentences.
@@ -4676,8 +4409,8 @@ Failures shown: 26
 - **Correct:** `False`
 - **Within one level:** `False`
 - **Failure reason:** verdict got `unverifiable`, expected one of `mostly_false, mixed`
-- **TLDR:** None of the provided sources mention Mark Herring or any vote on shorter sentences for sex offenders.
-- **Explanation:** The sources provided discuss sex-offense recidivism research (Source 1), general sex-offense data (Source 2), Canadian bail/sentencing reforms unrelated to Mark Herring (Source 3), and an Ohio dissent report referencing “Herring” in a different legal context (Source 4). Source 5 discusses Washington State SSOSA-related sentencing alternatives but does not identify Mark Herring or any vote about shorter sentences for rapists/sex offenders.
+- **TLDR:** The sources don’t mention Mark Herring or any vote on shorter sentences for sex offenders.
+- **Explanation:** None of the provided sources contain information about Mark Herring voting to allow sex offenders (including rapists) to serve shorter sentences. Source 1 discusses sex-offender recidivism and studies, Source 2 provides general data on sexual offending, Source 3 summarizes Canadian bail/sentencing reforms without any Mark Herring vote, and Source 4 is about exclusionary-rule costs referencing a case name “Herring” unrelated to a voting record. Source 5 concerns Washington State SSOSA-related recommendations and voting results, but it does not identify Mark Herring or the specific claim about shorter sentences for sex offenders.
 - **Confidence reason:** No source addresses the specific person, vote, or sentencing change.
 - **Claim verdicts:**
 ```json
@@ -4725,7 +4458,7 @@ Failures shown: 26
 - Likely failure type: analyzer reasoning / evidence insufficient / label mapping / retrieval / extraction / other
 - Notes:
 
-### 17. PolitiFact / pf_009 - true
+### 16. PolitiFact / pf_009 - true
 
 #### Input
 - **Claim:** The words subhuman mongrel, which Ted Nugent called President Barack Obama, were used by the Nazis to justify the genocide of the Jewish community.
@@ -4735,23 +4468,27 @@ Failures shown: 26
 
 #### Output
 - **Actual verdict:** `mostly_true`
-- **Score:** `86`
+- **Score:** `78`
 - **Confidence:** `medium`
 - **Correct:** `False`
 - **Within one level:** `True`
 - **Failure reason:** verdict got `mostly_true`, expected one of `true`
-- **TLDR:** Sources support that Nazi propaganda used “subhuman”/“mongrel” terms tied to genocide justification.
-- **Explanation:** PolitiFact (Source 1) directly states that “untermenschen, subhuman mongrels” were used by Nazis and were part of the Nazi lexicon, and it links this to justification of genocide. The CNN/RealClearPolitics transcript (Source 6) and Mediaite (Source 7) similarly attribute the “subhuman mongrels” framing to Nazi materials used to justify genocide. The New Yorker (Source 2) and Slate (Source 3) focus on the slur’s offensiveness and Nazi-echoing context but do not provide detailed Nazi-justification evidence; however, they do not contradict the core Nazi-usage claim.
-- **Confidence reason:** Multiple sources (PolitiFact, CNN transcript, Mediaite) directly address Nazi usage and genocide justification.
+- **TLDR:** Sources support that Nazis used “untermensch/subhuman” and “mongrel” language for dehumanization; Nugent used the phrase for Obama.
+- **Explanation:** PolitiFact (Source 1) and the RealClearPolitics transcript of Blitzer’s CNN remarks (Source 2) state that Nazis used “untermenschen/subhuman mongrels” to describe Jews in the build-up to the Holocaust, supporting the genocide-justification framing. Sources 5 and 6 show Ted Nugent used the phrase “subhuman mongrel” to attack Obama, supporting the second claim. However, the provided sources do not independently verify the exact Nazi phrase “subhuman mongrel” in English or that it was specifically used as a direct justification phrase for genocide, so the support is strong but not airtight.
+- **Confidence reason:** Multiple sources support key points, but exact phrasing/justification linkage not fully evidenced.
 - **Claim verdicts:**
 ```json
 [
   {
-    "claim": "The words \"subhuman mongrel,\" which Ted Nugent called President Barack Obama, were used by the Nazis.",
+    "claim": "The words \"subhuman\" and \"mongrel\" were used by the Nazis to justify the genocide of the Jewish community.",
     "verdict": "supported"
   },
   {
-    "claim": "The Nazis used the words \"subhuman mongrel\" to justify the genocide of the Jewish community.",
+    "claim": "Ted Nugent called President Barack Obama by the words \"subhuman\" and \"mongrel\".",
+    "verdict": "supported"
+  },
+  {
+    "claim": "The Nazis used the words \"subhuman\" and \"mongrel\" to justify the genocide of the Jewish community.",
     "verdict": "supported"
   }
 ]
@@ -4760,13 +4497,13 @@ Failures shown: 26
 ```json
 {
   "https://www.politifact.com/factchecks/2014/feb/19/wolf-blitzer/wolf-blitzer-ted-nugent-used-nazi-terminology-subh/": "supporting",
-  "https://www.newyorker.com/news/amy-davidson/ted-nugents-subhuman-mongrel-slur-in-translation": "neutral",
-  "https://slate.com/human-interest/2014/02/ted-nugent-the-rocker-and-political-activist-referred-to-president-obama-as-a-subhuman-mongrel-in-an-interview-with-guns-com.html": "neutral",
-  "https://www.politifact.com/factchecks/list/?target=ted-nugent": "supporting",
-  "https://www.tampabay.com/news/politics/national/punditfact-ted-nugents-remarks-about-obama-hark-back-to-nazis/2167186/": "neutral",
-  "https://www.realclearpolitics.com/video/2014/02/19/cnns_wolf_blitzer_takes_on_ted_nugent_for_using_term_subhuman_mongrel_to_attack_obama.html": "supporting",
-  "https://www.mediaite.com/media/tv/blitzer-gets-super-detailed-on-nazi-origins-of-nugents-subhuman-mongrel-obama-remark/": "supporting",
-  "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0274957": "neutral"
+  "https://www.realclearpolitics.com/video/2014/02/19/cnns_wolf_blitzer_takes_on_ted_nugent_for_using_term_subhuman_mongrel_to_attack_obama.html": "neutral",
+  "https://kymkemp.com/2025/11/21/humboldt-county-jail-reports-daily-booking-sheet-november-21-2025/": "neutral",
+  "https://pmc.ncbi.nlm.nih.gov/articles/PMC9645591/": "supporting",
+  "https://www.yahoo.com/entertainment/ted-nugent-takes-credit-piers-morgan-cancelation-got-180626523.html": "supporting",
+  "https://www.newyorker.com/news/amy-davidson/ted-nugents-subhuman-mongrel-slur-in-translation": "supporting",
+  "https://www.washingtonpost.com/news/post-politics/wp/2014/03/07/perry-nugents-subhuman-mongrel-comment-wasnt-racist/": "neutral",
+  "https://www.clarionledger.com/story/news/2014/02/21/rocker-ted-nugent-apologizes-for-obama-racial-remark/5703459/": "supporting"
 }
 ```
 
@@ -4775,40 +4512,40 @@ Failures shown: 26
    URL: https://www.politifact.com/factchecks/2014/feb/19/wolf-blitzer/wolf-blitzer-ted-nugent-used-nazi-terminology-subh/
    Stance: `supporting`
 
-2. **Ted Nugent’s “Subhuman Mongrel” Slur, in Translation | The New Yorker**
-   URL: https://www.newyorker.com/news/amy-davidson/ted-nugents-subhuman-mongrel-slur-in-translation
-   Stance: `neutral`
-
-3. **Ted Nugent: The rocker and political activist referred to President Obama as a subhuman mongrel in an interview with Guns.com.**
-   URL: https://slate.com/human-interest/2014/02/ted-nugent-the-rocker-and-political-activist-referred-to-president-obama-as-a-subhuman-mongrel-in-an-interview-with-guns-com.html
-   Stance: `neutral`
-
-4. **Fact-checks | PolitiFact**
-   URL: https://www.politifact.com/factchecks/list/?target=ted-nugent
-   Stance: `supporting`
-
-5. **PunditFact: Ted Nugent's remarks about Obama hark back to Nazis**
-   URL: https://www.tampabay.com/news/politics/national/punditfact-ted-nugents-remarks-about-obama-hark-back-to-nazis/2167186/
-   Stance: `neutral`
-
-6. **CNN's Wolf Blitzer Takes On Ted Nugent For Using Term "Subhuman Mongrel" To Attack Obama | Video | RealClearPolitics**
+2. **CNN's Wolf Blitzer Takes On Ted Nugent For Using Term "Subhuman Mongrel" To Attack Obama | Video | RealClearPolitics**
    URL: https://www.realclearpolitics.com/video/2014/02/19/cnns_wolf_blitzer_takes_on_ted_nugent_for_using_term_subhuman_mongrel_to_attack_obama.html
-   Stance: `supporting`
-
-7. **Blitzer Gets Super-Detailed on Nazi Origins of Nugent’s ‘Subhuman Mongrel’ Obama Remark**
-   URL: https://www.mediaite.com/media/tv/blitzer-gets-super-detailed-on-nazi-origins-of-nugents-subhuman-mongrel-obama-remark/
-   Stance: `supporting`
-
-8. **Dehumanization and mass violence: A study of mental state language in Nazi propaganda (1927–1945) | PLOS One**
-   URL: https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0274957
    Stance: `neutral`
+
+3. **Humboldt County Jail Reports: Daily Booking Sheet - November 21, 2025 - Redheaded Blackbelt**
+   URL: https://kymkemp.com/2025/11/21/humboldt-county-jail-reports-daily-booking-sheet-november-21-2025/
+   Stance: `neutral`
+
+4. **Dehumanization and mass violence: A study of mental state language in Nazi propaganda (1927–1945) - PMC**
+   URL: https://pmc.ncbi.nlm.nih.gov/articles/PMC9645591/
+   Stance: `supporting`
+
+5. **Ted Nugent Takes Credit For Piers Morgan’s Cancelation: I Got His ‘A– Thrown Out’ (Video)**
+   URL: https://www.yahoo.com/entertainment/ted-nugent-takes-credit-piers-morgan-cancelation-got-180626523.html
+   Stance: `supporting`
+
+6. **Ted Nugent’s “Subhuman Mongrel” Slur, in Translation | The New Yorker**
+   URL: https://www.newyorker.com/news/amy-davidson/ted-nugents-subhuman-mongrel-slur-in-translation
+   Stance: `supporting`
+
+7. **Perry: Nugent’s ‘subhuman mongrel’ comment wasn’t racist - The Washington Post**
+   URL: https://www.washingtonpost.com/news/post-politics/wp/2014/03/07/perry-nugents-subhuman-mongrel-comment-wasnt-racist/
+   Stance: `neutral`
+
+8. **The Clarion-Ledger**
+   URL: https://www.clarionledger.com/story/news/2014/02/21/rocker-ted-nugent-apologizes-for-obama-racial-remark/5703459/
+   Stance: `supporting`
 
 #### Human Review Notes
 - Evidence sufficient? yes / no / unclear
 - Likely failure type: analyzer reasoning / evidence insufficient / label mapping / retrieval / extraction / other
 - Notes:
 
-### 18. PolitiFact / pf_011 - true
+### 17. PolitiFact / pf_011 - true
 
 #### Input
 - **Claim:** Says Donald Trump has changed his mind on abortion.
@@ -4823,9 +4560,9 @@ Failures shown: 26
 - **Correct:** `False`
 - **Within one level:** `True`
 - **Failure reason:** verdict got `mostly_true`, expected one of `true`
-- **TLDR:** Multiple sources say Trump shifted abortion positions, including moving away from a national ban.
-- **Explanation:** Axios describes a timeline of Trump’s shifting abortion stance, including private support for a 16-week national ban with exceptions and later public suggestions of a 15-week ban with exceptions. Al Jazeera and FactCheck.org both describe a more recent shift toward leaving abortion limits to states rather than endorsing a national ban. The ACLU also characterizes his public position as shifting with political conditions, supporting the idea that he has changed his mind.
-- **Confidence reason:** Several sources document shifts, but not one direct “changed his mind” statement.
+- **TLDR:** Sources show Trump’s abortion position has shifted, including moving away from a national ban.
+- **Explanation:** Axios and Al Jazeera describe multiple changes in Trump’s abortion stance over time, including recent statements that abortion limits should be left to states rather than a national ban. FactCheck.org also characterizes this as a change from his 2016 support for a federal abortion ban, while ACLU similarly notes his public position shifts with political conditions. None of the sources directly deny that he has changed his mind; they mainly document the shifting nature of his views.
+- **Confidence reason:** Multiple sources document shifts, but not a single definitive “changed his mind” moment.
 - **Claim verdicts:**
 ```json
 [
@@ -4872,6 +4609,89 @@ Failures shown: 26
 - Likely failure type: analyzer reasoning / evidence insufficient / label mapping / retrieval / extraction / other
 - Notes:
 
+### 18. PolitiFact / pf_012 - false
+
+#### Input
+- **Claim:** A new ruling by the EPA would force dairy farmers to comply with the Spill Prevention, Control and Countermeasure Program when dealing with spilt milk -- the same regulations oil and natural gas producers must follow.
+- **Expected label:** false
+- **Expected verdicts:** `false, mostly_false`
+- **Expected score range:** `[0, 40]`
+
+#### Output
+- **Actual verdict:** `mixed`
+- **Score:** `35`
+- **Confidence:** `medium`
+- **Correct:** `False`
+- **Within one level:** `True`
+- **Failure reason:** verdict got `mixed`, expected one of `false, mostly_false`
+- **TLDR:** Sources conflict: milk spills were proposed to be covered, but EPA later exempted milk containers; oil/natural gas SPCC is supported.
+- **Explanation:** For the first claim, Source 1 states the allegation that a new EPA ruling would force dairy farmers to comply with SPCC for spilled milk, but Source 2 says EPA testimony indicated dairy containers would be exempted, and Source 4 says EPA exempted milk and milk product containers from SPCC (while fuel oil/other applicable oils remain covered). For the second claim, multiple sources support that SPCC applies to oil facilities: Source 3 describes SPCC requirements for facilities storing/using significant quantities of oil and notes oil includes milk due to animal fat, and Source 7 and Source 8 describe SPCC obligations for farms/facilities storing oil or oil products; none contradict that oil/natural gas producers must follow SPCC.
+- **Confidence reason:** Milk-related coverage is contradicted by later exemption sources; oil/natural gas coverage is broadly supported.
+- **Claim verdicts:**
+```json
+[
+  {
+    "claim": "A new ruling by the EPA would force dairy farmers to comply with the Spill Prevention, Control and Countermeasure Program when dealing with spilt milk.",
+    "verdict": "mixed"
+  },
+  {
+    "claim": "Oil and natural gas producers must follow the Spill Prevention, Control and Countermeasure Program.",
+    "verdict": "supported"
+  }
+]
+```
+- **Source stances:**
+```json
+{
+  "https://www.politifact.com/factchecks/2011/mar/11/morgan-griffith/morgan-griffith-says-epa-treats-milk-spills-same-w/": "supporting",
+  "https://green.blogs.nytimes.com/2011/03/12/spilled-milk-regulations-a-myth-e-p-a-says/": "contradicting",
+  "https://www.klobuchar.senate.gov/public/index.cfm/amy-in-the-news?ID=4ADE358E-D981-457E-BB25-35C90E059579": "supporting",
+  "https://www.farmprogress.com/management/dairy-containers-excluded-from-spcc-regulations-in-updated-ruling": "contradicting",
+  "https://www.epa.gov/oil-spills-prevention-and-preparedness-regulations/fact-sheet-proposed-exemption-milk-containers": "neutral",
+  "https://www.govinfo.gov/content/pkg/CHRG-109shrg42267/html/CHRG-109shrg42267.htm": "neutral",
+  "https://www.epa.gov/oil-spills-prevention-and-preparedness-regulations/spill-prevention-control-and-countermeasure-fact": "supporting",
+  "https://www.ecfr.gov/current/title-40/chapter-I/subchapter-D/part-112": "supporting"
+}
+```
+
+#### Pipeline Sources Output
+1. **PolitiFact | Morgan Griffith says EPA treats milk spills same way as oil spills**
+   URL: https://www.politifact.com/factchecks/2011/mar/11/morgan-griffith/morgan-griffith-says-epa-treats-milk-spills-same-w/
+   Stance: `supporting`
+
+2. **Spilled Milk Regulations a Myth, E.P.A. Says - The New York Times**
+   URL: https://green.blogs.nytimes.com/2011/03/12/spilled-milk-regulations-a-myth-e-p-a-says/
+   Stance: `contradicting`
+
+3. **Klobuchar calls for EPA Exemption for Dairy Farmers - Amy in the News - U.S. Senator Amy Klobuchar**
+   URL: https://www.klobuchar.senate.gov/public/index.cfm/amy-in-the-news?ID=4ADE358E-D981-457E-BB25-35C90E059579
+   Stance: `supporting`
+
+4. **Dairy containers excluded from SPCC regulations in updated ruling | Farm Progress**
+   URL: https://www.farmprogress.com/management/dairy-containers-excluded-from-spcc-regulations-in-updated-ruling
+   Stance: `contradicting`
+
+5. **Fact Sheet: Proposed Exemption for Milk Containers and Associated Piping and Appurtenances | US EPA**
+   URL: https://www.epa.gov/oil-spills-prevention-and-preparedness-regulations/fact-sheet-proposed-exemption-milk-containers
+   Stance: `neutral`
+
+6. **- THE ENVIRONMENTAL PROTECTION AGENCY'S SPILL PREVENTION CONTROL AND COUNTERMEASURE PROGRAM**
+   URL: https://www.govinfo.gov/content/pkg/CHRG-109shrg42267/html/CHRG-109shrg42267.htm
+   Stance: `neutral`
+
+7. **Spill Prevention, Control, and Countermeasure Fact Sheet for Farms**
+   URL: https://www.epa.gov/oil-spills-prevention-and-preparedness-regulations/spill-prevention-control-and-countermeasure-fact
+   Stance: `supporting`
+
+8. **40 CFR Part 112 -- Oil Pollution Prevention - eCFR**
+   URL: https://www.ecfr.gov/current/title-40/chapter-I/subchapter-D/part-112
+   Stance: `supporting`
+
+#### Human Review Notes
+- Evidence sufficient? yes / no / unclear
+- Likely failure type: analyzer reasoning / evidence insufficient / label mapping / retrieval / extraction / other
+- Notes:
+
 ### 19. PolitiFact / pf_016 - half-true
 
 #### Input
@@ -4887,9 +4707,9 @@ Failures shown: 26
 - **Correct:** `False`
 - **Within one level:** `True`
 - **Failure reason:** verdict got `true`, expected one of `mixed, mostly_true, mostly_false`
-- **TLDR:** Sources support both McCain’s “extinction” warning for North Korea and his “Bomb Iran” song joke.
-- **Explanation:** Multiple sources (Source 1, 2, 4, 5) report McCain warned North Korea that aggression would lead to its “extinction.” Multiple sources (Source 6, 7, 8, 9, 10) report McCain joked/sang “Bomb Iran” by parodying the Beach Boys’ “Barbara Ann.”
-- **Confidence reason:** Multiple independent sources directly describe both alleged statements.
+- **TLDR:** Sources directly report McCain warning North Korea with “extinction” and jokingly singing “Bomb Iran.”
+- **Explanation:** Multiple sources (Presstv, Legal Reader, and CBS News) report McCain said aggressive actions by North Korea would lead to the country’s “extinction.” Multiple sources (NPR, CBS News, CNN, and NBC News) report McCain joked and briefly sang “Bomb Iran” to the tune of a Beach Boys song during a campaign appearance.
+- **Confidence reason:** Independent sources directly document both quoted remarks.
 - **Claim verdicts:**
 ```json
 [
@@ -4965,19 +4785,19 @@ Failures shown: 26
 
 #### Output
 - **Actual verdict:** `mostly_true`
-- **Score:** `78`
+- **Score:** `70`
 - **Confidence:** `medium`
 - **Correct:** `False`
 - **Within one level:** `True`
 - **Failure reason:** verdict got `mostly_true`, expected one of `true`
-- **TLDR:** PolitiFact supports the $6,500 drop claim using Census data.
-- **Explanation:** Source 1 (PolitiFact) directly evaluates the statement and says it is “on target” with Census Bureau data, noting a $6,500, 10-year drop cited in Carter’s ad. Source 2 provides related but different figures for median household income (e.g., $54,803 in 2002 vs. $47,829 in 2013), which is directionally consistent with a decline but does not explicitly confirm the specific $6,500 figure. The other sources do not address Georgia’s middle-class income dropping by $6,500 over the last 10 years.
-- **Confidence reason:** Only one source directly verifies the exact $6,500 figure.
+- **TLDR:** PolitiFact and SaportaReport both indicate Georgia’s middle-class/median income fell by about $6,500 over ~10 years.
+- **Explanation:** Source 1 (PolitiFact) directly addresses the claim and states Carter’s ad is “true,” citing Census Bureau data and noting a $6,500, 10-year drop in household income. Source 2 (SaportaReport) also reports Census data showing Georgia’s median household income fell from $54,803 (2002) to $47,829 (2013) in inflation-adjusted terms, which is a decline of about $6,974—consistent with the $6,500 figure given the different endpoints.
+- **Confidence reason:** Two sources support the direction and magnitude; endpoints differ slightly.
 - **Claim verdicts:**
 ```json
 [
   {
-    "claim": "In the last 10 years, Georgia's middle class income has dropped by $6,500.",
+    "claim": "In the last 10 years, Georgia's middle class income has dropped $6,500.",
     "verdict": "supported"
   }
 ]
@@ -4986,32 +4806,32 @@ Failures shown: 26
 ```json
 {
   "https://www.politifact.com/factchecks/2014/sep/29/jason-carter/carter-claim-about-median-household-income-target/": "supporting",
-  "https://saportareport.com/georgias-middle-class-disappearing-gsu-report-cant-say-went/columnists/david/": "neutral",
+  "https://saportareport.com/georgias-middle-class-disappearing-gsu-report-cant-say-went/columnists/david/": "supporting",
   "https://thecurrentga.org/2025/10/11/analysis-how-georgias-drop-in-per-capita-income-presaged-its-rural-demographic-collapse-part-2/": "neutral",
-  "https://abc45.com/news/nation-world/middle-income-families-struggle-as-living-costs-outpace-dropping-prices-budget-groceries-rent-finances-united-states-economy-fact-check-team": "neutral",
-  "https://www.incomebyzipcode.com/georgia": "neutral"
+  "https://www.incomebyzipcode.com/georgia": "neutral",
+  "https://abc45.com/news/nation-world/middle-income-families-struggle-as-living-costs-outpace-dropping-prices-budget-groceries-rent-finances-united-states-economy-fact-check-team": "neutral"
 }
 ```
 
 #### Pipeline Sources Output
-1. **PolitiFact | Carter claim about median household income on target**
+1. **Carter claim about median household income on target**
    URL: https://www.politifact.com/factchecks/2014/sep/29/jason-carter/carter-claim-about-median-household-income-target/
    Stance: `supporting`
 
 2. **Georgia’s middle class is disappearing; GSU report can’t say where it's going, or why - SaportaReport**
    URL: https://saportareport.com/georgias-middle-class-disappearing-gsu-report-cant-say-went/columnists/david/
-   Stance: `neutral`
+   Stance: `supporting`
 
 3. **Analysis: How Georgia’s drop in per capita income presaged its rural demographic collapse – Part 2 - The Current**
    URL: https://thecurrentga.org/2025/10/11/analysis-how-georgias-drop-in-per-capita-income-presaged-its-rural-demographic-collapse-part-2/
    Stance: `neutral`
 
-4. **Fact Check Team: Middle-income families struggle as living costs outpace dropping prices**
-   URL: https://abc45.com/news/nation-world/middle-income-families-struggle-as-living-costs-outpace-dropping-prices-budget-groceries-rent-finances-united-states-economy-fact-check-team
+4. **Georgia Income Statistics for 2026**
+   URL: https://www.incomebyzipcode.com/georgia
    Stance: `neutral`
 
-5. **Georgia Income Statistics | Current Census Data for Georgia Zip Codes**
-   URL: https://www.incomebyzipcode.com/georgia
+5. **Fact Check Team: Middle-income families struggle as living costs outpace dropping prices**
+   URL: https://abc45.com/news/nation-world/middle-income-families-struggle-as-living-costs-outpace-dropping-prices-budget-groceries-rent-finances-united-states-economy-fact-check-team
    Stance: `neutral`
 
 #### Human Review Notes
@@ -5034,9 +4854,9 @@ Failures shown: 26
 - **Correct:** `False`
 - **Within one level:** `False`
 - **Failure reason:** verdict got `unverifiable`, expected one of `mixed, mostly_true, mostly_false`
-- **TLDR:** Sources discuss overall U.S. crude forecasts, not a 14% federal-land drop.
-- **Explanation:** Source 5 (EIA) forecasts U.S. crude oil production averaging 13.5 million b/d in 2026, about 100,000 b/d less than 2025, and notes Alaska and the Federal Gulf of America increases offset declines elsewhere. Source 1 provides EIA STEO regional figures including Federal Gulf of America, but none of the sources quantify a “down 14 percent” change on “federal land” for “this year.” The provided sources therefore do not contain the specific metric needed to verify the claim.
-- **Confidence reason:** No source states a 14% federal-land decline this year.
+- **TLDR:** Sources don’t provide the specific “down 14% on federal land” figure.
+- **Explanation:** None of the provided sources state that oil production on federal land is down 14% this year. Source 5 (EIA) forecasts total U.S. crude production averaging 13.5 million b/d in 2026, about 100,000 b/d less than 2025, and mentions Federal Gulf of America increases offset by declines elsewhere, but it does not quantify a 14% federal-land drop. Source 1 discusses EIA STEO projections for Federal Gulf of America and other regions, yet still does not give a “14 percent” federal-land figure for “this year.”
+- **Confidence reason:** No source mentions the 14% federal-land figure.
 - **Claim verdicts:**
 ```json
 [
@@ -5093,23 +4913,23 @@ Failures shown: 26
 
 #### Output
 - **Actual verdict:** `mostly_true`
-- **Score:** `78`
+- **Score:** `70`
 - **Confidence:** `medium`
 - **Correct:** `False`
 - **Within one level:** `False`
 - **Failure reason:** verdict got `mostly_true`, expected one of `false`
-- **TLDR:** PolitiFact reports Langevin opposed a border fence due to fear of someone getting hurt.
-- **Explanation:** Source 1 (PolitiFact) directly attributes to Michael J. Gardiner the statement that Langevin opposed a border fence because he was afraid someone would get hurt trying to go around it. Source 3 (OnTheIssues) indicates Langevin voted against building a fence, but it does not provide the specific “afraid someone would get hurt” rationale. The other sources shown do not address this specific fear-based justification.
-- **Confidence reason:** Only one source directly states the fear rationale.
+- **TLDR:** Sources support Langevin opposing a border fence and citing fear someone would get hurt.
+- **Explanation:** PolitiFact reports that Michael J. Gardiner said Langevin opposed the U.S.-Mexican border fence because he was afraid someone would get hurt trying to go around it (Source 1). PolitiFact also indicates Langevin voted against the fence resolution, aligning with the claim that he opposed a border fence to block illegal immigration (Source 1). The OnTheIssues page states Langevin voted NO on building a fence along the Mexican border, supporting the opposition aspect but not the specific “afraid someone would get hurt” rationale (Source 2).
+- **Confidence reason:** Opposition is supported by two sources; the specific fear rationale appears only in one.
 - **Claim verdicts:**
 ```json
 [
   {
-    "claim": "U.S. Rep. Jim Langevin didn't want a border fence to block illegal immigration.",
+    "claim": "U.S. Rep. Jim Langevin opposed a border fence to block illegal immigration.",
     "verdict": "supported"
   },
   {
-    "claim": "Jim Langevin said he opposed a border fence because he was afraid someone would get hurt trying to go around the fence.",
+    "claim": "Jim Langevin said he opposed the border fence because he was afraid someone would get hurt trying to go around it.",
     "verdict": "supported"
   }
 ]
@@ -5118,13 +4938,12 @@ Failures shown: 26
 ```json
 {
   "https://www.politifact.com/factchecks/2010/jun/25/michael-j-gardiner/gardiner-says-langevin-opposed-us-mexican-border-f/": "supporting",
-  "https://www.politifact.com/search/factcheck/?q=Trang%20ch%E1%BB%A7%20D%E1%BA%ABn%20l%C6%B0u%20m%C3%A0n%20h%C3%ACnh%20b%C3%A1%20ch%E1%BB%A7%28TG%3Ae10838%29.frm": "neutral",
   "https://www.ontheissues.org/house/James_Langevin_Immigration.htm": "supporting",
-  "https://www.govinfo.gov/content/pkg/CHRG-109hhrg41325/html/CHRG-109hhrg41325.htm": "neutral",
-  "https://www.congress.gov/event/116th-congress/house-event/LC64036/text": "neutral",
-  "https://www.politifact.com/factchecks/2017/apr/23/mick-mulvaney/fact-check-did-top-democrats-vote-border-wall-2006/": "neutral",
   "https://www.congress.gov/109/crec/2005/02/15/CREC-2005-02-15-pt1-PgE247.pdf": "neutral",
-  "https://assets.nfhs.org/umbraco/media/1019429/treaties.pdf": "neutral"
+  "https://www.govinfo.gov/content/pkg/CHRG-109hhrg41325/html/CHRG-109hhrg41325.htm": "neutral",
+  "https://www.politifact.com/factchecks/list/?category=immigration&ruling=barely-true": "neutral",
+  "https://democrats-armedservices.house.gov/2018/11/smith-house-democrats-demand-answers-on-trump-border-deployment": "neutral",
+  "https://nctr.ca/wp-content/uploads/2021/01/Volume_1_History_Part_1_English_Web.pdf": "neutral"
 }
 ```
 
@@ -5133,32 +4952,28 @@ Failures shown: 26
    URL: https://www.politifact.com/factchecks/2010/jun/25/michael-j-gardiner/gardiner-says-langevin-opposed-us-mexican-border-f/
    Stance: `supporting`
 
-2. **PolitiFact**
-   URL: https://www.politifact.com/search/factcheck/?q=Trang%20ch%E1%BB%A7%20D%E1%BA%ABn%20l%C6%B0u%20m%C3%A0n%20h%C3%ACnh%20b%C3%A1%20ch%E1%BB%A7%28TG%3Ae10838%29.frm
-   Stance: `neutral`
-
-3. **James Langevin on Immigration**
+2. **James Langevin on Immigration**
    URL: https://www.ontheissues.org/house/James_Langevin_Immigration.htm
    Stance: `supporting`
+
+3. **[PDF] CONGRESSIONAL RECORD— Extensions of ... - Congress.gov**
+   URL: https://www.congress.gov/109/crec/2005/02/15/CREC-2005-02-15-pt1-PgE247.pdf
+   Stance: `neutral`
 
 4. **CONSTRUCTION OPTIONS AND STRATEGIC PLACEMENT**
    URL: https://www.govinfo.gov/content/pkg/CHRG-109hhrg41325/html/CHRG-109hhrg41325.htm
    Stance: `neutral`
 
-5. **THE WAY FORWARD ON BORDER SECURITY**
-   URL: https://www.congress.gov/event/116th-congress/house-event/LC64036/text
+5. **Fact-checks | PolitiFact**
+   URL: https://www.politifact.com/factchecks/list/?category=immigration&ruling=barely-true
    Stance: `neutral`
 
-6. **PolitiFact | Fact-check: Did top Democrats vote for a border wall in 2006?**
-   URL: https://www.politifact.com/factchecks/2017/apr/23/mick-mulvaney/fact-check-did-top-democrats-vote-border-wall-2006/
+6. **Smith, House Democrats Demand Answers on Trump Border Deployment - Press Releases - House Armed Services Committee - Democrats**
+   URL: https://democrats-armedservices.house.gov/2018/11/smith-house-democrats-demand-answers-on-trump-border-deployment
    Stance: `neutral`
 
-7. **[PDF] CONGRESSIONAL RECORD— Extensions of ... - Congress.gov**
-   URL: https://www.congress.gov/109/crec/2005/02/15/CREC-2005-02-15-pt1-PgE247.pdf
-   Stance: `neutral`
-
-8. **[PDF] International Treaties**
-   URL: https://assets.nfhs.org/umbraco/media/1019429/treaties.pdf
+7. **[PDF] T he H istory, Part 1**
+   URL: https://nctr.ca/wp-content/uploads/2021/01/Volume_1_History_Part_1_English_Web.pdf
    Stance: `neutral`
 
 #### Human Review Notes
@@ -5181,9 +4996,9 @@ Failures shown: 26
 - **Correct:** `False`
 - **Within one level:** `False`
 - **Failure reason:** verdict got `mostly_false`, expected one of `mostly_true, true`
-- **TLDR:** Sources don’t substantiate the specific company layoffs or the CEO’s $500k Kasich super PAC check.
-- **Explanation:** PolitiFact rates the exact combined statement in the Ted Cruz ad as “mostly-true,” but the provided PolitiFact excerpt only documents the $500,000 contribution to Kasich’s super PAC and does not provide evidence for the “laid off 100 Ohioans” part. The other Ohio incentive/job-creation audit sources discuss broad noncompliance by companies receiving tax credits, and a separate example (TimberTech) of layoffs after a tax credit, but none identify the specific company, the “100 Ohioans” figure, or connect it to the CEO’s $500,000 check. Therefore, the specific claims are not supported by the provided sources as written.
-- **Confidence reason:** Key details (company identity, 100 layoffs) aren’t evidenced in provided excerpts.
+- **TLDR:** Sources don’t substantiate the specific layoffs and CEO check; only general incentive-noncompliance is supported.
+- **Explanation:** Source 6 (PolitiFact) evaluates the exact combined statement and rates it “mostly-true,” but the provided excerpt does not include the underlying evidence for the “laid off 100 Ohioans” or the “half-million-dollar check” details. Sources 1, 2, 4, and 3 discuss Ohio job-creation tax credits/incentives failing to meet job or payroll benchmarks, but they do not identify the specific company, the “100 Ohioans” figure, or any CEO check to Kasich’s super PAC. Source 7 is only a list page and does not provide additional substantiation in the provided text; Sources 8–10 discuss Kasich super PAC fundraising generally, not the specific CEO check tied to the tax-break company.
+- **Confidence reason:** Key specifics (company identity, 100 layoffs, $500k check) aren’t evidenced in provided excerpts.
 - **Claim verdicts:**
 ```json
 [
@@ -5193,7 +5008,7 @@ Failures shown: 26
   },
   {
     "claim": "The CEO of that company cut a half-million-dollar check to Kasichs super PAC.",
-    "verdict": "supported"
+    "verdict": "unverifiable"
   }
 ]
 ```
@@ -5206,7 +5021,7 @@ Failures shown: 26
   "https://www.statenews.org/government-politics/2026-01-13/nearly-two-thirds-of-companies-that-got-incentives-from-ohio-didnt-deliver-on-jobs-pay": "neutral",
   "https://ohiocapitaljournal.com/2025/12/03/hardworking-ohio-auto-workers-are-paying-the-price-for-ev-tax-credit-rollback/": "neutral",
   "https://www.politifact.com/factchecks/2016/apr/12/ted-cruz/ted-cruz-ad-revisits-controversy-kasichs-governors/": "supporting",
-  "https://www.politifact.com/factchecks/list/?target=john-kasich": "supporting",
+  "https://www.politifact.com/factchecks/list/?target=john-kasich": "neutral",
   "https://www.dispatch.com/story/news/politics/2015/07/30/john-kasich-s-donor-list/24175365007/": "neutral"
 }
 ```
@@ -5238,7 +5053,7 @@ Failures shown: 26
 
 7. **Fact-checks | PolitiFact**
    URL: https://www.politifact.com/factchecks/list/?target=john-kasich
-   Stance: `supporting`
+   Stance: `neutral`
 
 8. **John Kasich's donor list has Ohio all over it**
    URL: https://www.dispatch.com/story/news/politics/2015/07/30/john-kasich-s-donor-list/24175365007/
@@ -5259,14 +5074,14 @@ Failures shown: 26
 
 #### Output
 - **Actual verdict:** `mostly_false`
-- **Score:** `25`
-- **Confidence:** `medium`
+- **Score:** `20`
+- **Confidence:** `high`
 - **Correct:** `False`
 - **Within one level:** `False`
 - **Failure reason:** verdict got `mostly_false`, expected one of `mostly_true, true`
-- **TLDR:** One source says entitlements would not consume all federal revenue by 2045.
-- **Explanation:** PolitiFact directly evaluates the “consume all federal revenue by 2045” claim and concludes that using CBO’s current-law projections, entitlements would not consume every revenue dollar by 2045. The other sources discuss rising entitlement spending and crowding out other spending, but they do not state that entitlements consume all revenue by 2045.
-- **Confidence reason:** Only one source directly addresses the specific “all revenue by 2045” wording.
+- **TLDR:** PolitiFact says CBO projections do not support entitlements consuming all federal revenue by 2045.
+- **Explanation:** Source 1 (PolitiFact) directly evaluates the “consume all federal revenue by 2045” claim and concludes that using CBO’s current-law projections, entitlements would not consume every revenue dollar by 2045. While Source 2 and Source 3 discuss rising entitlement spending and crowding out other spending, they do not state that entitlements consume all revenue by 2045.
+- **Confidence reason:** One source directly tests the exact 2045 “all revenue” claim.
 - **Claim verdicts:**
 ```json
 [
@@ -5323,14 +5138,14 @@ Failures shown: 26
 
 #### Output
 - **Actual verdict:** `mostly_true`
-- **Score:** `95`
+- **Score:** `90`
 - **Confidence:** `high`
 - **Correct:** `False`
 - **Within one level:** `False`
 - **Failure reason:** verdict got `mostly_true`, expected one of `false`
 - **TLDR:** Sources say Fox News is not banned in Canada; the “lying law” reason is false.
-- **Explanation:** Multiple sources (The Canadian Press/AP, Berkshire Eagle/AP, Snopes, PolitiFact, and AFP) state Fox News is authorized/available for distribution in Canada, contradicting the claim that it is banned. PolitiFact and Snopes specifically rate the “banned because it violates a law preventing news channels from lying” explanation as incorrect/false.
-- **Confidence reason:** Multiple independent fact-checkers directly address both claims.
+- **Explanation:** Multiple sources (AP, Snopes, PolitiFact, and the Canadian fact-check) state Fox News is authorized/available in Canada, contradicting the claim that it is banned. PolitiFact and Snopes also specifically reject the explanation that a law preventing news channels from lying is the reason for any supposed ban.
+- **Confidence reason:** Multiple independent fact-checkers directly address both parts of the claims.
 - **Claim verdicts:**
 ```json
 [
@@ -5401,9 +5216,9 @@ Failures shown: 26
 - **Correct:** `False`
 - **Within one level:** `True`
 - **Failure reason:** verdict got `mostly_true`, expected one of `true`
-- **TLDR:** PolitiFact’s cited data supports California outpacing Texas on job growth and growth pace.
-- **Explanation:** Source 1 (PolitiFact) directly evaluates the exact June 2016 claim that California was “creating more jobs and more economic growth than Texas,” and rates it True, citing higher job growth rates for California than Texas (e.g., 3% vs 1.5% in the year discussed) and other economic indicators. Source 2 (PolitiFact) also reports the same “kicking our butt” framing and includes additional metrics (per-capita income and GDP growth) that align with California doing better than Texas in the periods it discusses. Other sources are either not directly comparable to the specific “today”/timeframe claim or are not about the same job-growth comparison.
-- **Confidence reason:** Two PolitiFact fact-checks directly address the claims; other sources are less directly relevant.
+- **TLDR:** PolitiFact’s data supports California outpacing Texas on jobs and growth, contradicting the “kicking our butt” framing.
+- **Explanation:** Source 1 directly evaluates the June 2016 claim that “Today, California is kicking our butt, creating more jobs and more economic growth than Texas,” and rates it True, citing higher job growth in California than Texas. Source 2 also reports the same “kicking our butt” claim and includes supporting comparisons (jobs/income/GDP metrics) consistent with California doing better than Texas. Sources 3-5 are not directly tied to the “today” jobs/growth comparison in the provided PolitiFact fact-check context, and Source 6-10 are unrelated to the claims.
+- **Confidence reason:** Only PolitiFact sources directly address the exact “today” jobs/growth comparison; other sources are tangential or unrelated.
 - **Claim verdicts:**
 ```json
 [
@@ -5412,8 +5227,8 @@ Failures shown: 26
     "verdict": "supported"
   },
   {
-    "claim": "California is kicking our butt.",
-    "verdict": "supported"
+    "claim": "Today California is kicking our butt.",
+    "verdict": "mixed"
   }
 ]
 ```
@@ -5425,9 +5240,9 @@ Failures shown: 26
   "https://businessintexas.com/blog/texas-vs-california-economy-which-state-is-best-for-business/": "neutral",
   "https://statspanda.com/blog/texas-vs-california-comparison": "neutral",
   "https://www.linkedin.com/posts/txedc_when-you-look-at-the-data-one-thing-becomes-activity-7424100550503493632-jZS0": "neutral",
-  "https://www.motherjones.com/kevin-drum/2020/02/sorry-donald-but-california-is-kicking-ass/": "neutral",
-  "https://www.pacificresearch.org/fact-checking-the-governor-on-manufacturing/": "neutral",
-  "https://www.motherjones.com/kevin-drum/2018/11/california-voters-kicked-ass/": "neutral"
+  "https://www.usatoday.com/story/news/factcheck/2020/10/02/fact-check-clint-eastwood-did-not-author-pro-trumps-post/5885225002/": "neutral",
+  "https://www.factcheck.org/": "neutral",
+  "https://www.instagram.com/p/DTElWYDCQVS/": "neutral"
 }
 ```
 
@@ -5452,16 +5267,16 @@ Failures shown: 26
    URL: https://www.linkedin.com/posts/txedc_when-you-look-at-the-data-one-thing-becomes-activity-7424100550503493632-jZS0
    Stance: `neutral`
 
-6. **Sorry Donald, But California Is Kicking Ass – Mother Jones**
-   URL: https://www.motherjones.com/kevin-drum/2020/02/sorry-donald-but-california-is-kicking-ass/
+6. **Fact check: Clint Eastwood did not author pro-Trump social media post**
+   URL: https://www.usatoday.com/story/news/factcheck/2020/10/02/fact-check-clint-eastwood-did-not-author-pro-trumps-post/5885225002/
    Stance: `neutral`
 
-7. **Fact Checking The Governor on Manufacturing - Pacific Research Institute**
-   URL: https://www.pacificresearch.org/fact-checking-the-governor-on-manufacturing/
+7. **FactCheck.org - A Project of The Annenberg Public Policy Center**
+   URL: https://www.factcheck.org/
    Stance: `neutral`
 
-8. **California Voters Kicked Ass! – Mother Jones**
-   URL: https://www.motherjones.com/kevin-drum/2018/11/california-voters-kicked-ass/
+8. **Instagram**
+   URL: https://www.instagram.com/p/DTElWYDCQVS/
    Stance: `neutral`
 
 #### Human Review Notes

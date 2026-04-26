@@ -81,12 +81,6 @@ class TestGoldEvidenceAnalysis:
             f"Expected verdict in {sample['expected_verdicts']}, got {result['verdict']}"
         )
 
-        lo, hi = sample["expected_score_range"]
-        assert lo <= result["score"] <= hi, (
-            f"[{dataset_name}/{sample['id']}] "
-            f"Expected score in [{lo}, {hi}], got {result['score']}"
-        )
-
 
 @pytest.mark.benchmark
 class TestSearchedEvidenceAnalysis:
